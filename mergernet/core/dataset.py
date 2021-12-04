@@ -85,6 +85,24 @@ def parser(serialized_example):
 
 
 
+class DatasetConfig:
+  """Configuration params for dataset."""
+  def __init__(
+    self,
+    download_url: str = None,
+    save_path: Path = None,
+    train_glob: Path = None,
+    validation_glob: Path = None,
+    test_glob: Path = None
+  ):
+    self.download_url = download_url
+    self.save_path = save_path
+    self.train_glob = save_path.parent / train_glob # concatenate folder and glob
+    self.validation_glob = save_path.parent / validation_glob
+    self.test_glob = save_path.parent / test_glob
+
+
+
 class DatasetCreator:
   def __init__(
     self,
