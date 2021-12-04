@@ -113,6 +113,61 @@ class DatasetCreator:
     # self.filename_column = filename_column
 
 
+  def generate(self):
+    kf = StratifiedKFold(n_splits=self.n_splits)
+    for fold, (train_ids, test_ids) in enumerate(kf.split(self.images, self.labels)):
+      img_train = self.images[train_ids]
+      img_test = self.images[test_ids]
+      lbl_train = self.labels[train_ids]
+      lbl_test = self.labels[test_ids]
+
+      train_examples = {
+        'image': img_train,
+        'label': lbl_train
+      }
+
+      test_examples = {
+        'image': img_test,
+        'label': lbl_test
+      }
+
+      write_tfrecord_file(
+        file_path=self.output / f'train_fold_{fold}.tfrecord',
+        examples=train_examples
+      )
+
+      write_tfrecord_file(
+        file_path=self.output / f'test_fold_{fold}.tfrecord',
+        examples=test_examples
+      )
+
+    # for fold in range(self.n_splits):
+    #   train_img_path = splited_dataset['X_train'][fold]
+    #   train_labels = splited_dataset['y_train'][fold]
+    #   test_img_path = splited_dataset['X_test'][fold]
+    #   test_labels = splited_dataset['y_test'][fold]
+
+    #   train_examples = {
+    #     'image': train_img_path,
+    #     'labels': train_labels
+    #   }
+
+    #   test_examples = {
+    #     'image': test_img_path,
+    #     'labels': test_labels
+    #   }
+
+    #   write_tfrecord_file(
+    #     file_path=self.output / f'train_fold_{fold}.tfrecord',
+    #     examples=train_examples
+    #   )
+
+    #   write_tfrecord_file(
+    #     file_path=self.output / f'test_fold_{fold}.tfrecord',
+    #     examples=test_examples
+    #   )
+
+
   def _generate(self):
     table = pd.read_csv(self.metadata_table)
     rmag = table[[self.rmag_column]].to_numpy()
