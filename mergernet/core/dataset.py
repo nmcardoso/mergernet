@@ -84,3 +84,68 @@ def parser(serialized_example):
   return tf.io.parse_tensor(image, tf.int64), label
 
 
+
+class DatasetCreator:
+  def __init__(
+    self,
+    # images_folder: Path,
+    images: List[Path],
+    labels: List[int],
+    # rmag: List[float],
+    # metadata_table: Path,
+    output: Path,
+    n_splits: int = 5,
+    bins: int = 6,
+    # rmag_column: str = 'r',
+    # label_column: str = 'class',
+    # filename_column: str = 'filename'
+  ):
+    self.images = images
+    self.labels = labels
+    # self.rmag = rmag
+    # self.images_folder = images_folder
+    # self.metadata_table = metadata_table
+    self.output = output
+    self.n_splits = n_splits
+    self.bins = bins
+    # self.rmag_column = rmag_column
+    # self.label_column = label_column
+    # self.filename_column = filename_column
+
+
+  def _generate(self):
+    table = pd.read_csv(self.metadata_table)
+    rmag = table[[self.rmag_column]].to_numpy()
+    filenames = table[[self.id_column]].to_numpy()
+    labels = table[[self.label_column]].to_numpy()
+
+    kf = StratifiedDistributionKFold(n_splits=self.n_splits, bins=self.bins)
+    splited_dataset = kf.split(filenames, labels)
+
+    for fold in range(self.n_splits):
+      train_filenames = splited_dataset['X_train'][fold]
+      train_labels = splited_dataset['y_train'][fold]
+      test_filenames = splited_dataset['X_test'][fold]
+      test_labels = splited_dataset['y_test'][fold]
+
+      train_examples = {
+        'image': [self.images_folder / filename for filename in train_filenames],
+        'labels': train_labels
+      }
+
+      test_examples = {
+        'image': [self.image_folder / filename for filename in test_filenames],
+        'labels': test_labels
+      }
+
+      write_tfrecord_file(
+        file_path=self.output / f'train_fold_{fold}.tfrecord',
+        examples=train_examples
+      )
+
+      write_tfrecord_file(
+        file_path=self.output / f'test_fold_{fold}.tfrecord',
+        examples=test_examples
+      )
+
+
