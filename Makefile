@@ -6,3 +6,6 @@ install:
 update:
 	. venv/bin/activate; pip3 freeze > requirements.txt
 
+clean:
+	rm -rf venv
+	find -iname "*.pyc" -delete
