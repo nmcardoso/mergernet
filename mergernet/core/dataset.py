@@ -67,3 +67,20 @@ def write_tfrecord_file(file_path: Path, examples: dict):
 
 
 
+def parser(serialized_example):
+  features = {
+    'label': tf.io.FixedLenFeature([], tf.int64),
+    'image': tf.io.FixedLenFeature([], tf.string)
+  }
+
+  example = tf.io.parse_single_example(
+    serialized=serialized_example,
+    features=features
+  )
+
+  image = example['image']
+  label = example['label']
+
+  return tf.io.parse_tensor(image, tf.int64), label
+
+
