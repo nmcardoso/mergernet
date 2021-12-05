@@ -308,3 +308,45 @@ class StratifiedDistributionKFold:
 
 
 
+class MergerNetDataset:
+  """High-level representation of dataset.
+
+  Parameters
+  ----------
+  ds_split: str
+    Split path.
+
+  Attributes
+  ----------
+  config: DatasetConfig
+    Configuration object.
+  """
+  RGB_CONFIG = DatasetConfig(
+    download_url='',
+    save_path=Path('datasets/mergernet_rgb.tar.gz'),
+    train_glob=Path('train.*.tfrecord'),
+    validation_glob=Path('validation.*.tfrecord'),
+    test_glob=Path('test.*.tfrecord')
+  )
+  """Default configuration object for RGB dataset."""
+
+
+  FITS_CONFIG = DatasetConfig(
+    download_url='',
+    save_path=Path('datasets/mergernet_fits.tar.gz'),
+    train_glob=Path('train.*.tfrecord'),
+    validation_glob=Path('validation.*.tfrecord'),
+    test_glob=Path('test.*.tfrecord')
+  )
+  """Default configuration object for FITS dataset."""
+
+
+  def __init__(self, ds_split: str, ds_type: str = 'rgb'):
+    self.ds_type = ds_type
+
+    if ds_type == 'rgb':
+      self.config = MergerNetDataset.RGB_CONFIG
+    elif ds_type == 'fits':
+      self.config = MergerNetDataset.FITS_CONFIG
+
+
