@@ -350,3 +350,19 @@ class MergerNetDataset:
       self.config = MergerNetDataset.FITS_CONFIG
 
 
+  def download(self) -> None:
+    """Check if destination path exists, create missing folders and download
+    the dataset files from web resource for a specified dataset type.
+    """
+    if not self.config.save_path.parent.exists():
+      self.config.save_path.parent.mkdir(parents=True, exist_ok=True)
+
+    tf.keras.utils.get_file(
+      fname=self.config.save_path.resolve(),
+      origin=self.config.download_url,
+      cache_subdir=self.config.save_path.parent.resolve(),
+      archive_format='tar',
+      extract=True
+    )
+
+
