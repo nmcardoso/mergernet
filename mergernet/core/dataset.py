@@ -366,3 +366,12 @@ class MergerNetDataset:
     )
 
 
+  def prepare(self) -> None:
+    """TODO: doc"""
+    ds = tf.data.TFRecordDataset(tf.io.gfile.glob(str(self.config.train_glob)))
+    ds = ds.map(parser)
+
+
+  def to_tensorflow(self) -> tf.data.Dataset:
+    """Returns a `tf.data.Dataset` instance."""
+    tf.data.TFRecordDataset()
