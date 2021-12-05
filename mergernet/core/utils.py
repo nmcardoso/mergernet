@@ -50,3 +50,15 @@ def load_table(path: Union[Path, str], default: bool = True) -> pd.DataFrame:
     return pd.read_csv(path)
 
 
+
+def save_table(data: pd.DataFrame, path: Union[Path, str], default: bool = True):
+  if default:
+    path = DATA_ROOT / 'tables' / path
+
+  if path.suffix in {'.fit', '.fits'}:
+    pass
+  elif path.suffix == '.csv':
+    data.to_csv(path, index=False)
+
+
+
