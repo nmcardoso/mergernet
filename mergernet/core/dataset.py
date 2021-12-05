@@ -239,3 +239,72 @@ class DistributionKFold:
 
 
 
+class StratifiedDistributionKFold:
+  def __init__(self, distribution, n_splits: int, bins: int):
+    self.n_splits = n_splits
+    self.bins = bins
+    self.distribution = distribution
+
+
+  @staticmethod
+  def compute_max_bins(y, distribution: List[float], n_classes: int, n_splits: int) -> int:
+    continue_testing = True
+    max_bins = 1
+    y = np.array(y)
+    distribution = np.array(distribution)
+
+    while continue_testing:
+      dist_kf = DistributionKFold(bins=max_bins)
+
+      for bin_ids in dist_kf.split(distribution=distribution):
+        y_bin = y[bin_ids]
+        _, counts = np.unique(y_bin, return_counts=True)
+        # class_counts = dict(zip(unique, counts))
+
+        # check ocurrences for all classes
+        continue_testing = continue_testing and (len(counts) == n_classes)
+
+        # check ocurrences for at least 1 example of each class in each fold
+        for c in counts:
+          continue_testing = continue_testing and (c >= n_classes * n_splits * max_bins)
+
+        max_bins += 1 if continue_testing else 0
+
+    return max_bins
+
+
+  def split(self, X, y) -> dict:
+    X_train = [[] for _ in range(self.n_splits)]
+    X_test = [[] for _ in range(self.n_splits)]
+    y_train = [[] for _ in range(self.n_splits)]
+    y_test = [[] for _ in range(self.n_splits)]
+
+    dist_kf = DistributionKFold(bins=self.bins)
+    class_kf = StratifiedKFold(n_splits=self.n_splits)
+
+    # First split: distribution split
+    for bin_ids in dist_kf.split(distribution=self.distribution):
+      X_bin = X[bin_ids]
+      y_bin = y[bin_ids]
+
+      # Second split: class split
+      for i, (train_ids, test_ids) in class_kf.split(X_bin, y_bin):
+        X_train[i] = np.concatenate((X_train[i], X_bin[train_ids]))
+        X_test[i] = np.concatenate((X_test[i], X_bin[test_ids]))
+        y_train[i] = np.concatenate((y_train[i], y_bin[train_ids]))
+        y_test[i] = np.concatenate((y_test[i], y_bin[test_ids]))
+
+    # Notes:
+    # len(X_train) == n_splits, each elements of the list represents a fold
+    # each
+
+    return {
+      'X_train': X_train,
+      'X_test': X_test,
+      'y_train': y_train,
+      'y_test': y_test
+    }
+
+
+
+
