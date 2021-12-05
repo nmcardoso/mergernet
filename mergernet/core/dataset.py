@@ -222,3 +222,20 @@ class DatasetCreator:
       )
 
 
+
+class DistributionKFold:
+  def __init__(self, bins: int):
+    self.bins = bins
+
+
+  def split(self, distribution):
+    bin_edges = np.histogram_bin_edges(distribution, bins=self.bins)
+
+    for i in range(len(bin_edges) - 1):
+      bin_ids = np.asarray(
+        (distribution >= bin_edges[i]) & (distribution <= bin_edges[i + 1])
+      ).nonzero()[0]
+      yield bin_ids
+
+
+
