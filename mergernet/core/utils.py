@@ -35,3 +35,18 @@ def load_image(path: Path) -> np.ndarray:
   elif path.suffix == '.fits':
     pass
 
+
+
+def load_table(path: Union[Path, str], default: bool = True) -> pd.DataFrame:
+  if default:
+    path = DATA_ROOT / 'tables' / path
+
+  if path.suffix in {'.fit', '.fits'}:
+    with fits.open(path) as hdul:
+      table_data = hdul[1].data
+      table = Table(data=table_data)
+    return table.to_pandas()
+  elif path.suffix == '.csv':
+    return pd.read_csv(path)
+
+
