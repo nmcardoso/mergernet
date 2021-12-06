@@ -25,3 +25,18 @@ class AbstractLogger:
 
 
 
+class Logger(AbstractLogger):
+  """This class represents the json log file data structure.
+  Also provides methods that transform an instance of this class in a
+  high-level log representation.
+  """
+  def __init__(
+    self,
+    name=None,
+    age=None,
+    train_history: TrainHistory = None
+  ):
+    self.name = name
+    self.age = age
+    self.train_history = TrainHistory(**train_history) if train_history else None
+
