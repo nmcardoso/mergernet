@@ -40,3 +40,22 @@ class Logger(AbstractLogger):
     self.age = age
     self.train_history = TrainHistory(**train_history) if train_history else None
 
+
+  @staticmethod
+  def load(path: Path):
+    """Loads a given file path and parses the file data to logger object.
+
+    Parameters
+    ----------
+    path: Path
+      Path of the ``json`` file to read.
+
+    Returns
+    -------
+    Logger
+      Log instance with parsed data.
+    """
+    log_dict = json.load(path)
+    return Logger(**log_dict)
+
+
