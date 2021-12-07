@@ -59,3 +59,15 @@ class Logger(AbstractLogger):
     return Logger(**log_dict)
 
 
+  def save(self, path: Path) -> None:
+    """Serializes this object data and stores a json file in the given path.
+
+    Parameters
+    ----------
+    path: Path
+      Path to save the generated ``json`` file.
+    """
+    log_dict = self.serialize()
+    json.dump(log_dict, path)
+
+
