@@ -59,3 +59,6 @@ class GithubService:
 
 
 
+if __name__ == '__main__':
+  gh_service = GithubService('nmcardoso', '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', 'arial')
+  gh_service.commit('filename.text', 'Caracas2', 'master')
