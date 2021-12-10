@@ -11,3 +11,9 @@ class GDrive:
   def is_mounted(self) -> bool:
     return self.base_path.is_dir()
 
+
+  def send(self, local: Path, remote: Path):
+    remote = self.base_path / remote
+    copy(str(local), str(remote))
+
+
