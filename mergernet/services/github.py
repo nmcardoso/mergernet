@@ -27,3 +27,35 @@ class GithubService:
     return base64_str
 
 
+  def commit(self, path: str, data: str, branch: str):
+    url = self._get_url(f'repos/{self.user}/{self.repo}/contents/{path}')
+
+    commit_data = {
+      'message': 'test commit',
+      'content': self._encode_content(data),
+      'branch': branch
+    }
+
+    response = requests.get(
+      url=url,
+      headers=HEADERS,
+      auth=(self.user, self.token)
+    )
+
+    print(response.json())
+
+    response_data = response.json()
+    if 'sha' in response_data:
+      commit_data['sha'] = response_data['sha']
+
+    response = requests.put(
+      url=url,
+      headers=HEADERS,
+      json=commit_data,
+      auth=(self.user, self.token)
+    )
+
+    print(response.json())
+
+
+
