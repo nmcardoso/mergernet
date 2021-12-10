@@ -17,3 +17,6 @@ class GDrive:
     copy(str(local), str(remote))
 
 
+  def get(self, remote: Path, local: Path):
+    remote = self.base_path / remote
+    copy(str(remote), str(local))
