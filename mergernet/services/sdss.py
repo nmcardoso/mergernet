@@ -32,3 +32,24 @@ class SloanService:
     })
     download_file(image_url, save_path)
 
+
+  def batch_download_rgb(
+    self,
+    ra: List[float],
+    dec: List[float],
+    save_path: List[Path],
+    workers: int = None,
+    **kwargs
+  ):
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
+      futures = []
+      for i in range(len(ra)):
+        futures.append(executor.submit(
+          self.download_rgb,
+          ra=ra[i],
+          dec=dec[i],
+          save_path=save_path[i],
+          **kwargs
+        ))
+      for _ in tqdm.tqdm(concurrent.futures.as_completed(futures), total=len(futures), unit=' file'):
+        pass
