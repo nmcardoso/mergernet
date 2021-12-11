@@ -109,3 +109,14 @@ class LegacyService:
 
 
 
+if __name__ == '__main__':
+  ls = LegacyService()
+  ls.batch_download_legacy_rgb(
+    ra=[185.1458 + dx/2 for dx in range(20)],
+    dec=[12.8624 + dy/2 for dy in range(20)],
+    save_path=[Path(f'broca/{i}.jpg') for i in range(20)],
+    workers=6
+  )
+  # ls.download_legacy_rgb(185.1458, 12.8624, Path('stamps/broca.jpg'))
+  # ls._download_file('https://natanael.net', Path('broca/broca.html'))
+  # print(ls._append_query_params('http://natanael.net?key0=val0', {'key1': 'val1', 'key2': 'val2'}))
