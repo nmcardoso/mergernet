@@ -67,3 +67,45 @@ class LegacyService:
     download_file(image_url, save_path)
 
 
+
+  def batch_download_rgb(
+    self,
+    ra: List[float],
+    dec: List[float],
+    save_path: List[Path],
+    workers: Union[int, None] = None,
+    **kwargs
+  ) -> None:
+    """Downloads a list of objects defined by RA and DEC coordinates.
+
+    `ra`, `dec` and `save_path` lists are mandatory and must have same length.
+
+    Parameters
+    ----------
+    ra: list(float)
+      The list of RA coordinates of the desired objects.
+    dec: list(float)
+      The list of DEC coordinates of the desired objects.
+    save_path: list(Path)
+      The list of path where files should be saved.
+    workers: int, optional
+      Maximum spawned threads.
+    kwargs: optional
+      Same args as `download_legacy_rgb` function.
+    """
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
+      futures = []
+      for i in range(len(ra)):
+        futures.append(executor.submit(
+          self.download_rgb,
+          ra=ra[i],
+          dec=dec[i],
+          save_path=save_path[i],
+          **kwargs
+        ))
+      for _ in tqdm.tqdm(concurrent.futures.as_completed(futures), total=len(futures), unit=' file'):
+        pass
+
+
+
