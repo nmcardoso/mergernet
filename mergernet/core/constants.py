@@ -20,3 +20,5 @@ GITHUB_BRANCH = os.environ.get('GITHUB_BRANCH', 'main')
 
 
 
+# Random number generation seed
+RANDOM_SEED = 42
