@@ -14,5 +14,11 @@ tqdm = "4.62.3"
 Pillow = "7.1.2"
 astropy = "==4.3.1"
 astroquery = "*"
+
+[dev-packages]
+numpydoc = "*"
+pydata-sphinx-theme = "*"
+ipykernel = "*"
+
 [requires]
 python_version = "3.7.12"
