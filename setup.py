@@ -13,5 +13,6 @@ setup(
     'pandas>=1.1.5',
     'tensorflow>=2.7',
     'tqdm>=4.62.3',
+    'requests>=2.23',
   ]
 )
