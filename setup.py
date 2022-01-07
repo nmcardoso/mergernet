@@ -12,5 +12,6 @@ setup(
     'numpy>=1.19.5',
     'pandas>=1.1.5',
     'tensorflow>=2.7',
+    'tqdm>=4.62.3',
   ]
 )
