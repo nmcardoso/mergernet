@@ -14,5 +14,6 @@ setup(
     'tensorflow>=2.7',
     'tqdm>=4.62.3',
     'requests>=2.23',
+    'Pillow>=7.1.2'
   ]
 )
