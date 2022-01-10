@@ -1,0 +1,4 @@
+#!/bin/bash
+src_root_dir=$(dirname $(readlink -f $0))
+parent_dir=$(dirname $src_root_dir)
+PYTHONPATH="$parent_dir" python "$src_root_dir"/index.py "$@"
