@@ -2,7 +2,7 @@
 
 This module defines the rules for loading a previously generated ``.tfrecord`` dataset.
 
-The main class is :py:class:`MergerNetDataset`, which is a high-level representation of the
+The main class is :py:class:`Dataset`, which is a high-level representation of the
 dataset and can be used for all development process of this deep learning model.
 
 This module defines others classes and functions as well, who perform complementary tasks.
