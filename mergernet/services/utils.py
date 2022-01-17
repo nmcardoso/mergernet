@@ -4,9 +4,15 @@ import requests
 
 
 
+def download_file(url: str, save_path: Path, replace: bool = False):
+  if not replace and save_path.exists():
+    return
+
   if not save_path.parent.exists():
     save_path.parent.mkdir(parents=True, exist_ok=True)
-  r = requests.get(remote_url, allow_redirects=True)
+
+  r = requests.get(url, allow_redirects=True)
+
   with open(str(save_path.resolve()), 'wb') as f:
     f.write(r.content)
 
