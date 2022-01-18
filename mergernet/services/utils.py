@@ -1,5 +1,8 @@
 from pathlib import Path
+from typing import List
+import concurrent.futures
 
+import tqdm
 import requests
 
 
@@ -15,6 +18,32 @@ def download_file(url: str, save_path: Path, replace: bool = False):
 
   with open(str(save_path.resolve()), 'wb') as f:
     f.write(r.content)
+
+
+
+def batch_download_file(
+  urls: List[str],
+  save_path: List[Path],
+  workers: int = 2,
+  replace: bool = False
+):
+  with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
+    futures = []
+
+    for i in range(len(urls)):
+      futures.append(executor.submit(
+        download_file,
+        url=urls[i],
+        save_path=save_path[i],
+        replace=replace
+      ))
+
+    for _ in tqdm.tqdm(
+      concurrent.futures.as_completed(futures),
+      total=len(futures),
+      unit=' files'
+    ):
+      pass
 
 
 
