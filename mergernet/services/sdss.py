@@ -55,3 +55,17 @@ class SloanService:
     )
 
 
+  def get_dr_prefix(self, dr17: Sequence, dr7: Sequence):
+    flag = False
+    fnames = []
+
+    for i in range(len(dr17)):
+      if dr17[i] == 0:
+        if dr7[i] != 0:
+          fnames.append(f'dr7_{dr7[i]}')
+        else:
+          flag = True
+      else:
+        fnames.append(f'dr17_{dr17[i]}')
+
+    return fnames, flag
