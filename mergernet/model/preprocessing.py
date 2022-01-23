@@ -11,3 +11,10 @@ def one_hot(X, y):
 
 
 
+def load_jpeg(X, *kargs):
+  img_bytes = tf.io.read_file(X)
+  img = tf.io.decode_jpeg(img_bytes, channels=3)
+  return img
+
+
+
