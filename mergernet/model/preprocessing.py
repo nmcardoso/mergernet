@@ -23,3 +23,5 @@ def normalize_rgb(X, *kargs):
 
 
 
+def standardize_rgb(X, *kargs):
+  return tf.image.per_image_standardization(X)
