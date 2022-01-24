@@ -18,3 +18,8 @@ def load_jpeg(X, *kargs):
 
 
 
+def normalize_rgb(X, *kargs):
+  return X / 255.
+
+
+
