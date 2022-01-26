@@ -3,10 +3,10 @@ import json
 
 
 
-class AbstractLogger:
-  """Represents an abstract logger, concrete classes implements the attrbutes."""
+class BaseLogger:
+  """Represents an abstract logger."""
   def serialize(self) -> dict:
-    """Recursively parse an ``AbstractLogger`` instance to a python ``dict``.
+    """Recursively parse an ``BaseLogger`` instance to a python ``dict``.
 
     Returns
     -------
@@ -17,7 +17,7 @@ class AbstractLogger:
     log_dict = {}
     for k, v in items:
       attr = getattr(self, k)
-      if isinstance(attr, AbstractLogger):
+      if isinstance(attr, BaseLogger):
         log_dict[k] = v.serialize()
       else:
         log_dict[k] = v
@@ -25,7 +25,7 @@ class AbstractLogger:
 
 
 
-class Logger(AbstractLogger):
+class Logger(BaseLogger):
   """This class represents the json log file data structure.
   Also provides methods that transform an instance of this class in a
   high-level log representation.
@@ -71,3 +71,7 @@ class Logger(AbstractLogger):
     json.dump(log_dict, path)
 
 
+
+if __name__ == '__main__':
+  l = Logger(train_history={'epochs': 1, 'key1': {'key2': '2'}})
+  print(l.serialize())
