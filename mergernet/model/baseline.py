@@ -186,8 +186,14 @@ class ConvolutionalClassifier:
 
     ds_train, ds_test = self.dataset.get_fold(0)
 
-    ds_train = ds_train.map(load_rgb(self.dataset.config.images_path))
+    _x, _y = next(ds_train.take(1).as_numpy_iterator())
+    print(_x, _y)
+    ds_train = ds_train.map(load_jpg)
+    _x, _y = next(ds_train.take(1).as_numpy_iterator())
+    print(_x.shape, _y)
     ds_train = ds_train.map(one_hot)
+    _x, _y = next(ds_train.take(1).as_numpy_iterator())
+    print(_x.shape, _y)
     # ds_train = ds_train.cache()
     ds_train = ds_train.shuffle(5000)
     ds_train = ds_train.batch(batch_size)
