@@ -86,6 +86,57 @@ def array_fallback(arrays, prefix=None):
 
 
 
+
+class Timming:
+  def __init__(self):
+    self.start_time = None
+    self.end_time = None
+
+
+  def __repr__(self) -> str:
+    return self.duration()
+
+
+  def start(self):
+    self.start_time = datetime.now()
+
+
+  def end(self):
+    self.end_time = datetime.now()
+
+
+  def duration(self) -> str:
+    if not self.end_time:
+      duration = self.end_time - self.start_time
+    else:
+      end_time = datetime.now()
+      duration = end_time - self.start_time
+
+    return self._format_time(duration)
+
+
+  def _format_time(self, dt: datetime) -> str:
+    r = ''
+
+    if dt.day:
+      r += f'{dt.day}d'
+
+    if dt.hour:
+      r += f'{dt.hour}h'
+
+    if dt.minute:
+      r += f'{dt.minute}m'
+
+    if dt.second:
+      r += f'{dt.second}s'
+
+    if r == '':
+      r = '0s'
+
+    return r
+
+
+
 class SingletonMeta(type):
   """The Singleton class can be implemented in different ways in Python. Some
   possible methods include: base class, decorator, metaclass. We will use the
