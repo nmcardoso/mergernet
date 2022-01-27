@@ -8,6 +8,28 @@ from mergernet.core.utils import SingletonMeta
 from mergernet.services.github import GithubService
 from mergernet.services.google import GDrive
 
+class ArtifactUploader:
+  def __init__(self, github: bool = True, gdrive: bool = True, gdrive_path: Path = None):
+    self.use_github = github
+    self.use_gdrive = gdrive
+    self.gdrive_path = gdrive_path
+    self.github = GithubService(user=GITHUB_USER, token=GITHUB_TOKEN, repo=GITHUB_REPO)
+    self.gdrive = GDrive(base_path=GDRIVE_PATH)
+
+
+  def upload_file(self, path):
+    path = Path(path)
+    if self.use_github:
+      if path.exists():
+        with open(path, 'rb') as file:
+          file_bytes = file.read()
+        self.github.commit(GITHUB_PATH, file_bytes, 'main')
+
+    if self.use_gdrive:
+      self.gdrive.send(path, path)
+
+
+
 class BaseArtifact:
   """Represents an abstract logger."""
   def __init__(self, **kwargs):
