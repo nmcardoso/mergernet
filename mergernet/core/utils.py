@@ -62,6 +62,29 @@ def save_table(data: pd.DataFrame, path: Union[Path, str], default: bool = True)
 
 
 
+def array_fallback(arrays, prefix=None):
+  gen = []
+  flag = False # return True if missing row
+
+  for i in range(arrays[0].shape[0]):
+    flag_aux = False
+
+    for j in range(len(arrays)):
+      row = arrays[j][i]
+      if row:
+        flag_aux = True
+        if prefix:
+          gen.append(f'{prefix[j]}_{row}')
+        else:
+          gen.append(row)
+        break
+
+    if not flag_aux:
+      flag = True
+
+  return gen, flag
+
+
 
 class SingletonMeta(type):
   """The Singleton class can be implemented in different ways in Python. Some
