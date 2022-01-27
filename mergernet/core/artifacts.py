@@ -73,3 +73,20 @@ class BaseArtifact:
     uploader = ArtifactUploader(github=github, gdrive=gdrive)
     uploader.upload_file(self._saved_path)
 
+  # @staticmethod
+  # def load(path: Path):
+  #   """Loads a given file path and parses the file data to logger object.
+
+  #   Parameters
+  #   ----------
+  #   path: Path
+  #     Path of the ``json`` file to read.
+
+  #   Returns
+  #   -------
+  #   Logger
+  #     Log instance with parsed data.
+  #   """
+  #   log_dict = json.load(path)
+  #   return JobReport(**log_dict)
+
