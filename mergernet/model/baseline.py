@@ -139,7 +139,7 @@ class ConvolutionalClassifier:
 
     model.compile(
       optimizer=optimizer,
-      loss=tf.keras.losses.CategoricalCrossentropy(from_logits=True),
+      loss=tf.keras.losses.CategoricalCrossentropy(from_logits=False),
       metrics=[
         tf.keras.metrics.CategoricalAccuracy(name='accuracy'),
         tf.keras.metrics.Precision(name='precision'),
