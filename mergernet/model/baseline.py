@@ -180,8 +180,7 @@ class ConvolutionalClassifier:
       optimizer=optimizer,
       learning_rate=learning_rate,
       data_aug=data_aug,
-      verbose=verbose,
-      pretrained_trainable=False
+      verbose=verbose
     )
 
     ds_train, ds_test = self.dataset.get_fold(0)
