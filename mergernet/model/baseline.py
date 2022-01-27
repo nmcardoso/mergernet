@@ -160,7 +160,7 @@ class ConvolutionalClassifier:
     sampling: str = None,
     dense_layers=None,
     pretrained_weights: str = 'imagenet',
-    pretrained_arch: str = 'inception_v4',
+    pretrained_arch: str = 'inception',
     input_shape: Tuple = (128, 128, 3),
     batch_size: str = 32,
     learning_rate: float = 1e-4,
