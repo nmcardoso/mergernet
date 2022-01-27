@@ -125,7 +125,7 @@ class ConvolutionalClassifier:
     else:
       x = tf.keras.layers.Flatten()(x)
       x = dense_layers(x)
-    outputs = tf.keras.layers.Dense(2, activation='softmax')(x)
+    outputs = tf.keras.layers.Dense(3, activation='softmax')(x)
     model = tf.keras.Model(inputs, outputs)
 
     if optimizer == 'std_adam':
