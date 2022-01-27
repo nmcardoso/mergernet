@@ -13,6 +13,6 @@ from mergernet.core.constants import RANDOM_SEED
 np.random.seed(RANDOM_SEED)
 random.seed(RANDOM_SEED)
 tf.random.set_seed(RANDOM_SEED)
-os.environ['PYTHONHASHSEED'] = RANDOM_SEED
+os.environ['PYTHONHASHSEED'] = str(RANDOM_SEED)
 
 
