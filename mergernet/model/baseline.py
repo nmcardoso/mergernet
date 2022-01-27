@@ -156,7 +156,7 @@ class ConvolutionalClassifier:
   def train(
     self,
     data_aug: Tuple = ('flip', 'rotation'),
-    train_epochs: int = 12,
+    epochs: int = 12,
     sampling: str = None,
     dense_layers=None,
     pretrained_weights: str = 'imagenet',
@@ -200,7 +200,7 @@ class ConvolutionalClassifier:
     history = model.fit(
       ds_train,
       batch_size=batch_size,
-      epochs=train_epochs,
+      epochs=epochs,
       validation_data=ds_test,
       # class_weight=class_weights,
       verbose=int(verbose)
