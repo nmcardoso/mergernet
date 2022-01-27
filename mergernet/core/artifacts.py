@@ -69,3 +69,7 @@ class BaseArtifact:
     self._saved_path = path
 
 
+  def upload(self, github=True, gdrive=True):
+    uploader = ArtifactUploader(github=github, gdrive=gdrive)
+    uploader.upload_file(self._saved_path)
+
