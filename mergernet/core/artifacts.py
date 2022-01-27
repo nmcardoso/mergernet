@@ -32,3 +32,18 @@ class BaseArtifact:
       else:
         log_dict[k] = v
     return log_dict
+
+
+  def save(self, path: Path):
+    """Serializes this object data and stores a json file in the given path.
+
+    Parameters
+    ----------
+    path: Path
+      Path to save the generated ``json`` file.
+    """
+    log_dict = self.serialize()
+    json.dump(log_dict, path, indent=True)
+    self._saved_path = path
+
+
