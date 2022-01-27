@@ -23,5 +23,13 @@ GITHUB_BRANCH = os.environ.get('GITHUB_BRANCH', 'main')
 
 
 
+# Google Drive
+if ENV == 'dev':
+  GDRIVE_PATH = 'gdrive'
+else:
+  GDRIVE_PATH = os.environ.get('GDRIVE_PATH', None)
+
+
+
 # Random number generation seed
 RANDOM_SEED = 42
