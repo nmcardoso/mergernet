@@ -122,3 +122,11 @@ class ModelMetrics(BaseArtifact):
 
 
 
+class Validation(BaseArtifact):
+  X: Sequence = None
+  y_ref: Sequence = None
+  y_pred: Sequence = None
+  metrics: ModelMetrics = None
+
+
+
