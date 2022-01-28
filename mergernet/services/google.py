@@ -27,6 +27,8 @@ class GDrive:
       return None
 
 
-  def get(self, remote: Path, local: Path):
+  def get(self, remote: Path, local: Path) -> Union[str, None]:
     remote = self.base_path / remote
-    copy(str(remote), str(local))
+    if remote.exists():
+      return copy2(str(remote), str(local))
+    return None
