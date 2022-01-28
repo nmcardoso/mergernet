@@ -58,6 +58,17 @@ class GithubService:
     print(response.json())
 
 
+  def list_dir(self, path: int) -> dict:
+    url = self._get_url(f'repos/{self.user}/{self.repo}/contents/{path}')
+
+    response = requests.get(
+      url=url,
+      headers=HEADERS,
+      auth=(self.user, self.token)
+    )
+
+    return response.json()
+
 
 if __name__ == '__main__':
   gh_service = GithubService('nmcardoso', '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', 'arial')
