@@ -112,3 +112,13 @@ class ModelWeightsArtifact(BaseArtifact):
 
 
 
+class ModelMetrics(BaseArtifact):
+  acc: Union[float, Sequence] = None
+  loss: Sequence[float] = None
+  precision: Sequence = None
+  recall: Sequence = None
+  roc_auc: Sequence = None
+  pr_auc: Sequence = None
+
+
+
