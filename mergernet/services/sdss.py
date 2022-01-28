@@ -56,17 +56,16 @@ class SloanService:
     )
 
 
-  def get_dr_prefix(self, dr17: Sequence, dr7: Sequence):
-    flag = False
-    fnames = []
-
-    for i in range(len(dr17)):
-      if dr17[i] == 0:
-        if dr7[i] != 0:
-          fnames.append(f'dr7_{dr7[i]}')
-        else:
-          flag = True
-      else:
-        fnames.append(f'dr17_{dr17[i]}')
-
+  def get_image_filename(
+    self,
+    dr8objid: np.ndarray,
+    dr7objid: np.ndarray,
+    extension: str = '.jpg',
+    basepath: Union[str, Path] = None
+  ) -> Tuple[list, bool]:
+    fnames, flag = array_fallback(arrays=(dr7objid, dr8objid), prefix=('dr7', 'dr8'))
+    if basepath:
+      fnames = [Path(basepath) / f'{f}{extension}' for f in fnames]
+    else:
+      fnames = [Path(f'{f}{extension}') for f in fnames]
     return fnames, flag
