@@ -106,3 +106,9 @@ class FigureArtifact(BaseArtifact):
 
 
 
+class ModelWeightsArtifact(BaseArtifact):
+  code: str = ArtifactTypes.model.value
+  filename: str = None
+
+
+
