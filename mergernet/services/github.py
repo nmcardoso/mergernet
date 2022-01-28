@@ -70,6 +70,27 @@ class GithubService:
     return response.json()
 
 
+  def get_lastest_job_run(self, jobid: int) -> Union[int, None]:
+    content = self.list_dir('jobs_artifacts')
+    folders = [c['name'] for c in content if c['type'] == 'dir']
+
+    runs = []
+    exp = r'job_{0:0=3d}_run_(\d+)'.format(jobid)
+    for folder in folders:
+      match = re.search(exp, folder)
+      if match:
+        runs.append(int(match[1]))
+
+    if len(runs) > 0:
+      return max(runs)
+    else:
+      return None
+
+
+
+
+
+
 if __name__ == '__main__':
   gh_service = GithubService('nmcardoso', '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', 'arial')
   gh_service.commit('filename.text', 'Caracas2', 'master')
