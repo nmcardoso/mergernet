@@ -204,7 +204,8 @@ class Dataset:
     self.config.images_path = data_path / self.config.images_path
     self.config.table_path = data_path / self.config.table_path
 
-    self.download()
+    if not self.is_dataset_downloaded():
+      self.download()
 
     if self.config.detect_img_extension:
       self._detect_img_extension()
