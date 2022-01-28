@@ -100,3 +100,9 @@ class ArtifactTypes(Enum):
 
 
 
+class FigureArtifact(BaseArtifact):
+  code: str = ArtifactTypes.figure.value
+  filename: str = None
+
+
+
