@@ -249,10 +249,10 @@ class Dataset:
     df_test = df[df[self.config.fold_column] == fold]
     df_train = df[df[self.config.fold_column] != fold]
 
-    X_train = df_train[[self.config.X_column]].to_numpy()
-    y_train = df_train[[self.config.y_column]].to_numpy()
-    X_test = df_test[[self.config.X_column]].to_numpy()
-    y_test = df_test[[self.config.y_column]].to_numpy()
+    X_train = df_train[self.config.X_column].to_numpy()
+    y_train = df_train[self.config.y_column].to_numpy()
+    X_test = df_test[self.config.X_column].to_numpy()
+    y_test = df_test[self.config.y_column].to_numpy()
 
     X_train = np.array([
       str((self.config.images_path / (X + self.config.X_column_suffix)).resolve())
