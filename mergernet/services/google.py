@@ -1,11 +1,14 @@
+from typing import Union
 from pathlib import Path
-from shutil import copy
+from shutil import copy2
 
 
 
 class GDrive:
-  def __init__(self, base_path: Path):
-    self.base_path = base_path
+  base_path = None
+
+  def __init__(self, base_path: Union[str, Path] = None):
+    if base_path: self.base_path = Path(base_path)
 
 
   def is_mounted(self) -> bool:
