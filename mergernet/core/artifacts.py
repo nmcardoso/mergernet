@@ -130,3 +130,11 @@ class Validation(BaseArtifact):
 
 
 
+class ModelArtifact(BaseArtifact):
+  code: str = ArtifactTypes.model.value
+  validation_type: str = None
+  train: Sequence[ModelMetrics] = None
+  val: Sequence[Validation] = None
+
+
+
