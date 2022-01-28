@@ -12,7 +12,9 @@ class GDrive:
 
 
   def is_mounted(self) -> bool:
-    return self.base_path.is_dir()
+    if self.base_path:
+      return self.base_path.is_dir()
+    return False
 
 
   def send(self, local: Path, remote: Path):
