@@ -291,9 +291,9 @@ class Dataset:
   @staticmethod
   def concat_fold_column(
     df: pd.DataFrame,
-    fname_column: Union[str, Sequence] = None,
-    class_column: Union[str, Sequence] = None,
-    r_column: Union[str, Sequence] = None,
+    fname_column: str = None,
+    class_column: str = None,
+    r_column: str = None,
     n_splits: int = 5,
     bins: int = 3
   ) -> pd.DataFrame:
@@ -307,9 +307,9 @@ class Dataset:
     folds = np.empty(X.shape, dtype=np.int32)
 
     for i in range(len(test_ids)):
-      folds[test_ids] = i
+      folds[test_ids[i]] = i
 
-    df = pd.concat([df, pd.DataFrame({'fold': folds})], axis=1)
+    df['fold'] = folds
 
     return df
 
