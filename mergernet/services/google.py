@@ -17,9 +17,14 @@ class GDrive:
     return False
 
 
-  def send(self, local: Path, remote: Path):
+  def send(self, local: Path, remote: Path) -> Union[str, None]:
     remote = self.base_path / remote
-    copy(str(local), str(remote))
+    if self.is_mounted():
+      if not remote.parent.exists():
+        remote.parent.mkdir(parents=True, exist_ok=True)
+      return copy2(str(local), str(remote))
+    else:
+      return None
 
 
   def get(self, remote: Path, local: Path):
