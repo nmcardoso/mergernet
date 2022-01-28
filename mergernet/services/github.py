@@ -1,4 +1,6 @@
 import base64
+from typing import Union
+import re
 
 import requests
 
@@ -10,10 +12,14 @@ HEADERS = {
 
 
 class GithubService:
-  def __init__(self, user: str, token: str, repo: str):
-    self.user = user
-    self.token = token
-    self.repo = repo
+  user = None
+  token = None
+  repo = None
+
+  def __init__(self, user: str = None, token: str = None, repo: str = None):
+    if user: self.user = user
+    if token: self.token = token
+    if repo: self.repo = repo
 
 
   def _get_url(self, route: str) -> str:
