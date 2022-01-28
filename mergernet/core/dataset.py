@@ -199,10 +199,10 @@ class Dataset:
     self.ds_type = ds_type
     self.data_path = data_path
 
-    if ds_type == 'rgb':
-      self.config = Dataset.RGB_CONFIG
-    elif ds_type == 'fits':
-      self.config = Dataset.FITS_CONFIG
+    self.config = Dataset.RGB_CONFIG
+    self.config.archive_path = data_path / self.config.archive_path
+    self.config.images_path = data_path / self.config.images_path
+    self.config.table_path = data_path / self.config.table_path
 
     self.download()
 
