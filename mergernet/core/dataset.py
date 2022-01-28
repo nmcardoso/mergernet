@@ -182,9 +182,15 @@ class Dataset:
     Configuration object.
   """
   RGB_CONFIG = DatasetConfig(
-    archive_path=Path('datasets/mergernet_rgb.tar.gz'),
-    images_path=Path(''),
-    table_path=Path('')
+    archive_url='',
+    table_url='',
+    archive_path=Path('sdss_lupton_jpg_128.tar.gz'),
+    images_path=Path('sdss_lupton_jpg_128'),
+    table_path=Path('reference.csv'),
+    X_column='filename',
+    y_column='class',
+    fold_column='fold',
+    label_map={ 'E': 0, 'M': 1, 'S': 2 }
   )
   """Default configuration object for RGB dataset."""
 
