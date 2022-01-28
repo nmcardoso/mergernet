@@ -96,11 +96,12 @@ class JobRunner:
       print(job_path.stem)
 
 
-  def run_job(self, job_id: int):
+  def run_job(self, job_id: int, data_path: str, **kwargs):
     job_path = self.jobs[job_id]
     job_module = import_module(f'..jobs.{job_path.stem}', package='mergernet.jobs')
     job = job_module.Job()
-    job.start_execution()
+    job.start_execution(data_path=data_path, **kwargs)
+
 
 
 
