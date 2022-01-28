@@ -1,10 +1,11 @@
 from pathlib import Path
-
-from typing import List, Sequence, Union
+from typing import List, Sequence, Tuple, Union
 import concurrent.futures
 
+import numpy as np
 import tqdm
 
+from mergernet.core.utils import array_fallback
 from mergernet.services.utils import append_query_params, batch_download_file, download_file
 
 
@@ -38,7 +39,7 @@ class SloanService:
     self,
     ra: List[float],
     dec: List[float],
-    save_path: List[Path],
+    save_path: List[Union[str, Path]],
     workers: int = None,
     replace: bool = False,
     **kwargs
