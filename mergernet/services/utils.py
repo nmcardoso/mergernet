@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List
+from typing import List, Union
 import concurrent.futures
 
 import tqdm
@@ -23,7 +23,7 @@ def download_file(url: str, save_path: Path, replace: bool = False):
 
 def batch_download_file(
   urls: List[str],
-  save_path: List[Path],
+  save_path: List[Union[str, Path]],
   workers: int = 2,
   replace: bool = False
 ):
@@ -34,7 +34,7 @@ def batch_download_file(
       futures.append(executor.submit(
         download_file,
         url=urls[i],
-        save_path=save_path[i],
+        save_path=Path(save_path[i]),
         replace=replace
       ))
 
