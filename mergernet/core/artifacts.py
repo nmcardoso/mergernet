@@ -138,3 +138,9 @@ class ModelArtifact(BaseArtifact):
 
 
 
+class JobArtifact(BaseArtifact):
+  code: str = ArtifactTypes.job.value
+  jobid: int = None
+  runid: int = None
+  name: str = None
+  description: str = None
