@@ -217,7 +217,7 @@ class Dataset:
   def _discretize_label(self, y: np.ndarray) -> np.ndarray:
     y_int = np.empty(y.shape, dtype=np.int64)
 
-    for k, v in self.config.label_map:
+    for k, v in self.config.label_map.items():
       y_int[y == k] = v
 
     return y_int
