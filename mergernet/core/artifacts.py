@@ -8,6 +8,73 @@ from mergernet.core.utils import SingletonMeta
 from mergernet.services.github import GithubService
 from mergernet.services.google import GDrive
 
+
+
+class ArtifactHelper(metaclass=SingletonMeta):
+  use_github = True
+  use_gdrive = True
+  artifact_path = None
+  gdrive_path = None
+
+
+  def _upload_github(self, filename: str):
+    path = self.artifact_path / filename
+    with open(path, 'rb') as file:
+      file_bytes = file.read()
+
+    gh_path = f'{GITHUB_PATH}/{self.artifact_path.stem}/{filename}'
+    self.github.commit(gh_path, file_bytes, 'main')
+
+
+  def _upload_gdrive(self, filename: str):
+    from_path = self.artifact_path / filename
+    to_path = Path(self.artifact_path.stem) / filename
+    self.gdrive.send(from_path, to_path)
+
+
+  def config(
+    self,
+    artifact_path: Union[str, Path] = None,
+    gdrive_path: Union[str, Path] = None,
+    use_github: bool = None,
+    use_gdrive: bool = None
+  ):
+    if artifact_path:
+      self.artifact_path = Path(artifact_path)
+      if not self.artifact_path.exists():
+        self.artifact_path.mkdir(parents=True, exist_ok=True)
+
+    if gdrive_path:
+      self.gdrive_path = Path(gdrive_path)
+      # TODO: check if this path exists (is_mounted() == True)
+
+    if use_github is not None: self.use_github = use_github
+    if use_gdrive is not None: self.use_gdrive = use_gdrive
+
+    self.github = GithubService(user=GITHUB_USER, token=GITHUB_TOKEN, repo=GITHUB_REPO)
+    self.gdrive = GDrive(base_path=gdrive_path)
+
+
+  def upload(self, filename: str, github: bool = None, gdrive: bool = None):
+    use_github = github if github is not None else self.use_github
+    use_gdrive = gdrive if gdrive is not None else self.use_gdrive
+    suffix = Path(filename).suffix
+    github_ext = ['.json', '.csv', '.png', '.svg', '.pdf', '.jpg', '.jpeg']
+
+    if use_github and suffix in github_ext:
+      self._upload_gdrive(filename)
+
+    if use_gdrive:
+      self._upload_gdrive(filename)
+
+
+  def save_json(self, data: dict, filename: Union[str, Path]):
+    path = self.artifact_path / filename
+    with open(path, 'w') as fp:
+      json.dump(data, fp, indent=True)
+
+
+
 class ArtifactUploader:
   def __init__(self, github: bool = True, gdrive: bool = True, gdrive_path: Path = None):
     self.use_github = github
