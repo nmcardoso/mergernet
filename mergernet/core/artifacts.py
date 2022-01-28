@@ -90,3 +90,13 @@ class BaseArtifact:
   #   log_dict = json.load(path)
   #   return JobReport(**log_dict)
 
+
+
+class ArtifactTypes(Enum):
+  figure = 'figure'
+  model_weights = 'model_weights'
+  model = 'model'
+  job = 'job'
+
+
+
