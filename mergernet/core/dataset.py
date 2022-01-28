@@ -195,7 +195,7 @@ class Dataset:
   """Default configuration object for RGB dataset."""
 
 
-  def __init__(self, data_path: Path, ds_type: str = 'rgb'):
+  def __init__(self, data_path: Path = Path(''), ds_type: str = 'rgb'):
     self.ds_type = ds_type
     self.data_path = data_path
 
