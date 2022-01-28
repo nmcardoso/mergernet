@@ -223,6 +223,10 @@ class Dataset:
     return y_int
 
 
+  def is_dataset_downloaded(self):
+    return self.config.images_path.is_dir() and self.config.table_path.is_file()
+
+
   def download(self) -> None:
     """Check if destination path exists, create missing folders and download
     the dataset files from web resource for a specified dataset type.
