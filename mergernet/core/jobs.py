@@ -9,6 +9,7 @@ import json
 from mergernet.core.artifacts import ArtifactHelper, JobArtifact
 
 from mergernet.core.constants import GITHUB_PATH, GITHUB_REPO, GITHUB_TOKEN, GITHUB_USER, GDRIVE_PATH
+from mergernet.core.logger import Logger
 from mergernet.services.google import GDrive
 from mergernet.services.github import GithubService
 
@@ -35,6 +36,9 @@ class BaseJob:
       use_github=True
     )
 
+    # config logger
+    l = Logger(save_path=self.artifact_path).get_logger()
+
     # create and upload job metadata artifact
     tz = timezone(timedelta(hours=-3))
     now = datetime.now(tz=tz).isoformat(sep=' ', timespec='seconds')
@@ -47,6 +51,8 @@ class BaseJob:
     )
     ah.save_json(job_artifact, 'job.json')
     ah.upload('job.json')
+
+    l.info('file uploaded')
 
 
   def run(self):
