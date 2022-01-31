@@ -2,10 +2,12 @@ import os
 from pathlib import Path
 import random
 from typing import Tuple
-from mergernet.core.constants import RANDOM_SEED
+import logging
 
+from mergernet.core.constants import RANDOM_SEED
 from mergernet.core.dataset import Dataset
-from mergernet.model.preprocessing import load_rgb, one_hot
+from mergernet.core.utils import Timming
+from mergernet.model.preprocessing import load_jpg, one_hot
 
 import tensorflow as tf
 import numpy as np
@@ -37,6 +39,15 @@ class ConvolutionalClassifier:
     verbose: bool = True
   ):
     IMAGE_SIZE = input_shape[:2]
+    logging.info('[MODEL COMPILATION]')
+    logging.info('Compiling model with parameters:')
+    logging.info(f'pretrained_weights: {pretrained_weights}')
+    logging.info(f'pretrained_arch: {pretrained_arch}')
+    logging.info(f'optimizer: {optimizer}')
+    logging.info(f'learning_rate: {learning_rate}')
+    logging.info(f'data_aug: {str(data_aug)}')
+    t = Timming()
+    t.start()
 
     if pretrained_arch == 'inception':
       preprocess_input = tf.keras.applications.inception_resnet_v2.preprocess_input
@@ -148,6 +159,9 @@ class ConvolutionalClassifier:
         tf.keras.metrics.AUC(curve='PR', name='AUC_PR')
       ]
     )
+
+    t.end()
+    logging.info(f'Model successfully compilated in {t.duration()}.')
 
     return model
 
