@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import Sequence, Union
-from datetime import datetime
+from datetime import datetime, timedelta
 from threading import Lock
 
 from mergernet.core.constants import DATA_ROOT
@@ -117,25 +117,8 @@ class Timming:
     return self._format_time(duration)
 
 
-  def _format_time(self, dt: datetime) -> str:
-    r = ''
-
-    if dt.day:
-      r += f'{dt.day}d'
-
-    if dt.hour:
-      r += f'{dt.hour}h'
-
-    if dt.minute:
-      r += f'{dt.minute}m'
-
-    if dt.second:
-      r += f'{dt.second}s'
-
-    if r == '':
-      r = '0s'
-
-    return r
+  def _format_time(self, dt: timedelta) -> str:
+    return str(dt)
 
 
 
