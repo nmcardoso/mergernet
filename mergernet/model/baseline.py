@@ -126,11 +126,11 @@ class ConvolutionalClassifier:
     data_augmentation = tf.keras.Sequential(data_aug_layers, name='data_augmentation')
 
 
-    base_model.trainable = False
+    # base_model.trainable = False
     inputs = tf.keras.Input(shape=input_shape)
     x = data_augmentation(inputs)
     x = preprocess_input(x)
-    x = base_model(x, training=False)
+    x = base_model(x)#, Training=False)
     if dense_layers is None:
       x = tf.keras.layers.GlobalAveragePooling2D()(x)
       x = tf.keras.layers.Dropout(0.4)(x)
