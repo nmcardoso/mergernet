@@ -217,7 +217,7 @@ class ConvolutionalClassifier:
 
     # ds_train = ds_train.cache()
     ds_train = ds_train.shuffle(5000)
-    ds_test = ds_test.shuffle()
+    ds_test = ds_test.shuffle(1000)
     _x, _y = next(ds_train.take(1).as_numpy_iterator())
     L.debug('[DATASET] apply: shuffle')
     L.debug(f'[DATASET] Example shape (X, y): {_x.shape}, {_y.shape}')
