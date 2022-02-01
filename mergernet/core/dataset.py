@@ -182,8 +182,8 @@ class Dataset:
     Configuration object.
   """
   RGB_CONFIG = DatasetConfig(
-    archive_url='',
-    table_url='',
+    archive_url='https://drive.google.com/uc?export=download&id=11M_Vw-oYLtYFBP6IV_EQRIRIpYAeS2y7',
+    table_url='https://drive.google.com/uc?export=download&id=1yHnyOdXS-HKzIsbenSi646jyf2AWU9vo',
     archive_path=Path('sdss_lupton_jpg_128.tar.gz'),
     images_path=Path('sdss_lupton_jpg_128'),
     table_path=Path('reference.csv'),
@@ -232,15 +232,24 @@ class Dataset:
     """Check if destination path exists, create missing folders and download
     the dataset files from web resource for a specified dataset type.
     """
-    if not self.config.save_path.parent.exists():
-      self.config.save_path.parent.mkdir(parents=True, exist_ok=True)
+    if not self.config.archive_path.parent.exists():
+      self.config.archive_path.parent.mkdir(parents=True, exist_ok=True)
 
     tf.keras.utils.get_file(
-      fname=self.config.save_path.resolve(),
-      origin=self.config.download_url,
-      cache_subdir=self.config.save_path.parent.resolve(),
+      fname=self.config.archive_path.resolve(),
+      origin=self.config.archive_url,
+      cache_subdir=self.config.archive_path.parent.resolve(),
       archive_format='tar',
       extract=True
+    )
+
+    if not self.config.table_path.parent.exists():
+      self.config.table_path.parent.mkdir(parents=True, exist_ok=True)
+
+    tf.keras.utils.get_file(
+      fname=self.config.table_path.resolve(),
+      origin=self.config.table_url,
+      cache_subdir=self.config.table_path.parent.resolve()
     )
 
 
