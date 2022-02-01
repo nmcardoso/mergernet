@@ -204,27 +204,32 @@ class ConvolutionalClassifier:
     L.info('[DATASET] Fold 0 loaded')
 
     ds_train = ds_train.map(load_jpg)
+    ds_test = ds_test.map(load_jpg)
     _x, _y = next(ds_train.take(1).as_numpy_iterator())
     L.debug('[DATASET] apply: load_jpg')
     L.debug(f'[DATASET] Example shape (X, y): {_x.shape}, {_y.shape}')
 
     ds_train = ds_train.map(one_hot)
+    ds_test = ds_test.map(one_hot)
     _x, _y = next(ds_train.take(1).as_numpy_iterator())
     L.debug('[DATASET] apply: one_hot')
     L.debug(f'[DATASET] Example shape (X, y): {_x.shape}, {_y.shape}')
 
     # ds_train = ds_train.cache()
     ds_train = ds_train.shuffle(5000)
+    ds_test = ds_test.shuffle()
     _x, _y = next(ds_train.take(1).as_numpy_iterator())
     L.debug('[DATASET] apply: shuffle')
     L.debug(f'[DATASET] Example shape (X, y): {_x.shape}, {_y.shape}')
 
     ds_train = ds_train.batch(batch_size)
+    ds_test = ds_test.batch(batch_size)
     _x, _y = next(ds_train.take(1).as_numpy_iterator())
     L.debug('[DATASET] apply: batch')
     L.debug(f'[DATASET] Example shape (X, y): {_x.shape}, {_y.shape}')
 
     ds_train = ds_train.prefetch(tf.data.AUTOTUNE)
+    ds_test = ds_test.prefetch(tf.data.AUTOTUNE)
 
     # class_weights = self.dataset.compute_class_weight() if sampling == 'class_weight' else None
 
