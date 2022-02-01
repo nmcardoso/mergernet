@@ -18,7 +18,7 @@ DATA_ROOT = PROJECT_ROOT / 'data'
 GITHUB_USER = os.environ.get('GITHUB_USER', None)
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', None)
 GITHUB_REPO = os.environ.get('GITHUB_REPO', None)
-GITHUB_PATH = os.environ.get('GITHUB_PATH', 'data/jobs_artifacts')
+GITHUB_PATH = os.environ.get('GITHUB_PATH', 'jobs_artifacts')
 GITHUB_BRANCH = os.environ.get('GITHUB_BRANCH', 'main')
 
 
