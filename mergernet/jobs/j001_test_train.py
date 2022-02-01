@@ -19,7 +19,7 @@ class Job(BaseJob):
 
     model = ConvolutionalClassifier(ds)
     model.train(
-      epochs=2,
+      epochs=20,
       optimizer='adam'
     )
 
