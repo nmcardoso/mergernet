@@ -26,19 +26,23 @@ class GithubService:
     return f'{BASE_URL}/{route}'
 
 
-  def _encode_content(self, content: str) -> str:
-    content_bytes = content.encode(encoding='utf-8')
+  def _encode_content(self, content: str, from_bytes: bool = False) -> str:
+    if from_bytes:
+      content_bytes = content
+    else:
+      content_bytes = content.encode(encoding='utf-8')
+
     base64_bytes = base64.b64encode(content_bytes)
     base64_str = base64_bytes.decode('utf-8')
     return base64_str
 
 
-  def commit(self, path: str, data: str, branch: str):
+  def commit(self, path: str, data: str, branch: str, from_bytes: bool = False):
     url = self._get_url(f'repos/{self.user}/{self.repo}/contents/{path}')
 
     commit_data = {
-      'message': 'test commit',
-      'content': self._encode_content(data),
+      'message': ':package: artifact upload',
+      'content': self._encode_content(data, from_bytes=from_bytes),
       'branch': branch
     }
 
@@ -48,7 +52,7 @@ class GithubService:
       auth=(self.user, self.token)
     )
 
-    print(response.json())
+    # print(response.json())
 
     response_data = response.json()
     if 'sha' in response_data:
@@ -61,7 +65,7 @@ class GithubService:
       auth=(self.user, self.token)
     )
 
-    print(response.json())
+    # print(response.json())
 
 
   def list_dir(self, path: int) -> dict:

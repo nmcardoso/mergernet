@@ -3,7 +3,7 @@ from typing import Sequence, Union
 from enum import Enum
 import json
 
-from mergernet.core.constants import GITHUB_USER, GITHUB_TOKEN, GITHUB_REPO, GITHUB_PATH, GDRIVE_PATH
+from mergernet.core.constants import GITHUB_BRANCH, GITHUB_USER, GITHUB_TOKEN, GITHUB_REPO, GITHUB_PATH, GDRIVE_PATH
 from mergernet.core.utils import SingletonMeta
 from mergernet.services.github import GithubService
 from mergernet.services.google import GDrive
@@ -23,7 +23,7 @@ class ArtifactHelper(metaclass=SingletonMeta):
       file_bytes = file.read()
 
     gh_path = f'{GITHUB_PATH}/{self.artifact_path.stem}/{filename}'
-    self.github.commit(gh_path, file_bytes, 'main')
+    self.github.commit(gh_path, file_bytes, GITHUB_BRANCH, from_bytes=True)
 
 
   def _upload_gdrive(self, filename: str):
@@ -59,10 +59,10 @@ class ArtifactHelper(metaclass=SingletonMeta):
     use_github = github if github is not None else self.use_github
     use_gdrive = gdrive if gdrive is not None else self.use_gdrive
     suffix = Path(filename).suffix
-    github_ext = ['.json', '.csv', '.png', '.svg', '.pdf', '.jpg', '.jpeg']
+    github_ext = ['.json', '.log', '.csv', '.png', '.svg', '.pdf', '.jpg', '.jpeg']
 
     if use_github and suffix in github_ext:
-      self._upload_gdrive(filename)
+      self._upload_github(filename)
 
     if use_gdrive:
       self._upload_gdrive(filename)

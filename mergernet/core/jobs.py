@@ -6,12 +6,10 @@ from datetime import datetime, timezone, timedelta
 import re
 import secrets
 import json
-from mergernet.core.artifacts import ArtifactHelper, JobArtifact
+from mergernet.core.artifacts import ArtifactHelper
 
-from mergernet.core.constants import GITHUB_PATH, GITHUB_REPO, GITHUB_TOKEN, GITHUB_USER, GDRIVE_PATH
+from mergernet.core.constants import GDRIVE_PATH
 from mergernet.core.logger import Logger
-from mergernet.services.google import GDrive
-from mergernet.services.github import GithubService
 
 
 class BaseJob:
@@ -60,18 +58,8 @@ class BaseJob:
 
 
   def post_run(self):
-    pass
-    # gh = GithubService(user=GITHUB_USER, token=GITHUB_TOKEN, repo=GITHUB_REPO)
-    # run = gh.get_lastest_job_run(jobid=self.jobid)
-    # if run:
-    #   new_folder = f'job_{self.jobid}_run_{(run + 1):03}'
-    # else:
-    #   new_folder = f'job_{self.jobid}_run_001'
-
-    # if self.data_path:
-    #   self.artifacts_path = self.data_path / new_folder
-    # else:
-    #   self.artifacts_path = Path('/tmp') / new_folder
+    ah = ArtifactHelper()
+    ah.upload('job.log')
 
 
   def get_system_resources(self):
