@@ -228,6 +228,10 @@ class ConvolutionalClassifier:
     L.debug('[DATASET] apply: batch')
     L.debug(f'[DATASET] Example shape (X, y): {_x.shape}, {_y.shape}')
 
+    _x, _y = next(ds_test.take(1).as_numpy_iterator())
+    L.debug('[DATASET] apply: batch')
+    L.debug(f'[DATASET] Test example shape (X, y): {_x.shape}, {_y.shape}')
+
     ds_train = ds_train.prefetch(tf.data.AUTOTUNE)
     ds_test = ds_test.prefetch(tf.data.AUTOTUNE)
 
