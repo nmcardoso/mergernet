@@ -27,7 +27,7 @@ Artifacts
 Log
 ---
 
-.. list-table:: Frozen Delights!
+.. list-table:: Log file
     :header-rows: 1
     :widths: 10 30
 
