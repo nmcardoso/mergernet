@@ -47,10 +47,7 @@ class BaseJob:
       description=self.description,
       timestamp=now
     )
-    ah.save_json(job_artifact, 'job.json')
-    ah.upload('job.json')
-
-    l.info('file uploaded')
+    ah.upload_json(job_artifact, 'job.json')
 
 
   def run(self):
@@ -59,7 +56,7 @@ class BaseJob:
 
   def post_run(self):
     ah = ArtifactHelper()
-    ah.upload('job.log')
+    ah.upload_log()
 
 
   def get_system_resources(self):
