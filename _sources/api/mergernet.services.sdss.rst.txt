@@ -1,0 +1,31 @@
+mergernet.services.sdss
+=======================
+
+.. automodule:: mergernet.services.sdss
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class-template.rst
+   
+      SloanService
+   
+   
+
+   
+   
+   
+
+
+

@@ -1,0 +1,17 @@
+mergernet.services.legacy.LegacyService
+=======================================
+
+.. currentmodule:: mergernet.services.legacy
+
+.. autoclass:: LegacyService
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

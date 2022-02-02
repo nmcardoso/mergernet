@@ -1,0 +1,41 @@
+mergernet.model.plot
+====================
+
+.. automodule:: mergernet.model.plot
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      color_color
+      data_distribution
+      roc
+      train_metrics
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class-template.rst
+   
+      Serie
+   
+   
+
+   
+   
+   
+
+
+

@@ -1,0 +1,17 @@
+mergernet.core.dataset.DatasetConfig
+====================================
+
+.. currentmodule:: mergernet.core.dataset
+
+.. autoclass:: DatasetConfig
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

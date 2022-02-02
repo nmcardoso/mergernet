@@ -1,0 +1,6 @@
+mergernet.core.trilogy.adjust\_saturation
+=========================================
+
+.. currentmodule:: mergernet.core.trilogy
+
+.. autofunction:: adjust_saturation

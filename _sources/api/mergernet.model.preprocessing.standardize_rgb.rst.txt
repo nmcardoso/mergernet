@@ -1,0 +1,6 @@
+mergernet.model.preprocessing.standardize\_rgb
+==============================================
+
+.. currentmodule:: mergernet.model.preprocessing
+
+.. autofunction:: standardize_rgb

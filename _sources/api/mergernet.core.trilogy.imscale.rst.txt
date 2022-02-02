@@ -1,0 +1,6 @@
+mergernet.core.trilogy.imscale
+==============================
+
+.. currentmodule:: mergernet.core.trilogy
+
+.. autofunction:: imscale

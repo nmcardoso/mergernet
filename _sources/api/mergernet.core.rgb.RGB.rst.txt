@@ -1,0 +1,17 @@
+mergernet.core.rgb.RGB
+======================
+
+.. currentmodule:: mergernet.core.rgb
+
+.. autoclass:: RGB
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

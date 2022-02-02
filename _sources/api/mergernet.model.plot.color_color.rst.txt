@@ -1,0 +1,6 @@
+mergernet.model.plot.color\_color
+=================================
+
+.. currentmodule:: mergernet.model.plot
+
+.. autofunction:: color_color

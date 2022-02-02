@@ -1,0 +1,6 @@
+mergernet.core.trilogy.RGB2im
+=============================
+
+.. currentmodule:: mergernet.core.trilogy
+
+.. autofunction:: RGB2im

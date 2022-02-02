@@ -1,0 +1,32 @@
+mergernet.model.baseline
+========================
+
+.. automodule:: mergernet.model.baseline
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class-template.rst
+   
+      ConvolutionalClassifier
+      Metamodel
+   
+   
+
+   
+   
+   
+
+
+

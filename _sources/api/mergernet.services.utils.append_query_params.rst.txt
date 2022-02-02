@@ -1,0 +1,6 @@
+mergernet.services.utils.append\_query\_params
+==============================================
+
+.. currentmodule:: mergernet.services.utils
+
+.. autofunction:: append_query_params

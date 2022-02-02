@@ -1,0 +1,32 @@
+﻿mergernet.jobs
+==============
+
+.. automodule:: mergernet.jobs
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :template: module-template.rst
+   :recursive:
+
+   mergernet.jobs.j001_test_train
+

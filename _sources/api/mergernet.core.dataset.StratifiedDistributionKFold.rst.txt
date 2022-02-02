@@ -1,0 +1,17 @@
+mergernet.core.dataset.StratifiedDistributionKFold
+==================================================
+
+.. currentmodule:: mergernet.core.dataset
+
+.. autoclass:: StratifiedDistributionKFold
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

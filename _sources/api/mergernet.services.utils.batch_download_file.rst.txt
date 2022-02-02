@@ -1,0 +1,6 @@
+mergernet.services.utils.batch\_download\_file
+==============================================
+
+.. currentmodule:: mergernet.services.utils
+
+.. autofunction:: batch_download_file

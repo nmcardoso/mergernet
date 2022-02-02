@@ -1,0 +1,6 @@
+mergernet.core.trilogy.rms
+==========================
+
+.. currentmodule:: mergernet.core.trilogy
+
+.. autofunction:: rms

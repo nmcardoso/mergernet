@@ -1,0 +1,6 @@
+mergernet.services.utils.download\_file
+=======================================
+
+.. currentmodule:: mergernet.services.utils
+
+.. autofunction:: download_file

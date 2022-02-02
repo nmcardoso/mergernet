@@ -1,0 +1,39 @@
+﻿mergernet.core
+==============
+
+.. automodule:: mergernet.core
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :template: module-template.rst
+   :recursive:
+
+   mergernet.core.artifacts
+   mergernet.core.constants
+   mergernet.core.dataset
+   mergernet.core.jobs
+   mergernet.core.logger
+   mergernet.core.rgb
+   mergernet.core.trilogy
+   mergernet.core.utils
+

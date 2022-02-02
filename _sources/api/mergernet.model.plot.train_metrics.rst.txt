@@ -1,0 +1,6 @@
+mergernet.model.plot.train\_metrics
+===================================
+
+.. currentmodule:: mergernet.model.plot
+
+.. autofunction:: train_metrics

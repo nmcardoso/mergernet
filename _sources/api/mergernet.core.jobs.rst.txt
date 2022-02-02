@@ -1,0 +1,32 @@
+mergernet.core.jobs
+===================
+
+.. automodule:: mergernet.core.jobs
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class-template.rst
+   
+      BaseJob
+      JobRunner
+   
+   
+
+   
+   
+   
+
+
+

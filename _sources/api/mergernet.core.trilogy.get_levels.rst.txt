@@ -1,0 +1,6 @@
+mergernet.core.trilogy.get\_levels
+==================================
+
+.. currentmodule:: mergernet.core.trilogy
+
+.. autofunction:: get_levels

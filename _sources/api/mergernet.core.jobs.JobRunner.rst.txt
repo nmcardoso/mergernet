@@ -1,0 +1,17 @@
+mergernet.core.jobs.JobRunner
+=============================
+
+.. currentmodule:: mergernet.core.jobs
+
+.. autoclass:: JobRunner
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

@@ -1,0 +1,17 @@
+mergernet.core.jobs.BaseJob
+===========================
+
+.. currentmodule:: mergernet.core.jobs
+
+.. autoclass:: BaseJob
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

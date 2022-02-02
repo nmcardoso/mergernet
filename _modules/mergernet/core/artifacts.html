@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mergernet.core.artifacts &#8212; MergerNet  documentation</title>
+    
+    <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  
+    
+    <link rel="stylesheet"
+      href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+    
+      
+  
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/pydata-sphinx-theme.css" />
+    
+    <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+<a class="navbar-brand" href="../../../index.html">
+<p class="title">MergerNet</p>
+</a>
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../reference.html">
+  API Reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../experiments.html">
+  Experiments
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/nmcardoso" rel="noopener" target="_blank" title="Github"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">Github</label></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://natanael.net" rel="noopener" target="_blank" title="Website"><span><i class="fas fa-globe"></i></span>
+            <label class="sr-only">Website</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for mergernet.core.artifacts</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">GITHUB_BRANCH</span><span class="p">,</span> <span class="n">GITHUB_USER</span><span class="p">,</span> <span class="n">GITHUB_TOKEN</span><span class="p">,</span> <span class="n">GITHUB_REPO</span><span class="p">,</span> <span class="n">GITHUB_PATH</span><span class="p">,</span> <span class="n">GDRIVE_PATH</span>
+<span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">SingletonMeta</span>
+<span class="kn">from</span> <span class="nn">mergernet.services.github</span> <span class="kn">import</span> <span class="n">GithubService</span>
+<span class="kn">from</span> <span class="nn">mergernet.services.google</span> <span class="kn">import</span> <span class="n">GDrive</span>
+
+
+<span class="n">L</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;job&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ArtifactHelper"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper">[docs]</a><span class="k">class</span> <span class="nc">ArtifactHelper</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">SingletonMeta</span><span class="p">):</span>
+  <span class="n">use_github</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">use_gdrive</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="n">artifact_path</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">gdrive_path</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="ArtifactHelper._upload_github"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper._upload_github">[docs]</a>  <span class="k">def</span> <span class="nf">_upload_github</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+      <span class="n">file_bytes</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="n">gh_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">GITHUB_PATH</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">gh_path</span><span class="p">,</span> <span class="n">file_bytes</span><span class="p">,</span> <span class="n">GITHUB_BRANCH</span><span class="p">,</span> <span class="n">from_bytes</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[GITHUB] file &quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&quot; successfully uploaded to github.&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[GITHUB] unable to upload the file &quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ArtifactHelper._upload_gdrive"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper._upload_gdrive">[docs]</a>  <span class="k">def</span> <span class="nf">_upload_gdrive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">from_path</span> <span class="o">=</span> <span class="n">path</span>
+    <span class="n">to_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span> <span class="o">/</span> <span class="n">filename</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gdrive</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">from_path</span><span class="p">,</span> <span class="n">to_path</span><span class="p">):</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[GDRIVE] file &quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&quot; uploaded to Google Drive.&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[GDRIVE] unable to upload the file &quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ArtifactHelper.config"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.config">[docs]</a>  <span class="k">def</span> <span class="nf">config</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">artifact_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">gdrive_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">use_github</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">use_gdrive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="p">):</span>
+    <span class="k">if</span> <span class="n">artifact_path</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">artifact_path</span><span class="p">)</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">gdrive_path</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">gdrive_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">gdrive_path</span><span class="p">)</span>
+      <span class="c1"># TODO: check if this path exists (is_mounted() == True)</span>
+
+    <span class="k">if</span> <span class="n">use_github</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_github</span> <span class="o">=</span> <span class="n">use_github</span>
+    <span class="k">if</span> <span class="n">use_gdrive</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_gdrive</span> <span class="o">=</span> <span class="n">use_gdrive</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">github</span> <span class="o">=</span> <span class="n">GithubService</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">GITHUB_USER</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">GITHUB_TOKEN</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="n">GITHUB_REPO</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">gdrive</span> <span class="o">=</span> <span class="n">GDrive</span><span class="p">(</span><span class="n">base_path</span><span class="o">=</span><span class="n">gdrive_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ArtifactHelper.upload"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.upload">[docs]</a>  <span class="k">def</span> <span class="nf">upload</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">github</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">gdrive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="p">):</span>
+    <span class="n">use_github</span> <span class="o">=</span> <span class="n">github</span> <span class="k">if</span> <span class="n">github</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_github</span>
+    <span class="n">use_gdrive</span> <span class="o">=</span> <span class="n">gdrive</span> <span class="k">if</span> <span class="n">gdrive</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_gdrive</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">if</span> <span class="n">path</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="n">fname</span>
+
+    <span class="n">suffix</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span>
+    <span class="n">github_ext</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.json&#39;</span><span class="p">,</span> <span class="s1">&#39;.log&#39;</span><span class="p">,</span> <span class="s1">&#39;.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="s1">&#39;.svg&#39;</span><span class="p">,</span> <span class="s1">&#39;.pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;.jpeg&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">use_github</span> <span class="ow">and</span> <span class="n">suffix</span> <span class="ow">in</span> <span class="n">github_ext</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_upload_github</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">use_gdrive</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_upload_gdrive</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ArtifactHelper.upload_log"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.upload_log">[docs]</a>  <span class="k">def</span> <span class="nf">upload_log</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;/tmp/job.log&#39;</span><span class="p">,</span> <span class="n">github</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">gdrive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ArtifactHelper.upload_model"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.upload_model">[docs]</a>  <span class="k">def</span> <span class="nf">upload_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">.h5&#39;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="n">filename</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">github</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">gdrive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">summary_fname</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">.txt&#39;</span>
+    <span class="n">summary_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="n">summary_fname</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">summary_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+      <span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">print_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">summary_path</span><span class="p">,</span> <span class="n">github</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">gdrive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ArtifactHelper.upload_json"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.upload_json">[docs]</a>  <span class="k">def</span> <span class="nf">upload_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">save_json</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ArtifactHelper.upload_text"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.upload_text">[docs]</a>  <span class="k">def</span> <span class="nf">upload_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+      <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">github</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">gdrive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ArtifactHelper.save_json"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.save_json">[docs]</a>  <span class="k">def</span> <span class="nf">save_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="n">filename</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+      <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
+</pre></div>
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+    <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, Natanael M. Cardoso..<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

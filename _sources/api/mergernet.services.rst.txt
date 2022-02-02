@@ -1,0 +1,38 @@
+﻿mergernet.services
+==================
+
+.. automodule:: mergernet.services
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :template: module-template.rst
+   :recursive:
+
+   mergernet.services.github
+   mergernet.services.google
+   mergernet.services.imaging
+   mergernet.services.legacy
+   mergernet.services.sdss
+   mergernet.services.splus
+   mergernet.services.utils
+
