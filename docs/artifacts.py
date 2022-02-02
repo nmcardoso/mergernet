@@ -52,7 +52,7 @@ def main():
       job_artifacts=job_artifacts
     )
 
-    gen_path = SAVE_PATH / (str(i) + '.rst')
+    gen_path = SAVE_PATH / f'{i:03d}.rst'
     gen_path.write_text(r)
 
 main()

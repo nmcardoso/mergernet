@@ -23,7 +23,7 @@ class BaseJob:
     # setup storage folders
     self.runid = secrets.token_hex(3)
     self.data_path = Path(data_path)
-    self.artifact_path = self.data_path / f'job_{self.jobid}_run_{self.runid}'
+    self.artifact_path = self.data_path / f'job_{self.jobid:03d}_run_{self.runid}'
 
     # config artifact helper
     ah = ArtifactHelper()
