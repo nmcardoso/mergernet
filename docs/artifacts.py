@@ -33,7 +33,12 @@ def main():
     folder = artifacts[i][1]
 
     log_path = folder / 'job.log'
-    log = log_path.read_text() if log_path.exists() else ''
+    log = []
+    if log_path.exists():
+      with open(log_path) as fp:
+        lines = fp.readlines()
+        for line in lines:
+          log.append({'timestamp': line[:20], 'msg': line[20:]})
 
     base_url = 'https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts'
 

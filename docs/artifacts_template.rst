@@ -24,8 +24,18 @@ Artifacts
 
 {% if job_log %}
 
-**Log**
+Log
+---
 
-{{ job_log }}
+.. list-table:: Frozen Delights!
+    :header-rows: 1
+    :widths: 10 30
+
+    * - Timestamp
+      - Message
+    {% for message in job_log -%}
+    * - {{ message.timestamp }}
+      - {{ message.msg }}
+    {% endfor %}
 
 {% endif %}
