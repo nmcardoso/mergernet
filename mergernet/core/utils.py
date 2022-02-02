@@ -118,7 +118,9 @@ class Timming:
 
 
   def _format_time(self, dt: timedelta) -> str:
-    return str(dt)
+    hours, remainder = divmod(dt.seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return '{:02}:{:02}:{:02}'.format(int(hours), int(minutes), int(seconds))
 
 
 
