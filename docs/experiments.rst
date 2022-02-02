@@ -1,4 +1,9 @@
 Experiments
 ===========
 
-Some experiments
+.. toctree::
+    :maxdepth: 2
+    :glob:
+    :hidden:
+
+    jobs/*
