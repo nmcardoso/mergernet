@@ -65,6 +65,8 @@ class GithubService:
       auth=(self.user, self.token)
     )
 
+    return True
+
     # print(response.json())
 
 
