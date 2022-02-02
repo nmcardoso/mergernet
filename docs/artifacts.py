@@ -32,7 +32,7 @@ def main():
     meta = artifacts[i][0]
     folder = artifacts[i][1]
 
-    log_path = folder / 'log.job'
+    log_path = folder / 'job.log'
     log = log_path.read_text() if log_path.exists() else ''
 
     base_url = 'https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts'
