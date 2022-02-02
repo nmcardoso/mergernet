@@ -34,9 +34,6 @@ class BaseJob:
       use_github=True
     )
 
-    # config logger
-    l = Logger(save_path=self.artifact_path).get_logger()
-
     # create and upload job metadata artifact
     tz = timezone(timedelta(hours=-3))
     now = datetime.now(tz=tz).isoformat(sep=' ', timespec='seconds')

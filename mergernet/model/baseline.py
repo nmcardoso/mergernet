@@ -1,3 +1,4 @@
+import logging
 import os
 from pathlib import Path
 import random
@@ -21,6 +22,8 @@ random.seed(RANDOM_SEED)
 tf.random.set_seed(RANDOM_SEED)
 os.environ['PYTHONHASHSEED'] = str(RANDOM_SEED)
 
+L = logging.getLogger('job')
+
 
 class ConvolutionalClassifier:
   def __init__(self, dataset: Dataset):
@@ -39,8 +42,6 @@ class ConvolutionalClassifier:
     verbose: bool = True
   ):
     IMAGE_SIZE = input_shape[:2]
-    L = Logger().get_logger()
-
     L.info('[BUILD] Compiling model with hyperparameters:')
     L.info(f'[BUILD] pretrained_weights: {pretrained_weights}')
     L.info(f'[BUILD] pretrained_arch: {pretrained_arch}')
@@ -184,8 +185,6 @@ class ConvolutionalClassifier:
     verbose: bool = True
   ):
     IMAGE_SIZE = input_shape[:2]
-    L = Logger().get_logger()
-
     tf.keras.backend.clear_session()
 
     model = self.compile_model(
