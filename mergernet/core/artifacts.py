@@ -107,7 +107,7 @@ class ArtifactHelper(metaclass=SingletonMeta):
     self.upload(path=summary_path, github=True, gdrive=True)
 
 
-  def upload_json(self, data: dict, filename: Union[str, Path]):
+  def upload_json(self, data: object, filename: Union[str, Path]):
     self.save_json(data, filename)
     self.upload(fname=filename)
 
@@ -118,7 +118,7 @@ class ArtifactHelper(metaclass=SingletonMeta):
     self.upload(fname=filename, github=True, gdrive=True)
 
 
-  def save_json(self, data: dict, filename: Union[str, Path]):
+  def save_json(self, data: object, filename: Union[str, Path]):
     path = self.artifact_path / filename
     with open(path, 'w') as fp:
       json.dump(data, fp, indent=True)

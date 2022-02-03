@@ -5,6 +5,7 @@ import pandas as pd
 from mergernet.core.jobs import BaseJob
 from mergernet.core.dataset import Dataset
 from mergernet.model.baseline import ConvolutionalClassifier
+from mergernet.model.autokeras import AutoKerasSimpleClassifier
 
 
 
@@ -14,12 +15,14 @@ class Job(BaseJob):
   description = 'Test job description'
 
   def run(self):
-    # pass
     ds = Dataset(data_path=self.data_path)
 
-    model = ConvolutionalClassifier(ds)
-    model.train(
-      epochs=20,
-      optimizer='adam'
-    )
+    # model = ConvolutionalClassifier(ds)
+    # model.train(
+    #   epochs=20,
+    #   optimizer='adam'
+    # )
+
+    clf = AutoKerasSimpleClassifier(ds)
+    clf.fit(name='job_0001', directory=str(self.artifact_path / 'models'))
 
