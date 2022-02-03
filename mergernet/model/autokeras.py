@@ -54,6 +54,7 @@ class AutoKerasSimpleClassifier:
     L.info(f'[BUILD] tuner: {tuner}')
 
     params = dict(
+      num_classes=3,
       project_name=project_name,
       directory=directory,
       max_trials=max_trials,
