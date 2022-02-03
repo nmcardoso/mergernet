@@ -32,6 +32,7 @@ class ConvolutionalClassifier:
 
   def compile_model(
     self,
+    name: str,
     dense_layers: None,
     pretrained_weights: str = 'imagenet',
     pretrained_arch: str = 'inception',
@@ -140,6 +141,7 @@ class ConvolutionalClassifier:
       x = dense_layers(x)
     outputs = tf.keras.layers.Dense(3, activation='softmax')(x)
     model = tf.keras.Model(inputs, outputs)
+    model.name = name
 
     if optimizer == 'std_adam':
       optimizer = tf.keras.optimizers.Adam(learning_rate)
@@ -171,6 +173,7 @@ class ConvolutionalClassifier:
 
   def train(
     self,
+    name: str,
     data_aug: Tuple = ('flip', 'rotation'),
     epochs: int = 12,
     sampling: str = None,
@@ -180,22 +183,20 @@ class ConvolutionalClassifier:
     input_shape: Tuple = (128, 128, 3),
     batch_size: str = 32,
     learning_rate: float = 1e-4,
-    optimizer: str = 'rmsprop',
-    save_plot_path: Path = None,
-    verbose: bool = True
+    optimizer: str = 'rmsprop'
   ):
     IMAGE_SIZE = input_shape[:2]
     tf.keras.backend.clear_session()
 
     model = self.compile_model(
+      name=name,
       dense_layers=dense_layers,
       pretrained_weights=pretrained_weights,
       pretrained_arch=pretrained_arch,
       input_shape=input_shape,
       optimizer=optimizer,
       learning_rate=learning_rate,
-      data_aug=data_aug,
-      verbose=verbose
+      data_aug=data_aug
     )
 
     ds_train, ds_test = self.dataset.get_fold(0)
@@ -245,8 +246,7 @@ class ConvolutionalClassifier:
       batch_size=batch_size,
       epochs=epochs,
       validation_data=ds_test,
-      # class_weight=class_weights,
-      verbose=int(verbose)
+      # class_weight=class_weights
     )
 
     t.end()
@@ -259,21 +259,20 @@ class ConvolutionalClassifier:
     L.info('[TRAIN] History artifact saved.')
 
     h = history.history
-    plt.figure(figsize=(7, 4.2))
-    plt.plot(h['accuracy'], label='Training Accuracy')
-    plt.plot(h['val_accuracy'], label='Validation Accuracy')
-    plt.plot(h['loss'], label='Training Loss')
-    plt.plot(h['val_loss'], label='Validation Loss')
-    plt.ylim([max([0, min(plt.ylim())]), min([1, max(plt.ylim())])])
-    plt.xlabel('epoch')
-    plt.ylabel('metric')
-    plt.legend(ncol=2).get_frame().set_alpha(0.75)
-    if save_plot_path is not None:
-      plt.savefig(save_plot_path, bbox_inches='tight', pad_inches=0.01)
-    if verbose:
-      plt.show()
-    plt.clf()
-    plt.close()
+    # plt.figure(figsize=(7, 4.2))
+    # plt.plot(h['accuracy'], label='Training Accuracy')
+    # plt.plot(h['val_accuracy'], label='Validation Accuracy')
+    # plt.plot(h['loss'], label='Training Loss')
+    # plt.plot(h['val_loss'], label='Validation Loss')
+    # plt.ylim([max([0, min(plt.ylim())]), min([1, max(plt.ylim())])])
+    # plt.xlabel('epoch')
+    # plt.ylabel('metric')
+    # plt.legend(ncol=2).get_frame().set_alpha(0.75)
+    # if save_plot_path is not None:
+    #   plt.savefig(save_plot_path, bbox_inches='tight', pad_inches=0.01)
+    # plt.show()
+    # plt.clf()
+    # plt.close()
 
     return (model, history)
 
