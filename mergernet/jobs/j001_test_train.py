@@ -24,5 +24,5 @@ class Job(BaseJob):
     # )
 
     clf = AutoKerasSimpleClassifier(ds)
-    clf.fit(name='job_0001', directory=str(self.artifact_path / 'models'))
+    clf.fit(project_name='job_0001', directory=str(self.artifact_path / 'models'))
 
