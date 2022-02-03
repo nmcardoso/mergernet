@@ -35,7 +35,7 @@ class ConvolutionalClassifier:
     name: str,
     dense_layers: None,
     pretrained_weights: str = 'imagenet',
-    pretrained_arch: str = 'inception',
+    pretrained_arch: str = 'densenet201',
     input_shape: Tuple = (128, 128, 3),
     optimizer: str = 'adam',
     learning_rate: float = 1e-4,
@@ -58,27 +58,63 @@ class ConvolutionalClassifier:
       weights=pretrained_weights
     )
 
-    if pretrained_arch == 'inception':
-      preprocess_input = tf.keras.applications.inception_resnet_v2.preprocess_input
-      base_model = tf.keras.applications.InceptionResNetV2(**params)
+    if pretrained_arch == 'xception':
+      preprocess_input = tf.keras.applications.xception.preprocess_input
+      base_model = tf.keras.applications.Xception(**params)
     elif pretrained_arch == 'vgg16':
       preprocess_input = tf.keras.applications.vgg16.preprocess_input
       base_model = tf.keras.applications.VGG16(**params)
     elif pretrained_arch == 'vgg19':
       preprocess_input = tf.keras.applications.vgg19.preprocess_input
       base_model = tf.keras.applications.VGG19(**params)
-    elif pretrained_arch == 'efficientnetb2':
-      preprocess_input = tf.keras.applications.efficientnet.preprocess_input
-      base_model = tf.keras.applications.EfficientNetB2(**params)
-    elif pretrained_arch == 'efficientnetb7':
-      preprocess_input = tf.keras.applications.efficientnet.preprocess_input
-      base_model = tf.keras.applications.EfficientNetB7(**params)
-    elif pretrained_arch == 'densenet201':
-      preprocess_input = tf.keras.applications.densenet.preprocess_input
-      base_model = tf.keras.applications.DenseNet201(**params)
+    elif pretrained_arch == 'resnet50':
+      preprocess_input = tf.keras.applications.resnet.preprocess_input
+      base_model = tf.keras.applications.ResNet50(**params)
+    elif pretrained_arch == 'resnet101':
+      preprocess_input = tf.keras.applications.resnet.preprocess_input
+      base_model = tf.keras.applications.ResNet101(**params)
+    elif pretrained_arch == 'resnet50v2':
+      preprocess_input = tf.keras.applications.resnet_v2.preprocess_input
+      base_model = tf.keras.applications.ResNet50V2(**params)
+    elif pretrained_arch == 'resnet101v2':
+      preprocess_input = tf.keras.applications.resnet_v2.preprocess_input
+      base_model = tf.keras.applications.ResNet101V2(**params)
+    elif pretrained_arch == 'inceptionv3':
+      preprocess_input = tf.keras.applications.inception_v3.preprocess_input
+      base_model = tf.keras.applications.InceptionV3(**params)
+    elif pretrained_arch == 'inceptionresnetv2':
+      preprocess_input = tf.keras.applications.inception_resnet_v2.preprocess_input
+      base_model = tf.keras.applications.InceptionResNetV2(**params)
     elif pretrained_arch == 'densenet169':
       preprocess_input = tf.keras.applications.densenet.preprocess_input
       base_model = tf.keras.applications.DenseNet169(**params)
+    elif pretrained_arch == 'densenet201':
+      preprocess_input = tf.keras.applications.densenet.preprocess_input
+      base_model = tf.keras.applications.DenseNet201(**params)
+    elif pretrained_arch == 'efficientnetb0':
+      preprocess_input = tf.keras.applications.efficientnet.preprocess_input
+      base_model = tf.keras.applications.EfficientNetB0(**params)
+    elif pretrained_arch == 'efficientnetb1':
+      preprocess_input = tf.keras.applications.efficientnet.preprocess_input
+      base_model = tf.keras.applications.EfficientNetB1(**params)
+    elif pretrained_arch == 'efficientnetb2':
+      preprocess_input = tf.keras.applications.efficientnet.preprocess_input
+      base_model = tf.keras.applications.EfficientNetB2(**params)
+    elif pretrained_arch == 'efficientnetb3':
+      preprocess_input = tf.keras.applications.efficientnet.preprocess_input
+      base_model = tf.keras.applications.EfficientNetB3(**params)
+    elif pretrained_arch == 'efficientnetb4':
+      preprocess_input = tf.keras.applications.efficientnet.preprocess_input
+      base_model = tf.keras.applications.EfficientNetB4(**params)
+    elif pretrained_arch == 'efficientnetb5':
+      preprocess_input = tf.keras.applications.efficientnet.preprocess_input
+      base_model = tf.keras.applications.EfficientNetB5(**params)
+    elif pretrained_arch == 'efficientnetb6':
+      preprocess_input = tf.keras.applications.efficientnet.preprocess_input
+      base_model = tf.keras.applications.EfficientNetB6(**params)
+    elif pretrained_arch == 'efficientnetb7':
+      preprocess_input = tf.keras.applications.efficientnet.preprocess_input
+      base_model = tf.keras.applications.EfficientNetB7(**params)
 
 
     data_aug_layers = [
