@@ -55,6 +55,7 @@ class AutoKerasSimpleClassifier:
 
     params = dict(
       num_classes=3,
+      loss='categorical_crossentropy',
       project_name=project_name,
       directory=directory,
       max_trials=max_trials,
