@@ -52,55 +52,33 @@ class ConvolutionalClassifier:
     t = Timming()
     t.start()
 
+    params = dict(
+      input_shape=input_shape,
+      include_top=False,
+      weights=pretrained_weights
+    )
+
     if pretrained_arch == 'inception':
       preprocess_input = tf.keras.applications.inception_resnet_v2.preprocess_input
-      base_model = tf.keras.applications.InceptionResNetV2(
-        input_shape=input_shape,
-        include_top=False,
-        weights=pretrained_weights
-      )
+      base_model = tf.keras.applications.InceptionResNetV2(**params)
     elif pretrained_arch == 'vgg16':
       preprocess_input = tf.keras.applications.vgg16.preprocess_input
-      base_model = tf.keras.applications.VGG16(
-        input_shape=input_shape,
-        include_top=False,
-        weights=pretrained_weights
-      )
+      base_model = tf.keras.applications.VGG16(**params)
     elif pretrained_arch == 'vgg19':
       preprocess_input = tf.keras.applications.vgg19.preprocess_input
-      base_model = tf.keras.applications.VGG19(
-        input_shape=input_shape,
-        include_top=False,
-        weights=pretrained_weights
-      )
+      base_model = tf.keras.applications.VGG19(**params)
     elif pretrained_arch == 'efficientnetb2':
       preprocess_input = tf.keras.applications.efficientnet.preprocess_input
-      base_model = tf.keras.applications.EfficientNetB2(
-        input_shape=input_shape,
-        include_top=False,
-        weights=pretrained_weights
-      )
+      base_model = tf.keras.applications.EfficientNetB2(**params)
     elif pretrained_arch == 'efficientnetb7':
       preprocess_input = tf.keras.applications.efficientnet.preprocess_input
-      base_model = tf.keras.applications.EfficientNetB7(
-        input_shape=input_shape,
-        include_top=False,
-        weights=pretrained_weights
-      )
-    elif pretrained_arch in ['densenet', 'densenet201']:
+      base_model = tf.keras.applications.EfficientNetB7(**params)
+    elif pretrained_arch == 'densenet201':
       preprocess_input = tf.keras.applications.densenet.preprocess_input
-      base_model = tf.keras.applications.DenseNet201(
-        input_shape=input_shape,
-        include_top=False,
-        weights=pretrained_weights
-      )
+      base_model = tf.keras.applications.DenseNet201(**params)
     elif pretrained_arch == 'densenet169':
       preprocess_input = tf.keras.applications.densenet.preprocess_input
-      base_model = tf.keras.applications.DenseNet169(
-        input_shape=input_shape,
-        include_top=False,
-        weights=pretrained_weights
-      )
+      base_model = tf.keras.applications.DenseNet169(**params)
 
 
     data_aug_layers = [
