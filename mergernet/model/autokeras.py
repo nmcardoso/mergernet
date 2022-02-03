@@ -53,14 +53,17 @@ class AutoKerasSimpleClassifier:
     L.info(f'[BUILD] max trials: {max_trials}')
     L.info(f'[BUILD] tuner: {tuner}')
 
-    clf = ak.ImageClassifier(
+    params = dict(
       project_name=project_name,
       directory=directory,
       max_trials=max_trials,
-      tuner=tuner,
       overwrite=overwrite,
       seed=RANDOM_SEED
     )
+
+    if tuner is not None: params.update(dict(tuner=tuner))
+
+    clf = ak.ImageClassifier(**params)
 
     L.info(f'[TRAIN] starting train loop.')
     t = Timming()

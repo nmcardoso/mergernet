@@ -23,6 +23,10 @@ class Job(BaseJob):
     #   optimizer='adam'
     # )
 
-    clf = AutoKerasSimpleClassifier(ds)
-    clf.fit(project_name='job_0001', directory=str(self.artifact_path / 'models'))
+    model = AutoKerasSimpleClassifier(ds)
+    model.fit(
+      project_name='job_0001',
+      directory=str(self.artifact_path / 'models'),
+      max_trials=10
+    )
 
