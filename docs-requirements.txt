@@ -13,5 +13,5 @@ numpydoc
 sphinx
 pydata-sphinx-theme
 ipykernel
-keras-tuner
+keras-tuner==1.0.4
 autokeras

@@ -16,7 +16,7 @@ setup(
     'requests>=2.23',
     'Pillow>=7.1.2',
     'tensorflow_addons',
-    'keras-tuner',
+    'keras-tuner==1.0.4',
     'autokeras'
   ]
 )
