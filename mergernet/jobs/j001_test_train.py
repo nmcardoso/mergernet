@@ -16,9 +16,10 @@ class Job(BaseJob):
   def run(self):
     ds = Dataset(data_path=self.data_path)
 
-    # model = ConvolutionalClassifier(ds)
-    # model.train(
-    #   epochs=20,
-    #   optimizer='adam'
-    # )
+    model = ConvolutionalClassifier(ds)
+    model.train(
+      pretrained_arch='inceptionresnetv2',
+      epochs=20,
+      optimizer='adam'
+    )
 
