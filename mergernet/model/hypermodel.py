@@ -31,11 +31,11 @@ class SimpleHyperModel():
     dropout_rate_1: float = 0.4,
     dense_2: bool = False,
     dense_units_2: int = None,
-    dropout_2: bool = False,
+    # dropout_2: bool = False,
     dropout_rate_2: float = None,
     dense_3: bool = False,
     dense_units_3: int = None,
-    dropout_3: bool = False,
+    # dropout_3: bool = False,
     dropout_rate_3: float = None,
     learning_rate: float = 5e-5
   ) -> tf.keras.Model:
@@ -80,12 +80,12 @@ class SimpleHyperModel():
     x = tf.keras.layers.Dropout(dropout_rate_1)(x)
     if dense_2:
       x = tf.keras.layers.Dense(dense_units_2, activation='relu')(x)
-      if dropout_2:
+      if dropout_rate_2 is not None:
         x = tf.keras.layers.Dropout(dropout_rate_2)(x)
 
     if dense_3:
       x = tf.keras.layers.Dense(dense_units_3, activation='relu')(x)
-      if dropout_3:
+      if dropout_rate_3 is not None:
         x = tf.keras.layers.Dropout(dropout_rate_3)(x)
 
     outputs = tf.keras.layers.Dense(3, activation='softmax')(x)
@@ -113,11 +113,11 @@ class SimpleHyperModel():
     dropout_rate_1: float = 0.4,
     dense_2: bool = False,
     dense_units_2: int = None,
-    dropout_2: bool = False,
+    # dropout_2: bool = False,
     dropout_rate_2: float = None,
     dense_3: bool = False,
     dense_units_3: int = None,
-    dropout_3: bool = False,
+    # dropout_3: bool = False,
     dropout_rate_3: float = None,
     learning_rate: float = 5e-5,
     # train params
@@ -134,11 +134,11 @@ class SimpleHyperModel():
       dropout_rate_1=dropout_rate_1,
       dense_2=dense_2,
       dense_units_2=dense_units_2,
-      dropout_2=dropout_2,
+      # dropout_2=dropout_2,
       dropout_rate_2=dropout_rate_2,
       dense_3=dense_3,
       dense_units_3=dense_units_3,
-      dropout_3=dropout_3,
+      # dropout_3=dropout_3,
       dropout_rate_3=dropout_rate_3,
       learning_rate=learning_rate
     )
@@ -238,12 +238,12 @@ class BayesianTuner(kt.BayesianOptimization):
       dropout_rate_1=hp.Choice('dropout_1_rate', [0.2, 0.3, 0.4, 0.5]),
       dense_2=hp.Boolean('dense_2'),
       dense_units_2=hp.Choice('dense_2_units', [128, 256, 512], parent_name='dense_2', parent_values=[True]),
-      dropout_2=hp.Boolean('dropout_2', parent_name='dense_2', parent_values=[True]),
-      dropout_rate_2=hp.Choice('dropout_2_rate', [0.2, 0.3, 0.4, 0.5], parent_name='dropout_2', parent_values=[True]),
+      # dropout_2=hp.Boolean('dropout_2', parent_name='dense_2', parent_values=[True]),
+      dropout_rate_2=hp.Choice('dropout_2_rate', [None, 0.2, 0.3, 0.4, 0.5], parent_name='dense_2', parent_values=[True]),
       dense_3=hp.Boolean('dense_3', parent_name='dense_2', parent_values=[True]),
       dense_units_3=hp.Choice('dense_3_units', [64, 128, 256, 512], parent_name='dense_3', parent_values=[True]),
-      dropout_3=hp.Boolean('dropout_3', parent_name='dense_3', parent_values=[True]),
-      dropout_rate_3=hp.Choice('dropout_3_rate', [0.2, 0.3, 0.4, 0.5], parent_name='dropout_3', parent_values=[True]),
+      # dropout_3=hp.Boolean('dropout_3', parent_name='dense_3', parent_values=[True]),
+      dropout_rate_3=hp.Choice('dropout_3_rate', [None, 0.2, 0.3, 0.4, 0.5], parent_name='dense_3', parent_values=[True]),
       learning_rate=hp.Choice('learning_rate', [1e-5, 5e-5, 1e-4, 5e-4, 1e-3]),
-      epochs=16
+      epochs=1
     )
