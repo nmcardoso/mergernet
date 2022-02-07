@@ -249,5 +249,5 @@ class BayesianTuner(kt.BayesianOptimization):
       # dropout_3=hp.Boolean('dropout_3', parent_name='dense_3', parent_values=[True]),
       dropout_rate_3=hp.Choice('dropout_3_rate', [-1.0, 0.2, 0.3, 0.4, 0.5], parent_name='dense_blocks', parent_values=[3]),
       learning_rate=hp.Choice('learning_rate', [1e-5, 5e-5, 1e-4, 5e-4, 1e-3]),
-      epochs=1
+      epochs=3
     )
