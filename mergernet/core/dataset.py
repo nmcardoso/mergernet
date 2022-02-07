@@ -285,13 +285,15 @@ class Dataset:
 
 
   def compute_class_weight(self) -> dict:
-    # TODO: TEST
     y = pd.read_csv(self.config.table_path)[self.config.y_column].to_numpy()
+    if self.config.label_map:
+      y = self._discretize_label(y)
+
     classes, cardinalities = np.unique(y, return_counts=True)
     total = np.sum(cardinalities)
     n = len(cardinalities)
-    weight_map = {}
 
+    weight_map = {}
     for class_, cardinality in zip(classes, cardinalities):
       weight_map[class_] = total / (n * cardinality)
 
