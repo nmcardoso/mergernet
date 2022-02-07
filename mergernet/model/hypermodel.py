@@ -110,6 +110,7 @@ class SimpleHyperModel():
     # model build params
     input_shape: Tuple = (128, 128, 3),
     pretrainded_weights: str = 'imagenet',
+    dense_blocks: int = 1,
     dense_units_1: int = 256,
     dropout_rate_1: float = 0.4,
     dense_2: bool = False,
@@ -131,6 +132,7 @@ class SimpleHyperModel():
     model = self.build(
       input_shape=input_shape,
       pretrainded_weights=pretrainded_weights,
+      dense_blocks=dense_blocks,
       dense_units_1=dense_units_1,
       dropout_rate_1=dropout_rate_1,
       dense_2=dense_2,
