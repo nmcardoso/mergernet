@@ -122,3 +122,7 @@ class ArtifactHelper(metaclass=SingletonMeta):
     path = self.artifact_path / filename
     with open(path, 'w') as fp:
       json.dump(data, fp, indent=True)
+
+
+  def upload_dir(self, path: Union[str, Path]):
+    self._upload_gdrive(path)
