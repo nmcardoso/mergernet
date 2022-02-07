@@ -153,7 +153,7 @@
 
 
 <div class="viewcode-block" id="Job"><a class="viewcode-back" href="../../../api/mergernet.jobs.j002_hyperparam.Job.html#mergernet.jobs.j002_hyperparam.Job">[docs]</a><span class="k">class</span> <span class="nc">Job</span><span class="p">(</span><span class="n">BaseJob</span><span class="p">):</span>
-  <span class="n">jobid</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">jobid</span> <span class="o">=</span> <span class="mi">2</span>
   <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Test job&#39;</span>
   <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;Test job description&#39;</span>
 
@@ -161,7 +161,7 @@
     <span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">data_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_path</span><span class="p">)</span>
 
     <span class="n">tuner</span> <span class="o">=</span> <span class="n">BayesianTuner</span><span class="p">(</span>
-      <span class="n">max_trials</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+      <span class="n">max_trials</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
       <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
       <span class="n">directory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;tuner&#39;</span><span class="p">,</span>
       <span class="n">project_name</span><span class="o">=</span><span class="s1">&#39;resnet&#39;</span>
