@@ -163,7 +163,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="008.html">
-   #1: Test job
+   #2: Test job
   </a>
  </li>
  <li class="toctree-l1">
@@ -208,6 +208,11 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="017.html">
+   #1: Test job
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="018.html">
    #1: Test job
   </a>
  </li>
@@ -269,15 +274,15 @@
 <h1>#2: Test job<a class="headerlink" href="#test-job" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><p>Job ID: 2</p></li>
-<li><p>Run ID: 8f1d45</p></li>
-<li><p>Date: 2022-02-07 13:41:50-03:00</p></li>
+<li><p>Run ID: 2733fa</p></li>
+<li><p>Date: 2022-02-07 14:22:13-03:00</p></li>
 <li><p>Description: Test job description</p></li>
 </ul>
 <section id="artifacts">
 <h2>Artifacts<a class="headerlink" href="#artifacts" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_8f1d45/job.log">job.log</a></p></li>
-<li><p><a class="reference external" href="https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_8f1d45/job.json">job.json</a></p></li>
+<li><p><a class="reference external" href="https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_2733fa/job.log">job.log</a></p></li>
+<li><p><a class="reference external" href="https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_2733fa/job.json">job.json</a></p></li>
 </ul>
 </section>
 <section id="log">
@@ -572,6 +577,57 @@
 </tr>
 <tr class="row-even"><td><p>2022-02-07 17:08:06</p></td>
 <td><p>INFO [TRAIN] Training finished without errors in 00:25:55.</p></td>
+</tr>
+<tr class="row-odd"><td><p>2022-02-07 17:09:29</p></td>
+<td><p>INFO [GITHUB] file “job.log” successfully uploaded to github.</p></td>
+</tr>
+<tr class="row-even"><td><p>2022-02-07 17:09:29</p></td>
+<td><p>INFO [GDRIVE] file “job.log” uploaded to Google Drive.</p></td>
+</tr>
+<tr class="row-odd"><td><p>2022-02-07 17:22:14</p></td>
+<td><p>INFO [GITHUB] file “job.json” successfully uploaded to github.</p></td>
+</tr>
+<tr class="row-even"><td><p>2022-02-07 17:22:14</p></td>
+<td><p>INFO [GDRIVE] file “job.json” uploaded to Google Drive.</p></td>
+</tr>
+<tr class="row-odd"><td><p>2022-02-07 17:22:14</p></td>
+<td><p>INFO [DATASET] Fold 0 loaded</p></td>
+</tr>
+<tr class="row-even"><td><p>2022-02-07 17:22:14</p></td>
+<td><p>DEBUG [DATASET] apply: load_jpg</p></td>
+</tr>
+<tr class="row-odd"><td><p>2022-02-07 17:22:14</p></td>
+<td><p>DEBUG [DATASET] Example shape (X, y): (128, 128, 3), ()</p></td>
+</tr>
+<tr class="row-even"><td><p>2022-02-07 17:22:14</p></td>
+<td><p>DEBUG [DATASET] apply: one_hot</p></td>
+</tr>
+<tr class="row-odd"><td><p>2022-02-07 17:22:14</p></td>
+<td><p>DEBUG [DATASET] Example shape (X, y): (128, 128, 3), (3,)</p></td>
+</tr>
+<tr class="row-even"><td><p>2022-02-07 17:22:16</p></td>
+<td><p>DEBUG [DATASET] apply: shuffle</p></td>
+</tr>
+<tr class="row-odd"><td><p>2022-02-07 17:22:16</p></td>
+<td><p>DEBUG [DATASET] Example shape (X, y): (128, 128, 3), (3,)</p></td>
+</tr>
+<tr class="row-even"><td><p>2022-02-07 17:22:19</p></td>
+<td><p>DEBUG [DATASET] apply: batch</p></td>
+</tr>
+<tr class="row-odd"><td><p>2022-02-07 17:22:19</p></td>
+<td><p>DEBUG [DATASET] Example shape (X, y): (64, 128, 128, 3), (64, 3)</p></td>
+</tr>
+<tr class="row-even"><td><p>2022-02-07 17:22:19</p></td>
+<td><p>DEBUG [DATASET] apply: batch</p></td>
+</tr>
+<tr class="row-odd"><td><p>2022-02-07 17:22:19</p></td>
+<td><p>DEBUG [DATASET] Test example shape (X, y): (64, 128, 128, 3), (64, 3)</p></td>
+</tr>
+<tr class="row-even"><td><p>2022-02-07 17:22:23</p></td>
+<td><p>INFO [TRAIN] Starting training loop</p></td>
+</tr>
+<tr class="row-odd"><td><p>2022-02-07 17:48:53</p></td>
+<td><p>INFO [TRAIN] Training finished without errors in 00:26:30.</p></td>
 </tr>
 </tbody>
 </table>
