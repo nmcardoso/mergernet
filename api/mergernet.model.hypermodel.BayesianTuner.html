@@ -1,0 +1,1281 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>mergernet.model.hypermodel.BayesianTuner &#8212; MergerNet  documentation</title>
+    
+    <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  
+    
+    <link rel="stylesheet"
+      href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+    
+      
+  
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/pydata-sphinx-theme.css" />
+    
+    <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="mergernet.model.hypermodel.SimpleHyperModel" href="mergernet.model.hypermodel.SimpleHyperModel.html" />
+    <link rel="prev" title="mergernet.model.hypermodel" href="mergernet.model.hypermodel.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+<a class="navbar-brand" href="../index.html">
+<p class="title">MergerNet</p>
+</a>
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../reference.html">
+  API Reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../experiments.html">
+  Experiments
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/nmcardoso" rel="noopener" target="_blank" title="Github"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">Github</label></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://natanael.net" rel="noopener" target="_blank" title="Website"><span><i class="fas fa-globe"></i></span>
+            <label class="sr-only">Website</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="mergernet.core.html">
+   mergernet.core
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.core.artifacts.html">
+     mergernet.core.artifacts
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.artifacts.ArtifactHelper.html">
+       mergernet.core.artifacts.ArtifactHelper
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="mergernet.core.constants.html">
+     mergernet.core.constants
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.core.dataset.html">
+     mergernet.core.dataset
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.dataset.Dataset.html">
+       mergernet.core.dataset.Dataset
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.dataset.DatasetConfig.html">
+       mergernet.core.dataset.DatasetConfig
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.dataset.DistributionKFold.html">
+       mergernet.core.dataset.DistributionKFold
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.dataset.StratifiedDistributionKFold.html">
+       mergernet.core.dataset.StratifiedDistributionKFold
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.core.jobs.html">
+     mergernet.core.jobs
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.jobs.BaseJob.html">
+       mergernet.core.jobs.BaseJob
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.jobs.JobRunner.html">
+       mergernet.core.jobs.JobRunner
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.core.logger.html">
+     mergernet.core.logger
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.logger.Logger.html">
+       mergernet.core.logger.Logger
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.core.rgb.html">
+     mergernet.core.rgb
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.rgb.RGB.html">
+       mergernet.core.rgb.RGB
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.core.trilogy.html">
+     mergernet.core.trilogy
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.trilogy.RGB2im.html">
+       mergernet.core.trilogy.RGB2im
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.trilogy.adjust_saturation.html">
+       mergernet.core.trilogy.adjust_saturation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.trilogy.da.html">
+       mergernet.core.trilogy.da
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.trilogy.get_clip.html">
+       mergernet.core.trilogy.get_clip
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.trilogy.get_levels.html">
+       mergernet.core.trilogy.get_levels
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.trilogy.imscale.html">
+       mergernet.core.trilogy.imscale
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.trilogy.meanstd.html">
+       mergernet.core.trilogy.meanstd
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.trilogy.rms.html">
+       mergernet.core.trilogy.rms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.trilogy.satK2m.html">
+       mergernet.core.trilogy.satK2m
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.trilogy.setLevel.html">
+       mergernet.core.trilogy.setLevel
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.trilogy.MakeImg.html">
+       mergernet.core.trilogy.MakeImg
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.core.utils.html">
+     mergernet.core.utils
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.utils.array_fallback.html">
+       mergernet.core.utils.array_fallback
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.utils.load_image.html">
+       mergernet.core.utils.load_image
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.utils.load_table.html">
+       mergernet.core.utils.load_table
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.utils.save_table.html">
+       mergernet.core.utils.save_table
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.utils.SingletonMeta.html">
+       mergernet.core.utils.SingletonMeta
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.utils.Timming.html">
+       mergernet.core.utils.Timming
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="mergernet.jobs.html">
+   mergernet.jobs
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+  <label for="toctree-checkbox-9">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.jobs.j001_test_train.html">
+     mergernet.jobs.j001_test_train
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+    <label for="toctree-checkbox-10">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.jobs.j001_test_train.Job.html">
+       mergernet.jobs.j001_test_train.Job
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.jobs.j002_hyperparam.html">
+     mergernet.jobs.j002_hyperparam
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+    <label for="toctree-checkbox-11">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.jobs.j002_hyperparam.Job.html">
+       mergernet.jobs.j002_hyperparam.Job
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="mergernet.model.html">
+   mergernet.model
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <label for="toctree-checkbox-12">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.model.baseline.html">
+     mergernet.model.baseline
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+    <label for="toctree-checkbox-13">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.baseline.ConvolutionalClassifier.html">
+       mergernet.model.baseline.ConvolutionalClassifier
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.baseline.Metamodel.html">
+       mergernet.model.baseline.Metamodel
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.model.callback.html">
+     mergernet.model.callback
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.callback.DeltaStopping.html">
+       mergernet.model.callback.DeltaStopping
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="mergernet.model.hypermodel.html">
+     mergernet.model.hypermodel
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <label for="toctree-checkbox-15">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       mergernet.model.hypermodel.BayesianTuner
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.hypermodel.SimpleHyperModel.html">
+       mergernet.model.hypermodel.SimpleHyperModel
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.model.plot.html">
+     mergernet.model.plot
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.plot.color_color.html">
+       mergernet.model.plot.color_color
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.plot.data_distribution.html">
+       mergernet.model.plot.data_distribution
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.plot.roc.html">
+       mergernet.model.plot.roc
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.plot.train_metrics.html">
+       mergernet.model.plot.train_metrics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.plot.Serie.html">
+       mergernet.model.plot.Serie
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.model.preprocessing.html">
+     mergernet.model.preprocessing
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.preprocessing.load_jpg.html">
+       mergernet.model.preprocessing.load_jpg
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.preprocessing.normalize_rgb.html">
+       mergernet.model.preprocessing.normalize_rgb
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.preprocessing.one_hot.html">
+       mergernet.model.preprocessing.one_hot
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.preprocessing.standardize_rgb.html">
+       mergernet.model.preprocessing.standardize_rgb
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="mergernet.services.html">
+   mergernet.services
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+  <label for="toctree-checkbox-18">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.services.github.html">
+     mergernet.services.github
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label for="toctree-checkbox-19">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.services.github.GithubService.html">
+       mergernet.services.github.GithubService
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.services.google.html">
+     mergernet.services.google
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label for="toctree-checkbox-20">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.services.google.GDrive.html">
+       mergernet.services.google.GDrive
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.services.imaging.html">
+     mergernet.services.imaging
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label for="toctree-checkbox-21">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.services.imaging.BaseImagingService.html">
+       mergernet.services.imaging.BaseImagingService
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.services.legacy.html">
+     mergernet.services.legacy
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/>
+    <label for="toctree-checkbox-22">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.services.legacy.LegacyService.html">
+       mergernet.services.legacy.LegacyService
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.services.sdss.html">
+     mergernet.services.sdss
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/>
+    <label for="toctree-checkbox-23">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.services.sdss.SloanService.html">
+       mergernet.services.sdss.SloanService
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.services.splus.html">
+     mergernet.services.splus
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/>
+    <label for="toctree-checkbox-24">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.services.splus.SplusService.html">
+       mergernet.services.splus.SplusService
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.services.tensorboard.html">
+     mergernet.services.tensorboard
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/>
+    <label for="toctree-checkbox-25">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.services.tensorboard.TensorboardService.html">
+       mergernet.services.tensorboard.TensorboardService
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.services.utils.html">
+     mergernet.services.utils
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/>
+    <label for="toctree-checkbox-26">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.services.utils.append_query_params.html">
+       mergernet.services.utils.append_query_params
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.services.utils.batch_download_file.html">
+       mergernet.services.utils.batch_download_file
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.services.utils.download_file.html">
+       mergernet.services.utils.download_file
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+
+<nav id="bd-toc-nav">
+    
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="mergernet-model-hypermodel-bayesiantuner">
+<h1>mergernet.model.hypermodel.BayesianTuner<a class="headerlink" href="#mergernet-model-hypermodel-bayesiantuner" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mergernet.model.hypermodel.</span></span><span class="sig-name descname"><span class="pre">BayesianTuner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hypermodel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">objective</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_initial_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tune_new_entries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_new_entries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/hypermodel.html#BayesianTuner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras_tuner.tuners.bayesian.BayesianOptimization</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>project_dir</strong></dt><dd></dd>
+<dt><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.remaining_trials" title="mergernet.model.hypermodel.BayesianTuner.remaining_trials"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remaining_trials</span></code></a></dt><dd><p>Returns the number of trials remaining.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.get_best_hyperparameters" title="mergernet.model.hypermodel.BayesianTuner.get_best_hyperparameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_best_hyperparameters</span></code></a>([num_trials])</p></td>
+<td><p>Returns the best hyperparameters, as determined by the objective.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.get_best_models" title="mergernet.model.hypermodel.BayesianTuner.get_best_models"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_best_models</span></code></a>([num_models])</p></td>
+<td><p>Returns the best model(s), as determined by the tuner's objective.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.get_state" title="mergernet.model.hypermodel.BayesianTuner.get_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_state</span></code></a>()</p></td>
+<td><p>Returns the current state of this object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.load_model" title="mergernet.model.hypermodel.BayesianTuner.load_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_model</span></code></a>(trial)</p></td>
+<td><p>Loads a Model from a given trial.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.on_batch_begin" title="mergernet.model.hypermodel.BayesianTuner.on_batch_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_batch_begin</span></code></a>(trial, model, batch, logs)</p></td>
+<td><p>Called at the beginning of a batch.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.on_batch_end" title="mergernet.model.hypermodel.BayesianTuner.on_batch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_batch_end</span></code></a>(trial, model, batch[, logs])</p></td>
+<td><p>Called at the end of a batch.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.on_epoch_begin" title="mergernet.model.hypermodel.BayesianTuner.on_epoch_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_epoch_begin</span></code></a>(trial, model, epoch[, logs])</p></td>
+<td><p>Called at the beginning of an epoch.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.on_search_begin" title="mergernet.model.hypermodel.BayesianTuner.on_search_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_search_begin</span></code></a>()</p></td>
+<td><p>Called at the beginning of the <cite>search</cite> method.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.on_search_end" title="mergernet.model.hypermodel.BayesianTuner.on_search_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_search_end</span></code></a>()</p></td>
+<td><p>Called at the end of the <cite>search</cite> method.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.on_trial_begin" title="mergernet.model.hypermodel.BayesianTuner.on_trial_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_trial_begin</span></code></a>(trial)</p></td>
+<td><p>Called at the beginning of a trial.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.on_trial_end" title="mergernet.model.hypermodel.BayesianTuner.on_trial_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_trial_end</span></code></a>(trial)</p></td>
+<td><p>Called at the end of a trial.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.reload" title="mergernet.model.hypermodel.BayesianTuner.reload"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reload</span></code></a>()</p></td>
+<td><p>Reloads this object from its project directory.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.results_summary" title="mergernet.model.hypermodel.BayesianTuner.results_summary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">results_summary</span></code></a>([num_trials])</p></td>
+<td><p>Display tuning results summary.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.run_trial" title="mergernet.model.hypermodel.BayesianTuner.run_trial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_trial</span></code></a>(trial, *kargs, **kwargs)</p></td>
+<td><p>Evaluates a set of hyperparameter values.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.save" title="mergernet.model.hypermodel.BayesianTuner.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save</span></code></a>()</p></td>
+<td><p>Saves this object to its project directory.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.save_model" title="mergernet.model.hypermodel.BayesianTuner.save_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_model</span></code></a>(trial_id, model[, step])</p></td>
+<td><p>Saves a Model for a given trial.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.search" title="mergernet.model.hypermodel.BayesianTuner.search"><code class="xref py py-obj docutils literal notranslate"><span class="pre">search</span></code></a>(*fit_args, **fit_kwargs)</p></td>
+<td><p>Performs a search for best hyperparameter configuations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.search_space_summary" title="mergernet.model.hypermodel.BayesianTuner.search_space_summary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">search_space_summary</span></code></a>([extended])</p></td>
+<td><p>Print search space summary.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.set_state" title="mergernet.model.hypermodel.BayesianTuner.set_state"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_state</span></code></a>(state)</p></td>
+<td><p>Sets the current state of this object.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<colgroup>
+<col style="width: 63%" />
+<col style="width: 37%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>get_trial_dir</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>on_epoch_end</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.project_dir" title="mergernet.model.hypermodel.BayesianTuner.project_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">project_dir</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.hypermodel.BayesianTuner.remaining_trials" title="mergernet.model.hypermodel.BayesianTuner.remaining_trials"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remaining_trials</span></code></a></p></td>
+<td><p>Returns the number of trials remaining.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner._build_and_fit_model">
+<span class="sig-name descname"><span class="pre">_build_and_fit_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner._build_and_fit_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>For AutoKeras to override.</p>
+<p>DO NOT REMOVE this function. AutoKeras overrides the function to tune
+tf.data preprocessing pipelines, preprocess the dataset to obtain
+the input shape before building the model, adapt preprocessing layers,
+and tune other fit_args and fit_kwargs.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>trial: A <cite>Trial</cite> instance that contains the information needed to</dt><dd><p>run this trial. <cite>Hyperparameters</cite> can be accessed via
+<cite>trial.hyperparameters</cite>.</p>
+</dd>
+</dl>
+<p><a href="#id1"><span class="problematic" id="id2">*</span></a>args: Positional arguments passed by <cite>search</cite>.
+<a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs: Keyword arguments passed by <cite>search</cite>.</p>
+</dd>
+<dt>Returns:</dt><dd><p>The fit history.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner._build_hypermodel">
+<span class="sig-name descname"><span class="pre">_build_hypermodel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner._build_hypermodel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner._checkpoint_model">
+<span class="sig-name descname"><span class="pre">_checkpoint_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner._checkpoint_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner._configure_tensorboard_dir">
+<span class="sig-name descname"><span class="pre">_configure_tensorboard_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callbacks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">execution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner._configure_tensorboard_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner._deepcopy_callbacks">
+<span class="sig-name descname"><span class="pre">_deepcopy_callbacks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callbacks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner._deepcopy_callbacks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner._delete_checkpoint">
+<span class="sig-name descname"><span class="pre">_delete_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner._delete_checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner._get_checkpoint_dir">
+<span class="sig-name descname"><span class="pre">_get_checkpoint_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner._get_checkpoint_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner._get_checkpoint_fname">
+<span class="sig-name descname"><span class="pre">_get_checkpoint_fname</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner._get_checkpoint_fname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner._get_tensorboard_dir">
+<span class="sig-name descname"><span class="pre">_get_tensorboard_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">execution</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner._get_tensorboard_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner._get_tuner_fname">
+<span class="sig-name descname"><span class="pre">_get_tuner_fname</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner._get_tuner_fname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner._override_compile_args">
+<span class="sig-name descname"><span class="pre">_override_compile_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner._override_compile_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner._populate_initial_space">
+<span class="sig-name descname"><span class="pre">_populate_initial_space</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner._populate_initial_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populate initial search space for oracle.</p>
+<p>Keep this function as a subroutine for AutoKeras to override. The space
+may not be ready at the initialization of the tuner, but after seeing
+the training data.</p>
+<p>Build hypermodel multiple times to find all conditional hps. It
+generates hp values based on the not activated <cite>conditional_scopes</cite>
+found in the builds.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner._try_build">
+<span class="sig-name descname"><span class="pre">_try_build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner._try_build" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.get_best_hyperparameters">
+<span class="sig-name descname"><span class="pre">get_best_hyperparameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.get_best_hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the best hyperparameters, as determined by the objective.</p>
+<p>This method can be used to reinstantiate the (untrained) best model
+found during the search process.</p>
+<p>Example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">best_hp</span> <span class="pre">=</span> <span class="pre">tuner.get_best_hyperparameters()[0]</span>
+<span class="pre">model</span> <span class="pre">=</span> <span class="pre">tuner.hypermodel.build(best_hp)</span>
+<span class="pre">`</span></code></p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>num_trials: Optional number of <cite>HyperParameters</cite> objects to return.</p>
+</dd>
+<dt>Returns:</dt><dd><p>List of <cite>HyperParameter</cite> objects sorted from the best to the worst.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.get_best_models">
+<span class="sig-name descname"><span class="pre">get_best_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_models</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.get_best_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the best model(s), as determined by the tuner’s objective.</p>
+<p>The models are loaded with the weights corresponding to
+their best checkpoint (at the end of the best epoch of best trial).</p>
+<p>This method is for querying the models trained during the search.
+For best performance, it is recommended to retrain your Model on the
+full dataset using the best hyperparameters found during <cite>search</cite>,
+which can be obtained using <cite>tuner.get_best_hyperparameters()</cite>.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>num_models: Optional number of best models to return.</dt><dd><p>Defaults to 1.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>List of trained model instances sorted from the best to the worst.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.get_state">
+<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current state of this object.</p>
+<p>This method is called during <cite>save</cite>.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>A dictionary of serializable objects as the state.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.get_trial_dir">
+<span class="sig-name descname"><span class="pre">get_trial_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.get_trial_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.load_model">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a Model from a given trial.</p>
+<p>For models that report intermediate results to the <cite>Oracle</cite>, generally
+<cite>load_model</cite> should load the best reported <cite>step</cite> by relying of
+<cite>trial.best_step</cite>.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>trial: A <cite>Trial</cite> instance, the <cite>Trial</cite> corresponding to the model</dt><dd><p>to load.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.on_batch_begin">
+<span class="sig-name descname"><span class="pre">on_batch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.on_batch_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of a batch.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>trial: A <cite>Trial</cite> instance.
+model: A Keras <cite>Model</cite>.
+batch: The current batch number within the current epoch.
+logs: Additional metrics.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.on_batch_end">
+<span class="sig-name descname"><span class="pre">on_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.on_batch_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of a batch.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>trial: A <cite>Trial</cite> instance.
+model: A Keras <cite>Model</cite>.
+batch: The current batch number within the current epoch.
+logs: Additional metrics.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.on_epoch_begin">
+<span class="sig-name descname"><span class="pre">on_epoch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.on_epoch_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of an epoch.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>trial: A <cite>Trial</cite> instance.
+model: A Keras <cite>Model</cite>.
+epoch: The current epoch number.
+logs: Additional metrics.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.on_epoch_end">
+<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.on_search_begin">
+<span class="sig-name descname"><span class="pre">on_search_begin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.on_search_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the <cite>search</cite> method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.on_search_end">
+<span class="sig-name descname"><span class="pre">on_search_end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.on_search_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the <cite>search</cite> method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.on_trial_begin">
+<span class="sig-name descname"><span class="pre">on_trial_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.on_trial_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of a trial.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>trial: A <cite>Trial</cite> instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.on_trial_end">
+<span class="sig-name descname"><span class="pre">on_trial_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.on_trial_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of a trial.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>trial: A <cite>Trial</cite> instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.project_dir">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">project_dir</span></span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.project_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.reload">
+<span class="sig-name descname"><span class="pre">reload</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reloads this object from its project directory.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.remaining_trials">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">remaining_trials</span></span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.remaining_trials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of trials remaining.</p>
+<p>Will return <cite>None</cite> if <cite>max_trials</cite> is not set. This is useful when
+resuming a previously stopped search.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.results_summary">
+<span class="sig-name descname"><span class="pre">results_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.results_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display tuning results summary.</p>
+<p>The method prints a summary of the search results including the
+hyperparameter values and evaluation results for each trial.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>num_trials: Optional number of trials to display. Defaults to 10.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.run_trial">
+<span class="sig-name descname"><span class="pre">run_trial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">kargs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/hypermodel.html#BayesianTuner.run_trial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.run_trial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluates a set of hyperparameter values.</p>
+<p>This method is called multiple times during <cite>search</cite> to build and
+evaluate the models with different hyperparameters and return the
+objective value.</p>
+<p>Example:</p>
+<p>You can use it with <cite>self.hypermodel</cite> to build and fit the model.</p>
+<p><a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a>python
+def run_trial(self, trial, <a href="#id9"><span class="problematic" id="id10">*</span></a>args, <a href="#id11"><span class="problematic" id="id12">**</span></a>kwargs):</p>
+<blockquote>
+<div><p>hp = trial.hyperparameters
+model = self.hypermodel.build(hp)
+return self.hypermodel.fit(hp, model, <a href="#id13"><span class="problematic" id="id14">*</span></a>args, <a href="#id15"><span class="problematic" id="id16">**</span></a>kwargs)</p>
+</div></blockquote>
+<p><a href="#id17"><span class="problematic" id="id18">``</span></a><a href="#id19"><span class="problematic" id="id20">`</span></a></p>
+<p>You can also use it as a black-box optimizer for anything.</p>
+<p><a href="#id21"><span class="problematic" id="id22">``</span></a><a href="#id23"><span class="problematic" id="id24">`</span></a>python
+def run_trial(self, trial, <a href="#id25"><span class="problematic" id="id26">*</span></a>args, <a href="#id27"><span class="problematic" id="id28">**</span></a>kwargs):</p>
+<blockquote>
+<div><p>hp = trial.hyperparameters
+x = hp.Float(“x”, -2.0, 2.0)
+y = x * x + 2 * x + 1
+return y</p>
+</div></blockquote>
+<p><a href="#id29"><span class="problematic" id="id30">``</span></a><a href="#id31"><span class="problematic" id="id32">`</span></a></p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>trial: A <cite>Trial</cite> instance that contains the information needed to</dt><dd><p>run this trial. Hyperparameters can be accessed via
+<cite>trial.hyperparameters</cite>.</p>
+</dd>
+</dl>
+<p><a href="#id33"><span class="problematic" id="id34">*</span></a>args: Positional arguments passed by <cite>search</cite>.
+<a href="#id35"><span class="problematic" id="id36">**</span></a>kwargs: Keyword arguments passed by <cite>search</cite>.</p>
+</dd>
+<dt>Returns:</dt><dd><p>A <cite>History</cite> object, which is the return value of <cite>model.fit()</cite>, a
+dictionary, a float, or a list of one of these types.</p>
+<p>If return a dictionary, it should be a dictionary of the metrics to
+track. The keys are the metric names, which contains the
+<cite>objective</cite> name. The values should be the metric values.</p>
+<p>If return a float, it should be the <cite>objective</cite> value.</p>
+<p>If evaluating the model for multiple times, you may return a list
+of results of any of the types above. The final objective value is
+the average of the results in the list.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves this object to its project directory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.save_model">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves a Model for a given trial.</p>
+<dl>
+<dt>Args:</dt><dd><p>trial_id: The ID of the <cite>Trial</cite> corresponding to this Model.
+model: The trained model.
+step: Integer, for models that report intermediate results to the</p>
+<blockquote>
+<div><p><cite>Oracle</cite>, the step the saved file correspond to. For example, for
+Keras models this is the number of epochs trained.</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.search">
+<span class="sig-name descname"><span class="pre">search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">fit_args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fit_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a search for best hyperparameter configuations.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt><a href="#id37"><span class="problematic" id="id38">*</span></a>fit_args: Positional arguments that should be passed to</dt><dd><p><cite>run_trial</cite>, for example the training and validation data.</p>
+</dd>
+<dt><a href="#id39"><span class="problematic" id="id40">**</span></a>fit_kwargs: Keyword arguments that should be passed to</dt><dd><p><cite>run_trial</cite>, for example the training and validation data.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.search_space_summary">
+<span class="sig-name descname"><span class="pre">search_space_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extended</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.search_space_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print search space summary.</p>
+<p>The methods prints a summary of the hyperparameters in the search
+space, which can be called before calling the <cite>search</cite> method.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>extended: Optional boolean, whether to display an extended summary.</dt><dd><p>Defaults to False.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.BayesianTuner.set_state">
+<span class="sig-name descname"><span class="pre">set_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.hypermodel.BayesianTuner.set_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the current state of this object.</p>
+<p>This method is called during <cite>reload</cite>.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>state: A dictionary of serialized objects as the state to restore.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="mergernet.model.hypermodel.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">mergernet.model.hypermodel</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="mergernet.model.hypermodel.SimpleHyperModel.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">mergernet.model.hypermodel.SimpleHyperModel</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+    <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, Natanael M. Cardoso..<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

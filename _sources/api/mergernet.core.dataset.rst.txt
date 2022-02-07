@@ -1,0 +1,34 @@
+mergernet.core.dataset
+======================
+
+.. automodule:: mergernet.core.dataset
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class-template.rst
+   
+      Dataset
+      DatasetConfig
+      DistributionKFold
+      StratifiedDistributionKFold
+   
+   
+
+   
+   
+   
+
+
+
