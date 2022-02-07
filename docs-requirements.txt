@@ -14,3 +14,4 @@ sphinx
 pydata-sphinx-theme
 ipykernel
 keras-tuner==1.1.0
+tensorboard
