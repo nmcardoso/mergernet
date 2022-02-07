@@ -6,10 +6,11 @@ from datetime import datetime, timezone, timedelta
 import re
 import secrets
 import json
-from mergernet.core.artifacts import ArtifactHelper
 
+from mergernet.core.artifacts import ArtifactHelper
 from mergernet.core.constants import GDRIVE_PATH
 from mergernet.core.logger import Logger
+from mergernet.services.tensorboard import TensorboardService
 
 
 class BaseJob:
@@ -56,6 +57,12 @@ class BaseJob:
     ah.upload_log()
     if (self.artifact_path / 'tensorboard').exists():
       ah.upload_dir(self.artifact_path / 'tensorboard')
+      ts = TensorboardService()
+      ts.upload_assets(
+        logdir=self.artifact_path / 'tensorboard',
+        name=f'job_{self.jobid:03d}_run_{self.runid}',
+        description=self.description
+      )
     if (self.artifact_path / 'tuner').exists():
       ah.upload_dir(self.artifact_path / 'tuner')
 
