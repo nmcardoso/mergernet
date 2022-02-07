@@ -152,6 +152,7 @@
 <span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">Timming</span>
 <span class="kn">from</span> <span class="nn">mergernet.core.artifacts</span> <span class="kn">import</span> <span class="n">ArtifactHelper</span>
 <span class="kn">from</span> <span class="nn">mergernet.model.preprocessing</span> <span class="kn">import</span> <span class="n">load_jpg</span><span class="p">,</span> <span class="n">one_hot</span>
+<span class="kn">from</span> <span class="nn">mergernet.model.callback</span> <span class="kn">import</span> <span class="n">DeltaStopping</span>
 
 
 <span class="n">L</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;job&#39;</span><span class="p">)</span>
@@ -241,15 +242,7 @@
       <span class="p">),</span>
       <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">CategoricalCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
       <span class="n">metrics</span><span class="o">=</span><span class="p">[</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">CategoricalAccuracy</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">),</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">Precision</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;precision&#39;</span><span class="p">),</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">Recall</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;recall&#39;</span><span class="p">),</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">AUC</span><span class="p">(</span><span class="n">curve</span><span class="o">=</span><span class="s1">&#39;ROC&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;AUC_ROC&#39;</span><span class="p">),</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">AUC</span><span class="p">(</span><span class="n">curve</span><span class="o">=</span><span class="s1">&#39;PR&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;AUC_PR&#39;</span><span class="p">),</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">TruePositives</span><span class="p">(),</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">TrueNegatives</span><span class="p">(),</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">FalsePositives</span><span class="p">(),</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">FalseNegatives</span><span class="p">()</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">CategoricalAccuracy</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
       <span class="p">]</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">model</span></div>
@@ -312,7 +305,8 @@
           <span class="n">write_images</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
           <span class="n">profile_batch</span><span class="o">=</span><span class="mi">40</span>
         <span class="p">),</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">patience</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">patience</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
+        <span class="n">DeltaStopping</span><span class="p">()</span>
       <span class="p">]</span>
     <span class="p">)</span>
 
@@ -322,34 +316,6 @@
     <span class="n">ev</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_test</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">ev</span></div>
-
-
-<div class="viewcode-block" id="SimpleHyperModel.pipeline"><a class="viewcode-back" href="../../../api/mergernet.model.hypermodel.SimpleHyperModel.html#mergernet.model.hypermodel.SimpleHyperModel.pipeline">[docs]</a>  <span class="k">def</span> <span class="nf">pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="n">t</span> <span class="o">=</span> <span class="n">Timming</span><span class="p">()</span>
-    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;[TUNING] Starting tuning loop&#39;</span><span class="p">)</span>
-
-    <span class="n">tuner</span> <span class="o">=</span> <span class="n">kt</span><span class="o">.</span><span class="n">BayesianOptimization</span><span class="p">(</span>
-      <span class="bp">self</span><span class="p">,</span>
-      <span class="n">objective</span><span class="o">=</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">,</span>
-      <span class="n">max_trials</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-      <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="n">ah</span> <span class="o">=</span> <span class="n">ArtifactHelper</span><span class="p">()</span>
-
-    <span class="n">tuner</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">ds_train</span><span class="p">,</span>
-      <span class="n">validation_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_test</span><span class="p">,</span>
-      <span class="n">epochs</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-      <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">TensorBoard</span><span class="p">(</span><span class="n">log_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">ah</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;tensorboard&#39;</span><span class="p">),</span> <span class="n">write_images</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">profile_batch</span><span class="o">=</span><span class="mi">40</span><span class="p">),</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">patience</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
-      <span class="p">]</span>
-    <span class="p">)</span>
-
-    <span class="n">t</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
-    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[TUNING] Tuning finished without errors in </span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span></div>
 
 
 
@@ -423,7 +389,7 @@
       <span class="n">dropout_3</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="s1">&#39;dropout_3&#39;</span><span class="p">),</span>
       <span class="n">dropout_rate_3</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;dropout_3_rate&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]),</span>
       <span class="n">learning_rate</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">5e-5</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="mf">5e-4</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">]),</span>
-      <span class="n">epochs</span><span class="o">=</span><span class="mi">30</span>
+      <span class="n">epochs</span><span class="o">=</span><span class="mi">12</span>
     <span class="p">)</span></div></div>
 </pre></div>
 
