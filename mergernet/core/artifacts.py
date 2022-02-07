@@ -36,14 +36,20 @@ class ArtifactHelper(metaclass=SingletonMeta):
 
 
   def _upload_gdrive(self, path: Union[str, Path]):
-    filename = str(path.name)
+    name = str(path.name)
     from_path = path
-    to_path = Path(self.artifact_path.stem) / filename
+    to_path = Path(self.artifact_path.stem) / name
 
-    if self.gdrive.send(from_path, to_path):
-      L.info(f'[GDRIVE] file "{filename}" uploaded to Google Drive.')
+    if path.is_file():
+      if self.gdrive.send(from_path, to_path):
+        L.info(f'[GDRIVE] file "{name}" uploaded to Google Drive.')
+      else:
+        L.info(f'[GDRIVE] unable to upload the file "{name}"')
     else:
-      L.info(f'[GDRIVE] unable to upload the file "{filename}"')
+      if self.gdrive.send_dir(from_path, to_path):
+        L.info(f'[GDRIVE] folder "{name}" uploaded to Google Drive.')
+      else:
+        L.info(f'[GDRIVE] unable to upload the folder "{name}"')
 
 
   def config(

@@ -1,6 +1,6 @@
 from typing import Union
 from pathlib import Path
-from shutil import copy2
+from shutil import copy2, copytree
 
 
 
@@ -28,6 +28,16 @@ class GDrive:
       if not remote.parent.exists():
         remote.parent.mkdir(parents=True, exist_ok=True)
       return copy2(str(local), str(remote))
+    else:
+      return None
+
+
+  def send_dir(self, local: Path, remote: Path) -> Union[str, None]:
+    remote = self.base_path / remote
+    if self.is_mounted():
+      if not remote.parent.exists():
+        remote.parent.mkdir(parents=True, exist_ok=True)
+      return copytree(str(local), str(remote), dirs_exist_ok=True)
     else:
       return None
 
