@@ -32,7 +32,6 @@ class ConvolutionalClassifier:
 
   def compile_model(
     self,
-    name: str,
     dense_layers: None,
     pretrained_weights: str = 'imagenet',
     pretrained_arch: str = 'densenet201',
@@ -155,7 +154,6 @@ class ConvolutionalClassifier:
       x = dense_layers(x)
     outputs = tf.keras.layers.Dense(3, activation='softmax')(x)
     model = tf.keras.Model(inputs, outputs)
-    model.name = name
 
     if optimizer == 'std_adam':
       optimizer = tf.keras.optimizers.Adam(learning_rate)
@@ -187,7 +185,6 @@ class ConvolutionalClassifier:
 
   def train(
     self,
-    name: str,
     data_aug: Tuple = ('flip', 'rotation'),
     epochs: int = 12,
     sampling: str = None,
@@ -203,7 +200,6 @@ class ConvolutionalClassifier:
     tf.keras.backend.clear_session()
 
     model = self.compile_model(
-      name=name,
       dense_layers=dense_layers,
       pretrained_weights=pretrained_weights,
       pretrained_arch=pretrained_arch,
@@ -249,7 +245,7 @@ class ConvolutionalClassifier:
     ds_train = ds_train.prefetch(tf.data.AUTOTUNE)
     ds_test = ds_test.prefetch(tf.data.AUTOTUNE)
 
-    # class_weights = self.dataset.compute_class_weight() if sampling == 'class_weight' else None
+    class_weights = self.dataset.compute_class_weight()
 
     t = Timming()
     t.start()
@@ -260,7 +256,7 @@ class ConvolutionalClassifier:
       batch_size=batch_size,
       epochs=epochs,
       validation_data=ds_test,
-      # class_weight=class_weights
+      class_weight=class_weights
     )
 
     t.end()
