@@ -97,15 +97,7 @@ class SimpleHyperModel():
       ),
       loss=tf.keras.losses.CategoricalCrossentropy(from_logits=False),
       metrics=[
-        tf.keras.metrics.CategoricalAccuracy(name='accuracy'),
-        tf.keras.metrics.Precision(name='precision'),
-        tf.keras.metrics.Recall(name='recall'),
-        tf.keras.metrics.AUC(curve='ROC', name='AUC_ROC'),
-        tf.keras.metrics.AUC(curve='PR', name='AUC_PR'),
-        tf.keras.metrics.TruePositives(),
-        tf.keras.metrics.TrueNegatives(),
-        tf.keras.metrics.FalsePositives(),
-        tf.keras.metrics.FalseNegatives()
+        tf.keras.metrics.CategoricalAccuracy(name='accuracy')
       ]
     )
     return model
