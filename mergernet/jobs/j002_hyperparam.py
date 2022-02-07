@@ -9,7 +9,7 @@ from mergernet.model.hypermodel import SimpleHyperModel, BayesianTuner
 
 
 class Job(BaseJob):
-  jobid = 1
+  jobid = 2
   name = 'Test job'
   description = 'Test job description'
 
