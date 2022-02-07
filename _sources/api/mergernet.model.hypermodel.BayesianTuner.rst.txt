@@ -1,0 +1,24 @@
+mergernet.model.hypermodel.BayesianTuner
+========================================
+
+.. currentmodule:: mergernet.model.hypermodel
+
+.. autoclass:: BayesianTuner
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BayesianTuner.project_dir
+      ~BayesianTuner.remaining_trials
+   
+   

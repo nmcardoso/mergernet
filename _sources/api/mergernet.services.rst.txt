@@ -34,5 +34,6 @@
    mergernet.services.legacy
    mergernet.services.sdss
    mergernet.services.splus
+   mergernet.services.tensorboard
    mergernet.services.utils
 

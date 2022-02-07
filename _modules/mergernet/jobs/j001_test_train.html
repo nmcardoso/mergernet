@@ -158,11 +158,11 @@
   <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;Test job description&#39;</span>
 
 <div class="viewcode-block" id="Job.run"><a class="viewcode-back" href="../../../api/mergernet.jobs.j001_test_train.Job.html#mergernet.jobs.j001_test_train.Job.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="c1"># pass</span>
     <span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">data_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_path</span><span class="p">)</span>
 
     <span class="n">model</span> <span class="o">=</span> <span class="n">ConvolutionalClassifier</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
     <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+      <span class="n">pretrained_arch</span><span class="o">=</span><span class="s1">&#39;inceptionresnetv2&#39;</span><span class="p">,</span>
       <span class="n">epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
       <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span>
     <span class="p">)</span></div></div>

@@ -29,6 +29,7 @@
    :recursive:
 
    mergernet.model.baseline
+   mergernet.model.hypermodel
    mergernet.model.plot
    mergernet.model.preprocessing
 

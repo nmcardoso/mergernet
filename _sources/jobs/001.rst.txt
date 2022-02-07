@@ -2,8 +2,8 @@
 ============================
 
 * Job ID: 1
-* Run ID: 09c8e5
-* Date: 2022-02-01 23:08:38-03:00
+* Run ID: 743f9e
+* Date: 2022-02-02 22:38:02-03:00
 * Description: Test job description
 
 
@@ -13,7 +13,7 @@
 Artifacts
 ---------
 
-* `job.json <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_1_run_09c8e5/job.json>`_
+* `job.json <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_001_run_743f9e/job.json>`_
 
 
 

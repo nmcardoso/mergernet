@@ -429,13 +429,15 @@
 
 
 <div class="viewcode-block" id="Dataset.compute_class_weight"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset.compute_class_weight">[docs]</a>  <span class="k">def</span> <span class="nf">compute_class_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-    <span class="c1"># TODO: TEST</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">y_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">label_map</span><span class="p">:</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_discretize_label</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
     <span class="n">classes</span><span class="p">,</span> <span class="n">cardinalities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">total</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cardinalities</span><span class="p">)</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cardinalities</span><span class="p">)</span>
-    <span class="n">weight_map</span> <span class="o">=</span> <span class="p">{}</span>
 
+    <span class="n">weight_map</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">class_</span><span class="p">,</span> <span class="n">cardinality</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">classes</span><span class="p">,</span> <span class="n">cardinalities</span><span class="p">):</span>
       <span class="n">weight_map</span><span class="p">[</span><span class="n">class_</span><span class="p">]</span> <span class="o">=</span> <span class="n">total</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">cardinality</span><span class="p">)</span>
 

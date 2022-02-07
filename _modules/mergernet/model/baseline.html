@@ -178,7 +178,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">dense_layers</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">pretrained_weights</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;imagenet&#39;</span><span class="p">,</span>
-    <span class="n">pretrained_arch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;inception&#39;</span><span class="p">,</span>
+    <span class="n">pretrained_arch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;densenet201&#39;</span><span class="p">,</span>
     <span class="n">input_shape</span><span class="p">:</span> <span class="n">Tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
     <span class="n">optimizer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;adam&#39;</span><span class="p">,</span>
     <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">,</span>
@@ -195,55 +195,69 @@
     <span class="n">t</span> <span class="o">=</span> <span class="n">Timming</span><span class="p">()</span>
     <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;inception&#39;</span><span class="p">:</span>
-      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">inception_resnet_v2</span><span class="o">.</span><span class="n">preprocess_input</span>
-      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">InceptionResNetV2</span><span class="p">(</span>
-        <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">,</span>
-        <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">weights</span><span class="o">=</span><span class="n">pretrained_weights</span>
-      <span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+      <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">,</span>
+      <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+      <span class="n">weights</span><span class="o">=</span><span class="n">pretrained_weights</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;xception&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">xception</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">Xception</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;vgg16&#39;</span><span class="p">:</span>
       <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">vgg16</span><span class="o">.</span><span class="n">preprocess_input</span>
-      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">VGG16</span><span class="p">(</span>
-        <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">,</span>
-        <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">weights</span><span class="o">=</span><span class="n">pretrained_weights</span>
-      <span class="p">)</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">VGG16</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;vgg19&#39;</span><span class="p">:</span>
       <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">vgg19</span><span class="o">.</span><span class="n">preprocess_input</span>
-      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">VGG19</span><span class="p">(</span>
-        <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">,</span>
-        <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">weights</span><span class="o">=</span><span class="n">pretrained_weights</span>
-      <span class="p">)</span>
-    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;efficientnetb2&#39;</span><span class="p">:</span>
-      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">efficientnet</span><span class="o">.</span><span class="n">preprocess_input</span>
-      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">EfficientNetB2</span><span class="p">(</span>
-        <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">,</span>
-        <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">weights</span><span class="o">=</span><span class="n">pretrained_weights</span>
-      <span class="p">)</span>
-    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;efficientnetb7&#39;</span><span class="p">:</span>
-      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">efficientnet</span><span class="o">.</span><span class="n">preprocess_input</span>
-      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">EfficientNetB7</span><span class="p">(</span>
-        <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">,</span>
-        <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">weights</span><span class="o">=</span><span class="n">pretrained_weights</span>
-      <span class="p">)</span>
-    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;densenet&#39;</span><span class="p">,</span> <span class="s1">&#39;densenet201&#39;</span><span class="p">]:</span>
-      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">densenet</span><span class="o">.</span><span class="n">preprocess_input</span>
-      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">DenseNet201</span><span class="p">(</span>
-        <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">,</span>
-        <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">weights</span><span class="o">=</span><span class="n">pretrained_weights</span>
-      <span class="p">)</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">VGG19</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;resnet50&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">resnet</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">ResNet50</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;resnet101&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">resnet</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">ResNet101</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;resnet50v2&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">resnet_v2</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">ResNet50V2</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;resnet101v2&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">resnet_v2</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">ResNet101V2</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;inceptionv3&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">inception_v3</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">InceptionV3</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;inceptionresnetv2&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">inception_resnet_v2</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">InceptionResNetV2</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;densenet169&#39;</span><span class="p">:</span>
       <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">densenet</span><span class="o">.</span><span class="n">preprocess_input</span>
-      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">DenseNet169</span><span class="p">(</span>
-        <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">,</span>
-        <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">weights</span><span class="o">=</span><span class="n">pretrained_weights</span>
-      <span class="p">)</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">DenseNet169</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;densenet201&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">densenet</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">DenseNet201</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;efficientnetb0&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">efficientnet</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">EfficientNetB0</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;efficientnetb1&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">efficientnet</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">EfficientNetB1</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;efficientnetb2&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">efficientnet</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">EfficientNetB2</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;efficientnetb3&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">efficientnet</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">EfficientNetB3</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;efficientnetb4&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">efficientnet</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">EfficientNetB4</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;efficientnetb5&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">efficientnet</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">EfficientNetB5</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;efficientnetb6&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">efficientnet</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">EfficientNetB6</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;efficientnetb7&#39;</span><span class="p">:</span>
+      <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">efficientnet</span><span class="o">.</span><span class="n">preprocess_input</span>
+      <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">EfficientNetB7</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
 
 
     <span class="n">data_aug_layers</span> <span class="o">=</span> <span class="p">[</span>
@@ -324,9 +338,7 @@
     <span class="n">input_shape</span><span class="p">:</span> <span class="n">Tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
     <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">,</span>
-    <span class="n">optimizer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;rmsprop&#39;</span><span class="p">,</span>
-    <span class="n">save_plot_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">optimizer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;rmsprop&#39;</span>
   <span class="p">):</span>
     <span class="n">IMAGE_SIZE</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
     <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">clear_session</span><span class="p">()</span>
@@ -338,8 +350,7 @@
       <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">,</span>
       <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
       <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span>
-      <span class="n">data_aug</span><span class="o">=</span><span class="n">data_aug</span><span class="p">,</span>
-      <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
+      <span class="n">data_aug</span><span class="o">=</span><span class="n">data_aug</span>
     <span class="p">)</span>
 
     <span class="n">ds_train</span><span class="p">,</span> <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -378,7 +389,7 @@
     <span class="n">ds_train</span> <span class="o">=</span> <span class="n">ds_train</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">AUTOTUNE</span><span class="p">)</span>
     <span class="n">ds_test</span> <span class="o">=</span> <span class="n">ds_test</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">AUTOTUNE</span><span class="p">)</span>
 
-    <span class="c1"># class_weights = self.dataset.compute_class_weight() if sampling == &#39;class_weight&#39; else None</span>
+    <span class="n">class_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">compute_class_weight</span><span class="p">()</span>
 
     <span class="n">t</span> <span class="o">=</span> <span class="n">Timming</span><span class="p">()</span>
     <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
@@ -389,8 +400,7 @@
       <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
       <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
       <span class="n">validation_data</span><span class="o">=</span><span class="n">ds_test</span><span class="p">,</span>
-      <span class="c1"># class_weight=class_weights,</span>
-      <span class="n">verbose</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
+      <span class="n">class_weight</span><span class="o">=</span><span class="n">class_weights</span>
     <span class="p">)</span>
 
     <span class="n">t</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
@@ -403,21 +413,20 @@
     <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;[TRAIN] History artifact saved.&#39;</span><span class="p">)</span>
 
     <span class="n">h</span> <span class="o">=</span> <span class="n">history</span><span class="o">.</span><span class="n">history</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training Accuracy&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Validation Accuracy&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training Loss&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="s1">&#39;val_loss&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Validation Loss&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="nb">max</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">())]),</span> <span class="nb">min</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">())])])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;epoch&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;metric&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span><span class="o">.</span><span class="n">set_alpha</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">save_plot_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-      <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_plot_path</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">pad_inches</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-      <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="c1"># plt.figure(figsize=(7, 4.2))</span>
+    <span class="c1"># plt.plot(h[&#39;accuracy&#39;], label=&#39;Training Accuracy&#39;)</span>
+    <span class="c1"># plt.plot(h[&#39;val_accuracy&#39;], label=&#39;Validation Accuracy&#39;)</span>
+    <span class="c1"># plt.plot(h[&#39;loss&#39;], label=&#39;Training Loss&#39;)</span>
+    <span class="c1"># plt.plot(h[&#39;val_loss&#39;], label=&#39;Validation Loss&#39;)</span>
+    <span class="c1"># plt.ylim([max([0, min(plt.ylim())]), min([1, max(plt.ylim())])])</span>
+    <span class="c1"># plt.xlabel(&#39;epoch&#39;)</span>
+    <span class="c1"># plt.ylabel(&#39;metric&#39;)</span>
+    <span class="c1"># plt.legend(ncol=2).get_frame().set_alpha(0.75)</span>
+    <span class="c1"># if save_plot_path is not None:</span>
+    <span class="c1">#   plt.savefig(save_plot_path, bbox_inches=&#39;tight&#39;, pad_inches=0.01)</span>
+    <span class="c1"># plt.show()</span>
+    <span class="c1"># plt.clf()</span>
+    <span class="c1"># plt.close()</span>
 
     <span class="k">return</span> <span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">history</span><span class="p">)</span></div></div>
 

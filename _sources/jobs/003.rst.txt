@@ -2,8 +2,8 @@
 ============================
 
 * Job ID: 1
-* Run ID: 0d0e02
-* Date: 2022-02-01 17:49:20-03:00
+* Run ID: 311840
+* Date: 2022-02-02 22:23:51-03:00
 * Description: Test job description
 
 
@@ -13,91 +13,11 @@
 Artifacts
 ---------
 
-* `job.json <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_1_run_0d0e02/job.json>`_
-* `job.log <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_1_run_0d0e02/job.log>`_
+* `job.json <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_001_run_311840/job.json>`_
 
 
 
 
 
 
-
-
-
-Log
----
-
-.. list-table:: Log file
-    :header-rows: 1
-    :widths: 10 30
-
-    * - Timestamp
-      - Message
-    * - 2022-02-01 20:49:21 
-      - INFO file uploaded
-
-    * - 2022-02-01 20:49:21 
-      - INFO [BUILD] Compiling model with hyperparameters:
-
-    * - 2022-02-01 20:49:21 
-      - INFO [BUILD] pretrained_weights: imagenet
-
-    * - 2022-02-01 20:49:21 
-      - INFO [BUILD] pretrained_arch: inception
-
-    * - 2022-02-01 20:49:21 
-      - INFO [BUILD] optimizer: adam
-
-    * - 2022-02-01 20:49:21 
-      - INFO [BUILD] learning_rate: 0.0001
-
-    * - 2022-02-01 20:49:21 
-      - INFO [BUILD] data_aug: ('flip', 'rotation')
-
-    * - 2022-02-01 20:49:31 
-      - INFO [BUILD] Model successfully compilated in 0:00:10.464740.
-
-    * - 2022-02-01 20:49:33 
-      - INFO [DATASET] Fold 0 loaded
-
-    * - 2022-02-01 20:49:33 
-      - DEBUG [DATASET] apply: load_jpg
-
-    * - 2022-02-01 20:49:33 
-      - DEBUG [DATASET] Example shape (X, y): (128, 128, 3), ()
-
-    * - 2022-02-01 20:49:33 
-      - DEBUG [DATASET] apply: one_hot
-
-    * - 2022-02-01 20:49:33 
-      - DEBUG [DATASET] Example shape (X, y): (128, 128, 3), (3,)
-
-    * - 2022-02-01 20:49:34 
-      - DEBUG [DATASET] apply: shuffle
-
-    * - 2022-02-01 20:49:34 
-      - DEBUG [DATASET] Example shape (X, y): (128, 128, 3), (3,)
-
-    * - 2022-02-01 20:49:36 
-      - DEBUG [DATASET] apply: batch
-
-    * - 2022-02-01 20:49:36 
-      - DEBUG [DATASET] Example shape (X, y): (32, 128, 128, 3), (32, 3)
-
-    * - 2022-02-01 20:49:36 
-      - DEBUG [DATASET] apply: batch
-
-    * - 2022-02-01 20:49:36 
-      - DEBUG [DATASET] Test example shape (X, y): (32, 128, 128, 3), (32, 3)
-
-    * - 2022-02-01 20:49:36 
-      - INFO [TRAIN] Starting training loop
-
-    * - 2022-02-02 00:47:22 
-      - INFO [TRAIN] Training finished without errors in 3:57:45.336696.
-
-    * - 2022-02-02 00:47:22 
-      - INFO [TRAIN] History artifact saved.
-
-    
 
