@@ -8,6 +8,7 @@ from mergernet.core.dataset import Dataset
 from mergernet.core.utils import Timming
 from mergernet.core.artifacts import ArtifactHelper
 from mergernet.model.preprocessing import load_jpg, one_hot
+from mergernet.model.callback import DeltaStopping
 
 
 L = logging.getLogger('job')
@@ -160,7 +161,8 @@ class SimpleHyperModel():
           write_images=True,
           profile_batch=40
         ),
-        tf.keras.callbacks.EarlyStopping(patience=8)
+        tf.keras.callbacks.EarlyStopping(patience=3),
+        DeltaStopping()
       ]
     )
 
@@ -170,34 +172,6 @@ class SimpleHyperModel():
     ev = model.evaluate(self.ds_test)
 
     return ev
-
-
-  def pipeline(self):
-    t = Timming()
-    t.start()
-    L.info('[TUNING] Starting tuning loop')
-
-    tuner = kt.BayesianOptimization(
-      self,
-      objective='val_accuracy',
-      max_trials=50,
-      seed=42,
-    )
-
-    ah = ArtifactHelper()
-
-    tuner.search(
-      self.ds_train,
-      validation_data=self.ds_test,
-      epochs=30,
-      callbacks=[
-        tf.keras.callbacks.TensorBoard(log_dir=str(ah.artifact_path / 'tensorboard'), write_images=True, profile_batch=40),
-        tf.keras.callbacks.EarlyStopping(patience=8)
-      ]
-    )
-
-    t.end()
-    L.info(f'[TUNING] Tuning finished without errors in {t.duration()}.')
 
 
 
@@ -271,5 +245,5 @@ class BayesianTuner(kt.BayesianOptimization):
       dropout_3=hp.Boolean('dropout_3'),
       dropout_rate_3=hp.Choice('dropout_3_rate', [0.2, 0.3, 0.4, 0.5]),
       learning_rate=hp.Choice('learning_rate', [1e-5, 5e-5, 1e-4, 5e-4, 1e-3]),
-      epochs=30
+      epochs=12
     )
