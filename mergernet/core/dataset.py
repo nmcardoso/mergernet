@@ -12,13 +12,14 @@ This module defines others classes and functions as well, who perform complement
 from pathlib import Path
 from typing import Dict, List, Generator, Sequence, Tuple, Union
 
-from mergernet.core.utils import load_image, load_table
-from mergernet.core.constants import RANDOM_SEED
-
 from sklearn.model_selection import StratifiedKFold
 import tensorflow as tf
 import numpy as np
 import pandas as pd
+
+from mergernet.core.utils import load_image, load_table
+from mergernet.core.constants import RANDOM_SEED
+from mergernet.services.google import GDrive
 
 
 
@@ -182,8 +183,8 @@ class Dataset:
     Configuration object.
   """
   RGB_CONFIG = DatasetConfig(
-    archive_url='https://drive.google.com/uc?export=download&id=11M_Vw-oYLtYFBP6IV_EQRIRIpYAeS2y7',
-    table_url='https://drive.google.com/uc?export=download&id=1yHnyOdXS-HKzIsbenSi646jyf2AWU9vo',
+    archive_url=GDrive.get_url('11M_Vw-oYLtYFBP6IV_EQRIRIpYAeS2y7'),
+    table_url=GDrive.get_url('1yHnyOdXS-HKzIsbenSi646jyf2AWU9vo'),
     archive_path=Path('sdss_lupton_jpg_128.tar.gz'),
     images_path=Path('sdss_lupton_jpg_128'),
     table_path=Path('reference.csv'),

@@ -11,6 +11,11 @@ class GDrive:
     if base_path: self.base_path = Path(base_path)
 
 
+  @classmethod
+  def get_url(fileid):
+    return f'https://drive.google.com/uc?export=download&id={fileid}'
+
+
   def is_mounted(self) -> bool:
     if self.base_path:
       return self.base_path.is_dir()
