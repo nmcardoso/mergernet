@@ -11,7 +11,7 @@ class GDrive:
     if base_path: self.base_path = Path(base_path)
 
 
-  @classmethod
+  @staticmethod
   def get_url(fileid):
     return f'https://drive.google.com/uc?export=download&id={fileid}'
 
