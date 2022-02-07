@@ -2,8 +2,8 @@
 ============================
 
 * Job ID: 2
-* Run ID: 2733fa
-* Date: 2022-02-07 14:22:13-03:00
+* Run ID: 0ae587
+* Date: 2022-02-07 14:56:28-03:00
 * Description: Test job description
 
 
@@ -13,8 +13,8 @@
 Artifacts
 ---------
 
-* `job.log <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_2733fa/job.log>`_
-* `job.json <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_2733fa/job.json>`_
+* `job.log <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_0ae587/job.log>`_
+* `job.json <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_0ae587/job.json>`_
 
 
 
@@ -362,6 +362,57 @@ Log
 
     * - 2022-02-07 17:48:53 
       - INFO [TRAIN] Training finished without errors in 00:26:30.
+
+    * - 2022-02-07 17:50:16 
+      - INFO [GITHUB] file "job.log" successfully uploaded to github.
+
+    * - 2022-02-07 17:50:16 
+      - INFO [GDRIVE] file "job.log" uploaded to Google Drive.
+
+    * - 2022-02-07 17:56:29 
+      - INFO [GITHUB] file "job.json" successfully uploaded to github.
+
+    * - 2022-02-07 17:56:29 
+      - INFO [GDRIVE] file "job.json" uploaded to Google Drive.
+
+    * - 2022-02-07 17:56:30 
+      - INFO [DATASET] Fold 0 loaded
+
+    * - 2022-02-07 17:56:30 
+      - DEBUG [DATASET] apply: load_jpg
+
+    * - 2022-02-07 17:56:30 
+      - DEBUG [DATASET] Example shape (X, y): (128, 128, 3), ()
+
+    * - 2022-02-07 17:56:30 
+      - DEBUG [DATASET] apply: one_hot
+
+    * - 2022-02-07 17:56:30 
+      - DEBUG [DATASET] Example shape (X, y): (128, 128, 3), (3,)
+
+    * - 2022-02-07 17:56:32 
+      - DEBUG [DATASET] apply: shuffle
+
+    * - 2022-02-07 17:56:32 
+      - DEBUG [DATASET] Example shape (X, y): (128, 128, 3), (3,)
+
+    * - 2022-02-07 17:56:34 
+      - DEBUG [DATASET] apply: batch
+
+    * - 2022-02-07 17:56:34 
+      - DEBUG [DATASET] Example shape (X, y): (64, 128, 128, 3), (64, 3)
+
+    * - 2022-02-07 17:56:35 
+      - DEBUG [DATASET] apply: batch
+
+    * - 2022-02-07 17:56:35 
+      - DEBUG [DATASET] Test example shape (X, y): (64, 128, 128, 3), (64, 3)
+
+    * - 2022-02-07 17:56:39 
+      - INFO [TRAIN] Starting training loop
+
+    * - 2022-02-07 18:23:08 
+      - INFO [TRAIN] Training finished without errors in 00:26:29.
 
     
 
