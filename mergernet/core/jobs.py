@@ -54,6 +54,10 @@ class BaseJob:
   def post_run(self):
     ah = ArtifactHelper()
     ah.upload_log()
+    if (self.artifact_path / 'tensorboard').exists():
+      ah.upload_dir(self.artifact_path / 'tensorboard')
+    if (self.artifact_path / 'tuner').exists():
+      ah.upload_dir(self.artifact_path / 'tuner')
 
 
   def get_system_resources(self):
