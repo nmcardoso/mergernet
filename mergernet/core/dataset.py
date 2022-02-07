@@ -183,11 +183,12 @@ class Dataset:
     Configuration object.
   """
   RGB_CONFIG = DatasetConfig(
-    archive_url=GDrive.get_url('11M_Vw-oYLtYFBP6IV_EQRIRIpYAeS2y7'),
-    table_url=GDrive.get_url('1yHnyOdXS-HKzIsbenSi646jyf2AWU9vo'),
+    # table_url=GDrive.get_url('1yHnyOdXS-HKzIsbenSi646jyf2AWU9vo'),
+    archive_url=GDrive.get_url('1ltKXhZgA4Ab60FGKCqybhebSiAL2LMgG'),
+    table_url=GDrive.get_url('1QgUYkzcjaCmo-kcgM8s2U8PYlx0C58oD'),
     archive_path=Path('sdss_lupton_jpg_128.tar.gz'),
     images_path=Path('sdss_lupton_jpg_128'),
-    table_path=Path('reference.csv'),
+    table_path=Path('reference_darg.csv'),
     X_column='filename',
     y_column='class',
     fold_column='fold',
