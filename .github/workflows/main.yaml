@@ -19,6 +19,7 @@ jobs:
 
     - name: install deps
       run: |
+        pip install -U wheel
         pip install -r docs-requirements.txt
 
     - name: build docs
