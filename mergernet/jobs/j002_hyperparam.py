@@ -17,7 +17,7 @@ class Job(BaseJob):
     ds = Dataset(data_path=self.data_path)
 
     tuner = BayesianTuner(
-      max_trials=15,
+      max_trials=1,
       overwrite=True,
       directory=self.artifact_path / 'tuner',
       project_name='resnet'
