@@ -37,7 +37,7 @@ class GDrive:
     if self.is_mounted():
       if not remote.parent.exists():
         remote.parent.mkdir(parents=True, exist_ok=True)
-      return copytree(str(local), str(remote), dirs_exist_ok=True)
+      return copytree(str(local), str(remote))
     else:
       return None
 
