@@ -10,10 +10,12 @@ import requests
 
 def download_file(
   url: str,
-  save_path: Path,
+  save_path: Union[str, Path],
   replace: bool = False,
   http_client: requests.Session = None
 ):
+  save_path = Path(save_path)
+
   if not replace and save_path.exists():
     return
 
