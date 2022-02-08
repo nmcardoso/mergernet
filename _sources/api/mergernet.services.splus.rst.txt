@@ -9,6 +9,13 @@ mergernet.services.splus
 
    
    
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      update_authorization
+   
    
 
    
@@ -19,6 +26,7 @@ mergernet.services.splus
       :toctree:
       :template: class-template.rst
    
+      ImageType
       SplusService
    
    

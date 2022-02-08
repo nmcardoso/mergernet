@@ -172,6 +172,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/mergernet.services.imaging.BaseImagingService.html#mergernet.services.imaging.BaseImagingService._abc_impl">_abc_impl (mergernet.services.imaging.BaseImagingService attribute)</a>
 </li>
+      <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._batch_download">_batch_download() (mergernet.services.splus.SplusService method)</a>
+</li>
       <li><a href="api/mergernet.model.hypermodel.BayesianTuner.html#mergernet.model.hypermodel.BayesianTuner._build_and_fit_model">_build_and_fit_model() (mergernet.model.hypermodel.BayesianTuner method)</a>
 </li>
       <li><a href="api/mergernet.model.hypermodel.BayesianTuner.html#mergernet.model.hypermodel.BayesianTuner._build_hypermodel">_build_hypermodel() (mergernet.model.hypermodel.BayesianTuner method)</a>
@@ -188,6 +190,8 @@
 </li>
       <li><a href="api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset._discretize_label">_discretize_label() (mergernet.core.dataset.Dataset method)</a>
 </li>
+      <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._download_image">_download_image() (mergernet.services.splus.SplusService method)</a>
+</li>
       <li><a href="api/mergernet.services.github.GithubService.html#mergernet.services.github.GithubService._encode_content">_encode_content() (mergernet.services.github.GithubService method)</a>
 </li>
       <li><a href="api/mergernet.core.utils.Timming.html#mergernet.core.utils.Timming._format_time">_format_time() (mergernet.core.utils.Timming method)</a>
@@ -203,7 +207,11 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/mergernet.services.github.GithubService.html#mergernet.services.github.GithubService._get_url">_get_url() (mergernet.services.github.GithubService method)</a>
+
+      <ul>
+        <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._get_url">(mergernet.services.splus.SplusService method)</a>
 </li>
+      </ul></li>
       <li><a href="api/mergernet.model.callback.DeltaStopping.html#mergernet.model.callback.DeltaStopping._implements_predict_batch_hooks">_implements_predict_batch_hooks() (mergernet.model.callback.DeltaStopping method)</a>
 </li>
       <li><a href="api/mergernet.model.callback.DeltaStopping.html#mergernet.model.callback.DeltaStopping._implements_test_batch_hooks">_implements_test_batch_hooks() (mergernet.model.callback.DeltaStopping method)</a>
@@ -222,6 +230,8 @@
         <li><a href="api/mergernet.core.logger.Logger.html#mergernet.core.logger.Logger._lock">(mergernet.core.logger.Logger attribute)</a>
 </li>
         <li><a href="api/mergernet.core.utils.SingletonMeta.html#mergernet.core.utils.SingletonMeta._lock">(mergernet.core.utils.SingletonMeta attribute)</a>
+</li>
+        <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._lock">(mergernet.services.splus.SplusService attribute)</a>
 </li>
       </ul></li>
       <li><a href="api/mergernet.model.hypermodel.BayesianTuner.html#mergernet.model.hypermodel.BayesianTuner._override_compile_args">_override_compile_args() (mergernet.model.hypermodel.BayesianTuner method)</a>
@@ -268,8 +278,6 @@
 </li>
       <li><a href="api/mergernet.services.utils.batch_download_file.html#mergernet.services.utils.batch_download_file">batch_download_file() (in module mergernet.services.utils)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/mergernet.services.imaging.BaseImagingService.html#mergernet.services.imaging.BaseImagingService.batch_download_rgb">batch_download_rgb() (mergernet.services.imaging.BaseImagingService method)</a>
 
       <ul>
@@ -278,6 +286,10 @@
         <li><a href="api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.batch_download_rgb">(mergernet.services.sdss.SloanService method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.batch_image_download">batch_image_download() (mergernet.services.splus.SplusService method)</a>
+</li>
       <li><a href="api/mergernet.model.hypermodel.BayesianTuner.html#mergernet.model.hypermodel.BayesianTuner">BayesianTuner (class in mergernet.model.hypermodel)</a>
 </li>
       <li><a href="api/mergernet.model.hypermodel.SimpleHyperModel.html#mergernet.model.hypermodel.SimpleHyperModel.build">build() (mergernet.model.hypermodel.SimpleHyperModel method)</a>
@@ -330,13 +342,17 @@
         <li><a href="api/mergernet.jobs.j002_hyperparam.Job.html#mergernet.jobs.j002_hyperparam.Job.description">(mergernet.jobs.j002_hyperparam.Job attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/mergernet.core.dataset.DistributionKFold.html#mergernet.core.dataset.DistributionKFold">DistributionKFold (class in mergernet.core.dataset)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset.download">download() (mergernet.core.dataset.Dataset method)</a>
 </li>
       <li><a href="api/mergernet.services.utils.download_file.html#mergernet.services.utils.download_file">download_file() (in module mergernet.services.utils)</a>
+</li>
+      <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.download_fits">download_fits() (mergernet.services.splus.SplusService method)</a>
+</li>
+      <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.download_lupton_rgb">download_lupton_rgb() (mergernet.services.splus.SplusService method)</a>
 </li>
       <li><a href="api/mergernet.services.imaging.BaseImagingService.html#mergernet.services.imaging.BaseImagingService.download_rgb">download_rgb() (mergernet.services.imaging.BaseImagingService method)</a>
 
@@ -346,6 +362,8 @@
         <li><a href="api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.download_rgb">(mergernet.services.sdss.SloanService method)</a>
 </li>
       </ul></li>
+      <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.download_trilogy_rgb">download_trilogy_rgb() (mergernet.services.splus.SplusService method)</a>
+</li>
       <li><a href="api/mergernet.core.utils.Timming.html#mergernet.core.utils.Timming.duration">duration() (mergernet.core.utils.Timming method)</a>
 </li>
   </ul></td>
@@ -367,6 +385,8 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/mergernet.model.hypermodel.SimpleHyperModel.html#mergernet.model.hypermodel.SimpleHyperModel.fit">fit() (mergernet.model.hypermodel.SimpleHyperModel method)</a>
+</li>
+      <li><a href="api/mergernet.services.splus.ImageType.html#mergernet.services.splus.ImageType.fits">fits (mergernet.services.splus.ImageType attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -391,7 +411,11 @@
       <li><a href="api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset.get_fold">get_fold() (mergernet.core.dataset.Dataset method)</a>
 </li>
       <li><a href="api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.get_image_filename">get_image_filename() (mergernet.services.sdss.SloanService method)</a>
+
+      <ul>
+        <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.get_image_filename">(mergernet.services.splus.SplusService method)</a>
 </li>
+      </ul></li>
       <li><a href="api/mergernet.services.github.GithubService.html#mergernet.services.github.GithubService.get_lastest_job_run">get_lastest_job_run() (mergernet.services.github.GithubService method)</a>
 </li>
   </ul></td>
@@ -434,6 +458,8 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mergernet.services.splus.ImageType.html#mergernet.services.splus.ImageType">ImageType (class in mergernet.services.splus)</a>
+</li>
       <li><a href="api/mergernet.core.trilogy.imscale.html#mergernet.core.trilogy.imscale">imscale() (in module mergernet.core.trilogy)</a>
 </li>
   </ul></td>
@@ -487,6 +513,8 @@
       <li><a href="api/mergernet.core.utils.load_table.html#mergernet.core.utils.load_table">load_table() (in module mergernet.core.utils)</a>
 </li>
       <li><a href="api/mergernet.core.logger.Logger.html#mergernet.core.logger.Logger">Logger (class in mergernet.core.logger)</a>
+</li>
+      <li><a href="api/mergernet.services.splus.ImageType.html#mergernet.services.splus.ImageType.lupton">lupton (mergernet.services.splus.ImageType attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -984,6 +1012,8 @@
 </li>
       <li><a href="api/mergernet.model.plot.train_metrics.html#mergernet.model.plot.train_metrics">train_metrics() (in module mergernet.model.plot)</a>
 </li>
+      <li><a href="api/mergernet.services.splus.ImageType.html#mergernet.services.splus.ImageType.trilogy">trilogy (mergernet.services.splus.ImageType attribute)</a>
+</li>
       <li><a href="api/mergernet.core.rgb.RGB.html#mergernet.core.rgb.RGB.trilogy_fits_to_png">trilogy_fits_to_png() (mergernet.core.rgb.RGB method)</a>
 </li>
   </ul></td>
@@ -992,6 +1022,10 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mergernet.services.splus.update_authorization.html#mergernet.services.splus.update_authorization">update_authorization() (in module mergernet.services.splus)</a>
+</li>
+      <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.update_token">update_token() (mergernet.services.splus.SplusService method)</a>
+</li>
       <li><a href="api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.upload">upload() (mergernet.core.artifacts.ArtifactHelper method)</a>
 </li>
       <li><a href="api/mergernet.services.tensorboard.TensorboardService.html#mergernet.services.tensorboard.TensorboardService.upload_assets">upload_assets() (mergernet.services.tensorboard.TensorboardService method)</a>
@@ -1000,10 +1034,10 @@
 </li>
       <li><a href="api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.upload_json">upload_json() (mergernet.core.artifacts.ArtifactHelper method)</a>
 </li>
-      <li><a href="api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.upload_log">upload_log() (mergernet.core.artifacts.ArtifactHelper method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.upload_log">upload_log() (mergernet.core.artifacts.ArtifactHelper method)</a>
+</li>
       <li><a href="api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.upload_model">upload_model() (mergernet.core.artifacts.ArtifactHelper method)</a>
 </li>
       <li><a href="api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.upload_text">upload_text() (mergernet.core.artifacts.ArtifactHelper method)</a>

@@ -142,8 +142,259 @@
               <div>
                 
   <h1>Source code for mergernet.services.splus</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="SplusService"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService">[docs]</a><span></span><span class="k">class</span> <span class="nc">SplusService</span><span class="p">:</span>
-  <span class="k">pass</span></div>
+<span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Lock</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">FunctionType</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span>
+<span class="kn">import</span> <span class="nn">concurrent.futures</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">tqdm</span>
+
+<span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">SPLUS_PASS</span><span class="p">,</span> <span class="n">SPLUS_USER</span>
+<span class="kn">from</span> <span class="nn">mergernet.services.utils</span> <span class="kn">import</span> <span class="n">download_file</span><span class="p">,</span> <span class="n">batch_download_file</span><span class="p">,</span> <span class="n">append_query_params</span>
+
+
+
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s1">&#39;https://splus.cloud/api/&#39;</span>
+<span class="n">LOGIN_ROUTE</span> <span class="o">=</span> <span class="s1">&#39;auth/login&#39;</span>
+<span class="n">LUPTON_ROUTE</span> <span class="o">=</span> <span class="s1">&#39;get_lupton_image/</span><span class="si">{ra}</span><span class="s1">/</span><span class="si">{dec}</span><span class="s1">/</span><span class="si">{size}</span><span class="s1">/</span><span class="si">{r_band}</span><span class="s1">/</span><span class="si">{g_band}</span><span class="s1">/</span><span class="si">{b_band}</span><span class="s1">/</span><span class="si">{stretch}</span><span class="s1">/</span><span class="si">{Q}</span><span class="s1">&#39;</span>
+<span class="n">TRILOGY_ROUTE</span> <span class="o">=</span> <span class="s1">&#39;get_image/</span><span class="si">{ra}</span><span class="s1">/</span><span class="si">{dec}</span><span class="s1">/</span><span class="si">{size}</span><span class="s1">/</span><span class="si">{r_band}</span><span class="s1">-</span><span class="si">{g_band}</span><span class="s1">-</span><span class="si">{b_band}</span><span class="s1">/</span><span class="si">{noise}</span><span class="s1">/</span><span class="si">{saturation}</span><span class="s1">&#39;</span>
+<span class="n">FITS_ROUTE</span> <span class="o">=</span> <span class="s1">&#39;get_cut/</span><span class="si">{ra}</span><span class="s1">/</span><span class="si">{dec}</span><span class="s1">/</span><span class="si">{size}</span><span class="s1">/</span><span class="si">{band}</span><span class="s1">&#39;</span>
+
+
+
+<div class="viewcode-block" id="update_authorization"><a class="viewcode-back" href="../../../api/mergernet.services.splus.update_authorization.html#mergernet.services.splus.update_authorization">[docs]</a><span class="k">def</span> <span class="nf">update_authorization</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">this</span><span class="p">:</span> <span class="n">SplusService</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">updated</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">update_token</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">updated</span><span class="p">:</span>
+      <span class="n">this</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+        <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Token </span><span class="si">{</span><span class="n">this</span><span class="o">.</span><span class="n">token</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+      <span class="p">})</span>
+    <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+
+<div class="viewcode-block" id="ImageType"><a class="viewcode-back" href="../../../api/mergernet.services.splus.ImageType.html#mergernet.services.splus.ImageType">[docs]</a><span class="k">class</span> <span class="nc">ImageType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+  <span class="n">trilogy</span> <span class="o">=</span> <span class="s1">&#39;trilogy&#39;</span>
+  <span class="n">lupton</span> <span class="o">=</span> <span class="s1">&#39;lupton&#39;</span>
+  <span class="n">fits</span> <span class="o">=</span> <span class="s1">&#39;fits&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="SplusService"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService">[docs]</a><span class="k">class</span> <span class="nc">SplusService</span><span class="p">:</span>
+  <span class="n">_lock</span><span class="p">:</span> <span class="n">Lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">SPLUS_USER</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">SPLUS_PASS</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">credentials</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+      <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="n">password</span>
+    <span class="p">}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">token_duration</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="SplusService.update_token"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.update_token">[docs]</a>  <span class="k">def</span> <span class="nf">update_token</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">SplusService</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+      <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_duration</span><span class="p">):</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">_get_url</span><span class="p">(</span><span class="n">LOGIN_ROUTE</span><span class="p">),</span>
+          <span class="n">json</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">credentials</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+          <span class="k">if</span> <span class="s1">&#39;application/json&#39;</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">]:</span>
+            <span class="n">resp_body</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s1">&#39;token&#39;</span> <span class="ow">in</span> <span class="n">resp_body</span><span class="p">:</span>
+              <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">resp_body</span><span class="p">[</span><span class="s1">&#39;token&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;timestamp&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+              <span class="p">}</span>
+              <span class="k">return</span> <span class="kc">True</span> <span class="c1"># updated</span>
+    <span class="k">return</span> <span class="kc">False</span> <span class="c1"># using cache</span></div>
+
+
+<div class="viewcode-block" id="SplusService.download_lupton_rgb"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.download_lupton_rgb">[docs]</a>  <span class="k">def</span> <span class="nf">download_lupton_rgb</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">ra</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">dec</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">replace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+    <span class="n">r_band</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span>
+    <span class="n">g_band</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span>
+    <span class="n">b_band</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span>
+    <span class="n">stretch</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">Q</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
+  <span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_download_image</span><span class="p">(</span>
+      <span class="n">LUPTON_ROUTE</span><span class="p">,</span>
+      <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
+      <span class="n">replace</span><span class="o">=</span><span class="n">replace</span><span class="p">,</span>
+      <span class="n">ra</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">ra</span><span class="p">),</span>
+      <span class="n">dec</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">dec</span><span class="p">),</span>
+      <span class="n">size</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
+      <span class="n">r_band</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">r_band</span><span class="p">),</span>
+      <span class="n">g_band</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">g_band</span><span class="p">),</span>
+      <span class="n">b_band</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">b_band</span><span class="p">),</span>
+      <span class="n">stretch</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">stretch</span><span class="p">),</span>
+      <span class="n">Q</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">Q</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SplusService.download_trilogy_rgb"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.download_trilogy_rgb">[docs]</a>  <span class="k">def</span> <span class="nf">download_trilogy_rgb</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">ra</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">dec</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">replace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+    <span class="n">r_band</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;F861&#39;</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">],</span>
+    <span class="n">g_band</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;F515&#39;</span><span class="p">,</span> <span class="s1">&#39;F660&#39;</span><span class="p">],</span>
+    <span class="n">b_band</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;U&#39;</span><span class="p">,</span> <span class="s1">&#39;F378&#39;</span><span class="p">,</span> <span class="s1">&#39;F395&#39;</span><span class="p">,</span> <span class="s1">&#39;F410&#39;</span><span class="p">,</span> <span class="s1">&#39;F430&#39;</span><span class="p">],</span>
+    <span class="n">noise</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.15</span><span class="p">,</span>
+    <span class="n">saturation</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.15</span>
+  <span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_download_image</span><span class="p">(</span>
+      <span class="n">TRILOGY_ROUTE</span><span class="p">,</span>
+      <span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="p">,</span>
+      <span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="p">,</span>
+      <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
+      <span class="n">replace</span><span class="o">=</span><span class="n">replace</span><span class="p">,</span>
+      <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
+      <span class="n">r_band</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">r_band</span><span class="p">),</span>
+      <span class="n">g_band</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">g_band</span><span class="p">),</span>
+      <span class="n">b_band</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">b_band</span><span class="p">),</span>
+      <span class="n">noise</span><span class="o">=</span><span class="n">noise</span><span class="p">,</span>
+      <span class="n">saturation</span><span class="o">=</span><span class="n">saturation</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SplusService.download_fits"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.download_fits">[docs]</a>  <span class="k">def</span> <span class="nf">download_fits</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">ra</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">dec</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">replace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+    <span class="n">band</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;R&#39;</span>
+  <span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_download_image</span><span class="p">(</span>
+      <span class="n">FITS_ROUTE</span><span class="p">,</span>
+      <span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="p">,</span>
+      <span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="p">,</span>
+      <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
+      <span class="n">replace</span><span class="o">=</span><span class="n">replace</span><span class="p">,</span>
+      <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
+      <span class="n">band</span><span class="o">=</span><span class="n">band</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SplusService.batch_image_download"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.batch_image_download">[docs]</a>  <span class="k">def</span> <span class="nf">batch_image_download</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">ra</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">dec</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]],</span>
+    <span class="n">img_type</span><span class="p">:</span> <span class="n">ImageType</span> <span class="o">=</span> <span class="n">ImageType</span><span class="o">.</span><span class="n">lupton</span><span class="p">,</span>
+    <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+  <span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ra</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">img_type</span> <span class="o">==</span> <span class="n">ImageType</span><span class="o">.</span><span class="n">fits</span><span class="p">:</span>
+      <span class="n">download_function</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">download_fits</span>
+    <span class="k">elif</span> <span class="n">img_type</span> <span class="o">==</span> <span class="n">ImageType</span><span class="o">.</span><span class="n">lupton</span><span class="p">:</span>
+      <span class="n">download_function</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">download_lupton_rgb</span>
+    <span class="k">elif</span> <span class="n">img_type</span> <span class="o">==</span> <span class="n">ImageType</span><span class="o">.</span><span class="n">trilogy</span><span class="p">:</span>
+      <span class="n">download_function</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">download_trilogy_rgb</span>
+
+    <span class="n">download_args</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">{</span><span class="s1">&#39;ra&#39;</span><span class="p">:</span> <span class="n">_ra</span><span class="p">,</span> <span class="s1">&#39;dec&#39;</span><span class="p">:</span> <span class="n">_dec</span><span class="p">,</span> <span class="s1">&#39;save_path&#39;</span><span class="p">:</span> <span class="n">Path</span><span class="p">(</span><span class="n">_save_path</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">}</span>
+      <span class="k">for</span> <span class="n">_ra</span><span class="p">,</span> <span class="n">_dec</span><span class="p">,</span> <span class="n">_save_path</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">_batch_download</span><span class="p">(</span>
+      <span class="n">download_function</span><span class="o">=</span><span class="n">download_function</span><span class="p">,</span>
+      <span class="n">download_args</span><span class="o">=</span><span class="n">download_args</span><span class="p">,</span>
+      <span class="n">workers</span><span class="o">=</span><span class="n">workers</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SplusService.get_image_filename"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.get_image_filename">[docs]</a>  <span class="k">def</span> <span class="nf">get_image_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="SplusService._get_url"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._get_url">[docs]</a>  <span class="k">def</span> <span class="nf">_get_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{})</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">BASE_URL</span><span class="p">,</span> <span class="n">route</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="SplusService._download_image"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._download_image">[docs]</a>  <span class="nd">@update_authorization</span>
+  <span class="k">def</span> <span class="nf">_download_image</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">replace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+  <span class="p">):</span>
+    <span class="c1"># Stage 1 request</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_url</span><span class="p">(</span><span class="n">route</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+      <span class="k">if</span> <span class="s1">&#39;application/json&#39;</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">]:</span>
+        <span class="n">resp_body</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="n">file_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_url</span><span class="p">(</span><span class="n">resp_body</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">])</span>
+        <span class="c1"># Stage 2 request</span>
+        <span class="n">download_file</span><span class="p">(</span>
+          <span class="n">file_url</span><span class="p">,</span>
+          <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
+          <span class="n">replace</span><span class="o">=</span><span class="n">replace</span><span class="p">,</span>
+          <span class="n">http_client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SplusService._batch_download"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._batch_download">[docs]</a>  <span class="k">def</span> <span class="nf">_batch_download</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">download_function</span><span class="p">:</span> <span class="n">FunctionType</span><span class="p">,</span>
+    <span class="n">download_args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="p">):</span>
+    <span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">workers</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+      <span class="n">futures</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="n">download_function</span> <span class="o">=</span> <span class="n">download_function</span> <span class="ow">or</span> <span class="n">download_file</span>
+
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">download_args</span><span class="p">)):</span>
+        <span class="n">futures</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
+          <span class="n">download_function</span><span class="p">,</span>
+          <span class="o">**</span><span class="n">download_args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="p">))</span>
+
+      <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span>
+        <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">),</span>
+        <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">futures</span><span class="p">),</span>
+        <span class="n">unit</span><span class="o">=</span><span class="s1">&#39; files&#39;</span>
+      <span class="p">):</span>
+        <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">SplusService</span><span class="p">()</span>
+  <span class="n">ra</span> <span class="o">=</span> <span class="p">[</span><span class="mf">11.5933851</span><span class="p">,</span> <span class="mf">11.8345742</span><span class="p">,</span> <span class="mf">11.9053378</span><span class="p">,</span> <span class="mf">12.1397573</span><span class="p">,</span> <span class="mf">12.3036425</span><span class="p">]</span>
+  <span class="n">dec</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.0180862</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.8710110</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.8707459</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7373196</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4088959</span><span class="p">]</span>
+  <span class="n">path1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1.png&#39;</span><span class="p">,</span> <span class="s1">&#39;2.png&#39;</span><span class="p">,</span> <span class="s1">&#39;3.png&#39;</span><span class="p">,</span> <span class="s1">&#39;4.png&#39;</span><span class="p">,</span> <span class="s1">&#39;5.png&#39;</span><span class="p">]</span>
+  <span class="n">path2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;01.png&#39;</span><span class="p">,</span> <span class="s1">&#39;02.png&#39;</span><span class="p">,</span> <span class="s1">&#39;03.png&#39;</span><span class="p">,</span> <span class="s1">&#39;04.png&#39;</span><span class="p">,</span> <span class="s1">&#39;05.png&#39;</span><span class="p">]</span>
+  <span class="n">path3</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;2.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;3.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;4.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;5.fits&#39;</span><span class="p">]</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">batch_image_download</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">path1</span><span class="p">,</span> <span class="n">img_type</span><span class="o">=</span><span class="n">ImageType</span><span class="o">.</span><span class="n">lupton</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">batch_image_download</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">path2</span><span class="p">,</span> <span class="n">img_type</span><span class="o">=</span><span class="n">ImageType</span><span class="o">.</span><span class="n">trilogy</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">batch_image_download</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">path3</span><span class="p">,</span> <span class="n">img_type</span><span class="o">=</span><span class="n">ImageType</span><span class="o">.</span><span class="n">fits</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
               </div>

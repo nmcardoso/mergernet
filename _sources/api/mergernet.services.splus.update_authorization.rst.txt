@@ -1,0 +1,6 @@
+mergernet.services.splus.update\_authorization
+==============================================
+
+.. currentmodule:: mergernet.services.splus
+
+.. autofunction:: update_authorization

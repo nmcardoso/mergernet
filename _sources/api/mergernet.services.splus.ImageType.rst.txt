@@ -1,0 +1,25 @@
+mergernet.services.splus.ImageType
+==================================
+
+.. currentmodule:: mergernet.services.splus
+
+.. autoclass:: ImageType
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ImageType.trilogy
+      ~ImageType.lupton
+      ~ImageType.fits
+   
+   
