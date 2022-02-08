@@ -1,0 +1,41 @@
+2022-02-07 22:09:21 INFO [GITHUB] file "job.json" successfully uploaded to github.
+2022-02-07 22:09:22 INFO [GDRIVE] file "job.json" uploaded to Google Drive.
+2022-02-07 22:10:00 INFO [DATASET] Fold 0 loaded
+2022-02-07 22:10:01 DEBUG [DATASET] apply: load_jpg
+2022-02-07 22:10:01 DEBUG [DATASET] Example shape (X, y): (128, 128, 3), ()
+2022-02-07 22:10:01 DEBUG [DATASET] apply: one_hot
+2022-02-07 22:10:01 DEBUG [DATASET] Example shape (X, y): (128, 128, 3), (3,)
+2022-02-07 22:10:02 DEBUG [DATASET] apply: shuffle
+2022-02-07 22:10:02 DEBUG [DATASET] Example shape (X, y): (128, 128, 3), (3,)
+2022-02-07 22:10:03 DEBUG [DATASET] apply: batch
+2022-02-07 22:10:03 DEBUG [DATASET] Example shape (X, y): (64, 128, 128, 3), (64, 3)
+2022-02-07 22:10:04 DEBUG [DATASET] apply: batch
+2022-02-07 22:10:04 DEBUG [DATASET] Test example shape (X, y): (64, 128, 128, 3), (64, 3)
+2022-02-07 22:10:06 INFO [TRAIN] Starting training loop
+2022-02-07 22:12:15 INFO [TRAIN] Training finished without errors in 00:02:09.
+2022-02-07 22:12:18 INFO [DATASET] Fold 0 loaded
+2022-02-07 22:12:18 DEBUG [DATASET] apply: load_jpg
+2022-02-07 22:12:18 DEBUG [DATASET] Example shape (X, y): (128, 128, 3), ()
+2022-02-07 22:12:18 DEBUG [DATASET] apply: one_hot
+2022-02-07 22:12:18 DEBUG [DATASET] Example shape (X, y): (128, 128, 3), (3,)
+2022-02-07 22:12:19 DEBUG [DATASET] apply: shuffle
+2022-02-07 22:12:19 DEBUG [DATASET] Example shape (X, y): (128, 128, 3), (3,)
+2022-02-07 22:12:20 DEBUG [DATASET] apply: batch
+2022-02-07 22:12:20 DEBUG [DATASET] Example shape (X, y): (64, 128, 128, 3), (64, 3)
+2022-02-07 22:12:20 DEBUG [DATASET] apply: batch
+2022-02-07 22:12:20 DEBUG [DATASET] Test example shape (X, y): (64, 128, 128, 3), (64, 3)
+2022-02-07 22:12:23 INFO [TRAIN] Starting training loop
+2022-02-07 22:14:14 INFO [TRAIN] Training finished without errors in 00:01:51.
+2022-02-07 22:14:22 INFO [DATASET] Fold 0 loaded
+2022-02-07 22:14:22 DEBUG [DATASET] apply: load_jpg
+2022-02-07 22:14:22 DEBUG [DATASET] Example shape (X, y): (128, 128, 3), ()
+2022-02-07 22:14:22 DEBUG [DATASET] apply: one_hot
+2022-02-07 22:14:22 DEBUG [DATASET] Example shape (X, y): (128, 128, 3), (3,)
+2022-02-07 22:14:29 DEBUG [DATASET] apply: shuffle
+2022-02-07 22:14:29 DEBUG [DATASET] Example shape (X, y): (128, 128, 3), (3,)
+2022-02-07 22:14:32 DEBUG [DATASET] apply: batch
+2022-02-07 22:14:32 DEBUG [DATASET] Example shape (X, y): (64, 128, 128, 3), (64, 3)
+2022-02-07 22:14:32 DEBUG [DATASET] apply: batch
+2022-02-07 22:14:32 DEBUG [DATASET] Test example shape (X, y): (64, 128, 128, 3), (64, 3)
+2022-02-07 22:14:34 INFO [TRAIN] Starting training loop
+2022-02-07 22:16:44 INFO [TRAIN] Training finished without errors in 00:02:09.
