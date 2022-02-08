@@ -154,10 +154,12 @@
 
 <div class="viewcode-block" id="download_file"><a class="viewcode-back" href="../../../api/mergernet.services.utils.download_file.html#mergernet.services.utils.download_file">[docs]</a><span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span>
   <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-  <span class="n">save_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+  <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
   <span class="n">replace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
   <span class="n">http_client</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">):</span>
+  <span class="n">save_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+
   <span class="k">if</span> <span class="ow">not</span> <span class="n">replace</span> <span class="ow">and</span> <span class="n">save_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
     <span class="k">return</span>
 
