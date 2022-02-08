@@ -23,6 +23,12 @@ GITHUB_BRANCH = os.environ.get('GITHUB_BRANCH', 'main')
 
 
 
+# S-PLUS authentication
+SPLUS_USER = os.environ.get('SPLUS_USER', None)
+SPLUS_PASS = os.environ.get('SPLUS_PASS', None)
+
+
+
 # Google Drive
 if ENV == 'dev':
   GDRIVE_PATH = 'gdrive'

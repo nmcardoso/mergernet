@@ -1,4 +1,5 @@
 from pathlib import Path
+from types import FunctionType
 from typing import List, Union
 import concurrent.futures
 
@@ -7,14 +8,21 @@ import requests
 
 
 
-def download_file(url: str, save_path: Path, replace: bool = False):
+def download_file(
+  url: str,
+  save_path: Path,
+  replace: bool = False,
+  http_client: requests.Session = None
+):
   if not replace and save_path.exists():
     return
+
+  http_client = http_client or requests
 
   if not save_path.parent.exists():
     save_path.parent.mkdir(parents=True, exist_ok=True)
 
-  r = requests.get(url, allow_redirects=True)
+  r = http_client.get(url, allow_redirects=True)
 
   with open(str(save_path.resolve()), 'wb') as f:
     f.write(r.content)
