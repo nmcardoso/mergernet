@@ -1,17 +1,18 @@
 from datetime import datetime, timedelta
 from enum import Enum
 from multiprocessing import Lock
+from time import sleep
 from types import FunctionType
 from typing import List, Union
 from pathlib import Path
-from urllib.parse import urljoin
+from urllib.parse import urljoin, quote, urlparse
 import concurrent.futures
 
 import requests
 import tqdm
 
 from mergernet.core.constants import SPLUS_PASS, SPLUS_USER
-from mergernet.services.utils import download_file, batch_download_file, append_query_params
+from mergernet.services.utils import download_file
 
 
 
@@ -20,6 +21,8 @@ LOGIN_ROUTE = 'auth/login'
 LUPTON_ROUTE = 'get_lupton_image/{ra}/{dec}/{size}/{r_band}/{g_band}/{b_band}/{stretch}/{Q}'
 TRILOGY_ROUTE = 'get_image/{ra}/{dec}/{size}/{r_band}-{g_band}-{b_band}/{noise}/{saturation}'
 FITS_ROUTE = 'get_cut/{ra}/{dec}/{size}/{band}'
+PUBLIC_TAP_ROUTE = '/public-TAP/tap/async/?request=doQuery&version=1.0&lang=ADQL&phase=run&query={sql}&format={fmt}'
+PRIVATE_TAP_ROUTE = '/public-TAP/tap/async/?request=doQuery&version=1.0&lang=ADQL&phase=run&query={sql}&format={fmt}'
 
 
 
@@ -187,8 +190,89 @@ class SplusService:
     pass
 
 
+  @update_authorization
+  def query(
+    self,
+    sql: str,
+    save_path: Union[str, Path],
+    replace: bool = False,
+    scope: str = 'public',
+    fmt: str = 'text/csv'
+  ):
+    if scope == 'public':
+      url = self._get_url(PUBLIC_TAP_ROUTE, {'sql': quote(sql), 'fmt': fmt})
+    else:
+      url = self._get_url(PRIVATE_TAP_ROUTE, {'sql': quote(sql), 'fmt': fmt})
+
+    resp = self.client.post(
+      url,
+      headers={
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    )
+
+    if resp.status_code == 200:
+      self._track_tap_job(url=resp.url, save_path=save_path, replace=replace)
+
+
+  def batch_query(
+    self,
+    sql: List[str],
+    save_path: List[Union[str, Path]],
+    replace: bool = False,
+    scope: str = 'public',
+    fmt: str = 'text/csv',
+    workers: int = None
+  ):
+    assert len(sql) == len(save_path)
+
+    args = [
+      {
+        'sql': _sql,
+        'save_path': _save_path,
+        'replace': replace,
+        'scope': scope,
+        'fmt': fmt
+      }
+      for _sql, _save_path in zip(sql, save_path)
+    ]
+
+    self._batch_download(
+      download_function=self.query,
+      download_args=args,
+      workers=workers
+    )
+
+
   def _get_url(self, route: str, params: dict = {}) -> str:
     return urljoin(BASE_URL, route.format(**params))
+
+
+  @update_authorization
+  def _track_tap_job(self, url: str, save_path: Union[str, Path], replace: bool):
+    resp = self.client.get(url, headers={'Accept': 'application/json'})
+
+    if resp.status_code == 200:
+      data = resp.json()
+      destruction_time = datetime.fromisoformat(data['destruction'][:-1] + '+00:00')
+      now = datetime.now(destruction_time.tzinfo)
+
+      if data['phase'] == 'EXECUTING' and destruction_time > now:
+        sleep(5)
+        self._track_tap_job(url, save_path, replace)
+      elif data['phase'] == 'COMPLETED':
+        result_url = urlparse(data['results'][0]['href'])
+        result_url = result_url._replace(netloc='splus.cloud').geturl()
+        download_file(
+          url=result_url,
+          save_path=save_path,
+          replace=replace,
+          http_client=self.client
+        )
+      elif data['phase'] == 'ERROR':
+        message = data['error'].get('message', '')
+        print(message)
 
 
   @update_authorization
@@ -220,7 +304,7 @@ class SplusService:
     self,
     download_function: FunctionType,
     download_args: dict,
-    workers: int
+    workers: int = None
   ):
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
       futures = []
@@ -248,6 +332,12 @@ if __name__ == '__main__':
   path1 = ['1.png', '2.png', '3.png', '4.png', '5.png']
   path2 = ['01.png', '02.png', '03.png', '04.png', '05.png']
   path3 = ['1.fits', '2.fits', '3.fits', '4.fits', '5.fits']
-  s.batch_image_download(ra, dec, path1, img_type=ImageType.lupton, workers=3, replace=True)
-  s.batch_image_download(ra, dec, path2, img_type=ImageType.trilogy, workers=3, replace=True)
-  s.batch_image_download(ra, dec, path3, img_type=ImageType.fits, workers=3, replace=True)
+  # s.batch_image_download(ra, dec, path1, img_type=ImageType.lupton, workers=3, replace=True)
+  # s.batch_image_download(ra, dec, path2, img_type=ImageType.trilogy, workers=3, replace=True)
+  # s.batch_image_download(ra, dec, path3, img_type=ImageType.fits, workers=3, replace=True)
+
+
+  sql = ['SELECT TOP 100 ID, RA, DEC FROM dr3.all_dr3 where id like \'%HYDRA%\'']
+  # path4 = [f'table{i}.csv' for i in range(10)]
+  path4 = ['table0.csv']
+  s.batch_query(sql, save_path=path4, replace=True, workers=2)
