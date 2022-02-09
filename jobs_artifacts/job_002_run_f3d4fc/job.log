@@ -1,0 +1,29 @@
+2022-02-09 03:28:43 INFO [DATASET] Fold 0 loaded
+2022-02-09 03:28:43 INFO [DATASET] apply: one_hot
+2022-02-09 03:28:43 INFO [DATASET] apply: shuffle
+2022-02-09 03:28:43 INFO [DATASET] apply: batch
+2022-02-09 03:28:45 INFO [TRAIN] Starting training loop
+2022-02-09 03:29:59 INFO [TRAIN] Training finished without errors in 00:01:13.
+2022-02-09 03:32:34 INFO [DATASET] Fold 0 loaded
+2022-02-09 03:32:34 INFO [DATASET] apply: load_jpg
+2022-02-09 03:32:34 INFO [DATASET] apply: one_hot
+2022-02-09 03:32:34 INFO [DATASET] apply: shuffle
+2022-02-09 03:32:34 INFO [DATASET] apply: batch
+2022-02-09 03:32:37 INFO [TRAIN] Starting training loop
+2022-02-09 03:33:42 INFO [TRAIN] Training finished without errors in 00:01:05.
+2022-02-09 03:33:44 INFO [DATASET] Fold 0 loaded
+2022-02-09 03:33:44 INFO [DATASET] apply: load_jpg
+2022-02-09 03:33:44 INFO [DATASET] apply: one_hot
+2022-02-09 03:33:44 INFO [DATASET] apply: shuffle
+2022-02-09 03:33:44 INFO [DATASET] apply: batch
+2022-02-09 03:33:46 INFO [TRAIN] Starting training loop
+2022-02-09 03:34:46 INFO [TRAIN] Training finished without errors in 00:01:00.
+2022-02-09 03:34:54 INFO [DATASET] Fold 0 loaded
+2022-02-09 03:34:54 INFO [DATASET] apply: load_jpg
+2022-02-09 03:34:54 INFO [DATASET] apply: one_hot
+2022-02-09 03:34:54 INFO [DATASET] apply: shuffle
+2022-02-09 03:34:54 INFO [DATASET] apply: batch
+2022-02-09 03:34:56 INFO [TRAIN] Starting training loop
+2022-02-09 03:36:04 INFO [TRAIN] Training finished without errors in 00:01:07.
+2022-02-09 03:36:06 INFO [GITHUB] file "job.json" successfully uploaded to github.
+2022-02-09 03:36:06 INFO [GDRIVE] file "job.json" uploaded to Google Drive.
