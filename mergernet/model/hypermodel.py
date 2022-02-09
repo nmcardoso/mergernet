@@ -113,6 +113,7 @@ class HyperModelTrainer:
 
     tuner = kt.BayesianOptimization(
       model,
+      objective=kt.Objective('val_accuracy', 'max'),
       max_trials=3,
       overwrite=True,
       directory=ah.artifact_path / 'tuner',
