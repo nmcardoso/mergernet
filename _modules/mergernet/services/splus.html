@@ -395,28 +395,35 @@
 
 <div class="viewcode-block" id="SplusService._track_tap_job"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._track_tap_job">[docs]</a>  <span class="nd">@update_authorization</span>
   <span class="k">def</span> <span class="nf">_track_tap_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">replace</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">})</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+      <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">})</span>
 
-    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-      <span class="n">data</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-      <span class="n">destruction_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;destruction&#39;</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;+00:00&#39;</span><span class="p">)</span>
-      <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">destruction_time</span><span class="o">.</span><span class="n">tzinfo</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="n">destruction_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;destruction&#39;</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;+00:00&#39;</span><span class="p">)</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">destruction_time</span><span class="o">.</span><span class="n">tzinfo</span><span class="p">)</span>
 
-      <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;EXECUTING&#39;</span> <span class="ow">and</span> <span class="n">destruction_time</span> <span class="o">&gt;</span> <span class="n">now</span><span class="p">:</span>
-        <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_track_tap_job</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">save_path</span><span class="p">,</span> <span class="n">replace</span><span class="p">)</span>
-      <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;COMPLETED&#39;</span><span class="p">:</span>
-        <span class="n">result_url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;href&#39;</span><span class="p">])</span>
-        <span class="n">result_url</span> <span class="o">=</span> <span class="n">result_url</span><span class="o">.</span><span class="n">_replace</span><span class="p">(</span><span class="n">netloc</span><span class="o">=</span><span class="s1">&#39;splus.cloud&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">geturl</span><span class="p">()</span>
-        <span class="n">download_file</span><span class="p">(</span>
-          <span class="n">url</span><span class="o">=</span><span class="n">result_url</span><span class="p">,</span>
-          <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
-          <span class="n">replace</span><span class="o">=</span><span class="n">replace</span><span class="p">,</span>
-          <span class="n">http_client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span>
-        <span class="p">)</span>
-      <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ERROR&#39;</span><span class="p">:</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;EXECUTING&#39;</span> <span class="ow">and</span> <span class="n">destruction_time</span> <span class="o">&gt;</span> <span class="n">now</span><span class="p">:</span>
+          <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;COMPLETED&#39;</span><span class="p">:</span>
+          <span class="n">result_url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;href&#39;</span><span class="p">])</span>
+          <span class="n">result_url</span> <span class="o">=</span> <span class="n">result_url</span><span class="o">.</span><span class="n">_replace</span><span class="p">(</span><span class="n">netloc</span><span class="o">=</span><span class="s1">&#39;splus.cloud&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">geturl</span><span class="p">()</span>
+          <span class="n">download_file</span><span class="p">(</span>
+            <span class="n">url</span><span class="o">=</span><span class="n">result_url</span><span class="p">,</span>
+            <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
+            <span class="n">replace</span><span class="o">=</span><span class="n">replace</span><span class="p">,</span>
+            <span class="n">http_client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span>
+          <span class="p">)</span>
+          <span class="k">break</span>
+        <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;phase&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ERROR&#39;</span><span class="p">:</span>
+          <span class="n">message</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+          <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+          <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="k">break</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Status code: </span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">break</span></div>
 
 
 <div class="viewcode-block" id="SplusService._download_image"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._download_image">[docs]</a>  <span class="nd">@update_authorization</span>

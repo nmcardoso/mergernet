@@ -177,8 +177,14 @@
       <span class="n">gdrive_path</span><span class="o">=</span><span class="n">GDRIVE_PATH</span><span class="p">,</span>
       <span class="n">use_gdrive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
       <span class="n">use_github</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span>
+    <span class="p">)</span></div>
 
+
+<div class="viewcode-block" id="BaseJob.run"><a class="viewcode-back" href="../../../api/mergernet.core.jobs.BaseJob.html#mergernet.core.jobs.BaseJob.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Job was not implemented.&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BaseJob.post_run"><a class="viewcode-back" href="../../../api/mergernet.core.jobs.BaseJob.html#mergernet.core.jobs.BaseJob.post_run">[docs]</a>  <span class="k">def</span> <span class="nf">post_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="c1"># create and upload job metadata artifact</span>
     <span class="n">tz</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=-</span><span class="mi">3</span><span class="p">))</span>
     <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">tz</span><span class="o">=</span><span class="n">tz</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">timespec</span><span class="o">=</span><span class="s1">&#39;seconds&#39;</span><span class="p">)</span>
@@ -189,16 +195,13 @@
       <span class="n">description</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
       <span class="n">timestamp</span><span class="o">=</span><span class="n">now</span>
     <span class="p">)</span>
-    <span class="n">ah</span><span class="o">.</span><span class="n">upload_json</span><span class="p">(</span><span class="n">job_artifact</span><span class="p">,</span> <span class="s1">&#39;job.json&#39;</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="BaseJob.run"><a class="viewcode-back" href="../../../api/mergernet.core.jobs.BaseJob.html#mergernet.core.jobs.BaseJob.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Job not implemented&#39;</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="BaseJob.post_run"><a class="viewcode-back" href="../../../api/mergernet.core.jobs.BaseJob.html#mergernet.core.jobs.BaseJob.post_run">[docs]</a>  <span class="k">def</span> <span class="nf">post_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">ah</span> <span class="o">=</span> <span class="n">ArtifactHelper</span><span class="p">()</span>
+    <span class="n">ah</span><span class="o">.</span><span class="n">upload_json</span><span class="p">(</span><span class="n">job_artifact</span><span class="p">,</span> <span class="s1">&#39;job.json&#39;</span><span class="p">)</span>
+
+    <span class="c1"># upload log file</span>
     <span class="n">ah</span><span class="o">.</span><span class="n">upload_log</span><span class="p">()</span>
+
+    <span class="c1"># backup tensorboard folder</span>
     <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;tensorboard&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
       <span class="n">ah</span><span class="o">.</span><span class="n">upload_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;tensorboard&#39;</span><span class="p">)</span>
       <span class="n">ts</span> <span class="o">=</span> <span class="n">TensorboardService</span><span class="p">()</span>
@@ -207,6 +210,8 @@
         <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;job_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">jobid</span><span class="si">:</span><span class="s1">03d</span><span class="si">}</span><span class="s1">_run_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">runid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span>
       <span class="p">)</span>
+
+    <span class="c1"># backup tuner folder</span>
     <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;tuner&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
       <span class="n">ah</span><span class="o">.</span><span class="n">upload_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;tuner&#39;</span><span class="p">)</span></div>
 

@@ -158,7 +158,7 @@
 
 
 
-<div class="viewcode-block" id="load_image"><a class="viewcode-back" href="../../../api/mergernet.core.utils.load_image.html#mergernet.core.utils.load_image">[docs]</a><span class="k">def</span> <span class="nf">load_image</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<div class="viewcode-block" id="load_image"><a class="viewcode-back" href="../../../api/mergernet.core.utils.load_image.html#mergernet.core.utils.load_image">[docs]</a><span class="k">def</span> <span class="nf">load_image</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
   <span class="sd">&quot;&quot;&quot;Load image from local storage to numpy array.</span>
 <span class="sd">  Supports several types of files, incluing ``.jpg``, ``.png``, ``.npy``,</span>
 <span class="sd">  ``.npz``, ``.fits``</span>
@@ -173,6 +173,7 @@
 <span class="sd">  numpy.ndarray</span>
 <span class="sd">    Image converted (if needed) to a numpy array.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
   <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span> <span class="s1">&#39;.png&#39;</span><span class="p">]:</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">img_to_array</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
