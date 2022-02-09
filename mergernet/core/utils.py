@@ -14,7 +14,7 @@ import tensorflow as tf
 
 
 
-def load_image(path: Path) -> np.ndarray:
+def load_image(path: Union[str, Path]) -> np.ndarray:
   """Load image from local storage to numpy array.
   Supports several types of files, incluing ``.jpg``, ``.png``, ``.npy``,
   ``.npz``, ``.fits``
@@ -29,6 +29,7 @@ def load_image(path: Path) -> np.ndarray:
   numpy.ndarray
     Image converted (if needed) to a numpy array.
   """
+  path = Path(path)
   if path.suffix in ['.jpg', '.png']:
     img = Image.open(path)
     return tf.keras.preprocessing.image.img_to_array(img)
