@@ -251,28 +251,35 @@ class SplusService:
 
   @update_authorization
   def _track_tap_job(self, url: str, save_path: Union[str, Path], replace: bool):
-    resp = self.client.get(url, headers={'Accept': 'application/json'})
+    while True:
+      resp = self.client.get(url, headers={'Accept': 'application/json'})
 
-    if resp.status_code == 200:
-      data = resp.json()
-      destruction_time = datetime.fromisoformat(data['destruction'][:-1] + '+00:00')
-      now = datetime.now(destruction_time.tzinfo)
+      if resp.status_code == 200:
+        data = resp.json()
+        destruction_time = datetime.fromisoformat(data['destruction'][:-1] + '+00:00')
+        now = datetime.now(destruction_time.tzinfo)
 
-      if data['phase'] == 'EXECUTING' and destruction_time > now:
-        sleep(5)
-        self._track_tap_job(url, save_path, replace)
-      elif data['phase'] == 'COMPLETED':
-        result_url = urlparse(data['results'][0]['href'])
-        result_url = result_url._replace(netloc='splus.cloud').geturl()
-        download_file(
-          url=result_url,
-          save_path=save_path,
-          replace=replace,
-          http_client=self.client
-        )
-      elif data['phase'] == 'ERROR':
-        message = data['error'].get('message', '')
-        print(message)
+        if data['phase'] == 'EXECUTING' and destruction_time > now:
+          sleep(5)
+        elif data['phase'] == 'COMPLETED':
+          result_url = urlparse(data['results'][0]['href'])
+          result_url = result_url._replace(netloc='splus.cloud').geturl()
+          download_file(
+            url=result_url,
+            save_path=save_path,
+            replace=replace,
+            http_client=self.client
+          )
+          break
+        elif data['phase'] == 'ERROR':
+          message = data['error'].get('message', '')
+          print(message)
+          break
+        else:
+          break
+      else:
+        print(f'Status code: {resp.status_code}')
+        break
 
 
   @update_authorization
