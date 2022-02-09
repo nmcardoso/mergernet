@@ -195,7 +195,9 @@ class SimpleHyperModel():
     ds_test = ds_test.map(one_hot)
     L.info('[DATASET] apply: one_hot')
 
-    # ds_train = ds_train.cache()
+    ds_train = ds_train.cache()
+    ds_test = ds_test.cache()
+
     ds_train = ds_train.shuffle(5000)
     ds_test = ds_test.shuffle(1000)
     L.info('[DATASET] apply: shuffle')
@@ -204,8 +206,11 @@ class SimpleHyperModel():
     ds_test = ds_test.batch(64)
     L.info('[DATASET] apply: batch')
 
-    self.ds_train = ds_train.prefetch(tf.data.AUTOTUNE)
-    self.ds_test = ds_test.prefetch(tf.data.AUTOTUNE)
+    ds_train = ds_train.prefetch(tf.data.AUTOTUNE)
+    ds_test = ds_test.prefetch(tf.data.AUTOTUNE)
+
+    self.ds_train = ds_train
+    self.ds_test = ds_test
     self.class_weights = self.dataset.compute_class_weight()
 
 
