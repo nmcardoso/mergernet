@@ -15,6 +15,171 @@ from mergernet.model.callback import DeltaStopping
 L = logging.getLogger('job')
 
 
+
+class HyperModel(kt.HyperModel):
+  def __init__(self):
+    self.input_shape = (128, 128, 3)
+    self.pretrained_weights = 'imagenet'
+
+
+  def build(self, hp):
+    conv_block = tf.keras.applications.ResNet50(
+      input_shape=self.input_shape,
+      include_top=False,
+      weights=self.pretrained_weights
+    )
+
+    preprocess_input = tf.keras.applications.resnet.preprocess_input
+
+    data_aug_layers = [
+      tf.keras.layers.RandomFlip(mode='horizontal', seed=42),
+      tf.keras.layers.RandomFlip(mode='vertical', seed=42),
+      tf.keras.layers.RandomRotation(
+        (-0.08, 0.08),
+        fill_mode='reflect',
+        interpolation='bilinear',
+        seed=42
+      ),
+      tf.keras.layers.RandomZoom(
+        (-0.15, 0.0),
+        fill_mode='reflect',
+        interpolation='bilinear',
+        seed=42
+      )
+    ]
+
+    data_aug_block = tf.keras.Sequential(data_aug_layers, name='data_augmentation')
+
+    dense_blocks = hp.Choice('dense_blocks', [1, 2, 3])
+
+    inputs = tf.keras.Input(shape=self.input_shape)
+    x = data_aug_block(inputs)
+    x = preprocess_input(x)
+    x = conv_block(x)#, Training=False)
+    # if dense_block is None:
+    #   x = tf.keras.layers.GlobalAveragePooling2D()(x)
+    #   x = tf.keras.layers.Dropout(0.4)(x)
+    # else:
+    x = tf.keras.layers.Flatten()(x)
+    # x = dense_block(x)
+    x = tf.keras.layers.Dense(hp.Choice('dense_1_units', [256, 512, 1024]), activation='relu')(x)
+    x = tf.keras.layers.Dropout(hp.Choice('dropout_1_rate', [0.2, 0.3, 0.4, 0.5]))(x)
+    if dense_blocks > 1:
+      x = tf.keras.layers.Dense(hp.Choice('dense_2_units', [128, 256, 512], parent_name='dense_blocks', parent_values=[2, 3]), activation='relu')(x)
+      dropout_rate_2 = hp.Choice('dropout_2_rate', [-1.0, 0.2, 0.3, 0.4, 0.5], parent_name='dense_blocks', parent_values=[2, 3])
+      if dropout_rate_2 > 0:
+        x = tf.keras.layers.Dropout(dropout_rate_2)(x)
+
+    if dense_blocks > 2:
+      x = tf.keras.layers.Dense(hp.Choice('dense_3_units', [64, 128, 256, 512], parent_name='dense_blocks', parent_values=[3]), activation='relu')(x)
+      dropout_rate_3 = hp.Choice('dropout_3_rate', [-1.0, 0.2, 0.3, 0.4, 0.5], parent_name='dense_blocks', parent_values=[3])
+      if dropout_rate_3 > 0:
+        x = tf.keras.layers.Dropout(dropout_rate_3)(x)
+
+    outputs = tf.keras.layers.Dense(3, activation='softmax')(x)
+
+    model = tf.keras.Model(inputs, outputs)
+
+    model.compile(
+      optimizer=tf.keras.optimizers.Adam(
+        hp.Choice('learning_rate', [1e-5, 5e-5, 1e-4, 5e-4, 1e-3])
+      ),
+      loss=tf.keras.losses.CategoricalCrossentropy(from_logits=False),
+      metrics=[
+        tf.keras.metrics.CategoricalAccuracy(name='accuracy')
+      ]
+    )
+
+    return model
+
+
+
+
+class HyperModelTrainer:
+  def __init__(self, dataset: Dataset):
+    self.dataset = dataset
+
+
+  def fit(self, batch_size=64, epochs=3):
+    self.prepare_dataset()
+
+    model = HyperModel()
+
+    t = Timming()
+    t.start()
+    L.info('[TRAIN] Starting training loop')
+
+    ah = ArtifactHelper()
+
+    tuner = kt.BayesianOptimization(
+      model,
+      max_trials=3,
+      overwrite=True,
+      directory=ah.artifact_path / 'tuner',
+      project_name='resnet'
+    )
+
+    tuner.search(
+      self.ds_train,
+      # batch_size=batch_size,
+      epochs=epochs,
+      validation_data=self.ds_test,
+      class_weight=self.class_weights,
+      callbacks=[
+        tf.keras.callbacks.TensorBoard(
+          log_dir=str(ah.artifact_path / 'tensorboard' / secrets.token_hex(3)),
+          write_images=False,
+          write_graph=False,
+          write_steps_per_second='epoch',
+          update_freq='epoch',
+          profile_batch=40
+        ),
+        tf.keras.callbacks.EarlyStopping(patience=3),
+        DeltaStopping()
+      ]
+    )
+
+    t.end()
+    L.info(f'[TRAIN] Training finished without errors in {t.duration()}.')
+
+
+  def prepare_dataset(self):
+    ds_train, ds_test = self.dataset.get_fold(0)
+    L.info('[DATASET] Fold 0 loaded')
+
+    if not self.dataset.in_memory:
+      ds_train = ds_train.map(load_jpg)
+      ds_test = ds_test.map(load_jpg)
+      L.info('[DATASET] apply: load_jpg')
+
+    ds_train = ds_train.map(one_hot)
+    ds_test = ds_test.map(one_hot)
+    L.info('[DATASET] apply: one_hot')
+
+    ds_train = ds_train.cache()
+    ds_test = ds_test.cache()
+
+    ds_train = ds_train.shuffle(5000)
+    ds_test = ds_test.shuffle(1000)
+    L.info('[DATASET] apply: shuffle')
+
+    ds_train = ds_train.batch(64)
+    ds_test = ds_test.batch(64)
+    L.info('[DATASET] apply: batch')
+
+    ds_train = ds_train.prefetch(tf.data.AUTOTUNE)
+    ds_test = ds_test.prefetch(tf.data.AUTOTUNE)
+
+    self.ds_train = ds_train
+    self.ds_test = ds_test
+    self.class_weights = self.dataset.compute_class_weight()
+
+
+
+
+
+
+
 class SimpleHyperModel():
   def __init__(self, dataset: Dataset):
     self.dataset = dataset

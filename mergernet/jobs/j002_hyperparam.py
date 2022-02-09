@@ -3,7 +3,7 @@ import pandas as pd
 
 from mergernet.core.jobs import BaseJob
 from mergernet.core.dataset import Dataset
-from mergernet.model.hypermodel import SimpleHyperModel, BayesianTuner
+from mergernet.model.hypermodel import HyperModelTrainer, SimpleHyperModel, BayesianTuner
 
 
 
@@ -15,14 +15,16 @@ class Job(BaseJob):
   def run(self):
     ds = Dataset(data_path=self.data_path)
 
-    tuner = BayesianTuner(
-      max_trials=3,
-      overwrite=True,
-      directory=self.artifact_path / 'tuner',
-      project_name='resnet'
-    )
+    HyperModelTrainer(ds).fit()
 
-    tuner.search(dataset=ds)
+    # tuner = BayesianTuner(
+    #   max_trials=3,
+    #   overwrite=True,
+    #   directory=self.artifact_path / 'tuner',
+    #   project_name='resnet'
+    # )
+
+    # tuner.search(dataset=ds)
 
 
 
