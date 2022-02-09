@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>mergernet.services.imaging &#8212; MergerNet  documentation</title>
+    <title>mergernet.model.hypermodel.HyperModelTrainer &#8212; MergerNet  documentation</title>
     
     <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -34,8 +34,8 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="mergernet.services.imaging.BaseImagingService" href="mergernet.services.imaging.BaseImagingService.html" />
-    <link rel="prev" title="mergernet.services.google.GDrive" href="mergernet.services.google.GDrive.html" />
+    <link rel="next" title="mergernet.model.hypermodel.SimpleHyperModel" href="mergernet.model.hypermodel.SimpleHyperModel.html" />
+    <link rel="prev" title="mergernet.model.hypermodel.HyperModel" href="mergernet.model.hypermodel.HyperModel.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
     
@@ -398,16 +398,16 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1 has-children">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="mergernet.model.html">
    mergernet.model
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
   <label for="toctree-checkbox-12">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
+  <ul class="current">
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="mergernet.model.baseline.html">
      mergernet.model.baseline
@@ -447,16 +447,16 @@
      </li>
     </ul>
    </li>
-   <li class="toctree-l2 has-children">
+   <li class="toctree-l2 current active has-children">
     <a class="reference internal" href="mergernet.model.hypermodel.html">
      mergernet.model.hypermodel
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
     <label for="toctree-checkbox-15">
      <i class="fas fa-chevron-down">
      </i>
     </label>
-    <ul>
+    <ul class="current">
      <li class="toctree-l3">
       <a class="reference internal" href="mergernet.model.hypermodel.BayesianTuner.html">
        mergernet.model.hypermodel.BayesianTuner
@@ -467,8 +467,8 @@
        mergernet.model.hypermodel.HyperModel
       </a>
      </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.model.hypermodel.HyperModelTrainer.html">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
        mergernet.model.hypermodel.HyperModelTrainer
       </a>
      </li>
@@ -550,16 +550,16 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1 current active has-children">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="mergernet.services.html">
    mergernet.services
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+  <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
   <label for="toctree-checkbox-18">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul class="current">
+  <ul>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="mergernet.services.github.html">
      mergernet.services.github
@@ -594,11 +594,11 @@
      </li>
     </ul>
    </li>
-   <li class="toctree-l2 current active has-children">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.services.imaging.html">
      mergernet.services.imaging
     </a>
-    <input checked="" class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
     <label for="toctree-checkbox-21">
      <i class="fas fa-chevron-down">
      </i>
@@ -757,21 +757,39 @@
               
               <div>
                 
-  <section id="module-mergernet.services.imaging">
-<span id="mergernet-services-imaging"></span><h1>mergernet.services.imaging<a class="headerlink" href="#module-mergernet.services.imaging" title="Permalink to this headline">¶</a></h1>
-<p class="rubric">Classes</p>
-<table class="longtable table autosummary">
+  <section id="mergernet-model-hypermodel-hypermodeltrainer">
+<h1>mergernet.model.hypermodel.HyperModelTrainer<a class="headerlink" href="#mergernet-model-hypermodel-hypermodeltrainer" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.HyperModelTrainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mergernet.model.hypermodel.</span></span><span class="sig-name descname"><span class="pre">HyperModelTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset" title="mergernet.core.dataset.Dataset"><span class="pre">mergernet.core.dataset.Dataset</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/hypermodel.html#HyperModelTrainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.hypermodel.HyperModelTrainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p class="rubric">Methods</p>
+<table class="table">
 <colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
+<col style="width: 66%" />
+<col style="width: 34%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="mergernet.services.imaging.BaseImagingService.html#mergernet.services.imaging.BaseImagingService" title="mergernet.services.imaging.BaseImagingService"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseImagingService</span></code></a>()</p></td>
-<td><p><p class="rubric">Methods</p>
-</p></td>
+<tr class="row-odd"><td><p><strong>fit</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>prepare_dataset</strong></p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.HyperModelTrainer.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/hypermodel.html#HyperModelTrainer.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.hypermodel.HyperModelTrainer.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.hypermodel.HyperModelTrainer.prepare_dataset">
+<span class="sig-name descname"><span class="pre">prepare_dataset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/hypermodel.html#HyperModelTrainer.prepare_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.hypermodel.HyperModelTrainer.prepare_dataset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -780,17 +798,17 @@
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="mergernet.services.google.GDrive.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="mergernet.model.hypermodel.HyperModel.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">mergernet.services.google.GDrive</p>
+            <p class="prev-next-title">mergernet.model.hypermodel.HyperModel</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="mergernet.services.imaging.BaseImagingService.html" title="next page">
+    <a class='right-next' id="next-link" href="mergernet.model.hypermodel.SimpleHyperModel.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">mergernet.services.imaging.BaseImagingService</p>
+        <p class="prev-next-title">mergernet.model.hypermodel.SimpleHyperModel</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

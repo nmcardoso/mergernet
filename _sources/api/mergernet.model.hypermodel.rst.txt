@@ -20,6 +20,8 @@ mergernet.model.hypermodel
       :template: class-template.rst
    
       BayesianTuner
+      HyperModel
+      HyperModelTrainer
       SimpleHyperModel
    
    
