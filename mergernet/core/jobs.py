@@ -35,6 +35,12 @@ class BaseJob:
       use_github=True
     )
 
+
+  def run(self):
+    raise NotImplementedError('Job was not implemented.')
+
+
+  def post_run(self):
     # create and upload job metadata artifact
     tz = timezone(timedelta(hours=-3))
     now = datetime.now(tz=tz).isoformat(sep=' ', timespec='seconds')
@@ -45,16 +51,13 @@ class BaseJob:
       description=self.description,
       timestamp=now
     )
+    ah = ArtifactHelper()
     ah.upload_json(job_artifact, 'job.json')
 
-
-  def run(self):
-    print('Job not implemented')
-
-
-  def post_run(self):
-    ah = ArtifactHelper()
+    # upload log file
     ah.upload_log()
+
+    # backup tensorboard folder
     if (self.artifact_path / 'tensorboard').exists():
       ah.upload_dir(self.artifact_path / 'tensorboard')
       ts = TensorboardService()
@@ -63,6 +66,8 @@ class BaseJob:
         name=f'job_{self.jobid:03d}_run_{self.runid}',
         description=self.description
       )
+
+    # backup tuner folder
     if (self.artifact_path / 'tuner').exists():
       ah.upload_dir(self.artifact_path / 'tuner')
 
