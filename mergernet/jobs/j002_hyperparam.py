@@ -1,5 +1,4 @@
 from pathlib import Path
-
 import pandas as pd
 
 from mergernet.core.jobs import BaseJob
@@ -14,7 +13,7 @@ class Job(BaseJob):
   description = 'Test job description'
 
   def run(self):
-    ds = Dataset(data_path=self.data_path)
+    ds = Dataset(data_path=self.data_path, in_memory=True)
 
     tuner = BayesianTuner(
       max_trials=3,

@@ -197,9 +197,15 @@ class Dataset:
   """Default configuration object for RGB dataset."""
 
 
-  def __init__(self, data_path: Path = Path(''), ds_type: str = 'rgb'):
+  def __init__(
+    self,
+    data_path: Union[str, Path] = Path(''),
+    ds_type: str = 'rgb',
+    in_memory: bool = True
+  ):
     self.ds_type = ds_type
-    self.data_path = data_path
+    self.data_path = Path(data_path)
+    self.in_memory = in_memory
 
     self.config = Dataset.RGB_CONFIG
     self.config.archive_path = data_path / self.config.archive_path
@@ -275,6 +281,10 @@ class Dataset:
       str((self.config.images_path / (X + self.config.X_column_suffix)).resolve())
       for X in X_test
     ])
+
+    if self.in_memory:
+      X_train = [load_image(path) for path in X_train]
+      X_test = [load_image(path) for path in X_test]
 
     if self.config.label_map:
       y_train = self._discretize_label(y_train)

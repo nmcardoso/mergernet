@@ -183,11 +183,12 @@ class SimpleHyperModel():
     _x, _y = next(ds_train.take(1).as_numpy_iterator())
     L.info('[DATASET] Fold 0 loaded')
 
-    ds_train = ds_train.map(load_jpg)
-    ds_test = ds_test.map(load_jpg)
-    _x, _y = next(ds_train.take(1).as_numpy_iterator())
-    L.debug('[DATASET] apply: load_jpg')
-    L.debug(f'[DATASET] Example shape (X, y): {_x.shape}, {_y.shape}')
+    if not self.dataset.in_memory:
+      ds_train = ds_train.map(load_jpg)
+      ds_test = ds_test.map(load_jpg)
+      _x, _y = next(ds_train.take(1).as_numpy_iterator())
+      L.debug('[DATASET] apply: load_jpg')
+      L.debug(f'[DATASET] Example shape (X, y): {_x.shape}, {_y.shape}')
 
     ds_train = ds_train.map(one_hot)
     ds_test = ds_test.map(one_hot)
