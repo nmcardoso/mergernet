@@ -1,5 +1,6 @@
 import logging
 from typing import Tuple
+import secrets
 
 import tensorflow as tf
 import keras_tuner as kt
@@ -160,8 +161,11 @@ class SimpleHyperModel():
       class_weight=self.class_weights,
       callbacks=[
         tf.keras.callbacks.TensorBoard(
-          log_dir=str(ah.artifact_path / 'tensorboard'),
-          write_images=True,
+          log_dir=str(ah.artifact_path / 'tensorboard' / secrets.token_hex(3)),
+          write_images=False,
+          write_graph=False,
+          write_steps_per_second='epoch',
+          update_freq='epoch',
           profile_batch=40
         ),
         tf.keras.callbacks.EarlyStopping(patience=3),
@@ -223,6 +227,8 @@ class BayesianTuner(kt.BayesianOptimization):
 
     hp = trial.hyperparameters
     sm = SimpleHyperModel(dataset)
+
+    print(trial.trial_id)
 
     return sm.fit(
       dense_units_1=hp.Choice('dense_1_units', [256, 512, 1024]),
