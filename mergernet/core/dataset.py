@@ -201,7 +201,7 @@ class Dataset:
     self,
     data_path: Union[str, Path] = Path(''),
     ds_type: str = 'rgb',
-    in_memory: bool = True
+    in_memory: bool = False
   ):
     self.ds_type = ds_type
     self.data_path = Path(data_path)

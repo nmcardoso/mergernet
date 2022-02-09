@@ -13,7 +13,7 @@ class Job(BaseJob):
   description = 'Test job description'
 
   def run(self):
-    ds = Dataset(data_path=self.data_path, in_memory=True)
+    ds = Dataset(data_path=self.data_path)
 
     tuner = BayesianTuner(
       max_trials=3,
