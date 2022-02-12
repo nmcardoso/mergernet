@@ -146,6 +146,7 @@
 <span class="kn">import</span> <span class="nn">secrets</span>
 
 <span class="kn">import</span> <span class="nn">optuna</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">from</span> <span class="nn">mergernet.core.artifacts</span> <span class="kn">import</span> <span class="n">ArtifactHelper</span>
 <span class="kn">from</span> <span class="nn">optuna.integration.mlflow</span> <span class="kn">import</span> <span class="n">MLflowCallback</span>
@@ -321,6 +322,8 @@
 <div class="viewcode-block" id="HyperModel.hypertrain"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.hypertrain">[docs]</a>  <span class="k">def</span> <span class="nf">hypertrain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span><span class="n">storage</span><span class="o">=</span><span class="s1">&#39;sqlite:///optuna.sqlite&#39;</span><span class="p">,</span> <span class="n">study_name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;maximize&#39;</span><span class="p">)</span>
     <span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objective</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mlflow</span><span class="p">])</span>
+
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">tensorflow</span><span class="o">.</span><span class="n">autolog</span><span class="p">()</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of finished trials: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">trials</span><span class="p">)))</span>
 
