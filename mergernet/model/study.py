@@ -2,6 +2,7 @@ import logging
 import secrets
 
 import optuna
+import mlflow
 import tensorflow as tf
 from mergernet.core.artifacts import ArtifactHelper
 from optuna.integration.mlflow import MLflowCallback
@@ -177,6 +178,8 @@ class HyperModel:
   def hypertrain(self):
     study = optuna.create_study(storage='sqlite:///optuna.sqlite', study_name='test', direction='maximize')
     study.optimize(self.objective, n_trials=2, callbacks=[self.mlflow])
+
+    mlflow.tensorflow.autolog()
 
     print('Number of finished trials: {}'.format(len(study.trials)))
 
