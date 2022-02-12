@@ -54,9 +54,6 @@ class BaseJob:
     ah = ArtifactHelper()
     ah.upload_json(job_artifact, 'job.json')
 
-    # upload log file
-    ah.upload_log()
-
     # backup tensorboard folder
     if (self.artifact_path / 'tensorboard').exists():
       ah.upload_dir(self.artifact_path / 'tensorboard')
@@ -64,6 +61,9 @@ class BaseJob:
     # backup tuner folder
     if (self.artifact_path / 'tuner').exists():
       ah.upload_dir(self.artifact_path / 'tuner')
+
+    # upload log file
+    ah.upload_log()
 
 
   def get_system_resources(self):
