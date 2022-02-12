@@ -1,0 +1,6 @@
+mergernet.model.study.build\_model
+==================================
+
+.. currentmodule:: mergernet.model.study
+
+.. autofunction:: build_model

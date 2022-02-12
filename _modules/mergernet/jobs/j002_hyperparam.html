@@ -148,6 +148,7 @@
 <span class="kn">from</span> <span class="nn">mergernet.core.jobs</span> <span class="kn">import</span> <span class="n">BaseJob</span>
 <span class="kn">from</span> <span class="nn">mergernet.core.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 <span class="kn">from</span> <span class="nn">mergernet.model.hypermodel</span> <span class="kn">import</span> <span class="n">HyperModelTrainer</span><span class="p">,</span> <span class="n">SimpleHyperModel</span><span class="p">,</span> <span class="n">BayesianTuner</span>
+<span class="kn">from</span> <span class="nn">mergernet.model.study</span> <span class="kn">import</span> <span class="n">hypertrain</span>
 
 
 
@@ -159,7 +160,9 @@
 <div class="viewcode-block" id="Job.run"><a class="viewcode-back" href="../../../api/mergernet.jobs.j002_hyperparam.Job.html#mergernet.jobs.j002_hyperparam.Job.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">data_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_path</span><span class="p">)</span>
 
-    <span class="n">HyperModelTrainer</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span></div></div>
+    <span class="n">hypertrain</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span></div></div>
+
+    <span class="c1"># HyperModelTrainer(ds).fit()</span>
 
     <span class="c1"># tuner = BayesianTuner(</span>
     <span class="c1">#   max_trials=3,</span>

@@ -1,0 +1,33 @@
+mergernet.model.study
+=====================
+
+.. automodule:: mergernet.model.study
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      build_model
+      hypertrain
+      objective_factory
+      prepare_data
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

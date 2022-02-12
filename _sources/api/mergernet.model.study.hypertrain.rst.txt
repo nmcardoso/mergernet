@@ -1,0 +1,6 @@
+mergernet.model.study.hypertrain
+================================
+
+.. currentmodule:: mergernet.model.study
+
+.. autofunction:: hypertrain

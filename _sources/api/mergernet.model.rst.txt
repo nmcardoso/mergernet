@@ -33,4 +33,5 @@
    mergernet.model.hypermodel
    mergernet.model.plot
    mergernet.model.preprocessing
+   mergernet.model.study
 
