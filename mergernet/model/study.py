@@ -1,9 +1,10 @@
 import logging
 import secrets
 
+import optuna
 import tensorflow as tf
 from mergernet.core.artifacts import ArtifactHelper
-import optuna
+from optuna.integration.mlflow import MLflowCallback
 
 from mergernet.core.dataset import Dataset
 from mergernet.model.callback import DeltaStopping
@@ -14,9 +15,33 @@ from mergernet.core.utils import Timming
 L = logging.getLogger('job')
 
 
+
+mlflow_cb = MLflowCallback(
+  metric_name='accuracy',
+  nest_trials=False,
+  tag_study_user_attrs=False
+)
+
+
+
 class HyperModel:
-  def __init__(self, dataset: Dataset):
+  def __init__(
+    self,
+    dataset: Dataset,
+    optuna_uri: str = 'sqlite:///optuna.sqlite',
+    mlflow_uri: str = 'sqlite:///mlflow.sqlite'
+  ):
+    ah = ArtifactHelper()
+    self.optuna_uri = optuna_uri or ah.optuna_uri
+    self.mlflow_uri = mlflow_uri or ah.mlflow_uri
     self.dataset = dataset
+
+    self.mlflow = MLflowCallback(
+      tracking_uri=mlflow_uri,
+      metric_name='accuracy',
+      nest_trials=False,
+      tag_study_user_attrs=False
+    )
 
 
   def prepare_data(self, dataset):
@@ -150,8 +175,8 @@ class HyperModel:
 
 
   def hypertrain(self):
-    study = optuna.create_study(storage='sqlite:///optuna.db', study_name='test', direction='maximize')
-    study.optimize(self.objective, n_trials=2)
+    study = optuna.create_study(storage='sqlite:///optuna.sqlite', study_name='test', direction='maximize')
+    study.optimize(self.objective, n_trials=2, callbacks=[self.mlflow])
 
     print('Number of finished trials: {}'.format(len(study.trials)))
 

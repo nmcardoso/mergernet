@@ -35,10 +35,14 @@ class ArtifactHelper(metaclass=SingletonMeta):
       L.error(f'[GITHUB] unable to upload the file "{filename}"')
 
 
-  def _upload_gdrive(self, path: Union[str, Path]):
+  def _upload_gdrive(self, path: Union[str, Path], root: bool = False):
     name = str(path.name)
     from_path = path
-    to_path = Path(self.artifact_path.stem) / name
+
+    if root:
+      to_path = Path(name)
+    else:
+      to_path = Path(self.artifact_path.stem) / name
 
     if path.is_file():
       if self.gdrive.send(from_path, to_path):
@@ -132,3 +136,18 @@ class ArtifactHelper(metaclass=SingletonMeta):
 
   def upload_dir(self, path: Union[str, Path]):
     self._upload_gdrive(path)
+
+
+  def upload_optuna_db(self):
+    ah = ArtifactHelper()
+    self._upload_gdrive(ah.optuna_path)
+
+
+  def upload_mlflow_db(self):
+    ah = ArtifactHelper()
+    self._upload_gdrive(ah.mlflow_path)
+
+
+  def download_mlflow_db(self):
+    pass
+
