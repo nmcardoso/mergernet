@@ -140,7 +140,8 @@ def objective_factory(dataset):
     L.info(f'[TRAIN] Training finished without errors in {t.duration()}.')
 
     ev = model.evaluate(ds_test)
-    return ev['val_accuracy']
+    idx = ev.index('val_accuracy')
+    return ev[idx]
   return objective
 
 
