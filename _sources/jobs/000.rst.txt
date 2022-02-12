@@ -13,7 +13,6 @@
 Artifacts
 ---------
 
-* `job.log <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_9b5eec/job.log>`_
 * `job.json <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_9b5eec/job.json>`_
 
 
@@ -21,65 +20,4 @@ Artifacts
 
 
 
-
-
-
-Log
----
-
-.. list-table:: Log file
-    :header-rows: 1
-    :widths: 10 30
-
-    * - Timestamp
-      - Message
-    * - 2022-02-12 23:06:21 
-      - INFO [DATASET] Fold 0 loaded
-
-    * - 2022-02-12 23:06:21 
-      - INFO [DATASET] apply: load_jpg
-
-    * - 2022-02-12 23:06:21 
-      - INFO [DATASET] apply: one_hot
-
-    * - 2022-02-12 23:06:21 
-      - INFO [DATASET] apply: shuffle
-
-    * - 2022-02-12 23:06:21 
-      - INFO [DATASET] apply: batch
-
-    * - 2022-02-12 23:06:26 
-      - INFO [TRAIN] Starting training loop
-
-    * - 2022-02-12 23:07:29 
-      - INFO [TRAIN] Training finished without errors in 00:01:03.
-
-    * - 2022-02-12 23:07:32 
-      - INFO [DATASET] Fold 0 loaded
-
-    * - 2022-02-12 23:07:32 
-      - INFO [DATASET] apply: load_jpg
-
-    * - 2022-02-12 23:07:32 
-      - INFO [DATASET] apply: one_hot
-
-    * - 2022-02-12 23:07:32 
-      - INFO [DATASET] apply: shuffle
-
-    * - 2022-02-12 23:07:32 
-      - INFO [DATASET] apply: batch
-
-    * - 2022-02-12 23:07:34 
-      - INFO [TRAIN] Starting training loop
-
-    * - 2022-02-12 23:08:42 
-      - INFO [TRAIN] Training finished without errors in 00:01:07.
-
-    * - 2022-02-12 23:08:43 
-      - INFO [GITHUB] file "job.json" successfully uploaded to github.
-
-    * - 2022-02-12 23:08:44 
-      - INFO [GDRIVE] file "job.json" uploaded to Google Drive.
-
-    
 
