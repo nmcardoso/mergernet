@@ -559,23 +559,8 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.model.study.build_model.html">
-       mergernet.model.study.build_model
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.model.study.hypertrain.html">
-       mergernet.model.study.hypertrain
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.model.study.objective_factory.html">
-       mergernet.model.study.objective_factory
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.model.study.prepare_data.html">
-       mergernet.model.study.prepare_data
+      <a class="reference internal" href="mergernet.model.study.HyperModel.html">
+       mergernet.model.study.HyperModel
       </a>
      </li>
     </ul>
@@ -806,32 +791,41 @@
 <p class="rubric">Methods</p>
 <table class="table">
 <colgroup>
-<col style="width: 62%" />
-<col style="width: 38%" />
+<col style="width: 69%" />
+<col style="width: 31%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>config</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><strong>save_json</strong></p></td>
+<tr class="row-even"><td><p><strong>download_mlflow_db</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><strong>upload</strong></p></td>
+<tr class="row-odd"><td><p><strong>save_json</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><strong>upload_dir</strong></p></td>
+<tr class="row-even"><td><p><strong>upload</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><p><strong>upload_json</strong></p></td>
+<tr class="row-odd"><td><p><strong>upload_dir</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><strong>upload_log</strong></p></td>
+<tr class="row-even"><td><p><strong>upload_json</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>upload_log</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>upload_mlflow_db</strong></p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p><strong>upload_model</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><strong>upload_text</strong></p></td>
+<tr class="row-even"><td><p><strong>upload_optuna_db</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>upload_text</strong></p></td>
 <td></td>
 </tr>
 </tbody>
@@ -864,7 +858,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mergernet.core.artifacts.ArtifactHelper._upload_gdrive">
-<span class="sig-name descname"><span class="pre">_upload_gdrive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/artifacts.html#ArtifactHelper._upload_gdrive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.artifacts.ArtifactHelper._upload_gdrive" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">_upload_gdrive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/artifacts.html#ArtifactHelper._upload_gdrive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.artifacts.ArtifactHelper._upload_gdrive" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -880,6 +874,11 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="mergernet.core.artifacts.ArtifactHelper.config">
 <span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artifact_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gdrive_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_github</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_gdrive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/artifacts.html#ArtifactHelper.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.artifacts.ArtifactHelper.config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.core.artifacts.ArtifactHelper.download_mlflow_db">
+<span class="sig-name descname"><span class="pre">download_mlflow_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/artifacts.html#ArtifactHelper.download_mlflow_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.artifacts.ArtifactHelper.download_mlflow_db" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -913,8 +912,18 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="mergernet.core.artifacts.ArtifactHelper.upload_mlflow_db">
+<span class="sig-name descname"><span class="pre">upload_mlflow_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/artifacts.html#ArtifactHelper.upload_mlflow_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.artifacts.ArtifactHelper.upload_mlflow_db" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="mergernet.core.artifacts.ArtifactHelper.upload_model">
 <span class="sig-name descname"><span class="pre">upload_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">keras.engine.training.Model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/artifacts.html#ArtifactHelper.upload_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.artifacts.ArtifactHelper.upload_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.core.artifacts.ArtifactHelper.upload_optuna_db">
+<span class="sig-name descname"><span class="pre">upload_optuna_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/artifacts.html#ArtifactHelper.upload_optuna_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.artifacts.ArtifactHelper.upload_optuna_db" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

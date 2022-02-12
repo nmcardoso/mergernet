@@ -1,6 +1,0 @@
-mergernet.model.study.objective\_factory
-========================================
-
-.. currentmodule:: mergernet.model.study
-
-.. autofunction:: objective_factory

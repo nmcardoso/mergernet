@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>mergernet.model.study.hypertrain &#8212; MergerNet  documentation</title>
+    <title>mergernet.model.study.HyperModel &#8212; MergerNet  documentation</title>
     
     <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -34,8 +34,8 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="mergernet.model.study.objective_factory" href="mergernet.model.study.objective_factory.html" />
-    <link rel="prev" title="mergernet.model.study.build_model" href="mergernet.model.study.build_model.html" />
+    <link rel="next" title="mergernet.services" href="mergernet.services.html" />
+    <link rel="prev" title="mergernet.model.study" href="mergernet.model.study.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
     
@@ -558,24 +558,9 @@
      </i>
     </label>
     <ul class="current">
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.model.study.build_model.html">
-       mergernet.model.study.build_model
-      </a>
-     </li>
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
-       mergernet.model.study.hypertrain
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.model.study.objective_factory.html">
-       mergernet.model.study.objective_factory
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.model.study.prepare_data.html">
-       mergernet.model.study.prepare_data
+       mergernet.model.study.HyperModel
       </a>
      </li>
     </ul>
@@ -789,12 +774,54 @@
               
               <div>
                 
-  <section id="mergernet-model-study-hypertrain">
-<h1>mergernet.model.study.hypertrain<a class="headerlink" href="#mergernet-model-study-hypertrain" title="Permalink to this headline">¶</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="mergernet.model.study.hypertrain">
-<span class="sig-prename descclassname"><span class="pre">mergernet.model.study.</span></span><span class="sig-name descname"><span class="pre">hypertrain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset" title="mergernet.core.dataset.Dataset"><span class="pre">mergernet.core.dataset.Dataset</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/study.html#hypertrain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.study.hypertrain" title="Permalink to this definition">¶</a></dt>
+  <section id="mergernet-model-study-hypermodel">
+<h1>mergernet.model.study.HyperModel<a class="headerlink" href="#mergernet-model-study-hypermodel" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mergernet.model.study.HyperModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mergernet.model.study.</span></span><span class="sig-name descname"><span class="pre">HyperModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset" title="mergernet.core.dataset.Dataset"><span class="pre">mergernet.core.dataset.Dataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">optuna_uri</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sqlite:///optuna.sqlite'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mlflow_uri</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sqlite:///mlflow.sqlite'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/study.html#HyperModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.study.HyperModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p class="rubric">Methods</p>
+<table class="table">
+<colgroup>
+<col style="width: 62%" />
+<col style="width: 38%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>build_model</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>hypertrain</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>objective</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>prepare_data</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.study.HyperModel.build_model">
+<span class="sig-name descname"><span class="pre">build_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pretrained_weights</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/study.html#HyperModel.build_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.study.HyperModel.build_model" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.study.HyperModel.hypertrain">
+<span class="sig-name descname"><span class="pre">hypertrain</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/study.html#HyperModel.hypertrain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.study.HyperModel.hypertrain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.study.HyperModel.objective">
+<span class="sig-name descname"><span class="pre">objective</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/study.html#HyperModel.objective"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.study.HyperModel.objective" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.study.HyperModel.prepare_data">
+<span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/study.html#HyperModel.prepare_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.study.HyperModel.prepare_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 </section>
 
@@ -804,17 +831,17 @@
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="mergernet.model.study.build_model.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="mergernet.model.study.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">mergernet.model.study.build_model</p>
+            <p class="prev-next-title">mergernet.model.study</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="mergernet.model.study.objective_factory.html" title="next page">
+    <a class='right-next' id="next-link" href="mergernet.services.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">mergernet.model.study.objective_factory</p>
+        <p class="prev-next-title">mergernet.services</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

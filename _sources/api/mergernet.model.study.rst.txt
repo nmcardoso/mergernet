@@ -9,19 +9,17 @@ mergernet.model.study
 
    
    
-   .. rubric:: Functions
+   
+
+   
+   
+   .. rubric:: Classes
 
    .. autosummary::
       :toctree:
+      :template: class-template.rst
    
-      build_model
-      hypertrain
-      objective_factory
-      prepare_data
-   
-   
-
-   
+      HyperModel
    
    
 

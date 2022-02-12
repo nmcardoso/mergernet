@@ -1,6 +1,0 @@
-mergernet.model.study.prepare\_data
-===================================
-
-.. currentmodule:: mergernet.model.study
-
-.. autofunction:: prepare_data

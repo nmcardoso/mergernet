@@ -179,10 +179,14 @@
       <span class="n">L</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[GITHUB] unable to upload the file &quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ArtifactHelper._upload_gdrive"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper._upload_gdrive">[docs]</a>  <span class="k">def</span> <span class="nf">_upload_gdrive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]):</span>
+<div class="viewcode-block" id="ArtifactHelper._upload_gdrive"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper._upload_gdrive">[docs]</a>  <span class="k">def</span> <span class="nf">_upload_gdrive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">root</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
     <span class="n">from_path</span> <span class="o">=</span> <span class="n">path</span>
-    <span class="n">to_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span> <span class="o">/</span> <span class="n">name</span>
+
+    <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+      <span class="n">to_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">to_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span> <span class="o">/</span> <span class="n">name</span>
 
     <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
       <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gdrive</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">from_path</span><span class="p">,</span> <span class="n">to_path</span><span class="p">):</span>
@@ -275,7 +279,22 @@
 
 
 <div class="viewcode-block" id="ArtifactHelper.upload_dir"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.upload_dir">[docs]</a>  <span class="k">def</span> <span class="nf">upload_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_upload_gdrive</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div></div>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_upload_gdrive</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ArtifactHelper.upload_optuna_db"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.upload_optuna_db">[docs]</a>  <span class="k">def</span> <span class="nf">upload_optuna_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">ah</span> <span class="o">=</span> <span class="n">ArtifactHelper</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_upload_gdrive</span><span class="p">(</span><span class="n">ah</span><span class="o">.</span><span class="n">optuna_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ArtifactHelper.upload_mlflow_db"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.upload_mlflow_db">[docs]</a>  <span class="k">def</span> <span class="nf">upload_mlflow_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">ah</span> <span class="o">=</span> <span class="n">ArtifactHelper</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_upload_gdrive</span><span class="p">(</span><span class="n">ah</span><span class="o">.</span><span class="n">mlflow_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ArtifactHelper.download_mlflow_db"><a class="viewcode-back" href="../../../api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper.download_mlflow_db">[docs]</a>  <span class="k">def</span> <span class="nf">download_mlflow_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">pass</span></div></div>
+
 </pre></div>
 
               </div>
