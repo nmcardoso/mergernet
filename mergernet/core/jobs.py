@@ -60,12 +60,6 @@ class BaseJob:
     # backup tensorboard folder
     if (self.artifact_path / 'tensorboard').exists():
       ah.upload_dir(self.artifact_path / 'tensorboard')
-      ts = TensorboardService()
-      ts.upload_assets(
-        logdir=self.artifact_path / 'tensorboard',
-        name=f'job_{self.jobid:03d}_run_{self.runid}',
-        description=self.description
-      )
 
     # backup tuner folder
     if (self.artifact_path / 'tuner').exists():
