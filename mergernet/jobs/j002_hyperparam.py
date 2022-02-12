@@ -4,6 +4,7 @@ import pandas as pd
 from mergernet.core.jobs import BaseJob
 from mergernet.core.dataset import Dataset
 from mergernet.model.hypermodel import HyperModelTrainer, SimpleHyperModel, BayesianTuner
+from mergernet.model.study import hypertrain
 
 
 
@@ -15,7 +16,9 @@ class Job(BaseJob):
   def run(self):
     ds = Dataset(data_path=self.data_path)
 
-    HyperModelTrainer(ds).fit()
+    hypertrain(ds)
+
+    # HyperModelTrainer(ds).fit()
 
     # tuner = BayesianTuner(
     #   max_trials=3,
