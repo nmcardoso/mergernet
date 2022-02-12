@@ -17,11 +17,15 @@ astroquery = "*"
 tensorflow-addons = "*"
 keras-tuner = "1.1.0"
 tensorboard = "*"
+optuna = "*"
+mlflow = "*"
+plotly = "*"
 
 [dev-packages]
 numpydoc = "*"
 pydata-sphinx-theme = "*"
 ipykernel = "*"
+tensorboard-plugin-profile = "*"
 
 [requires]
 python_version = "3.7.12"

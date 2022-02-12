@@ -17,6 +17,9 @@ setup(
     'Pillow>=7.1.2',
     'tensorflow_addons',
     'keras-tuner==1.1.0',
-    'tensorboard'
+    'tensorboard',
+    'optuna',
+    'mlflow',
+    'plotly'
   ]
 )
