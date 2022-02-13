@@ -192,7 +192,7 @@ class HyperModel:
     mlflow.set_tracking_uri(self.mlflow_uri)
     mlflow.set_experiment('test')
 
-    study = optuna.create_study(storage=self.sqlite_uri, study_name='test', direction='maximize')
+    study = optuna.create_study(storage=self.optuna_uri, study_name='test', direction='maximize')
     study.optimize(self.objective, n_trials=2, callbacks=[self.mlflow])
 
     print('Number of finished trials: {}'.format(len(study.trials)))
