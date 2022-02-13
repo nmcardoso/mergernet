@@ -171,15 +171,18 @@ class HyperModel:
 
 
     with mlflow.start_run(run_name=str(trial.number), nested=self.nest_trials) as run:
+      # The mlflow run will be created before optuna mlflow callback,
+      # so the following line is needed in order to optuna get the current run.
+      # https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py
       trial.set_system_attr(RUN_ID_ATTRIBUTE_KEY, run.info.run_id)
 
+      # history shape: {metric1: [val1, val2, ...], metric2: [val1, val2, ...]}
       h = history.history
       epochs = len(h[list(h.keys())[0]])
 
       for i in range(epochs):
-        metrics = {}
-        for name in h.keys():
-          metrics[name] = h[name][i]
+        # {k1: [v1, v2, ...], k2: [v1, v2, ...]} => {k1: vi, k2: vi}
+        metrics = {name: h[name][i] for name in h.keys()}
         mlflow.log_metrics(metrics=metrics, step=i)
 
     ev = model.evaluate(ds_test)
