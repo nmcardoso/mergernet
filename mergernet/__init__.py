@@ -5,7 +5,7 @@ def configure_logger():
   logger.setLevel(logging.DEBUG)
 
   formatter = logging.Formatter(
-    fmt='%(asctime)s %(levelname)s %(message)s',
+    fmt='[%(asctime)s] [%(levelname)s] %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
   )
 
