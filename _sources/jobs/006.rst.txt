@@ -2,8 +2,8 @@
 ============================
 
 * Job ID: 2
-* Run ID: a3ca6b
-* Date: 2022-02-09 01:50:07-03:00
+* Run ID: f3d4fc
+* Date: 2022-02-09 00:36:05-03:00
 * Description: Test job description
 
 
@@ -13,8 +13,8 @@
 Artifacts
 ---------
 
-* `job.log <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_a3ca6b/job.log>`_
-* `job.json <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_a3ca6b/job.json>`_
+* `job.log <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_f3d4fc/job.log>`_
+* `job.json <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_f3d4fc/job.json>`_
 
 
 
@@ -118,63 +118,6 @@ Log
       - INFO [GITHUB] file "job.json" successfully uploaded to github.
 
     * - 2022-02-09 03:36:06 
-      - INFO [GDRIVE] file "job.json" uploaded to Google Drive.
-
-    * - 2022-02-09 03:36:06 
-      - INFO [GITHUB] file "job.log" successfully uploaded to github.
-
-    * - 2022-02-09 03:36:07 
-      - INFO [GDRIVE] file "job.log" uploaded to Google Drive.
-
-    * - 2022-02-09 03:36:07 
-      - INFO [GDRIVE] folder "tensorboard" uploaded to Google Drive.
-
-    * - 2022-02-09 03:36:11 
-      - INFO [GDRIVE] folder "tuner" uploaded to Google Drive.
-
-    * - 2022-02-09 04:40:24 
-      - INFO [DATASET] Fold 0 loaded
-
-    * - 2022-02-09 04:40:24 
-      - INFO [DATASET] apply: load_jpg
-
-    * - 2022-02-09 04:40:24 
-      - INFO [DATASET] apply: one_hot
-
-    * - 2022-02-09 04:40:24 
-      - INFO [DATASET] apply: shuffle
-
-    * - 2022-02-09 04:40:24 
-      - INFO [DATASET] apply: batch
-
-    * - 2022-02-09 04:40:25 
-      - INFO [TRAIN] Starting training loop
-
-    * - 2022-02-09 04:46:44 
-      - INFO [DATASET] Fold 0 loaded
-
-    * - 2022-02-09 04:46:44 
-      - INFO [DATASET] apply: load_jpg
-
-    * - 2022-02-09 04:46:44 
-      - INFO [DATASET] apply: one_hot
-
-    * - 2022-02-09 04:46:44 
-      - INFO [DATASET] apply: shuffle
-
-    * - 2022-02-09 04:46:44 
-      - INFO [DATASET] apply: batch
-
-    * - 2022-02-09 04:46:44 
-      - INFO [TRAIN] Starting training loop
-
-    * - 2022-02-09 04:50:06 
-      - INFO [TRAIN] Training finished without errors in 00:03:22.
-
-    * - 2022-02-09 04:50:07 
-      - INFO [GITHUB] file "job.json" successfully uploaded to github.
-
-    * - 2022-02-09 04:50:07 
       - INFO [GDRIVE] file "job.json" uploaded to Google Drive.
 
     

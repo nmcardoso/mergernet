@@ -2,8 +2,8 @@
 ============================
 
 * Job ID: 2
-* Run ID: a3ca6b
-* Date: 2022-02-09 01:50:07-03:00
+* Run ID: 327b25
+* Date: 2022-02-12 05:36:59-03:00
 * Description: Test job description
 
 
@@ -13,8 +13,8 @@
 Artifacts
 ---------
 
-* `job.log <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_a3ca6b/job.log>`_
-* `job.json <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_a3ca6b/job.json>`_
+* `job.log <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_327b25/job.log>`_
+* `job.json <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_327b25/job.json>`_
 
 
 
@@ -33,148 +33,136 @@ Log
 
     * - Timestamp
       - Message
-    * - 2022-02-09 03:28:43 
+    * - 2022-02-12 08:18:38 
       - INFO [DATASET] Fold 0 loaded
 
-    * - 2022-02-09 03:28:43 
-      - INFO [DATASET] apply: one_hot
-
-    * - 2022-02-09 03:28:43 
-      - INFO [DATASET] apply: shuffle
-
-    * - 2022-02-09 03:28:43 
-      - INFO [DATASET] apply: batch
-
-    * - 2022-02-09 03:28:45 
-      - INFO [TRAIN] Starting training loop
-
-    * - 2022-02-09 03:29:59 
-      - INFO [TRAIN] Training finished without errors in 00:01:13.
-
-    * - 2022-02-09 03:32:34 
-      - INFO [DATASET] Fold 0 loaded
-
-    * - 2022-02-09 03:32:34 
+    * - 2022-02-12 08:18:39 
       - INFO [DATASET] apply: load_jpg
 
-    * - 2022-02-09 03:32:34 
+    * - 2022-02-12 08:18:39 
       - INFO [DATASET] apply: one_hot
 
-    * - 2022-02-09 03:32:34 
+    * - 2022-02-12 08:18:39 
       - INFO [DATASET] apply: shuffle
 
-    * - 2022-02-09 03:32:34 
+    * - 2022-02-12 08:18:39 
       - INFO [DATASET] apply: batch
 
-    * - 2022-02-09 03:32:37 
+    * - 2022-02-12 08:18:41 
       - INFO [TRAIN] Starting training loop
 
-    * - 2022-02-09 03:33:42 
-      - INFO [TRAIN] Training finished without errors in 00:01:05.
+    * - 2022-02-12 08:19:52 
+      - INFO [TRAIN] Training finished without errors in 00:01:10.
 
-    * - 2022-02-09 03:33:44 
+    * - 2022-02-12 08:24:58 
       - INFO [DATASET] Fold 0 loaded
 
-    * - 2022-02-09 03:33:44 
+    * - 2022-02-12 08:24:58 
       - INFO [DATASET] apply: load_jpg
 
-    * - 2022-02-09 03:33:44 
+    * - 2022-02-12 08:24:58 
       - INFO [DATASET] apply: one_hot
 
-    * - 2022-02-09 03:33:44 
+    * - 2022-02-12 08:24:58 
       - INFO [DATASET] apply: shuffle
 
-    * - 2022-02-09 03:33:44 
+    * - 2022-02-12 08:24:58 
       - INFO [DATASET] apply: batch
 
-    * - 2022-02-09 03:33:46 
+    * - 2022-02-12 08:25:00 
       - INFO [TRAIN] Starting training loop
 
-    * - 2022-02-09 03:34:46 
-      - INFO [TRAIN] Training finished without errors in 00:01:00.
+    * - 2022-02-12 08:26:07 
+      - INFO [TRAIN] Training finished without errors in 00:01:06.
 
-    * - 2022-02-09 03:34:54 
+    * - 2022-02-12 08:27:40 
       - INFO [DATASET] Fold 0 loaded
 
-    * - 2022-02-09 03:34:54 
+    * - 2022-02-12 08:27:40 
       - INFO [DATASET] apply: load_jpg
 
-    * - 2022-02-09 03:34:54 
+    * - 2022-02-12 08:27:40 
       - INFO [DATASET] apply: one_hot
 
-    * - 2022-02-09 03:34:54 
+    * - 2022-02-12 08:27:40 
       - INFO [DATASET] apply: shuffle
 
-    * - 2022-02-09 03:34:54 
+    * - 2022-02-12 08:27:40 
       - INFO [DATASET] apply: batch
 
-    * - 2022-02-09 03:34:56 
+    * - 2022-02-12 08:27:42 
       - INFO [TRAIN] Starting training loop
 
-    * - 2022-02-09 03:36:04 
-      - INFO [TRAIN] Training finished without errors in 00:01:07.
+    * - 2022-02-12 08:28:38 
+      - INFO [TRAIN] Training finished without errors in 00:00:56.
 
-    * - 2022-02-09 03:36:06 
+    * - 2022-02-12 08:31:34 
+      - INFO [DATASET] Fold 0 loaded
+
+    * - 2022-02-12 08:31:34 
+      - INFO [DATASET] apply: load_jpg
+
+    * - 2022-02-12 08:31:34 
+      - INFO [DATASET] apply: one_hot
+
+    * - 2022-02-12 08:31:34 
+      - INFO [DATASET] apply: shuffle
+
+    * - 2022-02-12 08:31:34 
+      - INFO [DATASET] apply: batch
+
+    * - 2022-02-12 08:31:37 
+      - INFO [TRAIN] Starting training loop
+
+    * - 2022-02-12 08:32:44 
+      - INFO [TRAIN] Training finished without errors in 00:01:06.
+
+    * - 2022-02-12 08:34:40 
+      - INFO [DATASET] Fold 0 loaded
+
+    * - 2022-02-12 08:34:40 
+      - INFO [DATASET] apply: load_jpg
+
+    * - 2022-02-12 08:34:41 
+      - INFO [DATASET] apply: one_hot
+
+    * - 2022-02-12 08:34:41 
+      - INFO [DATASET] apply: shuffle
+
+    * - 2022-02-12 08:34:41 
+      - INFO [DATASET] apply: batch
+
+    * - 2022-02-12 08:34:43 
+      - INFO [TRAIN] Starting training loop
+
+    * - 2022-02-12 08:35:47 
+      - INFO [TRAIN] Training finished without errors in 00:01:04.
+
+    * - 2022-02-12 08:35:49 
+      - INFO [DATASET] Fold 0 loaded
+
+    * - 2022-02-12 08:35:49 
+      - INFO [DATASET] apply: load_jpg
+
+    * - 2022-02-12 08:35:49 
+      - INFO [DATASET] apply: one_hot
+
+    * - 2022-02-12 08:35:49 
+      - INFO [DATASET] apply: shuffle
+
+    * - 2022-02-12 08:35:49 
+      - INFO [DATASET] apply: batch
+
+    * - 2022-02-12 08:35:51 
+      - INFO [TRAIN] Starting training loop
+
+    * - 2022-02-12 08:36:58 
+      - INFO [TRAIN] Training finished without errors in 00:01:06.
+
+    * - 2022-02-12 08:37:00 
       - INFO [GITHUB] file "job.json" successfully uploaded to github.
 
-    * - 2022-02-09 03:36:06 
-      - INFO [GDRIVE] file "job.json" uploaded to Google Drive.
-
-    * - 2022-02-09 03:36:06 
-      - INFO [GITHUB] file "job.log" successfully uploaded to github.
-
-    * - 2022-02-09 03:36:07 
-      - INFO [GDRIVE] file "job.log" uploaded to Google Drive.
-
-    * - 2022-02-09 03:36:07 
-      - INFO [GDRIVE] folder "tensorboard" uploaded to Google Drive.
-
-    * - 2022-02-09 03:36:11 
-      - INFO [GDRIVE] folder "tuner" uploaded to Google Drive.
-
-    * - 2022-02-09 04:40:24 
-      - INFO [DATASET] Fold 0 loaded
-
-    * - 2022-02-09 04:40:24 
-      - INFO [DATASET] apply: load_jpg
-
-    * - 2022-02-09 04:40:24 
-      - INFO [DATASET] apply: one_hot
-
-    * - 2022-02-09 04:40:24 
-      - INFO [DATASET] apply: shuffle
-
-    * - 2022-02-09 04:40:24 
-      - INFO [DATASET] apply: batch
-
-    * - 2022-02-09 04:40:25 
-      - INFO [TRAIN] Starting training loop
-
-    * - 2022-02-09 04:46:44 
-      - INFO [DATASET] Fold 0 loaded
-
-    * - 2022-02-09 04:46:44 
-      - INFO [DATASET] apply: load_jpg
-
-    * - 2022-02-09 04:46:44 
-      - INFO [DATASET] apply: one_hot
-
-    * - 2022-02-09 04:46:44 
-      - INFO [DATASET] apply: shuffle
-
-    * - 2022-02-09 04:46:44 
-      - INFO [DATASET] apply: batch
-
-    * - 2022-02-09 04:46:44 
-      - INFO [TRAIN] Starting training loop
-
-    * - 2022-02-09 04:50:06 
-      - INFO [TRAIN] Training finished without errors in 00:03:22.
-
-    * - 2022-02-09 04:50:07 
-      - INFO [GITHUB] file "job.json" successfully uploaded to github.
-
-    * - 2022-02-09 04:50:07 
+    * - 2022-02-12 08:37:00 
       - INFO [GDRIVE] file "job.json" uploaded to Google Drive.
 
     
