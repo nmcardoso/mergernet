@@ -1,7 +1,17 @@
+from pathlib import Path
+from typing import Union
+import shutil
 import logging
 
-def configure_logger():
-  logger = logging.getLogger('job')
+import optuna
+
+
+
+def configure_logger(logger_name: Union[str, None], path: str):
+  if logger_name:
+    logger = logging.getLogger(logger_name)
+  else:
+    logger = logging.getLogger()
   logger.setLevel(logging.DEBUG)
 
   formatter = logging.Formatter(
@@ -9,7 +19,10 @@ def configure_logger():
     datefmt='%Y-%m-%d %H:%M:%S'
   )
 
-  file_handler = logging.FileHandler('/tmp/job.log')
+  if Path(path).exists():
+    shutil.rmtree(path)
+
+  file_handler = logging.FileHandler(path)
   file_handler.setFormatter(formatter)
   file_handler.setLevel(logging.DEBUG)
 
@@ -20,4 +33,15 @@ def configure_logger():
   logger.addHandler(file_handler)
   logger.addHandler(stream_handler)
 
-configure_logger()
+
+# configure mergernet logger
+configure_logger('job', '/tmp/job.log')
+
+# configure root logger
+configure_logger(None, '/tmp/root.log')
+
+# propagate logs to the root logger
+optuna.logging.enable_propagation()
+
+# stop showing logs in sys.stderr
+optuna.logging.disable_default_handler()
