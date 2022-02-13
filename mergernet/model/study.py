@@ -15,13 +15,10 @@ from mergernet.core.utils import Timming
 
 L = logging.getLogger('job')
 
-
-
-mlflow_cb = MLflowCallback(
-  metric_name='accuracy',
-  nest_trials=False,
-  tag_study_user_attrs=False
-)
+# this implementation mimics the mlflow integration of optuna
+# `RUN_ID_ATTRIBUTE_KEY` was extracted from following code:
+# https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py
+RUN_ID_ATTRIBUTE_KEY = 'mlflow_run_id'
 
 
 
@@ -30,17 +27,20 @@ class HyperModel:
     self,
     dataset: Dataset,
     optuna_uri: str = 'sqlite:///optuna.sqlite',
-    mlflow_uri: str = 'sqlite:///mlflow.sqlite'
+    mlflow_uri: str = 'sqlite:///mlflow.sqlite',
+    nest_trials: bool = False
   ):
     ah = ArtifactHelper()
     self.optuna_uri = optuna_uri or ah.optuna_uri
     self.mlflow_uri = mlflow_uri or ah.mlflow_uri
     self.dataset = dataset
+    self.nest_trials = nest_trials
+    self.nest_trials = True
 
     self.mlflow = MLflowCallback(
-      tracking_uri=mlflow_uri,
-      metric_name='accuracy',
-      nest_trials=False,
+      tracking_uri=self.mlflow_uri,
+      metric_name='optuna_score',
+      nest_trials=self.nest_trials,
       tag_study_user_attrs=False
     )
 
@@ -169,6 +169,19 @@ class HyperModel:
     t.end()
     L.info(f'[TRAIN] Training finished without errors in {t.duration()}.')
 
+
+    with mlflow.start_run(run_name=str(trial.number), nested=self.nest_trials) as run:
+      trial.set_system_attr(RUN_ID_ATTRIBUTE_KEY, run.info.run_id)
+
+      h = history.history
+      epochs = len(h[list(h.keys())[0]])
+
+      for i in range(epochs):
+        metrics = {}
+        for name in h.keys():
+          metrics[name] = h[name][i]
+        run.log_metrics(metrics)
+
     ev = model.evaluate(ds_test)
     idx = model.metrics_names.index('accuracy')
     return ev[idx]
@@ -178,8 +191,6 @@ class HyperModel:
   def hypertrain(self):
     study = optuna.create_study(storage='sqlite:///optuna.sqlite', study_name='test', direction='maximize')
     study.optimize(self.objective, n_trials=2, callbacks=[self.mlflow])
-
-    mlflow.tensorflow.autolog()
 
     print('Number of finished trials: {}'.format(len(study.trials)))
 
