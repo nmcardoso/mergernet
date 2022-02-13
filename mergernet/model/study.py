@@ -180,7 +180,7 @@ class HyperModel:
         metrics = {}
         for name in h.keys():
           metrics[name] = h[name][i]
-        run.log_metrics(metrics)
+        mlflow.log_metrics(metrics=metrics, step=i)
 
     ev = model.evaluate(ds_test)
     idx = model.metrics_names.index('accuracy')
