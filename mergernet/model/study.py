@@ -38,7 +38,7 @@ class HyperModel:
     self.nest_trials = True
 
     self.mlflow = MLflowCallback(
-      tracking_uri=self.mlflow_uri,
+      # tracking_uri=self.mlflow_uri,
       metric_name='optuna_score',
       nest_trials=self.nest_trials,
       tag_study_user_attrs=False
@@ -189,7 +189,10 @@ class HyperModel:
 
 
   def hypertrain(self):
-    study = optuna.create_study(storage='sqlite:///optuna.sqlite', study_name='test', direction='maximize')
+    mlflow.set_tracking_uri(self.mlflow_uri)
+    mlflow.set_experiment('test')
+
+    study = optuna.create_study(storage=self.sqlite_uri, study_name='test', direction='maximize')
     study.optimize(self.objective, n_trials=2, callbacks=[self.mlflow])
 
     print('Number of finished trials: {}'.format(len(study.trials)))
