@@ -4,10 +4,10 @@ on:
     branches:
       - main
     paths:
-      - '/okteto.yml'
-      - '/Dockerfile'
-      - '/docker-compose.yml'
-      - '/.github/workflows/mlflow-server-deploy.yaml'
+      - 'okteto.yml'
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - '.github/workflows/mlflow-server-deploy.yaml'
 
 jobs:
   deploy:
