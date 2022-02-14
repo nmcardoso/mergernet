@@ -239,7 +239,7 @@ class HyperModel:
     if pruner == 'median':
       pruner_instance = optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=10)
     elif pruner == 'hyperband':
-      pruner_instance = optuna.pruners.HyperbandPruner()
+      pruner_instance = optuna.pruners.HyperbandPruner(min_resource=4)
 
     L.info(f'[HYPER] start of optuna optimization')
     t = Timming()
