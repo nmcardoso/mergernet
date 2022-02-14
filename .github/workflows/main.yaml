@@ -1,7 +1,14 @@
 name: "Docs build"
 
 on:
-  - push
+  push:
+    branches:
+      - main
+    paths:
+      - '/docs/**'
+      - '/jobs_artifacts/job.json'
+      - '/mergernet/**'
+      - '/scripts/**'
 
 jobs:
   docs:

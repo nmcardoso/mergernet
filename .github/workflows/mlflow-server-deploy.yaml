@@ -1,0 +1,26 @@
+name: mlflow-server-deploy
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '/okteto.yml'
+      - '/Dockerfile'
+      - '/docker-compose.yml'
+      - '/.github/workflows/mlflow-server-deploy.yaml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login
+      uses: okteto/login@master
+      with:
+        token: ${{ secrets.OKTETO_TOKEN }}
+    - name: Deploy application
+      uses: okteto/pipeline@master
+      with:
+        name: mlflow
+        namespace: nmcardoso
