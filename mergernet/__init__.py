@@ -19,8 +19,9 @@ def configure_logger(logger_name: Union[str, None], path: str):
     datefmt='%Y-%m-%d %H:%M:%S'
   )
 
-  if Path(path).exists():
-    shutil.rmtree(path)
+  path = Path(path)
+  if path.exists():
+    path.unlink()
 
   file_handler = logging.FileHandler(path)
   file_handler.setFormatter(formatter)
