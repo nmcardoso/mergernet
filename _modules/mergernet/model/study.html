@@ -177,7 +177,8 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">logs</span><span class="p">[</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="n">epoch</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">should_prune</span><span class="p">():</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">stop_training</span> <span class="o">=</span> <span class="kc">True</span></div></div>
+      <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">stop_training</span> <span class="o">=</span> <span class="kc">True</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[PRUNER] trial pruned at epoch </span><span class="si">{</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div></div>
 
 
 
@@ -382,7 +383,7 @@
     <span class="k">if</span> <span class="n">pruner</span> <span class="o">==</span> <span class="s1">&#39;median&#39;</span><span class="p">:</span>
       <span class="n">pruner_instance</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">pruners</span><span class="o">.</span><span class="n">MedianPruner</span><span class="p">(</span><span class="n">n_startup_trials</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_warmup_steps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">pruner</span> <span class="o">==</span> <span class="s1">&#39;hyperband&#39;</span><span class="p">:</span>
-      <span class="n">pruner_instance</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">pruners</span><span class="o">.</span><span class="n">HyperbandPruner</span><span class="p">()</span>
+      <span class="n">pruner_instance</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">pruners</span><span class="o">.</span><span class="n">HyperbandPruner</span><span class="p">(</span><span class="n">min_resource</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
     <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] start of optuna optimization&#39;</span><span class="p">)</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">Timming</span><span class="p">()</span>
@@ -407,7 +408,12 @@
     <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] params:&#39;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">best_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
       <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] ----- end of best trial summary -----&#39;</span><span class="p">)</span></div></div>
+    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] ----- end of best trial summary -----&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">plot_optimization_history</span><span class="p">(</span><span class="n">study</span><span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">((</span><span class="n">ah</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;optimization_history.png&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">path</span><span class="p">,</span>  <span class="n">pad_inches</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+    <span class="n">ah</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="s1">&#39;optimization_history.png&#39;</span><span class="p">,</span> <span class="n">github</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">gdrive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
 </pre></div>
 
               </div>
