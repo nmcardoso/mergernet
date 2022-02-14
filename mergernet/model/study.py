@@ -34,6 +34,7 @@ class PruneCallback(tf.keras.callbacks.Callback):
 
     if self.trial.should_prune():
       self.model.stop_training = True
+      L.info(f'[PRUNE_CB] training pruned at epoch {epoch + 1}')
 
 
 
