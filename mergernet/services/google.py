@@ -47,3 +47,9 @@ class GDrive:
     if remote.exists():
       return copy2(str(remote), str(local))
     return None
+
+
+  def exists(self, path: Union[str, Path]):
+    return (self.base_path / path).exists()
+
+
