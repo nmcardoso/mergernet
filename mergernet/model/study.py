@@ -7,7 +7,7 @@ import mlflow
 import tensorflow as tf
 from mergernet.core.artifacts import ArtifactHelper
 from optuna.integration.mlflow import MLflowCallback
-from mergernet.core.constants import MLFLOW_DEFAULT_DB
+from mergernet.core.constants import MLFLOW_DEFAULT_DB, RANDOM_SEED
 
 from mergernet.core.dataset import Dataset
 from mergernet.model.callback import DeltaStopping
@@ -21,6 +21,19 @@ L = logging.getLogger('job')
 # `RUN_ID_ATTRIBUTE_KEY` was extracted from following code:
 # https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py
 RUN_ID_ATTRIBUTE_KEY = 'mlflow_run_id'
+
+
+class PruneCallback(tf.keras.callbacks.Callback):
+  def __init__(self, trial: optuna.trial.FrozenTrial):
+    super(PruneCallback, self).__init__()
+    self.trial = trial
+
+
+  def on_epoch_end(self, epoch, logs):
+    self.trial.report(value=logs['val_accuracy'], step=epoch)
+
+    if self.trial.should_prune():
+      self.model.stop_training = True
 
 
 
@@ -151,7 +164,6 @@ class HyperModel:
     tf.keras.backend.clear_session()
 
     batch_size = 64
-    epochs=3
 
     ds_train, ds_test, class_weights = self.prepare_data(self.dataset)
 
@@ -170,12 +182,13 @@ class HyperModel:
     history = model.fit(
       ds_train,
       batch_size=batch_size,
-      epochs=epochs,
+      epochs=self.epochs,
       validation_data=ds_test,
       class_weight=class_weights,
       callbacks=[
-        tf.keras.callbacks.EarlyStopping(patience=3),
-        DeltaStopping()
+        # tf.keras.callbacks.EarlyStopping(patience=3),
+        # DeltaStopping(),
+        PruneCallback(trial)
       ]
     )
 
@@ -204,10 +217,12 @@ class HyperModel:
 
 
 
-  def hypertrain(self):
+  def hypertrain(self, n_trials: int, epochs: int, pruner: str = 'hyperband'):
     # mlflow must be initialized here, not by the callback
     mlflow.set_tracking_uri(self.mlflow_uri)
     mlflow.set_experiment(self.name)
+
+    self.epochs = epochs
 
     ah = ArtifactHelper()
     optuna_path = ah.artifact_path / 'optuna' / f'{self.name}.sqlite'
@@ -220,6 +235,11 @@ class HyperModel:
     elif not self.resume and optuna_path.exists():
       optuna_path.unlink()
 
+    if pruner == 'median':
+      pruner_instance = optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=10)
+    elif pruner == 'hyperband':
+      pruner_instance = optuna.pruners.HyperbandPruner()
+
     L.info(f'[HYPER] start of optuna optimization')
     t = Timming()
     t.start()
@@ -227,10 +247,12 @@ class HyperModel:
     study = optuna.create_study(
       storage=self.optuna_uri,
       study_name=self.name,
+      pruner=pruner_instance,
+      sampler=optuna.samplers.TPESampler(seed=RANDOM_SEED),
       direction='maximize',
       load_if_exists=self.resume
     )
-    study.optimize(self.objective, n_trials=2, callbacks=[self.mlflow_cb])
+    study.optimize(self.objective, n_trials=n_trials, callbacks=[self.mlflow_cb])
 
     t.end()
     L.info(f'[HYPER] optuna optimization finished in {t.duration()}')
