@@ -27,14 +27,14 @@ PRIVATE_TAP_ROUTE = '/public-TAP/tap/async/?request=doQuery&version=1.0&lang=ADQ
 
 
 def update_authorization(f):
-  def wrapper(*args, **kwargs):
-    this: SplusService = args[0]
+  def wrapper(*kargs, **kwargs):
+    this: SplusService = kargs[0]
     updated = this.update_token()
     if updated:
       this.client.headers.update({
         'Authorization': f'Token {this.token["value"]}'
       })
-    return f(*args, **kwargs)
+    return f(*kargs, **kwargs)
   return wrapper
 
 
