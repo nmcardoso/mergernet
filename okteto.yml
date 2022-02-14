@@ -1,8 +1,8 @@
 name: mlflow
 # command: python app.py
 environment:
-  - FLASK_ENV=production
+  - FLASK_ENV=development
 sync:
-  - mlflow:/mlflow
+  - mlflow:/app/mlflow
 forward:
   - 8080:8080
