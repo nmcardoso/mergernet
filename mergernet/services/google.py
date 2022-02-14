@@ -1,3 +1,4 @@
+import shutil
 from typing import Union
 from pathlib import Path
 from shutil import copy2, copytree
@@ -53,3 +54,11 @@ class GDrive:
     return (self.base_path / path).exists()
 
 
+  def move(self, from_path: Union[str, Path], to_path: Union[str, Path]):
+    from_path = self.base_path / from_path
+    to_path = self.base_path / to_path
+
+    if not to_path.parent.exists():
+      to_path.parent.mkdir(parents=True, exist_ok=True)
+
+    shutil.move(from_path, to_path)
