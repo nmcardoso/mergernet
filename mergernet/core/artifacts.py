@@ -137,7 +137,7 @@ class ArtifactHelper(metaclass=SingletonMeta):
       self.gdrive.move(remote_path, backup_path)
       L.info(f'[GDRIVE] created optuna backup at {backup_path}.')
 
-    if self.gdrive.upload(local_path, remote_path):
+    if self.gdrive.send(local_path, remote_path):
       L.info(f'[GDRIVE] uploaded optuna database {name}.sqlite.')
     else:
       L.info(f'[GDRIVE] an error occurred during optuna dataset upload.')
@@ -181,7 +181,7 @@ class ArtifactHelper(metaclass=SingletonMeta):
       self.gdrive.move(remote_path, backup_path)
       L.info(f'[GDRIVE] created mlflow backup at {backup_path}.')
 
-    if self.gdrive.upload(local_path, remote_path):
+    if self.gdrive.send(local_path, remote_path):
       L.info(f'[GDRIVE] uploaded mlflow database {name}.sqlite.')
     else:
       L.info(f'[GDRIVE] an error occurred during mlflow dataset upload.')
