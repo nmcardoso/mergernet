@@ -9,6 +9,7 @@ on:
       - 'jobs_artifacts/job.json'
       - 'mergernet/**'
       - 'scripts/**'
+      - '.github/workflows/main.yaml'
 
 jobs:
   docs:
