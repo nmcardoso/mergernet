@@ -265,3 +265,8 @@ class HyperModel:
     for k, v in study.best_params.items():
       L.info(f'[HYPER] {k}: {str(v)}')
     L.info(f'[HYPER] ----- end of best trial summary -----')
+
+    ax = optuna.visualization.matplotlib.plot_optimization_history(study)
+    path = str((ah.artifact_path / 'optimization_history.png').resolve())
+    ax.figure.savefig(path,  pad_inches=0.01, bbox_inches='tight')
+    ah.upload(fname='optimization_history.png', github=True, gdrive=True)
