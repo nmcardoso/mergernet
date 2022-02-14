@@ -39,3 +39,8 @@ else:
 
 # Random number generation seed
 RANDOM_SEED = 42
+
+
+
+# MLflow default database name
+MLFLOW_DEFAULT_DB = 'mlflow.sqlite'

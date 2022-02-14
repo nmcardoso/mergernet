@@ -1,11 +1,13 @@
 import logging
 import secrets
+import shutil
 
 import optuna
 import mlflow
 import tensorflow as tf
 from mergernet.core.artifacts import ArtifactHelper
 from optuna.integration.mlflow import MLflowCallback
+from mergernet.core.constants import MLFLOW_DEFAULT_DB
 
 from mergernet.core.dataset import Dataset
 from mergernet.model.callback import DeltaStopping
@@ -26,19 +28,30 @@ class HyperModel:
   def __init__(
     self,
     dataset: Dataset,
-    optuna_uri: str = 'sqlite:///optuna.sqlite',
-    mlflow_uri: str = 'sqlite:///mlflow.sqlite',
+    name: str,
+    resume: bool = False,
+    default_mlflow: bool = True,
     nest_trials: bool = False
   ):
     ah = ArtifactHelper()
-    self.optuna_uri = optuna_uri or ah.optuna_uri
-    self.mlflow_uri = mlflow_uri or ah.mlflow_uri
-    self.dataset = dataset
-    self.nest_trials = nest_trials
-    self.nest_trials = True
 
-    self.mlflow = MLflowCallback(
-      # tracking_uri=self.mlflow_uri,
+    self.optuna_uri = f'sqlite:///{str(ah.artifact_path.resolve())}/optuna/{name}.sqlite'
+    ah.optuna_db_name = name
+
+    if default_mlflow:
+      self.mlflow_uri = f'sqlite:///{str(ah.artifact_path.resolve())}/mlflow/{MLFLOW_DEFAULT_DB}'
+    else:
+      self.mlflow_uri = f'sqlite:///{str(ah.artifact_path.resolve())}/mlflow/{name}.sqlite'
+
+    print(self.mlflow_uri)
+    print(self.optuna_uri)
+
+    self.dataset = dataset
+    self.name = name
+    self.resume = resume
+    self.nest_trials = nest_trials
+
+    self.mlflow_cb = MLflowCallback(
       metric_name='optuna_score',
       nest_trials=self.nest_trials,
       tag_study_user_attrs=False
@@ -192,19 +205,40 @@ class HyperModel:
 
 
   def hypertrain(self):
+    # mlflow must be initialized here, not by the callback
     mlflow.set_tracking_uri(self.mlflow_uri)
-    mlflow.set_experiment('test')
+    mlflow.set_experiment(self.name)
 
-    study = optuna.create_study(storage=self.optuna_uri, study_name='test', direction='maximize')
-    study.optimize(self.objective, n_trials=2, callbacks=[self.mlflow])
+    ah = ArtifactHelper()
+    optuna_path = ah.artifact_path / 'optuna' / f'{self.name}.sqlite'
 
-    print('Number of finished trials: {}'.format(len(study.trials)))
+    if self.resume:
+      L.info(f'[HYPER] resuming previous optimization of {self.name} study')
 
-    print('Best trial:')
-    trial = study.best_trial
+    if self.resume and not optuna_path.exists():
+      ah.download_optuna_db(self.name)
+    elif not self.resume and optuna_path.exists():
+      optuna_path.unlink()
 
-    print('  Value: {}'.format(trial.value))
+    L.info(f'[HYPER] start of optuna optimization')
+    t = Timming()
+    t.start()
 
-    print('  Params: ')
-    for key, value in trial.params.items():
-      print('    {}: {}'.format(key, value))
+    study = optuna.create_study(
+      storage=self.optuna_uri,
+      study_name=self.name,
+      direction='maximize',
+      load_if_exists=self.resume
+    )
+    study.optimize(self.objective, n_trials=2, callbacks=[self.mlflow_cb])
+
+    t.end()
+    L.info(f'[HYPER] optuna optimization finished in {t.duration()}')
+
+    L.info(f'[HYPER] number of finished trials: {len(study.trials)}')
+    L.info(f'[HYPER] ----- begin of best trial summary -----')
+    L.info(f'[HYPER] optimization score: {study.best_trial.value}')
+    L.info(f'[HYPER] params:')
+    for k, v in study.best_params.items():
+      L.info(f'[HYPER] {k}: {str(v)}')
+    L.info(f'[HYPER] ----- end of best trial summary -----')

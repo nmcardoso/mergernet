@@ -1,4 +1,5 @@
 from enum import Enum
+import logging
 from pathlib import Path
 from importlib import import_module
 from typing import Sequence, Union
@@ -7,10 +8,14 @@ import re
 import secrets
 import json
 
+from tensorflow.python.client import device_lib
+
 from mergernet.core.artifacts import ArtifactHelper
 from mergernet.core.constants import GDRIVE_PATH
-from mergernet.core.logger import Logger
 from mergernet.services.tensorboard import TensorboardService
+
+
+L = logging.getLogger('job')
 
 
 class BaseJob:
@@ -34,6 +39,13 @@ class BaseJob:
       use_gdrive=True,
       use_github=True
     )
+
+    # hardware info
+    devices = device_lib.list_local_devices()
+    for i in range(len(devices)):
+      attrs = ['name', 'device_type', 'memory_limit', 'physical_device_desc']
+      infos = [f'{attr}: {getattr(devices[i], attr) or "None"}' for attr in attrs]
+      L.info(f'[HARDWARE] Device #{i}: {"; ".join(infos)}')
 
 
   def run(self):
@@ -62,13 +74,21 @@ class BaseJob:
     if (self.artifact_path / 'tuner').exists():
       ah.upload_dir(self.artifact_path / 'tuner')
 
-    # upload log file
-    ah.upload_log()
+    # backup mlflow database
+    if (self.artifact_path / 'mlflow').exists():
+      for path in (self.artifact_path / 'mlflow').glob('*.sqlite'):
+        ah.upload_mlflow_db(path.name)
 
+    # backup optuna dataset
+    if (self.artifact_path / 'optuna').exists():
+      for path in (self.artifact_path / 'optuna').glob('*.sqlite'):
+        ah.upload_optuna_db(path.name)
 
-  def get_system_resources(self):
-    pass
+    # upload root log file
+    ah.upload_log('root')
 
+    # upload job log file
+    ah.upload_log('job')
 
 
 

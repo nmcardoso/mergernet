@@ -17,7 +17,7 @@ class Job(BaseJob):
     ds = Dataset(data_path=self.data_path)
 
     # hypertrain(ds)
-    model = HyperModel(ds)
+    model = HyperModel(ds, 'resnet')
     model.hypertrain()
 
     # HyperModelTrainer(ds).fit()
