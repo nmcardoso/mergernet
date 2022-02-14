@@ -1,8 +1,8 @@
-name: vote
-command: python app.py
+name: mlflow
+# command: python app.py
 environment:
-  - FLASK_ENV=development
+  - FLASK_ENV=production
 sync:
-  - vote:/src
+  - mlflow:/mlflow
 forward:
   - 8080:8080
