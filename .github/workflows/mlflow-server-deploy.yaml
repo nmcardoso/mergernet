@@ -6,7 +6,7 @@ on:
     paths:
       - 'okteto.yml'
       - 'Dockerfile'
-      - 'docker-compose.yml'
+      - 'docker-compose.yaml'
       - 'okteto-pipeline.yml'
       - '.github/workflows/mlflow-server-deploy.yaml'
 
@@ -16,12 +16,16 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+
     - name: Login
-      uses: okteto/login@master
+      uses: okteto/context@latest
       with:
         token: ${{ secrets.OKTETO_TOKEN }}
+
     - name: Deploy application
-      uses: okteto/pipeline@master
+      uses: okteto/deploy-stack@latest
       with:
         name: mlflow
         namespace: nmcardoso
+        build: "true"
+        file: docker-compose.yaml
