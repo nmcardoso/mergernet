@@ -171,14 +171,14 @@
 
 
 <div class="viewcode-block" id="update_authorization"><a class="viewcode-back" href="../../../api/mergernet.services.splus.update_authorization.html#mergernet.services.splus.update_authorization">[docs]</a><span class="k">def</span> <span class="nf">update_authorization</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
-  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">this</span><span class="p">:</span> <span class="n">SplusService</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">kargs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">this</span><span class="p">:</span> <span class="n">SplusService</span> <span class="o">=</span> <span class="n">kargs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">updated</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">update_token</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">updated</span><span class="p">:</span>
       <span class="n">this</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
         <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Token </span><span class="si">{</span><span class="n">this</span><span class="o">.</span><span class="n">token</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
       <span class="p">})</span>
-    <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">kargs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">wrapper</span></div>
 
 

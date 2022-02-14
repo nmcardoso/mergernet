@@ -144,12 +144,14 @@
   <h1>Source code for mergernet.model.study</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">secrets</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
 
 <span class="kn">import</span> <span class="nn">optuna</span>
 <span class="kn">import</span> <span class="nn">mlflow</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">from</span> <span class="nn">mergernet.core.artifacts</span> <span class="kn">import</span> <span class="n">ArtifactHelper</span>
 <span class="kn">from</span> <span class="nn">optuna.integration.mlflow</span> <span class="kn">import</span> <span class="n">MLflowCallback</span>
+<span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">MLFLOW_DEFAULT_DB</span>
 
 <span class="kn">from</span> <span class="nn">mergernet.core.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 <span class="kn">from</span> <span class="nn">mergernet.model.callback</span> <span class="kn">import</span> <span class="n">DeltaStopping</span>
@@ -170,19 +172,30 @@
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span>
-    <span class="n">optuna_uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;sqlite:///optuna.sqlite&#39;</span><span class="p">,</span>
-    <span class="n">mlflow_uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;sqlite:///mlflow.sqlite&#39;</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">resume</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">default_mlflow</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">nest_trials</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="p">):</span>
     <span class="n">ah</span> <span class="o">=</span> <span class="n">ArtifactHelper</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">optuna_uri</span> <span class="o">=</span> <span class="n">optuna_uri</span> <span class="ow">or</span> <span class="n">ah</span><span class="o">.</span><span class="n">optuna_uri</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">mlflow_uri</span> <span class="o">=</span> <span class="n">mlflow_uri</span> <span class="ow">or</span> <span class="n">ah</span><span class="o">.</span><span class="n">mlflow_uri</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">nest_trials</span> <span class="o">=</span> <span class="n">nest_trials</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">nest_trials</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">mlflow</span> <span class="o">=</span> <span class="n">MLflowCallback</span><span class="p">(</span>
-      <span class="c1"># tracking_uri=self.mlflow_uri,</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">optuna_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;sqlite:///</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">ah</span><span class="o">.</span><span class="n">artifact_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span><span class="si">}</span><span class="s1">/optuna/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.sqlite&#39;</span>
+    <span class="n">ah</span><span class="o">.</span><span class="n">optuna_db_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">if</span> <span class="n">default_mlflow</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">mlflow_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;sqlite:///</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">ah</span><span class="o">.</span><span class="n">artifact_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span><span class="si">}</span><span class="s1">/mlflow/</span><span class="si">{</span><span class="n">MLFLOW_DEFAULT_DB</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">mlflow_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;sqlite:///</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">ah</span><span class="o">.</span><span class="n">artifact_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span><span class="si">}</span><span class="s1">/mlflow/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.sqlite&#39;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mlflow_uri</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optuna_uri</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">resume</span> <span class="o">=</span> <span class="n">resume</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">nest_trials</span> <span class="o">=</span> <span class="n">nest_trials</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">mlflow_cb</span> <span class="o">=</span> <span class="n">MLflowCallback</span><span class="p">(</span>
       <span class="n">metric_name</span><span class="o">=</span><span class="s1">&#39;optuna_score&#39;</span><span class="p">,</span>
       <span class="n">nest_trials</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nest_trials</span><span class="p">,</span>
       <span class="n">tag_study_user_attrs</span><span class="o">=</span><span class="kc">False</span>
@@ -336,22 +349,43 @@
 
 
 <div class="viewcode-block" id="HyperModel.hypertrain"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.hypertrain">[docs]</a>  <span class="k">def</span> <span class="nf">hypertrain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># mlflow must be initialized here, not by the callback</span>
     <span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mlflow_uri</span><span class="p">)</span>
-    <span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
-    <span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span><span class="n">storage</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">optuna_uri</span><span class="p">,</span> <span class="n">study_name</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;maximize&#39;</span><span class="p">)</span>
-    <span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objective</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mlflow</span><span class="p">])</span>
+    <span class="n">ah</span> <span class="o">=</span> <span class="n">ArtifactHelper</span><span class="p">()</span>
+    <span class="n">optuna_path</span> <span class="o">=</span> <span class="n">ah</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;optuna&#39;</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">.sqlite&#39;</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of finished trials: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">trials</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">resume</span><span class="p">:</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] resuming previous optimization of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> study&#39;</span><span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best trial:&#39;</span><span class="p">)</span>
-    <span class="n">trial</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">best_trial</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">resume</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">optuna_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+      <span class="n">ah</span><span class="o">.</span><span class="n">download_optuna_db</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">resume</span> <span class="ow">and</span> <span class="n">optuna_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+      <span class="n">optuna_path</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Value: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">trial</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] start of optuna optimization&#39;</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">Timming</span><span class="p">()</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Params: &#39;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">trial</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-      <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;    </span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span></div></div>
+    <span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span>
+      <span class="n">storage</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">optuna_uri</span><span class="p">,</span>
+      <span class="n">study_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+      <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;maximize&#39;</span><span class="p">,</span>
+      <span class="n">load_if_exists</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resume</span>
+    <span class="p">)</span>
+    <span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objective</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mlflow_cb</span><span class="p">])</span>
+
+    <span class="n">t</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] optuna optimization finished in </span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] number of finished trials: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">trials</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] ----- begin of best trial summary -----&#39;</span><span class="p">)</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] optimization score: </span><span class="si">{</span><span class="n">study</span><span class="o">.</span><span class="n">best_trial</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] params:&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">best_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] ----- end of best trial summary -----&#39;</span><span class="p">)</span></div></div>
 </pre></div>
 
               </div>

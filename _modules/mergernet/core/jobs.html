@@ -143,6 +143,7 @@
                 
   <h1>Source code for mergernet.core.jobs</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">import_module</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
@@ -151,10 +152,14 @@
 <span class="kn">import</span> <span class="nn">secrets</span>
 <span class="kn">import</span> <span class="nn">json</span>
 
+<span class="kn">from</span> <span class="nn">tensorflow.python.client</span> <span class="kn">import</span> <span class="n">device_lib</span>
+
 <span class="kn">from</span> <span class="nn">mergernet.core.artifacts</span> <span class="kn">import</span> <span class="n">ArtifactHelper</span>
 <span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">GDRIVE_PATH</span>
-<span class="kn">from</span> <span class="nn">mergernet.core.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
 <span class="kn">from</span> <span class="nn">mergernet.services.tensorboard</span> <span class="kn">import</span> <span class="n">TensorboardService</span>
+
+
+<span class="n">L</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;job&#39;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="BaseJob"><a class="viewcode-back" href="../../../api/mergernet.core.jobs.BaseJob.html#mergernet.core.jobs.BaseJob">[docs]</a><span class="k">class</span> <span class="nc">BaseJob</span><span class="p">:</span>
@@ -177,7 +182,14 @@
       <span class="n">gdrive_path</span><span class="o">=</span><span class="n">GDRIVE_PATH</span><span class="p">,</span>
       <span class="n">use_gdrive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
       <span class="n">use_github</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span></div>
+    <span class="p">)</span>
+
+    <span class="c1"># hardware info</span>
+    <span class="n">devices</span> <span class="o">=</span> <span class="n">device_lib</span><span class="o">.</span><span class="n">list_local_devices</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">devices</span><span class="p">)):</span>
+      <span class="n">attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;device_type&#39;</span><span class="p">,</span> <span class="s1">&#39;memory_limit&#39;</span><span class="p">,</span> <span class="s1">&#39;physical_device_desc&#39;</span><span class="p">]</span>
+      <span class="n">infos</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="n">devices</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">attr</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;None&quot;</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">]</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HARDWARE] Device #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="s2">&quot;; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">infos</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="BaseJob.run"><a class="viewcode-back" href="../../../api/mergernet.core.jobs.BaseJob.html#mergernet.core.jobs.BaseJob.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -206,13 +218,21 @@
     <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;tuner&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
       <span class="n">ah</span><span class="o">.</span><span class="n">upload_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;tuner&#39;</span><span class="p">)</span>
 
-    <span class="c1"># upload log file</span>
-    <span class="n">ah</span><span class="o">.</span><span class="n">upload_log</span><span class="p">()</span></div>
+    <span class="c1"># backup mlflow database</span>
+    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;mlflow&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+      <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;mlflow&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.sqlite&#39;</span><span class="p">):</span>
+        <span class="n">ah</span><span class="o">.</span><span class="n">upload_mlflow_db</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
+    <span class="c1"># backup optuna dataset</span>
+    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;optuna&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+      <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;optuna&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.sqlite&#39;</span><span class="p">):</span>
+        <span class="n">ah</span><span class="o">.</span><span class="n">upload_optuna_db</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
-<div class="viewcode-block" id="BaseJob.get_system_resources"><a class="viewcode-back" href="../../../api/mergernet.core.jobs.BaseJob.html#mergernet.core.jobs.BaseJob.get_system_resources">[docs]</a>  <span class="k">def</span> <span class="nf">get_system_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">pass</span></div></div>
+    <span class="c1"># upload root log file</span>
+    <span class="n">ah</span><span class="o">.</span><span class="n">upload_log</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
 
+    <span class="c1"># upload job log file</span>
+    <span class="n">ah</span><span class="o">.</span><span class="n">upload_log</span><span class="p">(</span><span class="s1">&#39;job&#39;</span><span class="p">)</span></div></div>
 
 
 

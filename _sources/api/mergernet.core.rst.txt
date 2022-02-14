@@ -32,7 +32,6 @@
    mergernet.core.constants
    mergernet.core.dataset
    mergernet.core.jobs
-   mergernet.core.logger
    mergernet.core.rgb
    mergernet.core.trilogy
    mergernet.core.utils
