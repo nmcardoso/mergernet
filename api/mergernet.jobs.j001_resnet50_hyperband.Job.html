@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>mergernet.core.trilogy.meanstd &#8212; MergerNet  documentation</title>
+    <title>mergernet.jobs.j001_resnet50_hyperband.Job &#8212; MergerNet  documentation</title>
     
     <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -34,8 +34,8 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="mergernet.core.trilogy.rms" href="mergernet.core.trilogy.rms.html" />
-    <link rel="prev" title="mergernet.core.trilogy.imscale" href="mergernet.core.trilogy.imscale.html" />
+    <link rel="next" title="mergernet.jobs.j002_hyperparam" href="mergernet.jobs.j002_hyperparam.html" />
+    <link rel="prev" title="mergernet.jobs.j001_resnet50_hyperband" href="mergernet.jobs.j001_resnet50_hyperband.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
     
@@ -121,16 +121,16 @@
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
     <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active has-children">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="mergernet.core.html">
    mergernet.core
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul class="current">
+  <ul>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="mergernet.core.artifacts.html">
      mergernet.core.artifacts
@@ -224,16 +224,16 @@
      </li>
     </ul>
    </li>
-   <li class="toctree-l2 current active has-children">
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="mergernet.core.trilogy.html">
      mergernet.core.trilogy
     </a>
-    <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
     <label for="toctree-checkbox-6">
      <i class="fas fa-chevron-down">
      </i>
     </label>
-    <ul class="current">
+    <ul>
      <li class="toctree-l3">
       <a class="reference internal" href="mergernet.core.trilogy.RGB2im.html">
        mergernet.core.trilogy.RGB2im
@@ -264,8 +264,8 @@
        mergernet.core.trilogy.imscale
       </a>
      </li>
-     <li class="toctree-l3 current active">
-      <a class="current reference internal" href="#">
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.trilogy.meanstd.html">
        mergernet.core.trilogy.meanstd
       </a>
      </li>
@@ -335,28 +335,28 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1 has-children">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="mergernet.jobs.html">
    mergernet.jobs
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
-   <li class="toctree-l2 has-children">
+  <ul class="current">
+   <li class="toctree-l2 current active has-children">
     <a class="reference internal" href="mergernet.jobs.j001_resnet50_hyperband.html">
      mergernet.jobs.j001_resnet50_hyperband
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
     <label for="toctree-checkbox-9">
      <i class="fas fa-chevron-down">
      </i>
     </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.jobs.j001_resnet50_hyperband.Job.html">
+    <ul class="current">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
        mergernet.jobs.j001_resnet50_hyperband.Job
       </a>
      </li>
@@ -740,12 +740,87 @@
               
               <div>
                 
-  <section id="mergernet-core-trilogy-meanstd">
-<h1>mergernet.core.trilogy.meanstd<a class="headerlink" href="#mergernet-core-trilogy-meanstd" title="Permalink to this headline">¶</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="mergernet.core.trilogy.meanstd">
-<span class="sig-prename descclassname"><span class="pre">mergernet.core.trilogy.</span></span><span class="sig-name descname"><span class="pre">meanstd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datasorted</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/trilogy.html#meanstd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.trilogy.meanstd" title="Permalink to this definition">¶</a></dt>
+  <section id="mergernet-jobs-j001-resnet50-hyperband-job">
+<h1>mergernet.jobs.j001_resnet50_hyperband.Job<a class="headerlink" href="#mergernet-jobs-j001-resnet50-hyperband-job" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mergernet.jobs.j001_resnet50_hyperband.Job">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mergernet.jobs.j001_resnet50_hyperband.</span></span><span class="sig-name descname"><span class="pre">Job</span></span><a class="reference internal" href="../_modules/mergernet/jobs/j001_resnet50_hyperband.html#Job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.jobs.j001_resnet50_hyperband.Job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mergernet.core.jobs.BaseJob.html#mergernet.core.jobs.BaseJob" title="mergernet.core.jobs.BaseJob"><code class="xref py py-class docutils literal notranslate"><span class="pre">mergernet.core.jobs.BaseJob</span></code></a></p>
+<p class="rubric">Methods</p>
+<table class="table">
+<colgroup>
+<col style="width: 66%" />
+<col style="width: 34%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>post_run</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>pre_run</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>run</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>start_execution</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.jobs.j001_resnet50_hyperband.Job.description" title="mergernet.jobs.j001_resnet50_hyperband.Job.description"><code class="xref py py-obj docutils literal notranslate"><span class="pre">description</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.jobs.j001_resnet50_hyperband.Job.jobid" title="mergernet.jobs.j001_resnet50_hyperband.Job.jobid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jobid</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.jobs.j001_resnet50_hyperband.Job.name" title="mergernet.jobs.j001_resnet50_hyperband.Job.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.jobs.j001_resnet50_hyperband.Job.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Minimal</span> <span class="pre">resnet50</span> <span class="pre">experiment</span> <span class="pre">with</span> <span class="pre">3</span> <span class="pre">classes</span> <span class="pre">and</span> <span class="pre">unclean</span> <span class="pre">data.</span> <span class="pre">Using</span> <span class="pre">all</span> <span class="pre">darg</span> <span class="pre">mergers</span> <span class="pre">with</span> <span class="pre">modelMag</span> <span class="pre">&lt;</span> <span class="pre">17.2.</span> <span class="pre">Using</span> <span class="pre">hyperband</span> <span class="pre">pruner.'</span></em><a class="headerlink" href="#mergernet.jobs.j001_resnet50_hyperband.Job.description" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.jobs.j001_resnet50_hyperband.Job.jobid">
+<span class="sig-name descname"><span class="pre">jobid</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#mergernet.jobs.j001_resnet50_hyperband.Job.jobid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.jobs.j001_resnet50_hyperband.Job.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Resnet50'</span></em><a class="headerlink" href="#mergernet.jobs.j001_resnet50_hyperband.Job.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.jobs.j001_resnet50_hyperband.Job.post_run">
+<span class="sig-name descname"><span class="pre">post_run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.jobs.j001_resnet50_hyperband.Job.post_run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.jobs.j001_resnet50_hyperband.Job.pre_run">
+<span class="sig-name descname"><span class="pre">pre_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.jobs.j001_resnet50_hyperband.Job.pre_run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.jobs.j001_resnet50_hyperband.Job.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/jobs/j001_resnet50_hyperband.html#Job.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.jobs.j001_resnet50_hyperband.Job.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.jobs.j001_resnet50_hyperband.Job.start_execution">
+<span class="sig-name descname"><span class="pre">start_execution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.jobs.j001_resnet50_hyperband.Job.start_execution" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 </section>
 
@@ -755,17 +830,17 @@
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="mergernet.core.trilogy.imscale.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="mergernet.jobs.j001_resnet50_hyperband.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">mergernet.core.trilogy.imscale</p>
+            <p class="prev-next-title">mergernet.jobs.j001_resnet50_hyperband</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="mergernet.core.trilogy.rms.html" title="next page">
+    <a class='right-next' id="next-link" href="mergernet.jobs.j002_hyperparam.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">mergernet.core.trilogy.rms</p>
+        <p class="prev-next-title">mergernet.jobs.j002_hyperparam</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

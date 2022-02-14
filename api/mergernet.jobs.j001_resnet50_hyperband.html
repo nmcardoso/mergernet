@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>mergernet.core.trilogy.meanstd &#8212; MergerNet  documentation</title>
+    <title>mergernet.jobs.j001_resnet50_hyperband &#8212; MergerNet  documentation</title>
     
     <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -34,8 +34,8 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="mergernet.core.trilogy.rms" href="mergernet.core.trilogy.rms.html" />
-    <link rel="prev" title="mergernet.core.trilogy.imscale" href="mergernet.core.trilogy.imscale.html" />
+    <link rel="next" title="mergernet.jobs.j001_resnet50_hyperband.Job" href="mergernet.jobs.j001_resnet50_hyperband.Job.html" />
+    <link rel="prev" title="mergernet.jobs" href="mergernet.jobs.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
     
@@ -121,16 +121,16 @@
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
     <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active has-children">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="mergernet.core.html">
    mergernet.core
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul class="current">
+  <ul>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="mergernet.core.artifacts.html">
      mergernet.core.artifacts
@@ -224,16 +224,16 @@
      </li>
     </ul>
    </li>
-   <li class="toctree-l2 current active has-children">
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="mergernet.core.trilogy.html">
      mergernet.core.trilogy
     </a>
-    <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
     <label for="toctree-checkbox-6">
      <i class="fas fa-chevron-down">
      </i>
     </label>
-    <ul class="current">
+    <ul>
      <li class="toctree-l3">
       <a class="reference internal" href="mergernet.core.trilogy.RGB2im.html">
        mergernet.core.trilogy.RGB2im
@@ -264,8 +264,8 @@
        mergernet.core.trilogy.imscale
       </a>
      </li>
-     <li class="toctree-l3 current active">
-      <a class="current reference internal" href="#">
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.trilogy.meanstd.html">
        mergernet.core.trilogy.meanstd
       </a>
      </li>
@@ -335,21 +335,21 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1 has-children">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="mergernet.jobs.html">
    mergernet.jobs
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
   <label for="toctree-checkbox-8">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="mergernet.jobs.j001_resnet50_hyperband.html">
+  <ul class="current">
+   <li class="toctree-l2 current active has-children">
+    <a class="current reference internal" href="#">
      mergernet.jobs.j001_resnet50_hyperband
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
     <label for="toctree-checkbox-9">
      <i class="fas fa-chevron-down">
      </i>
@@ -740,13 +740,21 @@
               
               <div>
                 
-  <section id="mergernet-core-trilogy-meanstd">
-<h1>mergernet.core.trilogy.meanstd<a class="headerlink" href="#mergernet-core-trilogy-meanstd" title="Permalink to this headline">¶</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="mergernet.core.trilogy.meanstd">
-<span class="sig-prename descclassname"><span class="pre">mergernet.core.trilogy.</span></span><span class="sig-name descname"><span class="pre">meanstd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datasorted</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/trilogy.html#meanstd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.trilogy.meanstd" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+  <section id="module-mergernet.jobs.j001_resnet50_hyperband">
+<span id="mergernet-jobs-j001-resnet50-hyperband"></span><h1>mergernet.jobs.j001_resnet50_hyperband<a class="headerlink" href="#module-mergernet.jobs.j001_resnet50_hyperband" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="mergernet.jobs.j001_resnet50_hyperband.Job.html#mergernet.jobs.j001_resnet50_hyperband.Job" title="mergernet.jobs.j001_resnet50_hyperband.Job"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Job</span></code></a>()</p></td>
+<td><p><p class="rubric">Methods</p>
+</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 
 
@@ -755,17 +763,17 @@
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="mergernet.core.trilogy.imscale.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="mergernet.jobs.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">mergernet.core.trilogy.imscale</p>
+            <p class="prev-next-title">mergernet.jobs</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="mergernet.core.trilogy.rms.html" title="next page">
+    <a class='right-next' id="next-link" href="mergernet.jobs.j001_resnet50_hyperband.Job.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">mergernet.core.trilogy.rms</p>
+        <p class="prev-next-title">mergernet.jobs.j001_resnet50_hyperband.Job</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

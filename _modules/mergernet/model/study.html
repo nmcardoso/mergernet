@@ -151,7 +151,7 @@
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">from</span> <span class="nn">mergernet.core.artifacts</span> <span class="kn">import</span> <span class="n">ArtifactHelper</span>
 <span class="kn">from</span> <span class="nn">optuna.integration.mlflow</span> <span class="kn">import</span> <span class="n">MLflowCallback</span>
-<span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">MLFLOW_DEFAULT_DB</span>
+<span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">MLFLOW_DEFAULT_DB</span><span class="p">,</span> <span class="n">RANDOM_SEED</span>
 
 <span class="kn">from</span> <span class="nn">mergernet.core.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 <span class="kn">from</span> <span class="nn">mergernet.model.callback</span> <span class="kn">import</span> <span class="n">DeltaStopping</span>
@@ -165,6 +165,19 @@
 <span class="c1"># `RUN_ID_ATTRIBUTE_KEY` was extracted from following code:</span>
 <span class="c1"># https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py</span>
 <span class="n">RUN_ID_ATTRIBUTE_KEY</span> <span class="o">=</span> <span class="s1">&#39;mlflow_run_id&#39;</span>
+
+
+<div class="viewcode-block" id="PruneCallback"><a class="viewcode-back" href="../../../api/mergernet.model.study.PruneCallback.html#mergernet.model.study.PruneCallback">[docs]</a><span class="k">class</span> <span class="nc">PruneCallback</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">Callback</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">PruneCallback</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">trial</span> <span class="o">=</span> <span class="n">trial</span>
+
+
+<div class="viewcode-block" id="PruneCallback.on_epoch_end"><a class="viewcode-back" href="../../../api/mergernet.model.study.PruneCallback.html#mergernet.model.study.PruneCallback.on_epoch_end">[docs]</a>  <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">logs</span><span class="p">[</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="n">epoch</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">should_prune</span><span class="p">():</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">stop_training</span> <span class="o">=</span> <span class="kc">True</span></div></div>
 
 
 
@@ -295,7 +308,6 @@
     <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">clear_session</span><span class="p">()</span>
 
     <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
-    <span class="n">epochs</span><span class="o">=</span><span class="mi">3</span>
 
     <span class="n">ds_train</span><span class="p">,</span> <span class="n">ds_test</span><span class="p">,</span> <span class="n">class_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
 
@@ -314,12 +326,13 @@
     <span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
       <span class="n">ds_train</span><span class="p">,</span>
       <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
-      <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+      <span class="n">epochs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="p">,</span>
       <span class="n">validation_data</span><span class="o">=</span><span class="n">ds_test</span><span class="p">,</span>
       <span class="n">class_weight</span><span class="o">=</span><span class="n">class_weights</span><span class="p">,</span>
       <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
-        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">patience</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
-        <span class="n">DeltaStopping</span><span class="p">()</span>
+        <span class="c1"># tf.keras.callbacks.EarlyStopping(patience=3),</span>
+        <span class="c1"># DeltaStopping(),</span>
+        <span class="n">PruneCallback</span><span class="p">(</span><span class="n">trial</span><span class="p">)</span>
       <span class="p">]</span>
     <span class="p">)</span>
 
@@ -348,10 +361,12 @@
 
 
 
-<div class="viewcode-block" id="HyperModel.hypertrain"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.hypertrain">[docs]</a>  <span class="k">def</span> <span class="nf">hypertrain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="HyperModel.hypertrain"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.hypertrain">[docs]</a>  <span class="k">def</span> <span class="nf">hypertrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_trials</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pruner</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;hyperband&#39;</span><span class="p">):</span>
     <span class="c1"># mlflow must be initialized here, not by the callback</span>
     <span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mlflow_uri</span><span class="p">)</span>
     <span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span> <span class="o">=</span> <span class="n">epochs</span>
 
     <span class="n">ah</span> <span class="o">=</span> <span class="n">ArtifactHelper</span><span class="p">()</span>
     <span class="n">optuna_path</span> <span class="o">=</span> <span class="n">ah</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;optuna&#39;</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">.sqlite&#39;</span>
@@ -364,6 +379,11 @@
     <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">resume</span> <span class="ow">and</span> <span class="n">optuna_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
       <span class="n">optuna_path</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
 
+    <span class="k">if</span> <span class="n">pruner</span> <span class="o">==</span> <span class="s1">&#39;median&#39;</span><span class="p">:</span>
+      <span class="n">pruner_instance</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">pruners</span><span class="o">.</span><span class="n">MedianPruner</span><span class="p">(</span><span class="n">n_startup_trials</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_warmup_steps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pruner</span> <span class="o">==</span> <span class="s1">&#39;hyperband&#39;</span><span class="p">:</span>
+      <span class="n">pruner_instance</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">pruners</span><span class="o">.</span><span class="n">HyperbandPruner</span><span class="p">()</span>
+
     <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] start of optuna optimization&#39;</span><span class="p">)</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">Timming</span><span class="p">()</span>
     <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
@@ -371,10 +391,12 @@
     <span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span>
       <span class="n">storage</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">optuna_uri</span><span class="p">,</span>
       <span class="n">study_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+      <span class="n">pruner</span><span class="o">=</span><span class="n">pruner_instance</span><span class="p">,</span>
+      <span class="n">sampler</span><span class="o">=</span><span class="n">optuna</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">TPESampler</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">RANDOM_SEED</span><span class="p">),</span>
       <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;maximize&#39;</span><span class="p">,</span>
       <span class="n">load_if_exists</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resume</span>
     <span class="p">)</span>
-    <span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objective</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mlflow_cb</span><span class="p">])</span>
+    <span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objective</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="n">n_trials</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mlflow_cb</span><span class="p">])</span>
 
     <span class="n">t</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
     <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] optuna optimization finished in </span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>

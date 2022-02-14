@@ -1,7 +1,7 @@
-mergernet.model.study
-=====================
+mergernet.jobs.j001\_resnet50\_hyperband
+========================================
 
-.. automodule:: mergernet.model.study
+.. automodule:: mergernet.jobs.j001_resnet50_hyperband
 
    
    
@@ -19,8 +19,7 @@ mergernet.model.study
       :toctree:
       :template: class-template.rst
    
-      HyperModel
-      PruneCallback
+      Job
    
    
 

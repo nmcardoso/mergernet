@@ -28,6 +28,6 @@
    :template: module-template.rst
    :recursive:
 
-   mergernet.jobs.j001_test_train
+   mergernet.jobs.j001_resnet50_hyperband
    mergernet.jobs.j002_hyperparam
 
