@@ -58,7 +58,7 @@ async def get_artifacts_backup(request):
     "Content-disposition": "attachment; filename=artifacts.tar.gz"
   }
 
-  file_path = Path('/data/app/artifacts.tar.gz')
+  file_path = Path('/app/data/artifacts.tar.gz')
 
   if not file_path.exists():
     return web.Response(
