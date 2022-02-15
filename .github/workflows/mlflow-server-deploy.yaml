@@ -28,4 +28,4 @@ jobs:
         name: mlflow
         namespace: nmcardoso
         build: "true"
-        file: docker-compose.yaml
+        file: mlflow-server/docker-compose.yaml
