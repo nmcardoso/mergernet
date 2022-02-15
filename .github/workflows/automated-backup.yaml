@@ -6,6 +6,10 @@ on:
       - main
     paths:
       - '.github/workflows/automated-backup.yaml'
+  schedule:
+    - cron: "0 13 */2 * *"
+  workflow_dispatch:
+
 
 jobs:
   docs:
@@ -26,7 +30,6 @@ jobs:
 
     - name: ping server
       run: |
-        apt-get install curl
         curl http://mlflow-nmcardoso.cloud.okteto.net
 
     - name: backup
