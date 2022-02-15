@@ -80,4 +80,4 @@ if __name__ == '__main__':
     web.get('/backup/db', get_database_backup),
     web.get('/backup/artifacts', get_artifacts_backup)
   ])
-  web.run_app(app, host='0.0.0.0', port=8080)
+  web.run_app(app, host='0.0.0.0', port=8081)
