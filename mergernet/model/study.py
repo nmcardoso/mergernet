@@ -53,7 +53,7 @@ class HyperModel:
     ah.optuna_db_name = name
 
     if default_mlflow:
-      self.mlflow_uri = f'sqlite:///{str(ah.artifact_path.resolve())}/mlflow/{MLFLOW_DEFAULT_DB}'
+      self.mlflow_uri = MLFLOW_DEFAULT_URL
     else:
       self.mlflow_uri = f'sqlite:///{str(ah.artifact_path.resolve())}/mlflow/{name}.sqlite'
 
