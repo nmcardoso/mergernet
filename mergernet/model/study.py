@@ -198,7 +198,7 @@ class HyperModel:
     t.end()
     L.info(f'[TRAIN] Training finished without errors in {t.duration()}.')
 
-
+    # mlflow logs
     with mlflow.start_run(run_name=str(trial.number), nested=self.nest_trials) as run:
       # The mlflow run will be created before optuna mlflow callback,
       # so the following line is needed in order to optuna get the current run.
@@ -231,7 +231,7 @@ class HyperModel:
 
 
   def hypertrain(self, n_trials: int, epochs: int, pruner: str = 'hyperband'):
-    # mlflow must be initialized here, not by the callback
+    # mlflow must be initialized here, not by the optuna callback
     mlflow.set_tracking_uri(self.mlflow_uri)
     mlflow.set_experiment(self.name)
 
@@ -278,7 +278,9 @@ class HyperModel:
       L.info(f'[HYPER] {k}: {str(v)}')
     L.info(f'[HYPER] ----- end of best trial summary -----')
 
-    ax = optuna.visualization.matplotlib.plot_optimization_history(study)
-    path = str((ah.artifact_path / 'optimization_history.png').resolve())
-    ax.figure.savefig(path,  pad_inches=0.01, bbox_inches='tight')
-    ah.upload(fname='optimization_history.png', github=True, gdrive=True)
+    # ax = optuna.visualization.matplotlib.plot_optimization_history(study)
+    # fig = optuna.visualization.plot_optimization_history(study)
+    # mlflow.log_figure(fig, 'optimization_history.html')
+    # path = str((ah.artifact_path / 'optimization_history.png').resolve())
+    # ax.figure.savefig(path,  pad_inches=0.01, bbox_inches='tight')
+    # ah.upload(fname='optimization_history.png', github=True, gdrive=True)
