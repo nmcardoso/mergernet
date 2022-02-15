@@ -18,7 +18,7 @@ class Job(BaseJob):
 
     model = HyperModel(ds, 'resnet50_minimal')
     model.hypertrain(
-      n_trials=60,
+      n_trials=5,
       epochs=25,
       pruner='hyperband'
     )
