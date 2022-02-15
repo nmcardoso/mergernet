@@ -228,9 +228,6 @@
       <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;optuna&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.sqlite&#39;</span><span class="p">):</span>
         <span class="n">ah</span><span class="o">.</span><span class="n">upload_optuna_db</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
-    <span class="c1"># upload root log file</span>
-    <span class="n">ah</span><span class="o">.</span><span class="n">upload_log</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
-
     <span class="c1"># upload job log file</span>
     <span class="n">ah</span><span class="o">.</span><span class="n">upload_log</span><span class="p">(</span><span class="s1">&#39;job&#39;</span><span class="p">)</span></div></div>
 
