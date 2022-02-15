@@ -5,9 +5,9 @@ on:
       - main
     paths:
       - 'okteto.yml'
-      - 'Dockerfile'
-      - 'docker-compose.yaml'
-      - 'okteto-pipeline.yml'
+      - 'mlflow-server/app/**'
+      - 'mlflow-server/docker-compose.yaml'
+      - 'mlflow-server/Dockerfile'
       - '.github/workflows/mlflow-server-deploy.yaml'
 
 jobs:
