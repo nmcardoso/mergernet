@@ -26,7 +26,7 @@ async def get_database_backup(request):
     "Content-disposition": "attachment; filename=mlflow.sqlite"
   }
 
-  file_path = Path('/data/app/mlflow.sqlite')
+  file_path = Path('/app/data/mlflow.sqlite')
 
   if not file_path.exists():
     return web.Response(
@@ -77,7 +77,7 @@ async def get_artifacts_backup(request):
 if __name__ == '__main__':
   app = web.Application()
   app.add_routes([
-    web.get('/backup/db', get_database_backup),
-    web.get('/backup/artifacts', get_artifacts_backup)
+    web.get('/db', get_database_backup),
+    web.get('/artifacts', get_artifacts_backup)
   ])
   web.run_app(app, host='0.0.0.0', port=8081)

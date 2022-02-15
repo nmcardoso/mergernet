@@ -5,7 +5,6 @@ ENV MLFLOW_HOST 0.0.0.0
 ENV MLFLOW_PORT 8080
 ENV BACKEND_URI sqlite:////app/data/mlflow.sqlite
 ENV ARTIFACT_ROOT /app/data/artifacts
-ENV STATIC_PREFIX /mlflow
 
 WORKDIR /app/
 RUN pip install --no-cache-dir mlflow==$MLFLOW_VERSION
@@ -15,5 +14,4 @@ CMD mlflow server --backend-store-uri ${BACKEND_URI} \
   --default-artifact-root ${ARTIFACT_ROOT} \
   --serve-artifacts \
   --host ${MLFLOW_HOST} \
-  --port ${MLFLOW_PORT} \
-  --static-prefix ${STATIC_PREFIX}
+  --port ${MLFLOW_PORT}
