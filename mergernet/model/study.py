@@ -5,12 +5,14 @@ import shutil
 import optuna
 import mlflow
 import tensorflow as tf
+import numpy as np
 from mergernet.core.artifacts import ArtifactHelper
 from optuna.integration.mlflow import MLflowCallback
-from mergernet.core.constants import MLFLOW_DEFAULT_DB, RANDOM_SEED
+from mergernet.core.constants import MLFLOW_DEFAULT_DB, MLFLOW_DEFAULT_URL, RANDOM_SEED
 
 from mergernet.core.dataset import Dataset
 from mergernet.model.callback import DeltaStopping
+from mergernet.model.plot import conf_matrix
 from mergernet.model.preprocessing import load_jpg, one_hot
 from mergernet.core.utils import Timming
 
@@ -211,6 +213,12 @@ class HyperModel:
         # {k1: [v1, v2, ...], k2: [v1, v2, ...]} => {k1: vi, k2: vi}
         metrics = {name: h[name][i] for name in h.keys()}
         mlflow.log_metrics(metrics=metrics, step=i)
+
+      # confusion matrix plot
+      y_pred = model.predict(ds_train)
+      y_true = np.concatenate([y for x, y in ds_test], axis=0)
+      fig = conf_matrix(y_true, y_pred, one_hot=True)
+      mlflow.log_figure(fig, f'confusion_matrix_{trial.number}.png')
 
     ev = model.evaluate(ds_test)
     idx = model.metrics_names.index('accuracy')
