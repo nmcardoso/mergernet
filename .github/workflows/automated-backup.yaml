@@ -36,8 +36,10 @@ jobs:
       run: |
         cd mlflow-server/scripts
         bash load_credentials.sh
-        cat credentials.json
         python backup.py
+      env:
+        PRIVATE_KEY_ID=${{ secrets.PRIVATE_KEY_ID }}
+        PRIVATE_KEY=${{ secrets.PRIVATE_KEY }}
 
     - name: save backup artifacts
       run: |
