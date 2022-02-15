@@ -75,9 +75,9 @@ class BaseJob:
       ah.upload_dir(self.artifact_path / 'tuner')
 
     # backup mlflow database
-    if (self.artifact_path / 'mlflow').exists():
-      for path in (self.artifact_path / 'mlflow').glob('*.sqlite'):
-        ah.upload_mlflow_db(path.name)
+    # if (self.artifact_path / 'mlflow').exists():
+    #   for path in (self.artifact_path / 'mlflow').glob('*.sqlite'):
+    #     ah.upload_mlflow_db(path.name)
 
     # backup optuna dataset
     if (self.artifact_path / 'optuna').exists():
