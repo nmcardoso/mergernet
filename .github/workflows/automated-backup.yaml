@@ -1,0 +1,43 @@
+name: "Automated Backup"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/automated-backup.yaml'
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: install deps
+      run: |
+        pip install -U wheel
+        pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib requests
+
+    - name: ping server
+      run: |
+        apt-get install curl
+        curl http://mlflow-nmcardoso.cloud.okteto.net
+
+    - name: backup
+      run: |
+        cd mlflow-server/scripts
+        python backup.py
+
+    - name: save backup artifacts
+      run: |
+        git config --global user.email "natanael_magalhaes@msn.com"
+        git config --global user.name "Natanael"
+        git add mlflow-server/backups/*
+        git commit --quiet -m ":rocket: automated backup"
+        git push --quiet "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" ${{ github.ref_name }}:${{ github.ref_name }}
