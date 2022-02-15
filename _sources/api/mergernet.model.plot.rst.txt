@@ -15,6 +15,7 @@ mergernet.model.plot
       :toctree:
    
       color_color
+      conf_matrix
       data_distribution
       roc
       train_metrics

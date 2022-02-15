@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>mergernet.core.dataset &#8212; MergerNet  documentation</title>
+    <title>mergernet.model.plot.conf_matrix &#8212; MergerNet  documentation</title>
     
     <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -34,8 +34,8 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="mergernet.core.dataset.Dataset" href="mergernet.core.dataset.Dataset.html" />
-    <link rel="prev" title="mergernet.core.constants" href="mergernet.core.constants.html" />
+    <link rel="next" title="mergernet.model.plot.data_distribution" href="mergernet.model.plot.data_distribution.html" />
+    <link rel="prev" title="mergernet.model.plot.color_color" href="mergernet.model.plot.color_color.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
     
@@ -121,16 +121,16 @@
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
     <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active has-children">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="mergernet.core.html">
    mergernet.core
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul class="current">
+  <ul>
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="mergernet.core.artifacts.html">
      mergernet.core.artifacts
@@ -153,11 +153,11 @@
      mergernet.core.constants
     </a>
    </li>
-   <li class="toctree-l2 current active has-children">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.core.dataset.html">
      mergernet.core.dataset
     </a>
-    <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
     <label for="toctree-checkbox-3">
      <i class="fas fa-chevron-down">
      </i>
@@ -381,16 +381,16 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1 has-children">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="mergernet.model.html">
    mergernet.model
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
   <label for="toctree-checkbox-11">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
+  <ul class="current">
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="mergernet.model.callback.html">
      mergernet.model.callback
@@ -440,23 +440,23 @@
      </li>
     </ul>
    </li>
-   <li class="toctree-l2 has-children">
+   <li class="toctree-l2 current active has-children">
     <a class="reference internal" href="mergernet.model.plot.html">
      mergernet.model.plot
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
     <label for="toctree-checkbox-14">
      <i class="fas fa-chevron-down">
      </i>
     </label>
-    <ul>
+    <ul class="current">
      <li class="toctree-l3">
       <a class="reference internal" href="mergernet.model.plot.color_color.html">
        mergernet.model.plot.color_color
       </a>
      </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.model.plot.conf_matrix.html">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
        mergernet.model.plot.conf_matrix
       </a>
      </li>
@@ -745,36 +745,13 @@
               
               <div>
                 
-  <section id="module-mergernet.core.dataset">
-<span id="mergernet-core-dataset"></span><h1>mergernet.core.dataset<a class="headerlink" href="#module-mergernet.core.dataset" title="Permalink to this headline">¶</a></h1>
-<p>Dataset Module: high-level abstraction of dataset.</p>
-<p>This module defines the rules for loading a previously generated <code class="docutils literal notranslate"><span class="pre">.tfrecord</span></code> dataset.</p>
-<p>The main class is <a class="reference internal" href="mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset" title="mergernet.core.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a>, which is a high-level representation of the
-dataset and can be used for all development process of this deep learning model.</p>
-<p>This module defines others classes and functions as well, who perform complementary tasks.</p>
-<p class="rubric">Classes</p>
-<table class="longtable table autosummary">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset" title="mergernet.core.dataset.Dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dataset</span></code></a>([data_path, ds_type, in_memory])</p></td>
-<td><p>High-level representation of dataset.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="mergernet.core.dataset.DatasetConfig.html#mergernet.core.dataset.DatasetConfig" title="mergernet.core.dataset.DatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetConfig</span></code></a>([name, archive_url, ...])</p></td>
-<td><p>Configuration params for dataset.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="mergernet.core.dataset.DistributionKFold.html#mergernet.core.dataset.DistributionKFold" title="mergernet.core.dataset.DistributionKFold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DistributionKFold</span></code></a>(bins)</p></td>
-<td><p><p class="rubric">Methods</p>
-</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="mergernet.core.dataset.StratifiedDistributionKFold.html#mergernet.core.dataset.StratifiedDistributionKFold" title="mergernet.core.dataset.StratifiedDistributionKFold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StratifiedDistributionKFold</span></code></a>(distribution, ...)</p></td>
-<td><p><p class="rubric">Methods</p>
-</p></td>
-</tr>
-</tbody>
-</table>
+  <section id="mergernet-model-plot-conf-matrix">
+<h1>mergernet.model.plot.conf_matrix<a class="headerlink" href="#mergernet-model-plot-conf-matrix" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="mergernet.model.plot.conf_matrix">
+<span class="sig-prename descclassname"><span class="pre">mergernet.model.plot.</span></span><span class="sig-name descname"><span class="pre">conf_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">one_hot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/plot.html#conf_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.plot.conf_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
 
 
@@ -783,17 +760,17 @@ dataset and can be used for all development process of this deep learning model.
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="mergernet.core.constants.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="mergernet.model.plot.color_color.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">mergernet.core.constants</p>
+            <p class="prev-next-title">mergernet.model.plot.color_color</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="mergernet.core.dataset.Dataset.html" title="next page">
+    <a class='right-next' id="next-link" href="mergernet.model.plot.data_distribution.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">mergernet.core.dataset.Dataset</p>
+        <p class="prev-next-title">mergernet.model.plot.data_distribution</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

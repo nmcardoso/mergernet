@@ -219,9 +219,9 @@
       <span class="n">ah</span><span class="o">.</span><span class="n">upload_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;tuner&#39;</span><span class="p">)</span>
 
     <span class="c1"># backup mlflow database</span>
-    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;mlflow&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-      <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;mlflow&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.sqlite&#39;</span><span class="p">):</span>
-        <span class="n">ah</span><span class="o">.</span><span class="n">upload_mlflow_db</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="c1"># if (self.artifact_path / &#39;mlflow&#39;).exists():</span>
+    <span class="c1">#   for path in (self.artifact_path / &#39;mlflow&#39;).glob(&#39;*.sqlite&#39;):</span>
+    <span class="c1">#     ah.upload_mlflow_db(path.name)</span>
 
     <span class="c1"># backup optuna dataset</span>
     <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">artifact_path</span> <span class="o">/</span> <span class="s1">&#39;optuna&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>

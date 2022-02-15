@@ -456,6 +456,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.plot.conf_matrix.html">
+       mergernet.model.plot.conf_matrix
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="mergernet.model.plot.data_distribution.html">
        mergernet.model.plot.data_distribution
       </a>
@@ -752,13 +757,16 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="mergernet.model.plot.color_color.html#mergernet.model.plot.color_color" title="mergernet.model.plot.color_color"><code class="xref py py-obj docutils literal notranslate"><span class="pre">color_color</span></code></a>(table_e, table_s[, xlim, ylim, ...])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="mergernet.model.plot.data_distribution.html#mergernet.model.plot.data_distribution" title="mergernet.model.plot.data_distribution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_distribution</span></code></a>(train_series, test_series, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="mergernet.model.plot.conf_matrix.html#mergernet.model.plot.conf_matrix" title="mergernet.model.plot.conf_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">conf_matrix</span></code></a>(y_true, y_pred[, one_hot])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="mergernet.model.plot.roc.html#mergernet.model.plot.roc" title="mergernet.model.plot.roc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">roc</span></code></a>(true_series, pred_series, curves[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="mergernet.model.plot.data_distribution.html#mergernet.model.plot.data_distribution" title="mergernet.model.plot.data_distribution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_distribution</span></code></a>(train_series, test_series, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="mergernet.model.plot.roc.html#mergernet.model.plot.roc" title="mergernet.model.plot.roc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">roc</span></code></a>(true_series, pred_series, curves[, ...])</p></td>
 <td><p>Plot ROC curve of a model Parameters ---------- true_series: list of Serie   The series of true labels. Shape of each serie: (n, n_class),   where rep is the number of repetitions (std curve computation),   n is the number of examples and n_class is the number of classes. pred_series: list of Serie   The series of predictions. Shape of each serie: (n, n_class),   where rep is the number of repetition (std curve computation),   n is the number of examples and n_class is the number of classes. curves: list   Values can include: 0 ... n_class, &quot;macro&quot; or &quot;micro&quot;. If curve is a int, then a curve of the specific class will be ploted. If curve is &quot;macro&quot;, the macro-average of all classes will be computed. If curve is &quot;micro&quot;, the micro-average of all classes will be computed.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="mergernet.model.plot.train_metrics.html#mergernet.model.plot.train_metrics" title="mergernet.model.plot.train_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train_metrics</span></code></a>(mean_series, error_series[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="mergernet.model.plot.train_metrics.html#mergernet.model.plot.train_metrics" title="mergernet.model.plot.train_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train_metrics</span></code></a>(mean_series, error_series[, ...])</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
