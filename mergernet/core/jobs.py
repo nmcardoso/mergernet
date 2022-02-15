@@ -84,9 +84,6 @@ class BaseJob:
       for path in (self.artifact_path / 'optuna').glob('*.sqlite'):
         ah.upload_optuna_db(path.name)
 
-    # upload root log file
-    ah.upload_log('root')
-
     # upload job log file
     ah.upload_log('job')
 

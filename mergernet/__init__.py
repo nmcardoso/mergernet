@@ -3,8 +3,6 @@ from typing import Union
 import shutil
 import logging
 
-import optuna
-
 
 
 def configure_logger(logger_name: Union[str, None], path: str):
@@ -37,12 +35,3 @@ def configure_logger(logger_name: Union[str, None], path: str):
 
 # configure mergernet logger
 configure_logger('job', '/tmp/job.log')
-
-# configure root logger
-configure_logger(None, '/tmp/root.log')
-
-# propagate logs to the root logger
-optuna.logging.enable_propagation()
-
-# stop showing logs in sys.stderr
-optuna.logging.disable_default_handler()
