@@ -1,5 +1,0 @@
-deploy:
-  - okteto stack deploy --build --wait
-
-devs:
-  - okteto.yml
