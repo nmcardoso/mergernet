@@ -220,9 +220,13 @@ class HyperModel:
       fig = conf_matrix(y_true, y_pred, one_hot=True)
       mlflow.log_figure(fig, f'confusion_matrix_{trial.number}.png')
 
+    # generating optuna value to optimize (val_accuracy)
+    last_epoch_accuracy = h['val_accuracy'][-1]
     ev = model.evaluate(ds_test)
     idx = model.metrics_names.index('accuracy')
-    return ev[idx]
+    print('last_epoch_acc', last_epoch_accuracy, 'eval', ev[idx])
+
+    return last_epoch_accuracy #ev[idx]
 
 
 
