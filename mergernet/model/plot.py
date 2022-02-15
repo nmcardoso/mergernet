@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 from scipy import interp
-from sklearn.metrics import roc_curve, auc
+from sklearn.metrics import roc_curve, auc, confusion_matrix, ConfusionMatrixDisplay
 
 
 
@@ -334,3 +334,14 @@ def color_color(table_e, table_s, xlim=None, ylim=None, relative=False, filename
     plt.savefig(filename, facecolor='white')
 
   plt.show()
+
+
+
+def conf_matrix(y_true, y_pred, one_hot: bool = False):
+  if one_hot:
+    y_true = np.argmax(y_true, axis=-1)
+    y_pred = np.argmax(y_pred, axis=-1)
+
+  cm = confusion_matrix(y_true, y_pred)
+  cm_display = ConfusionMatrixDisplay(cm)
+  return cm_display.figure_
