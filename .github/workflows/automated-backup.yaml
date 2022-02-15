@@ -6,13 +6,13 @@ on:
       - main
     paths:
       - '.github/workflows/automated-backup.yaml'
-  schedule:
-    - cron: "0 13 */2 * *"
-  workflow_dispatch:
+  # schedule:
+  #   - cron: "0 13 */2 * *"
+  # workflow_dispatch:
 
 
 jobs:
-  docs:
+  backup:
     runs-on: ubuntu-latest
     steps:
     - name: checkout
@@ -26,7 +26,7 @@ jobs:
     - name: install deps
       run: |
         pip install -U wheel
-        pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib requests
+        pip install -U google-api-python-client google-auth-httplib2 google-auth-oauthlib oauth2client requests
 
     - name: ping server
       run: |
