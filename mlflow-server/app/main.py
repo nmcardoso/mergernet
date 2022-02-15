@@ -1,6 +1,8 @@
+import tarfile
+import os
+
 from typing import Union
 from pathlib import Path
-from shutil import make_archive
 
 from aiohttp import web
 from aiohttp import streamer
@@ -48,11 +50,9 @@ async def get_artifacts_backup(request):
     with open(path / 'test.txt', 'w') as f:
       f.write('test')
 
-  make_archive(
-    base_name='/app/data/artifacts.tar.gz',
-    format='gztar',
-    root_dir='/app/data/artifacts'
-  )
+  with tarfile.open('/app/data/artifacts.tar.gz', 'w:gz') as tar:
+    for entry in os.scandir('/app/data/artifacts'):
+      tar.add(entry.path, arcname=entry.name)
 
   headers = {
     "Content-disposition": "attachment; filename=artifacts.tar.gz"
