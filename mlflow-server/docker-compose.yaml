@@ -11,6 +11,10 @@ services:
     environment:
       BACKEND_URI: sqlite:////app/data/mlflow.sqlite
       ARTIFACT_ROOT: /app/data/artifacts
+      MLFLOW_VERSION: 1.23.1
+      MLFLOW_HOST: 0.0.0.0
+      MLFLOW_PORT: 8080
+      STATIC_PREFIX: /mlflow
 
   backup:
     build:
