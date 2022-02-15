@@ -343,5 +343,5 @@ def conf_matrix(y_true, y_pred, one_hot: bool = False):
     y_pred = np.argmax(y_pred, axis=-1)
 
   cm = confusion_matrix(y_true, y_pred)
-  cm_display = ConfusionMatrixDisplay(cm)
-  return cm_display.figure_
+  cm_display = ConfusionMatrixDisplay(cm).plot()
+  return cm_display.ax_

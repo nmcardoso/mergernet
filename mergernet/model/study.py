@@ -217,8 +217,8 @@ class HyperModel:
       # confusion matrix plot
       y_pred = model.predict(ds_test)
       y_true = np.concatenate([y for x, y in ds_test], axis=0)
-      fig = conf_matrix(y_true, y_pred, one_hot=True)
-      mlflow.log_figure(fig, f'confusion_matrix_{trial.number}.png')
+      ax = conf_matrix(y_true, y_pred, one_hot=True)
+      mlflow.log_figure(ax.figure, f'confusion_matrix_{trial.number}.png')
 
     # generating optuna value to optimize (val_accuracy)
     last_epoch_accuracy = h['val_accuracy'][-1]
