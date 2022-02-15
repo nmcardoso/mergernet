@@ -26,6 +26,12 @@ numpydoc = "*"
 pydata-sphinx-theme = "*"
 ipykernel = "*"
 tensorboard-plugin-profile = "*"
+envyaml = "*"
+pydrive = "*"
+google-api-python-client = "*"
+google-auth-httplib2 = "*"
+google-auth-oauthlib = "*"
+aiohttp = "*"
 
 [requires]
 python_version = "3.7.12"
