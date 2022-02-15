@@ -36,6 +36,7 @@ jobs:
       run: |
         cd mlflow-server/scripts
         bash load_credentials.sh
+        cat credentials.json
         python backup.py
 
     - name: save backup artifacts
