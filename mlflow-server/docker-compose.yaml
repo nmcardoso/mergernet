@@ -13,7 +13,9 @@ services:
       ARTIFACT_ROOT: /app/data/artifacts
 
   backup:
-    build: app
+    build:
+      context: ./app
+      dockerfile: Dockerfile
     ports:
       - 8080:8080
     volumes:
