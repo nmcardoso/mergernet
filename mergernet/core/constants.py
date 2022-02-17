@@ -31,10 +31,9 @@ SPLUS_PASS = os.environ.get('SPLUS_PASS', None)
 
 
 # Google Drive
-if ENV == 'dev':
-  GDRIVE_PATH = 'gdrive'
-else:
-  GDRIVE_PATH = os.environ.get('GDRIVE_PATH', None)
+GDRIVE_PATH = os.environ.get('GDRIVE_PATH', None)
+if ENV == 'dev' and not GDRIVE_PATH:
+  GDRIVE_PATH = DATA_ROOT / 'gdrive'
 
 
 
