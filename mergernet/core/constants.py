@@ -11,6 +11,7 @@ SOURCE_ROOT = (Path(__file__).parent.parent).resolve()
 PROJECT_ROOT = SOURCE_ROOT.parent
 DOCS_ROOT = PROJECT_ROOT / 'docs'
 DATA_ROOT = PROJECT_ROOT / 'data'
+JOBS_PATH = SOURCE_ROOT / 'jobs'
 
 
 
