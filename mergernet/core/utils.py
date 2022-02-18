@@ -90,6 +90,18 @@ def array_fallback(arrays, prefix=None):
 
 
 
+def deep_update(original, new, *args):
+  updates = (new,) + args
+  for u in updates:
+    for k, v in u.items():
+      if isinstance(v, collections.abc.Mapping):
+        original[k] = deep_update(original.get(k, {}), v)
+      else:
+        original[k] = v
+    return original
+
+
+
 
 class Timming:
   def __init__(self):
