@@ -18,7 +18,7 @@ L = logging.getLogger('job')
 
 
 class ArtifactHelper(metaclass=SingletonMeta):
-  use_github: bool = True
+  use_github: bool = False
   use_gdrive: bool = True
   artifact_path: Union[Path, None] = None
   gdrive_path: Union[Path, None] = None
