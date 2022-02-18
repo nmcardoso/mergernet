@@ -15,7 +15,8 @@ import tensorflow as tf
 
 
 def load_image(path: Union[str, Path]) -> np.ndarray:
-  """Load image from local storage to numpy array.
+  """
+  Load image from local storage to numpy array.
   Supports several types of files, incluing ``.jpg``, ``.png``, ``.npy``,
   ``.npz``, ``.fits``
 
