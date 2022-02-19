@@ -102,6 +102,21 @@ def deep_update(original, new, *args):
 
 
 
+def unique_path(path: Union[str, Path]):
+  path = Path(path)
+  new_path = path
+  i = 2
+  while(not new_path.exists()):
+    parent = new_path.parent
+    ext = ''.join(new_path.suffixes)
+    name = new_path.name
+    new_name = name + '_' + str(i)
+    new_path = parent / (new_name + ext)
+    i += 1
+  return new_path
+
+
+
 
 class Timming:
   def __init__(self):
