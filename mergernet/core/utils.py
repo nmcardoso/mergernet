@@ -7,6 +7,8 @@ from mergernet.core.constants import DATA_ROOT
 
 from astropy.io import fits
 from astropy.table import Table
+from astropy.coordinates import ICRS, SkyCoord
+from astropy import units as u
 from PIL import Image
 import pandas as pd
 import numpy as np
@@ -115,6 +117,37 @@ def unique_path(path: Union[str, Path]):
     i += 1
   return new_path
 
+
+
+def iauname(ra: float, dec: float) -> str:
+  """
+  Receives the angular position of the object and returns IAU2000 name
+
+  Parameters
+  ----------
+  ra: float
+    The right ascension of the object.
+  dec: float
+    The declination of the object.
+
+  Example
+  --------
+  >>> iauname(187.70592, 12.39112)
+  'J123049.42+122328.03'
+
+  Returns
+  -------
+  str
+    The formated IAU name of the object
+  """
+  coord = SkyCoord(ra=ra*u.degree, dec=dec*u.degree, frame='icrs')
+  ra_str = coord.ra.to_string(unit=u.hourangle, sep='', precision=2, pad=True)
+  dec_str = coord.dec.to_string(sep='', precision=1, alwayssign=True, pad=True)
+  if isinstance(ra_str, list) or isinstance(ra_str, np.ndarray):
+    r = [f'J{_ra_str}{_dec_str}' for _ra_str, _dec_str in zip(ra_str, dec_str)]
+  else:
+    r = f'J{ra_str}{dec_str}'
+  return r
 
 
 
