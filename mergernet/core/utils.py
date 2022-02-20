@@ -1,3 +1,4 @@
+import collections.abc
 from pathlib import Path
 from typing import Sequence, Union
 from datetime import datetime, timedelta
