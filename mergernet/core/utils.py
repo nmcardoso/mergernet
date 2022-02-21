@@ -153,9 +153,11 @@ def iauname(ra: float, dec: float) -> str:
 
 
 class Timming:
-  def __init__(self):
+  def __init__(self, start: bool = True):
     self.start_time = None
     self.end_time = None
+    if start:
+      self.start()
 
 
   def __repr__(self) -> str:
@@ -166,8 +168,9 @@ class Timming:
     self.start_time = datetime.now()
 
 
-  def end(self):
+  def end(self) -> str:
     self.end_time = datetime.now()
+    return self.duration()
 
 
   def duration(self) -> str:
