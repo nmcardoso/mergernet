@@ -48,3 +48,11 @@ class XTable:
 
 
 
+class CrossMatchResult:
+  table: pd.DataFrame = None
+  primary_idx: np.ndarray = None
+  secondary_idx: np.ndarray = None
+  distance: np.ndarray = None
+
+
+
