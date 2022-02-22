@@ -56,3 +56,22 @@ class CrossMatchResult:
 
 
 
+class CrossMatch:
+  def pair_match(
+    self,
+    table1: XTable,
+    table2: XTable,
+    nthneighbor: int = 1
+  ) -> Tuple[np.ndarray, np.ndarray]:
+    df1_coord = table1.get_coords()
+    df2_coord = table2.get_coords()
+
+    idx, d, _ = match_coordinates_sky(
+      df1_coord,
+      df2_coord,
+      nthneighbor=nthneighbor
+    )
+
+    return np.array(idx), np.array(d)
+
+
