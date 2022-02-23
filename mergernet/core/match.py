@@ -112,3 +112,32 @@ class CrossMatch:
     return r
 
 
+  def unique(
+    self,
+    table: XTable,
+    radius: float
+  ):
+    idx, d = self.pair_match(table, table, nthneighbor=2)
+
+    mask = d < (radius * arcsec)
+    primary_idx = mask.nonzero()[0]
+    secondary_idx = idx[mask]
+    removed_idx = []
+
+    for pid, sid in zip(primary_idx, secondary_idx):
+      if sid not in removed_idx:
+        removed_idx.append(pid)
+
+    del_mask = np.isin(idx, removed_idx, invert=True).nonzero()[0]
+
+    df = table.to_df()
+
+    r = CrossMatchResult()
+    r.distance = d[del_mask]
+    r.table = df.iloc[del_mask]
+    r.primary_idx = primary_idx
+    r.secondary_idx = secondary_idx
+    return r
+
+
+
