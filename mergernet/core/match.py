@@ -141,3 +141,15 @@ class CrossMatch:
 
 
 
+if __name__ == '__main__':
+  cm = CrossMatch()
+
+  t1 = XTable(
+    ra='ra',
+    dec='dec',
+    path=Path(__file__ + '/../../../data/zoo2Stripe82Coadd1.csv.gz').resolve(),
+  )
+
+  r = cm.unique(t1, 30)
+  print(r.table)
+  print(len(t1.to_df()), len(r.table))
