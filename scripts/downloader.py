@@ -8,87 +8,49 @@ sys.path.append(project_root)
 
 import pandas as pd
 import numpy as np
-import mergernet.services.sdss
-import mergernet.core.dataset
-import mergernet.core.utils
+from mergernet.core.match import XTable, CrossMatch
+from mergernet.services.sdss import SloanService
 
 
-IMG_FOLDER = Path('../data/sdss_lupton_rgb')
+def download(df, img_folder, ra='ra', dec='dec'):
+  s = SloanService()
 
+  paths, flag = s.get_image_filename(
+    dr7objid=df.dr7objid.to_numpy(),
+    dr8objid=df.dr8objid.to_numpy(),
+    extension='.jpg',
+    basepath=img_folder
+  )
 
-zoo1 = pd.read_csv('../data/zoo1_spec_all.csv')
-darg = pd.read_csv('../data/tables/darg_mergers.csv')
-
-
-
-
-# spiral = zoo1[(zoo1.p_cs_debiased == 1) & (zoo1.uncertain == 0)]
-# ellip = zoo1[(zoo1.p_el_debiased > 0.95) & (zoo1.uncertain == 0)]
-# merger = zoo1[(zoo1.p_mg > 0.4)]
-
-
-
-s = mergernet.services.sdss.SloanService()
-
-dmerger =  zoo1[
-  (zoo1.dr7objid.isin(darg.object1) | zoo1.dr7objid.isin(darg.object2)) &
-  (zoo1.modelMag_r < 17.5) &
-  (zoo1.modelMag_r > 17) &
-  ~zoo1.dr7objid.isin([int(_x.name[4:-4]) for _x in Path('../data/sdss_lupton_jpg_128').iterdir()])
-]
-
-
-# spiral_paths, flag = s.get_image_filename(
-#   dr7objid=spiral.dr7objid.to_numpy(),
-#   dr8objid=spiral.dr8objid.to_numpy(),
-#   extension='.jpg',
-#   basepath=IMG_FOLDER
-# )
-
-# ellip_paths, flag = s.get_image_filename(
-#   dr7objid=ellip.dr7objid.to_numpy(),
-#   dr8objid=ellip.dr8objid.to_numpy(),
-#   extension='.jpg',
-#   basepath=IMG_FOLDER
-# )
-
-dmerger_paths, flag = s.get_image_filename(
-  dr7objid=dmerger.dr7objid.to_numpy(),
-  dr8objid=dmerger.dr8objid.to_numpy(),
-  extension='.jpg',
-  basepath=IMG_FOLDER
-)
+  s.batch_download_rgb(
+    ra=df[ra].to_numpy(),
+    dec=df[dec].to_numpy(),
+    save_path=paths,
+    workers=8,
+    replace=False,
+    width=128,
+    height=128,
+    scale=0.55
+  )
 
 
 
-# s.batch_download_rgb(
-#   ra=spiral.ra.to_numpy(),
-#   dec=spiral.dec.to_numpy(),
-#   save_path=spiral_paths,
-#   workers=2,
-#   replace=False,
-#   width=128,
-#   height=128,
-#   scale=0.55
-# )
+t = XTable('../data/zoo2Stripe82Coadd1.csv.gz', 'ra', 'dec')
+cm = CrossMatch()
+r = cm.unique(t, 30)
 
-# s.batch_download_rgb(
-#   ra=ellip.ra.to_numpy(),
-#   dec=ellip.dec.to_numpy(),
-#   save_path=ellip_paths,
-#   workers=2,
-#   replace=False,
-#   width=128,
-#   height=128,
-#   scale=0.55
-# )
+df = t.to_df().iloc[r.primary_idx]
+ra = df['ra'].to_numpy()
+dec = df['dec'].to_numpy()
+paths = [f'../data/test/{_id}.jpg' for _id in df['stripe82objid']]
 
+s = SloanService()
 s.batch_download_rgb(
-  ra=dmerger.ra.to_numpy(),
-  dec=dmerger.dec.to_numpy(),
-  save_path=dmerger_paths,
+  ra=ra,
+  dec=dec,
+  save_path=paths,
   workers=8,
-  replace=False,
+  replace=True,
   width=128,
   height=128,
   scale=0.55
