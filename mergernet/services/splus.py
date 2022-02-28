@@ -61,22 +61,23 @@ class SplusService:
 
 
   def update_token(self) -> bool:
-    with SplusService._lock:
-      now = datetime.now()
-      if self.token is None or self.token['timestamp'] < (now - self.token_duration):
-        resp = self.client.post(
-          self._get_url(LOGIN_ROUTE),
-          json=self.credentials
-        )
-        if resp.status_code == 200:
-          if 'application/json' in resp.headers['Content-Type']:
-            resp_body = resp.json()
-            if 'token' in resp_body:
-              self.token = {
-                'value': resp_body['token'],
-                'timestamp': datetime.now()
-              }
-              return True # updated
+    now = datetime.now()
+    if self.token is None or self.token['timestamp'] < (now - self.token_duration):
+      with SplusService._lock:
+        if self.token is None or self.token['timestamp'] < (now - self.token_duration):
+          resp = self.client.post(
+            self._get_url(LOGIN_ROUTE),
+            json=self.credentials
+          )
+          if resp.status_code == 200:
+            if 'application/json' in resp.headers['Content-Type']:
+              resp_body = resp.json()
+              if 'token' in resp_body:
+                self.token = {
+                  'value': resp_body['token'],
+                  'timestamp': datetime.now()
+                }
+                return True # updated
     return False # using cache
 
 
