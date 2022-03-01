@@ -171,6 +171,60 @@ class DatasetConfig:
     )
 
 
+
+DARG_NO_INSPECTION = DatasetConfig(
+  # table_url=GDrive.get_url('1yHnyOdXS-HKzIsbenSi646jyf2AWU9vo'),
+  archive_url=GDrive.get_url('1ltKXhZgA4Ab60FGKCqybhebSiAL2LMgG'),
+  table_url=GDrive.get_url('1QgUYkzcjaCmo-kcgM8s2U8PYlx0C58oD'),
+  archive_path=Path('sdss_lupton_jpg_128.tar.gz'),
+  images_path=Path('sdss_lupton_jpg_128'),
+  table_path=Path('reference_darg.csv'),
+  X_column='filename',
+  y_column='class',
+  fold_column='fold',
+  label_map={ 'E': 0, 'M': 1, 'S': 2 },
+  image_shape=(128, 128, 3)
+)
+"""Default configuration object for RGB dataset."""
+
+MESD_SDSS_128_JPG = DatasetConfig(
+  archive_url=GDrive.get_url('1YZ7A9rVglf5NJp27rW8-6aJXBfBNPfYv'),
+  table_url=GDrive.get_url('1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H'),
+  archive_path=Path('mesd_sdss_128_jpg.tar.gz'),
+  images_path=Path('mesd_sdss_128_jpg'),
+  table_path=Path('mesd.csv'),
+  X_column='iauname',
+  X_column_suffix='.jpg',
+  y_column='class',
+  fold_column='fold',
+  label_map={'merger': 0, 'elliptical': 1, 'spiral': 2, 'disturbed': 3},
+  image_shape=(128, 128, 3)
+)
+"""MESD dataset with SDSS 128x128 images."""
+
+MESD_LEGACY_128_JPG = DatasetConfig(
+  archive_url=GDrive.get_url('1cTU0SVEv3qVeVxF7pzhtOP7S-bx5cPOP'),
+  table_url=GDrive.get_url('1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H'),
+  archive_path=Path('mesd_legacy_128_jpg.tar.gz'),
+  images_path=Path('mesd_legacy_128_jpg'),
+  table_path=Path('mesd.csv'),
+  X_column='iauname',
+  X_column_suffix='.jpg',
+  y_column='class',
+  fold_column='fold',
+  label_map={'merger': 0, 'elliptical': 1, 'spiral': 2, 'disturbed': 3},
+  image_shape=(128, 128, 3)
+)
+"""MESD dataset with Legacy Survey 128x128 images."""
+
+DATASET_REGISTRY = {
+  'darg_no_inspection': DARG_NO_INSPECTION,
+  'mesd_sdss_128_jpg': MESD_SDSS_128_JPG,
+  'mesd_legacy_128_jpg': MESD_LEGACY_128_JPG
+}
+
+
+
 class Dataset:
   """High-level representation of dataset.
 
@@ -184,32 +238,18 @@ class Dataset:
   config: DatasetConfig
     Configuration object.
   """
-  RGB_CONFIG = DatasetConfig(
-    # table_url=GDrive.get_url('1yHnyOdXS-HKzIsbenSi646jyf2AWU9vo'),
-    archive_url=GDrive.get_url('1ltKXhZgA4Ab60FGKCqybhebSiAL2LMgG'),
-    table_url=GDrive.get_url('1QgUYkzcjaCmo-kcgM8s2U8PYlx0C58oD'),
-    archive_path=Path('sdss_lupton_jpg_128.tar.gz'),
-    images_path=Path('sdss_lupton_jpg_128'),
-    table_path=Path('reference_darg.csv'),
-    X_column='filename',
-    y_column='class',
-    fold_column='fold',
-    label_map={ 'E': 0, 'M': 1, 'S': 2 }
-  )
-  """Default configuration object for RGB dataset."""
-
 
   def __init__(
     self,
     data_path: Union[str, Path] = Path(''),
-    ds_type: str = 'rgb',
+    ds: str = '',
     in_memory: bool = False
   ):
-    self.ds_type = ds_type
+    self.ds = ds
     self.data_path = Path(data_path)
     self.in_memory = in_memory
 
-    self.config = Dataset.RGB_CONFIG
+    self.config = DATASET_REGISTRY.get(self.ds.lower(), 'mesd_sdss_128_jpg')
     self.config.archive_path = data_path / self.config.archive_path
     self.config.images_path = data_path / self.config.images_path
     self.config.table_path = data_path / self.config.table_path
