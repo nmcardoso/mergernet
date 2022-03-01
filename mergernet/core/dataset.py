@@ -46,6 +46,7 @@ class StratifiedDistributionKFold:
     self.bins = bins
     self.distribution = distribution
     self.shuffle = shuffle
+    self.random_seed = RANDOM_SEED if self.shuffle else None
 
 
   @staticmethod
@@ -80,7 +81,7 @@ class StratifiedDistributionKFold:
     test = [np.array([], dtype=np.int32) for _ in range(self.n_splits)]
 
     dist_kf = DistributionKFold(bins=self.bins)
-    class_kf = StratifiedKFold(n_splits=self.n_splits, shuffle=self.shuffle, random_state=RANDOM_SEED)
+    class_kf = StratifiedKFold(n_splits=self.n_splits, shuffle=self.shuffle, random_state=self.random_seed)
 
     # First split: distribution split
     for bin_ids in dist_kf.split(distribution=self.distribution):
