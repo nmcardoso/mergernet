@@ -129,7 +129,6 @@ class StratifiedDistributionKFold:
 
 
 
-
 class DatasetConfig:
   """Configuration params for dataset."""
   def __init__(
@@ -145,7 +144,8 @@ class DatasetConfig:
     fold_column: str = 'fold',
     X_column_suffix: str = '', # filename extension
     detect_img_extension: bool = False,
-    label_map: dict = None
+    label_map: dict = None,
+    image_shape: tuple = None
   ):
     self.name = name
     self.archive_url = archive_url
@@ -159,6 +159,7 @@ class DatasetConfig:
     self.X_column_suffix = X_column_suffix
     self.detect_img_extension = detect_img_extension
     self.label_map = label_map
+    self.image_shape = image_shape
 
   def __repr__(self) -> str:
     return (
