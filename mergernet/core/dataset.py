@@ -363,6 +363,7 @@ class Dataset:
     n_splits: int = 5,
     bins: int = 3
   ) -> pd.DataFrame:
+    df = df.copy()
     X = df[fname_column].to_numpy() # filenames
     y = df[class_column].to_numpy() # class labels
     r = df[r_column].to_numpy() # r band magnitude
