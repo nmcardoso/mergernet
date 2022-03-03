@@ -15,7 +15,7 @@ plot_params = {
   'font.family': 'DejaVu Sans',
   'legend.fontsize': 13,
   'axes.labelsize': 15,
-  'axes.grid': True,
+  # 'axes.grid': True,
   'axes.grid.axis': 'both',
   'grid.linestyle': '-',
   'grid.alpha': 0.35,
