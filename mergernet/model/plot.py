@@ -337,11 +337,11 @@ def color_color(table_e, table_s, xlim=None, ylim=None, relative=False, filename
 
 
 
-def conf_matrix(y_true, y_pred, one_hot: bool = False):
+def conf_matrix(y_true, y_pred, one_hot: bool = False, labels: Sequence[str] = None):
   if one_hot:
     y_true = np.argmax(y_true, axis=-1)
     y_pred = np.argmax(y_pred, axis=-1)
 
   cm = confusion_matrix(y_true, y_pred)
-  cm_display = ConfusionMatrixDisplay(cm).plot()
+  cm_display = ConfusionMatrixDisplay(cm, display_labels=labels).plot(cmap='Blues_r')
   return cm_display.ax_
