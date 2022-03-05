@@ -345,3 +345,53 @@ def conf_matrix(y_true, y_pred, one_hot: bool = False, labels: Sequence[str] = N
   cm = confusion_matrix(y_true, y_pred)
   cm_display = ConfusionMatrixDisplay(cm, display_labels=labels).plot(cmap='Blues_r')
   return cm_display.ax_
+
+
+
+def mag_class_distribution(
+  df: pd.DataFrame,
+  n_folds: int,
+  n_bins: int,
+  color_map: dict,
+  label_map: dict = None,
+  xlabel: str = 'r mag',
+  ylabel: str = 'count',
+  title: str = None,
+  figsize: Tuple[float, float] = (12, 8),
+  legend_pos: str = 'best',
+  legend_cols: int = 1
+):
+  total = []
+  limit = []
+  colors = []
+
+  classes = df['class'].unique()
+  labels = [label_map[_class] for _class in classes]
+
+  for i in range(n_folds):
+    fold = df[df['fold'] == i]
+    for _class in classes:
+      objects = fold[fold['class'] == _class]
+      total.append(objects['mag_r'].to_numpy())
+      colors.append(color_map[_class])
+    limit.append(fold['mag_r'].to_numpy())
+
+  plt.figure(figsize=figsize)
+  plt.hist(total, color=colors, stacked=True, bins=n_bins, label=labels)
+  plt.hist(
+    limit,
+    stacked=True,
+    color=('k',)*n_folds,
+    bins=n_bins,
+    histtype='bar',
+    fill=False,
+    linewidth=2
+  )
+  plt.xlabel(xlabel)
+  plt.ylabel(ylabel)
+
+  if title is not None:
+    plt.title(title)
+
+  if label_map is not None:
+    plt.legend(loc=legend_pos, ncol=legend_cols)
