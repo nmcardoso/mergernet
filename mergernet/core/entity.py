@@ -109,3 +109,19 @@ class ConstantHyperParameter(HyperParameter):
 
 
 
+class HyperParameterSet:
+  def __init__(self, hyperparameters: Sequence[Union[dict, HyperParameter]]):
+    for item in hyperparameters:
+      if type(item) == dict:
+        name = item['name']
+        self.__dict__.update({ name: HyperParameter.from_dict(item) })
+      else:
+        name = item.name
+        self.__dict__.update({ name: item })
+
+  def set_trial(self, trial: optuna.trial.FrozenTrial):
+    for hp in self.__dict__.values():
+      hp.set_trial(trial)
+
+
+
