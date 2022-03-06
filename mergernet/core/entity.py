@@ -132,3 +132,11 @@ class JobSpec:
 
 
 
+if __name__ == '__main__':
+  hp = HyperParameter.from_dict({
+    'type': 'categorical',
+    'name': 'params',
+    'choices': [0, 1, 2]
+  })
+  print(type(hp))
+  print(hp.__dict__)
