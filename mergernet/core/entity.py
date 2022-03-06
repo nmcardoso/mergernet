@@ -47,3 +47,13 @@ class HyperParameter:
     elif t == 'constant':
       E = ConstantHyperParameter
     return E(**params)
+
+
+
+class CategoricalHyperParameter(HyperParameter):
+  def __init__(self, name: str, choices: Sequence):
+    self.name = name
+    self.choices = choices
+
+
+
