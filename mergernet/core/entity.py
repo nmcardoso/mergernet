@@ -86,3 +86,11 @@ class IntHyperParameter(HyperParameter):
 
 
 
+class LogUniformHyperParameter(HyperParameter):
+  def __init__(self, name: str, low: float, high: float):
+    self.name = name
+    self.low = low
+    self.high = high
+
+
+
