@@ -57,3 +57,12 @@ class CategoricalHyperParameter(HyperParameter):
 
 
 
+class DiscreteUniformHyperParameter(HyperParameter):
+  def __init__(self, name: str, low: float, high: float, q: float):
+    self.name = name
+    self.low = low
+    self.high = high
+    self.q = q
+
+
+
