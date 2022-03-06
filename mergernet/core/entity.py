@@ -125,3 +125,10 @@ class HyperParameterSet:
 
 
 
+class JobSpec:
+  name: str
+  dataset: str
+  hyperparameters: HyperParameterSet
+
+
+
