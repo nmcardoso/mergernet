@@ -66,3 +66,13 @@ class DiscreteUniformHyperParameter(HyperParameter):
 
 
 
+class FloatHyperParameter(HyperParameter):
+  def __init__(self, name: str, low: float, high: float, step: float = None, log: bool = False):
+    self.name = name
+    self.low = low
+    self.high = high
+    self.step = step
+    self.log = log
+
+
+
