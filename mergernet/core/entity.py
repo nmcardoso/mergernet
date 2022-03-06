@@ -76,3 +76,13 @@ class FloatHyperParameter(HyperParameter):
 
 
 
+class IntHyperParameter(HyperParameter):
+  def __init__(self, name: str, low: int, high: int, step: int = 1, log: bool = False):
+    self.name = name
+    self.low = low
+    self.high = high
+    self.step = step
+    self.log = log
+
+
+
