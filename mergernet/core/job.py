@@ -15,6 +15,28 @@ from mergernet.model.study import HyperModel
 
 
 class Job:
+  def __init__(
+    self,
+    job_id: int,
+    local_data_path: Union[str, Path] = ''
+  ):
+    # constructor params to class state
+    self.job_id = job_id
+    self.local_data_path = Path(local_data_path)
+
+    # load job metadata
+    self.jobs_map = self._scan_jobs()
+    self.job = self._parse_job(job_id)
+
+    self.experiment_name = Path(self.job['filename']).stem
+
+    # setup remote job path
+    self.remote_artifact_path = None
+    self._config_remote_artifact_path()
+
+    # setup mlflow
+    if self.job['config']['mlflow']['enabled']:
+      self._config_mlflow()
 
 
   def run(self):
