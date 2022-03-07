@@ -15,6 +15,27 @@ from mergernet.model.study import HyperModel
 
 
 class Job:
+  def _optuna_train(self):
+    print('aqui 1')
+    ds = Dataset(data_path=self.local_data_path)
+    print('aqui 2')
+    hp = HyperParameterSet(self.job['hyperparameters'])
+    print('aqui 3')
+    model = HyperModel(
+      dataset=ds,
+      name=self.experiment_name,
+      hyperparameters=hp,
+      epochs=self.job['config']['train_epochs'],
+    )
+    print('aqui 4')
+    model.hypertrain(
+      optuna_uri=self.optuna_uri,
+      n_trials=self.job['config']['optuna']['n_trials'],
+      pruner=self.job['config']['optuna']['pruner'],
+      resume=bool(self.job['config']['resume'])
+    )
+
+
   def _scan_jobs(self) -> Dict[str, Path]:
     jobs_map = {}
     pattern = re.compile('(\d+)_.*\.yaml')
