@@ -15,6 +15,37 @@ from mergernet.model.study import HyperModel
 
 
 class Job:
+  def _config_optuna(self):
+    assert GDRIVE_PATH is not None
+
+    optuna_folder = Path(GDRIVE_PATH) / 'optuna'
+    if not optuna_folder.exists():
+      optuna_folder.mkdir(exist_ok=True)
+
+    if not self.job['config']['resume']:
+      print('aqui 1')
+      db_path = optuna_folder / (self.experiment_name + '.sqlite')
+      print('aqui 2')
+      if db_path.exists():
+        db_path.unlink()
+    else:
+      resume_experiment = Path(self.job['config']['resume']).stem
+      print(resume_experiment, self.experiment_name)
+      if self.experiment_name == resume_experiment:
+        db_path = optuna_folder / (resume_experiment + '.sqlite')
+      else:
+        original_path = optuna_folder / (resume_experiment + '.sqlite')
+        db_path = optuna_folder / (self.experiment_name + '.sqlite')
+        optuna.copy_study(
+          from_study_name=resume_experiment,
+          from_storage=f'sqlite:///{original_path.resolve()}',
+          to_storage=f'sqlite:///{db_path.resolve()}',
+          to_study_name=self.experiment_name
+        )
+
+    self.optuna_uri = f'sqlite:///{str(db_path.resolve())}'
+
+
   def _optuna_train(self):
     print('aqui 1')
     ds = Dataset(data_path=self.local_data_path)
