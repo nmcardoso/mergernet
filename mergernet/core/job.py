@@ -15,6 +15,16 @@ from mergernet.model.study import HyperModel
 
 
 class Job:
+
+
+  def run(self):
+    if self.job['config']['job_type'] == 'optuna_train':
+      self._config_optuna()
+      self._optuna_train()
+    elif self.job['config']['job_type'] == 'predict':
+      self._predict()
+
+
   def _config_remote_artifact_path(self):
     assert GDRIVE_PATH is not None
 
