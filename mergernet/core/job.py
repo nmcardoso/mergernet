@@ -15,6 +15,16 @@ from mergernet.model.study import HyperModel
 
 
 class Job:
+  def _config_remote_artifact_path(self):
+    assert GDRIVE_PATH is not None
+
+    path = None
+    if self.job['config']['mlflow']['enabled']:
+      path = Path(GDRIVE_PATH) / 'mlflow' / 'artifacts'
+
+    self.remote_artifact_path = path
+
+
   def _config_mlflow(self):
     assert GDRIVE_PATH is not None
 
