@@ -15,6 +15,19 @@ from mergernet.model.study import HyperModel
 
 
 class Job:
+  def _scan_jobs(self) -> Dict[str, Path]:
+    jobs_map = {}
+    pattern = re.compile('(\d+)_.*\.yaml')
+
+    for path in JOBS_PATH.iterdir():
+      match = pattern.match(path.name)
+      if match:
+        job_id = int(match.group(1))
+        jobs_map[job_id] = path
+
+    return jobs_map
+
+
   def _parse_job(self, job_id: int) -> Dict[str, Any]:
     assert job_id in self.jobs_map
 
