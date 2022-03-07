@@ -15,6 +15,21 @@ from mergernet.model.study import HyperModel
 
 
 class Job:
+  def _config_mlflow(self):
+    assert GDRIVE_PATH is not None
+
+    mlflow_folder = Path(GDRIVE_PATH) / 'mlflow'
+    if not mlflow_folder.exists():
+      mlflow_folder.mkdir(exist_ok=True)
+
+    db_name = 'mlflow.sqlite'
+    db_path =  mlflow_folder / db_name
+    db_uri = f'sqlite:///{str(db_path.resolve())}'
+
+    mlflow.set_tracking_uri(db_uri)
+    mlflow.set_experiment(self.experiment_name)
+
+
   def _config_optuna(self):
     assert GDRIVE_PATH is not None
 
