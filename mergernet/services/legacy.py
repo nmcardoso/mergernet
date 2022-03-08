@@ -1,23 +1,14 @@
-"""Download Module: pure functions to retrieve data from web resources.
-
-This module define pure utilitary functions to retrieve data from astronomical
-web services, like `Legacy Survey`, `SDSS` and `S-PLUS`.
-"""
-
 from pathlib import Path
 import concurrent.futures
 from typing import Union, List
 
 from tqdm import tqdm
 
-from mergernet.services.utils import append_query_params, download_file
-
+from mergernet.services.utils import append_query_params, download_file, batch_download_file
 
 
 
 LEGACY_RGB_URL: str = 'https://www.legacysurvey.org/viewer/jpeg-cutout'
-SLOAN_RGB_URL: str = ''
-
 
 
 
