@@ -291,6 +291,9 @@ class SplusService:
     replace: bool = False,
     **kwargs
   ):
+    if not replace and save_path.exists():
+      return
+
     # Stage 1 request
     url = self._get_url(route, kwargs)
     resp = self.client.get(url)
