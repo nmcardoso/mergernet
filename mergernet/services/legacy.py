@@ -95,18 +95,16 @@ class LegacyService:
       Same args as `download_legacy_rgb` function.
     """
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
-      futures = []
-      for i in range(len(ra)):
-        futures.append(executor.submit(
-          self.download_rgb,
-          ra=ra[i],
-          dec=dec[i],
-          save_path=save_path[i],
-          **kwargs
-        ))
-      for _ in tqdm.tqdm(concurrent.futures.as_completed(futures), total=len(futures), unit=' file'):
-        pass
+    urls = [
+      append_query_params(LEGACY_RGB_URL, {'ra': _ra, 'dec': _dec, **kwargs})
+      for _ra, _dec in zip(ra, dec)
+    ]
+    batch_download_file(
+      urls=urls,
+      save_path=save_path,
+      workers=workers,
+      replace=replace
+    )
 
 
 
