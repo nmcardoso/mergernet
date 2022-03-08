@@ -1,0 +1,50 @@
+extends:
+  - name: defaults
+
+
+config:
+  job_type: optuna_train
+
+  dataset: sdss_lupton_128
+
+  resume: false
+
+  train_epochs: 20
+
+  optuna:
+    n_trials: 40
+    pruner: hyperband
+    sampler: tpe
+
+  mlflow:
+    id: 1
+    enabled: true
+
+
+hyperparameters:
+  - name: pretrained_weights
+    type: constant
+    value: imagenet
+
+  - name: dense_1_units
+    type: categorical
+    choices: [64, 128, 256, 512, 1024]
+
+  - name: dropout_1_rate
+    type: uniform
+    low: 0.1
+    high: 0.5
+
+  - name: dense_2_units
+    type: categorical
+    choices: [64, 128, 256, 512, 1024]
+
+  - name: dropout_2_rate
+    type: uniform
+    low: 0.1
+    high: 0.5
+
+  - name: learning_rate
+    type: loguniform
+    low: 1.0e-5
+    high: 1.0e-3
