@@ -1,0 +1,17 @@
+config:
+  job_type: optuna_train
+
+  dataset: sdss_lupton_128
+
+  resume: false
+
+  train_epochs: 20
+
+  optuna:
+    n_trials: 40
+    pruner: hyperband
+    sampler: tpe
+
+  mlflow:
+    id: 1
+    enabled: true
