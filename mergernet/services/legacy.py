@@ -74,6 +74,7 @@ class LegacyService:
     dec: List[float],
     save_path: List[Path],
     workers: Union[int, None] = None,
+    replace: bool = False,
     **kwargs
   ) -> None:
     """Downloads a list of objects defined by RA and DEC coordinates.
