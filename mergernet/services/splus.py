@@ -332,7 +332,10 @@ class SplusService:
         total=len(futures),
         unit=' files'
       ):
-        future.result()
+        try:
+          future.result()
+        except Exception:
+          pass
 
 
 
