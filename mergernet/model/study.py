@@ -214,45 +214,36 @@ class HyperModel:
 
 
 
-  def hypertrain(self, n_trials: int, epochs: int, pruner: str = 'hyperband'):
-    # mlflow must be initialized here, not by the optuna callback
-    mlflow.set_tracking_uri(self.mlflow_uri)
-    mlflow.set_experiment(self.name)
-
-    self.epochs = epochs
-
-    ah = ArtifactHelper()
-    optuna_path = ah.artifact_path / 'optuna' / f'{self.name}.sqlite'
-
-    if self.resume:
+  def hypertrain(self, optuna_uri: str, n_trials: int, pruner: str = 'hyperband', resume: bool = False):
+    if resume:
       L.info(f'[HYPER] resuming previous optimization of {self.name} study')
 
-    if self.resume and not optuna_path.exists():
-      ah.download_optuna_db(self.name)
-    elif not self.resume and optuna_path.exists():
-      optuna_path.unlink()
-
     if pruner == 'median':
-      pruner_instance = optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=10)
+      pruner_instance = optuna.pruners.MedianPruner(
+        n_startup_trials=10,
+        n_warmup_steps=10
+      )
     elif pruner == 'hyperband':
       pruner_instance = optuna.pruners.HyperbandPruner(min_resource=4)
 
     L.info(f'[HYPER] start of optuna optimization')
-    t = Timming()
-    t.start()
 
+    t = Timming()
     study = optuna.create_study(
-      storage=self.optuna_uri,
+      storage=optuna_uri,
       study_name=self.name,
       pruner=pruner_instance,
       sampler=optuna.samplers.TPESampler(seed=RANDOM_SEED),
       direction='maximize',
-      load_if_exists=self.resume
+      load_if_exists=resume
     )
-    study.optimize(self.objective, n_trials=n_trials, callbacks=[self.mlflow_cb])
+    study.optimize(
+      self.objective,
+      n_trials=n_trials,
+      callbacks=[self.mlflow_cb]
+    )
 
-    t.end()
-    L.info(f'[HYPER] optuna optimization finished in {t.duration()}')
+    L.info(f'[HYPER] optuna optimization finished in {t.end()}')
 
     L.info(f'[HYPER] number of finished trials: {len(study.trials)}')
     L.info(f'[HYPER] ----- begin of best trial summary -----')
