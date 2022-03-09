@@ -99,11 +99,17 @@ class HyperModel:
 
 
 
-  def build_model(self, trial, input_shape, pretrained_weights):
+  def build_model(
+    self,
+    trial: optuna.trial.FrozenTrial,
+    input_shape: Tuple
+  ):
+    self.hp.set_trial(trial)
+
     conv_block = tf.keras.applications.ResNet50(
       input_shape=input_shape,
       include_top=False,
-      weights=pretrained_weights
+      weights=self.hp.pretrained_weights.suggest()
     )
 
     preprocess_input = tf.keras.applications.resnet.preprocess_input
@@ -124,7 +130,6 @@ class HyperModel:
         seed=42
       )
     ]
-
     data_aug_block = tf.keras.Sequential(data_aug_layers, name='data_augmentation')
 
     inputs = tf.keras.Input(shape=input_shape)
@@ -132,19 +137,15 @@ class HyperModel:
     x = preprocess_input(x)
     x = conv_block(x)
     x = tf.keras.layers.Flatten()(x)
-    x = tf.keras.layers.Dense(trial.suggest_categorical('dense_units_1', [64, 128, 256, 512, 1024]), activation='relu')(x)
-    x = tf.keras.layers.Dropout(trial.suggest_uniform('dropout_rate_1', 0.1, 0.5))(x)
-    x = tf.keras.layers.Dense(trial.suggest_categorical('dense_units_2', [64, 128, 256, 512, 1024]), activation='relu')(x)
-    x = tf.keras.layers.Dropout(trial.suggest_uniform('dropout_rate_2', 0.1, 0.5))(x)
-
+    x = tf.keras.layers.Dense(self.hp.dense_1_units.suggest(), activation='relu')(x)
+    x = tf.keras.layers.Dropout(self.hp.dropout_1_rate.suggest())(x)
+    x = tf.keras.layers.Dense(self.hp.dense_2_units.suggest(), activation='relu')(x)
+    x = tf.keras.layers.Dropout(self.hp.dropout_2_rate.suggest())(x)
     outputs = tf.keras.layers.Dense(3, activation='softmax')(x)
 
     model = tf.keras.Model(inputs, outputs)
-
     model.compile(
-      optimizer=tf.keras.optimizers.Adam(
-        trial.suggest_loguniform('learning_rate', 1e-5, 1e-3)
-      ),
+      optimizer=tf.keras.optimizers.Adam(self.hp.learning_rate.suggest()),
       loss=tf.keras.losses.CategoricalCrossentropy(from_logits=False),
       metrics=[
         tf.keras.metrics.CategoricalAccuracy(name='accuracy')
