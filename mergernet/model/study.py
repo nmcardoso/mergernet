@@ -163,7 +163,7 @@ class HyperModel:
 
     model = self.build_model(
       trial,
-      input_shape=(128, 128, 3)
+      input_shape=self.dataset.config.image_shape
     )
 
     t = Timming()
