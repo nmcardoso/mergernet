@@ -1,6 +1,7 @@
 import logging
 import secrets
 import shutil
+from typing import Tuple
 
 import optuna
 import mlflow
@@ -11,6 +12,7 @@ from optuna.integration.mlflow import MLflowCallback
 from mergernet.core.constants import MLFLOW_DEFAULT_DB, MLFLOW_DEFAULT_URL, RANDOM_SEED
 
 from mergernet.core.dataset import Dataset
+from mergernet.core.entity import HyperParameterSet
 from mergernet.model.callback import DeltaStopping
 from mergernet.model.plot import conf_matrix
 from mergernet.model.preprocessing import load_jpg, one_hot
@@ -45,26 +47,14 @@ class HyperModel:
     self,
     dataset: Dataset,
     name: str,
-    resume: bool = False,
-    default_mlflow: bool = True,
+    hyperparameters: HyperParameterSet,
+    epochs: int = 20,
     nest_trials: bool = False
   ):
-    ah = ArtifactHelper()
-
-    self.optuna_uri = f'sqlite:///{str(ah.artifact_path.resolve())}/optuna/{name}.sqlite'
-    ah.optuna_db_name = name
-
-    if default_mlflow:
-      self.mlflow_uri = MLFLOW_DEFAULT_URL
-    else:
-      self.mlflow_uri = f'sqlite:///{str(ah.artifact_path.resolve())}/mlflow/{name}.sqlite'
-
-    print(self.mlflow_uri)
-    print(self.optuna_uri)
-
     self.dataset = dataset
     self.name = name
-    self.resume = resume
+    self.hp = hyperparameters
+    self.epochs = epochs
     self.nest_trials = nest_trials
 
     self.mlflow_cb = MLflowCallback(
