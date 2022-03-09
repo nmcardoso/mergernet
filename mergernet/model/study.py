@@ -154,7 +154,7 @@ class HyperModel:
     return model
 
 
-  def objective(self, trial):
+  def objective(self, trial: optuna.trial.FrozenTrial):
     tf.keras.backend.clear_session()
 
     batch_size = 64
@@ -163,15 +163,11 @@ class HyperModel:
 
     model = self.build_model(
       trial,
-      input_shape=(128, 128, 3),
-      pretrained_weights='imagenet',
+      input_shape=(128, 128, 3)
     )
 
     t = Timming()
-    t.start()
-    L.info('[TRAIN] Starting training loop')
-
-    ah = ArtifactHelper()
+    L.info('[TRAIN] Start of training loop')
 
     history = model.fit(
       ds_train,
@@ -180,14 +176,11 @@ class HyperModel:
       validation_data=ds_test,
       class_weight=class_weights,
       callbacks=[
-        # tf.keras.callbacks.EarlyStopping(patience=3),
-        # DeltaStopping(),
         PruneCallback(trial)
       ]
     )
 
-    t.end()
-    L.info(f'[TRAIN] Training finished without errors in {t.duration()}.')
+    L.info(f'[TRAIN] End of training loop, duration: {t.end()}.')
 
     # mlflow logs
     with mlflow.start_run(run_name=str(trial.number), nested=self.nest_trials) as run:
