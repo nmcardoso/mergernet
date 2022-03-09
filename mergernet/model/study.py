@@ -64,7 +64,7 @@ class HyperModel:
     )
 
 
-  def prepare_data(self, dataset):
+  def prepare_data(self, dataset: Dataset):
     ds_train, ds_test = dataset.get_fold(0)
     L.info('[DATASET] Fold 0 loaded')
 
