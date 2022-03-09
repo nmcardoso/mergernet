@@ -5,7 +5,7 @@ extends:
 config:
   job_type: optuna_train
 
-  dataset: sdss_lupton_128
+  dataset: mesd_sdss_128_jpg
 
   resume: false
 
@@ -22,6 +22,10 @@ config:
 
 
 hyperparameters:
+  - name: batch_size
+    type: constant
+    value: 64
+
   - name: pretrained_weights
     type: constant
     value: imagenet

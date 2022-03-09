@@ -157,8 +157,6 @@ class HyperModel:
   def objective(self, trial: optuna.trial.FrozenTrial):
     tf.keras.backend.clear_session()
 
-    batch_size = 64
-
     ds_train, ds_test, class_weights = self.prepare_data(self.dataset)
 
     model = self.build_model(
@@ -171,7 +169,7 @@ class HyperModel:
 
     history = model.fit(
       ds_train,
-      batch_size=batch_size,
+      batch_size=self.hp.batch_size.suggest(trial),
       epochs=self.epochs,
       validation_data=ds_test,
       class_weight=class_weights,
