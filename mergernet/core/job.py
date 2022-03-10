@@ -71,7 +71,7 @@ class Job:
     # mlflow.set_tracking_uri(db_uri)
     mlflow.set_tracking_uri(f'file:///{str(mlflow_folder.resolve())}')
     # e = mlflow.set_experiment(self.experiment_name)
-    mlflow.create_experiment(self.experiment_name, f'file:///{str(mlflow_folder.resolve())}')
+    mlflow.create_experiment(self.experiment_name + '_2', f'file:///{str(mlflow_folder.resolve())}')
     # print(e.artifact_location)
 
 
