@@ -70,7 +70,8 @@ class Job:
 
     # mlflow.set_tracking_uri(db_uri)
     mlflow.set_tracking_uri(f'file:///{str(mlflow_folder.resolve())}')
-    mlflow.set_experiment(self.experiment_name)
+    e = mlflow.set_experiment(self.experiment_name)
+    print(e.artifact_location)
 
 
   def _config_optuna(self):
