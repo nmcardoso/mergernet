@@ -3,7 +3,8 @@ import tensorflow as tf
 
 
 def one_hot(X, y):
-  return X, tf.one_hot(y, 3)
+  depth = max(y) - 1
+  return X, tf.one_hot(y, depth)
 
 
 
