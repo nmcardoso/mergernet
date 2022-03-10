@@ -16,7 +16,7 @@ mergernet.model.preprocessing
    
       load_jpg
       normalize_rgb
-      one_hot
+      one_hot_factory
       standardize_rgb
    
    
