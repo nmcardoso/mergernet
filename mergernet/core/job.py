@@ -15,7 +15,7 @@ from mergernet.core.entity import HyperParameterSet
 from mergernet.core.utils import deep_update, unique_path
 from mergernet.model.study import HyperModel
 
-L = logging('job')
+L = logging.getLogger('job')
 
 
 class Job:
