@@ -104,11 +104,11 @@ class Job:
 
 
   def _optuna_train(self):
-    print('aqui 1')
-    ds = Dataset(data_path=self.local_data_path)
-    print('aqui 2')
+    ds = Dataset(
+      data_path=self.local_data_path,
+      ds=self.job['config']['dataset']
+    )
     hp = HyperParameterSet(self.job['hyperparameters'])
-    print('aqui 3')
     model = HyperModel(
       dataset=ds,
       name=self.experiment_name,
