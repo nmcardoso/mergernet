@@ -7,6 +7,8 @@ setup(
   author='Natanael',
   author_email='nauxmac@gmail.com',
   packages=find_packages(),
+  include_package_data=True,
+  package_data={'mergernet': ['jobs/*.yaml']},
   install_requires=[
     'wheel',
     'numpy>=1.19.5',

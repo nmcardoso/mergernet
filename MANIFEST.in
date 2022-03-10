@@ -1,1 +1,1 @@
-include mergernet/jobs/*.yaml
+recursive-include mergernet/jobs *.yaml
