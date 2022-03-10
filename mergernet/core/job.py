@@ -44,7 +44,7 @@ class Job:
     if self.job['config']['job_type'] == 'optuna_train':
       self._config_optuna()
       self._optuna_train()
-
+      self._upload()
     elif self.job['config']['job_type'] == 'predict':
       self._predict()
 
