@@ -289,7 +289,8 @@
     <span class="n">X_column_suffix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="c1"># filename extension</span>
     <span class="n">detect_img_extension</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">label_map</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">image_shape</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">image_shape</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">n_classes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">archive_url</span> <span class="o">=</span> <span class="n">archive_url</span>
@@ -304,6 +305,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">detect_img_extension</span> <span class="o">=</span> <span class="n">detect_img_extension</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">label_map</span> <span class="o">=</span> <span class="n">label_map</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">image_shape</span> <span class="o">=</span> <span class="n">image_shape</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span> <span class="o">=</span> <span class="n">n_classes</span>
 
   <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="k">return</span> <span class="p">(</span>
@@ -327,11 +329,12 @@
   <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
   <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
   <span class="n">label_map</span><span class="o">=</span><span class="p">{</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="mi">2</span> <span class="p">},</span>
-  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+  <span class="n">n_classes</span><span class="o">=</span><span class="mi">3</span>
 <span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;Default configuration object for RGB dataset.&quot;&quot;&quot;</span>
 
-<span class="n">MESD_SDSS_128_JPG</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+<span class="n">MESD_SDSS_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
   <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1YZ7A9rVglf5NJp27rW8-6aJXBfBNPfYv&#39;</span><span class="p">),</span>
   <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H&#39;</span><span class="p">),</span>
   <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_sdss_128.tar.gz&#39;</span><span class="p">),</span>
@@ -342,11 +345,12 @@
   <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
   <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
   <span class="n">label_map</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;merger&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;elliptical&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;spiral&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;disturbed&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
-  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+  <span class="n">n_classes</span><span class="o">=</span><span class="mi">4</span>
 <span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;MESD dataset with SDSS 128x128 images.&quot;&quot;&quot;</span>
 
-<span class="n">MESD_LEGACY_128_JPG</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+<span class="n">MESD_LEGACY_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
   <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1cTU0SVEv3qVeVxF7pzhtOP7S-bx5cPOP&#39;</span><span class="p">),</span>
   <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H&#39;</span><span class="p">),</span>
   <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_legacy_128.tar.gz&#39;</span><span class="p">),</span>
@@ -357,14 +361,15 @@
   <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
   <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
   <span class="n">label_map</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;merger&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;elliptical&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;spiral&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;disturbed&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
-  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+  <span class="n">n_classes</span><span class="o">=</span><span class="mi">4</span>
 <span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;MESD dataset with Legacy Survey 128x128 images.&quot;&quot;&quot;</span>
 
 <span class="n">DATASET_REGISTRY</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s1">&#39;darg_no_inspection&#39;</span><span class="p">:</span> <span class="n">DARG_NO_INSPECTION</span><span class="p">,</span>
-  <span class="s1">&#39;mesd_sdss_128&#39;</span><span class="p">:</span> <span class="n">MESD_SDSS_128_JPG</span><span class="p">,</span>
-  <span class="s1">&#39;mesd_legacy_128&#39;</span><span class="p">:</span> <span class="n">MESD_LEGACY_128_JPG</span>
+  <span class="s1">&#39;mesd_sdss_128&#39;</span><span class="p">:</span> <span class="n">MESD_SDSS_128</span><span class="p">,</span>
+  <span class="s1">&#39;mesd_legacy_128&#39;</span><span class="p">:</span> <span class="n">MESD_LEGACY_128</span>
 <span class="p">}</span>
 
 
@@ -393,7 +398,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">in_memory</span> <span class="o">=</span> <span class="n">in_memory</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">DATASET_REGISTRY</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="s1">&#39;mesd_sdss_128_jpg&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">DATASET_REGISTRY</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">MESD_SDSS_128</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span>

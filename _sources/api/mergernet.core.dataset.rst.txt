@@ -11,8 +11,8 @@ mergernet.core.dataset
       :toctree:
    
       DARG_NO_INSPECTION
-      MESD_SDSS_128_JPG
-      MESD_LEGACY_128_JPG
+      MESD_SDSS_128
+      MESD_LEGACY_128
    
    
 
