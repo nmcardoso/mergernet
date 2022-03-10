@@ -34,12 +34,12 @@ class Job:
     self.remote_artifact_path = None
     self._config_remote_artifact_path()
 
-    # setup mlflow
-    if self.job['config']['mlflow']['enabled']:
-      self._config_mlflow()
 
 
   def run(self):
+    if self.job['config']['mlflow']['enabled']:
+      self._config_mlflow()
+
     if self.job['config']['job_type'] == 'optuna_train':
       self._config_optuna()
       self._optuna_train()
