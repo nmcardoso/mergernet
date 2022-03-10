@@ -9,7 +9,7 @@ config:
 
   resume: false
 
-  train_epochs: 20
+  train_epochs: 2
 
   optuna:
     n_trials: 2

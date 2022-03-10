@@ -7,7 +7,6 @@ from typing import Tuple
 from mergernet.core.constants import RANDOM_SEED
 from mergernet.core.dataset import Dataset
 from mergernet.core.utils import Timming
-from mergernet.core.logger import Logger
 from mergernet.model.preprocessing import load_jpg, one_hot
 from mergernet.core.artifacts import ArtifactHelper
 

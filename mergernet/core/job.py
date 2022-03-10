@@ -68,7 +68,8 @@ class Job:
     db_path =  mlflow_folder / db_name
     db_uri = f'sqlite:///{str(db_path.resolve())}'
 
-    mlflow.set_tracking_uri(db_uri)
+    # mlflow.set_tracking_uri(db_uri)
+    mlflow.set_tracking_uri(f'file:///{str(mlflow_folder.resolve())}')
     mlflow.set_experiment(self.experiment_name)
 
 

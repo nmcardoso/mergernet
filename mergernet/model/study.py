@@ -200,16 +200,14 @@ class HyperModel:
       # confusion matrix plot
       y_pred = model.predict(ds_test)
       y_true = np.concatenate([y for x, y in ds_test], axis=0)
-      ax = conf_matrix(y_true, y_pred, one_hot=True)
+      lm = self.dataset.config.label_map
+      labels = [[*lm.keys()][v] for v in lm.values()]
+      ax = conf_matrix(y_true, y_pred, one_hot=True, labels=labels)
       mlflow.log_figure(ax.figure, f'confusion_matrix_{trial.number}.png')
 
     # generating optuna value to optimize (val_accuracy)
     last_epoch_accuracy = h['val_accuracy'][-1]
-    ev = model.evaluate(ds_test)
-    idx = model.metrics_names.index('accuracy')
-    print('last_epoch_acc', last_epoch_accuracy, 'eval', ev[idx])
-
-    return last_epoch_accuracy #ev[idx]
+    return last_epoch_accuracy
 
 
 
