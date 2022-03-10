@@ -178,6 +178,12 @@
 </li>
       <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._batch_download">_batch_download() (mergernet.services.splus.SplusService method)</a>
 </li>
+      <li><a href="api/mergernet.core.job.Job.html#mergernet.core.job.Job._config_mlflow">_config_mlflow() (mergernet.core.job.Job method)</a>
+</li>
+      <li><a href="api/mergernet.core.job.Job.html#mergernet.core.job.Job._config_optuna">_config_optuna() (mergernet.core.job.Job method)</a>
+</li>
+      <li><a href="api/mergernet.core.job.Job.html#mergernet.core.job.Job._config_remote_artifact_path">_config_remote_artifact_path() (mergernet.core.job.Job method)</a>
+</li>
       <li><a href="api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset._detect_img_extension">_detect_img_extension() (mergernet.core.dataset.Dataset method)</a>
 </li>
       <li><a href="api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset._discretize_label">_discretize_label() (mergernet.core.dataset.Dataset method)</a>
@@ -236,7 +242,15 @@
         <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._lock">(mergernet.services.splus.SplusService attribute)</a>
 </li>
       </ul></li>
+      <li><a href="api/mergernet.core.job.Job.html#mergernet.core.job.Job._optuna_train">_optuna_train() (mergernet.core.job.Job method)</a>
+</li>
+      <li><a href="api/mergernet.core.job.Job.html#mergernet.core.job.Job._parse_job">_parse_job() (mergernet.core.job.Job method)</a>
+</li>
+      <li><a href="api/mergernet.core.job.Job.html#mergernet.core.job.Job._scan_jobs">_scan_jobs() (mergernet.core.job.Job method)</a>
+</li>
       <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._track_tap_job">_track_tap_job() (mergernet.services.splus.SplusService method)</a>
+</li>
+      <li><a href="api/mergernet.core.job.Job.html#mergernet.core.job.Job._upload">_upload() (mergernet.core.job.Job method)</a>
 </li>
       <li><a href="api/mergernet.core.artifacts.ArtifactHelper.html#mergernet.core.artifacts.ArtifactHelper._upload_gdrive">_upload_gdrive() (mergernet.core.artifacts.ArtifactHelper method)</a>
 </li>
@@ -516,12 +530,16 @@
 <h2 id="J">J</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/mergernet.jobs.j001_resnet50_hyperband.Job.html#mergernet.jobs.j001_resnet50_hyperband.Job">Job (class in mergernet.jobs.j001_resnet50_hyperband)</a>
+      <li><a href="api/mergernet.core.job.Job.html#mergernet.core.job.Job">Job (class in mergernet.core.job)</a>
+
+      <ul>
+        <li><a href="api/mergernet.jobs.j001_resnet50_hyperband.Job.html#mergernet.jobs.j001_resnet50_hyperband.Job">(class in mergernet.jobs.j001_resnet50_hyperband)</a>
 </li>
-      <li><a href="api/mergernet.jobs.j001_resnet50_hyperband.Job.html#mergernet.jobs.j001_resnet50_hyperband.Job.jobid">jobid (mergernet.jobs.j001_resnet50_hyperband.Job attribute)</a>
-</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mergernet.jobs.j001_resnet50_hyperband.Job.html#mergernet.jobs.j001_resnet50_hyperband.Job.jobid">jobid (mergernet.jobs.j001_resnet50_hyperband.Job attribute)</a>
+</li>
       <li><a href="api/mergernet.core.jobs.JobRunner.html#mergernet.core.jobs.JobRunner">JobRunner (class in mergernet.core.jobs)</a>
 </li>
       <li><a href="api/mergernet.core.entity.JobSpec.html#mergernet.core.entity.JobSpec">JobSpec (class in mergernet.core.entity)</a>
@@ -604,6 +622,13 @@
 
       <ul>
         <li><a href="api/mergernet.core.entity.html#module-mergernet.core.entity">module</a>
+</li>
+      </ul></li>
+      <li>
+    mergernet.core.job
+
+      <ul>
+        <li><a href="api/mergernet.core.job.html#module-mergernet.core.job">module</a>
 </li>
       </ul></li>
       <li>
@@ -704,6 +729,8 @@
         <li><a href="api/mergernet.services.github.html#module-mergernet.services.github">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     mergernet.services.google
 
@@ -711,8 +738,6 @@
         <li><a href="api/mergernet.services.google.html#module-mergernet.services.google">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     mergernet.services.imaging
 
@@ -774,6 +799,8 @@
         <li><a href="api/mergernet.core.dataset.html#module-mergernet.core.dataset">mergernet.core.dataset</a>
 </li>
         <li><a href="api/mergernet.core.entity.html#module-mergernet.core.entity">mergernet.core.entity</a>
+</li>
+        <li><a href="api/mergernet.core.job.html#module-mergernet.core.job">mergernet.core.job</a>
 </li>
         <li><a href="api/mergernet.core.jobs.html#module-mergernet.core.jobs">mergernet.core.jobs</a>
 </li>
@@ -1000,9 +1027,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/mergernet.model.plot.roc.html#mergernet.model.plot.roc">roc() (in module mergernet.model.plot)</a>
 </li>
-      <li><a href="api/mergernet.core.jobs.BaseJob.html#mergernet.core.jobs.BaseJob.run">run() (mergernet.core.jobs.BaseJob method)</a>
+      <li><a href="api/mergernet.core.job.Job.html#mergernet.core.job.Job.run">run() (mergernet.core.job.Job method)</a>
 
       <ul>
+        <li><a href="api/mergernet.core.jobs.BaseJob.html#mergernet.core.jobs.BaseJob.run">(mergernet.core.jobs.BaseJob method)</a>
+</li>
         <li><a href="api/mergernet.jobs.j001_resnet50_hyperband.Job.html#mergernet.jobs.j001_resnet50_hyperband.Job.run">(mergernet.jobs.j001_resnet50_hyperband.Job method)</a>
 </li>
       </ul></li>
