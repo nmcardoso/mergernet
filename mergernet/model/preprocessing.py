@@ -1,11 +1,10 @@
 import tensorflow as tf
 
 
-
-def one_hot(X, y):
-  depth = tf.cast(tf.math.reduce_max(y), dtype=tf.int32) + tf.constant(1, dtype=tf.int32)
-  print(depth)
-  return X, tf.one_hot(y, depth)
+def one_hot_factory(n_class):
+  def one_hot(X, y):
+    return X, tf.one_hot(y, n_class)
+  return one_hot
 
 
 

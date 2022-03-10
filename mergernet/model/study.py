@@ -15,7 +15,7 @@ from mergernet.core.dataset import Dataset
 from mergernet.core.entity import HyperParameterSet
 from mergernet.model.callback import DeltaStopping
 from mergernet.model.plot import conf_matrix
-from mergernet.model.preprocessing import load_jpg, one_hot
+from mergernet.model.preprocessing import load_jpg, one_hot_factory
 from mergernet.core.utils import Timming
 
 
@@ -73,8 +73,8 @@ class HyperModel:
       ds_test = ds_test.map(load_jpg)
       L.info('[DATASET] apply: load_jpg')
 
-    ds_train = ds_train.map(one_hot)
-    ds_test = ds_test.map(one_hot)
+    ds_train = ds_train.map(one_hot_factory(self.dataset.config.n_classes))
+    ds_test = ds_test.map(one_hot_factory(self.dataset.config.n_classes))
     L.info('[DATASET] apply: one_hot')
     _x, _y = next(ds_train.take(1).as_numpy_iterator())
     print('X.shape =', _x.shape, 'y.shape =', _y.shape)
