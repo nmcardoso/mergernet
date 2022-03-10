@@ -190,8 +190,8 @@ DARG_NO_INSPECTION = DatasetConfig(
 MESD_SDSS_128_JPG = DatasetConfig(
   archive_url=GDrive.get_url('1YZ7A9rVglf5NJp27rW8-6aJXBfBNPfYv'),
   table_url=GDrive.get_url('1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H'),
-  archive_path=Path('mesd_sdss_128_jpg.tar.gz'),
-  images_path=Path('mesd_sdss_128_jpg'),
+  archive_path=Path('mesd_sdss_128.tar.gz'),
+  images_path=Path('mesd_sdss_128'),
   table_path=Path('mesd.csv'),
   X_column='iauname',
   X_column_suffix='.jpg',
@@ -205,8 +205,8 @@ MESD_SDSS_128_JPG = DatasetConfig(
 MESD_LEGACY_128_JPG = DatasetConfig(
   archive_url=GDrive.get_url('1cTU0SVEv3qVeVxF7pzhtOP7S-bx5cPOP'),
   table_url=GDrive.get_url('1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H'),
-  archive_path=Path('mesd_legacy_128_jpg.tar.gz'),
-  images_path=Path('mesd_legacy_128_jpg'),
+  archive_path=Path('mesd_legacy_128.tar.gz'),
+  images_path=Path('mesd_legacy_128'),
   table_path=Path('mesd.csv'),
   X_column='iauname',
   X_column_suffix='.jpg',
@@ -219,8 +219,8 @@ MESD_LEGACY_128_JPG = DatasetConfig(
 
 DATASET_REGISTRY = {
   'darg_no_inspection': DARG_NO_INSPECTION,
-  'mesd_sdss_128_jpg': MESD_SDSS_128_JPG,
-  'mesd_legacy_128_jpg': MESD_LEGACY_128_JPG
+  'mesd_sdss_128': MESD_SDSS_128_JPG,
+  'mesd_legacy_128': MESD_LEGACY_128_JPG
 }
 
 

@@ -5,7 +5,7 @@ extends:
 config:
   job_type: optuna_train
 
-  dataset: mesd_sdss_128_jpg
+  dataset: mesd_sdss_128
 
   resume: false
 
