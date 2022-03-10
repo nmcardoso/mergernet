@@ -9,7 +9,7 @@ config:
 
   resume: false
 
-  train_epochs: 2
+  train_epochs: 1
 
   optuna:
     n_trials: 2
@@ -32,7 +32,7 @@ hyperparameters:
 
   - name: batch_size
     type: constant
-    value: 192
+    value: 64
 
   - name: dense_1_units
     type: categorical
