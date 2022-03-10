@@ -1,0 +1,17 @@
+mergernet.core.entity.DiscreteUniformHyperParameter
+===================================================
+
+.. currentmodule:: mergernet.core.entity
+
+.. autoclass:: DiscreteUniformHyperParameter
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

@@ -29,9 +29,13 @@
    :recursive:
 
    mergernet.core.artifacts
+   mergernet.core.artifacts2
    mergernet.core.constants
    mergernet.core.dataset
+   mergernet.core.entity
+   mergernet.core.job
    mergernet.core.jobs
+   mergernet.core.match
    mergernet.core.rgb
    mergernet.core.trilogy
    mergernet.core.utils

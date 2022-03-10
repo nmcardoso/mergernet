@@ -1,0 +1,33 @@
+mergernet.core.match
+====================
+
+.. automodule:: mergernet.core.match
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class-template.rst
+   
+      CrossMatch
+      CrossMatchResult
+      XTable
+   
+   
+
+   
+   
+   
+
+
+

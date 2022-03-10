@@ -1,0 +1,31 @@
+mergernet.core.artifacts2
+=========================
+
+.. automodule:: mergernet.core.artifacts2
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class-template.rst
+   
+      ArtifactHelper
+   
+   
+
+   
+   
+   
+
+
+

@@ -1,0 +1,17 @@
+mergernet.core.entity.LogUniformHyperParameter
+==============================================
+
+.. currentmodule:: mergernet.core.entity
+
+.. autoclass:: LogUniformHyperParameter
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

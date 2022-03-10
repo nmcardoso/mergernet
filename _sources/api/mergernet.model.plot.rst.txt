@@ -17,6 +17,7 @@ mergernet.model.plot
       color_color
       conf_matrix
       data_distribution
+      mag_class_distribution
       roc
       train_metrics
    

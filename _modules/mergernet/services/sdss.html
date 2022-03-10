@@ -142,18 +142,24 @@
               <div>
                 
   <h1>Source code for mergernet.services.sdss</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">import</span> <span class="nn">chunk</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">secrets</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">import</span> <span class="nn">concurrent.futures</span>
+<span class="kn">import</span> <span class="nn">urllib.parse</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">tqdm</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">array_fallback</span>
+<span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">array_fallback</span><span class="p">,</span> <span class="n">save_table</span>
 <span class="kn">from</span> <span class="nn">mergernet.services.utils</span> <span class="kn">import</span> <span class="n">append_query_params</span><span class="p">,</span> <span class="n">batch_download_file</span><span class="p">,</span> <span class="n">download_file</span>
 
 
 <span class="n">SDSS_RGB_URL</span> <span class="o">=</span> <span class="s1">&#39;http://skyserver.sdss.org/dr17/SkyServerWS/ImgCutout/getjpeg&#39;</span>
+<span class="n">XID_URL</span> <span class="o">=</span> <span class="s1">&#39;http://skyserver.sdss.org/dr17/SkyServerWS/SearchTools/CrossIdSearch&#39;</span>
 
 
 
@@ -212,7 +218,111 @@
       <span class="n">fnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="n">basepath</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">f</span><span class="si">}{</span><span class="n">extension</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fnames</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="n">fnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">f</span><span class="si">}{</span><span class="n">extension</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fnames</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">fnames</span><span class="p">,</span> <span class="n">flag</span></div></div>
+    <span class="k">return</span> <span class="n">fnames</span><span class="p">,</span> <span class="n">flag</span></div>
+
+
+<div class="viewcode-block" id="SloanService.crossmatch"><a class="viewcode-back" href="../../../api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.crossmatch">[docs]</a>  <span class="k">def</span> <span class="nf">crossmatch</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">ra</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">dec</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="n">fields</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{},</span>
+    <span class="n">search_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;photo&#39;</span><span class="p">,</span> <span class="c1"># photo or spectro</span>
+    <span class="n">search_radius</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span> <span class="c1"># arcmin</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+  <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">match_id</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_hex</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">match_folder</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;/tmp/sdss_xmatch_</span><span class="si">{</span><span class="n">match_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">match_folder</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">fields</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;columns&#39;</span><span class="p">]]</span>
+    <span class="n">joins</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;join_type&quot;</span><span class="p">,</span> <span class="s2">&quot;INNER&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1"> JOIN </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1"> ON </span><span class="si">{</span><span class="n">v</span><span class="p">[</span><span class="s2">&quot;join&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+      <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">fields</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="p">]</span>
+
+    <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    SELECT </span><span class="si">{columns}</span><span class="s1"></span>
+<span class="s1">    FROM #upload AS u</span>
+<span class="s1">    JOIN #x AS x ON u.up_id = x.up_id</span>
+<span class="s1">    </span><span class="si">{joins}</span><span class="s1"></span>
+<span class="s1">    ORDER BY x.up_id</span>
+<span class="s1">    &#39;&#39;&#39;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+      <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">columns</span><span class="p">),</span>
+      <span class="n">joins</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">joins</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">objects</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">_ra</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">_dec</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_ra</span><span class="p">,</span> <span class="n">_dec</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">)]</span>
+    <span class="n">n_chunks</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ra</span><span class="p">)</span> <span class="o">/</span> <span class="n">chunk_size</span><span class="p">))</span>
+    <span class="n">urls</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_chunks</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n_chunks</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">chunk</span> <span class="o">=</span> <span class="n">objects</span><span class="p">[</span><span class="n">chunk_size</span> <span class="o">*</span> <span class="n">i</span> <span class="p">:</span> <span class="n">chunk_size</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">chunk</span> <span class="o">=</span> <span class="n">objects</span><span class="p">[</span><span class="n">chunk_size</span> <span class="o">*</span> <span class="n">i</span> <span class="p">:]</span>
+      <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;searchtool&#39;</span><span class="p">:</span> <span class="s1">&#39;CrossID&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;searchType&#39;</span><span class="p">:</span> <span class="n">search_type</span><span class="p">,</span>
+        <span class="s1">&#39;photoScope&#39;</span><span class="p">:</span> <span class="s1">&#39;nearPrim&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;spectroScope&#39;</span><span class="p">:</span> <span class="s1">&#39;nearPrim&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;photoUpType&#39;</span><span class="p">:</span> <span class="s1">&#39;ra-dec&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;spectroUpType&#39;</span><span class="p">:</span> <span class="s1">&#39;ra-dec&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;radius&#39;</span><span class="p">:</span> <span class="n">search_radius</span><span class="p">,</span>
+        <span class="s1">&#39;firstcol&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;csv&#39;</span><span class="p">,</span>
+        <span class="c1"># &#39;upload&#39;: &#39;&#39;,</span>
+        <span class="s1">&#39;paste&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;ra,dec&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">chunk</span><span class="p">),</span>
+        <span class="s1">&#39;uquery&#39;</span><span class="p">:</span> <span class="n">query</span>
+      <span class="p">}</span>
+      <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">XID_URL</span> <span class="o">+</span> <span class="s1">&#39;?&#39;</span> <span class="o">+</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
+
+    <span class="n">batch_download_file</span><span class="p">(</span>
+      <span class="n">urls</span><span class="o">=</span><span class="n">urls</span><span class="p">,</span>
+      <span class="n">save_path</span><span class="o">=</span><span class="p">[</span><span class="n">match_folder</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;chunk_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.csv&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_chunks</span><span class="p">)],</span>
+      <span class="n">workers</span><span class="o">=</span><span class="n">workers</span><span class="p">,</span>
+      <span class="n">replace</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+
+    <span class="n">combined_csv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+      <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">match_folder</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.csv&#39;</span><span class="p">)</span>
+    <span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">save_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">save_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">save_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="n">combined_csv</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">combined_csv</span></div></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">SloanService</span><span class="p">()</span>
+  <span class="n">tb</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">crossmatch</span><span class="p">(</span>
+    <span class="n">ra</span><span class="o">=</span><span class="p">[</span><span class="mf">193.78</span><span class="p">,</span> <span class="mf">199.02</span><span class="p">,</span> <span class="mf">199.84</span><span class="p">,</span> <span class="mf">200.44</span><span class="p">,</span> <span class="mf">208.37</span><span class="p">,</span> <span class="mf">171.26</span><span class="p">,</span> <span class="mf">196.62</span><span class="p">,</span> <span class="mf">199.55</span><span class="p">,</span> <span class="mf">199.67</span><span class="p">,</span> <span class="mf">204.95</span><span class="p">],</span>
+    <span class="n">dec</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">1.09</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.21</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.13</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.16</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.05</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.81</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.79</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.64</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.74</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.76</span><span class="p">],</span>
+    <span class="n">fields</span><span class="o">=</span><span class="p">{</span>
+      <span class="s1">&#39;SpecObj&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;join&#39;</span><span class="p">:</span> <span class="s1">&#39;SpecObj.specObjID = x.specObjID&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;join_type&#39;</span><span class="p">:</span> <span class="s1">&#39;inner&#39;</span>
+      <span class="p">},</span>
+      <span class="s1">&#39;PhotoTag&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;ra&#39;</span><span class="p">,</span> <span class="s1">&#39;dec&#39;</span><span class="p">,</span> <span class="s1">&#39;modelMag_r&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;join&#39;</span><span class="p">:</span> <span class="s1">&#39;PhotoTag.objID = SpecObj.bestObjID&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;join_type&#39;</span><span class="p">:</span> <span class="s1">&#39;inner&#39;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">search_type</span><span class="o">=</span><span class="s1">&#39;spectro&#39;</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="s1">&#39;xmatch.csv&#39;</span><span class="p">,</span>
+    <span class="n">workers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">chunk_size</span><span class="o">=</span><span class="mi">3</span>
+  <span class="p">)</span>
+
+  <span class="nb">print</span><span class="p">(</span><span class="n">tb</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 </pre></div>
 
               </div>

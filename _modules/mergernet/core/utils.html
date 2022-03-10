@@ -142,7 +142,8 @@
               <div>
                 
   <h1>Source code for mergernet.core.utils</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span></span><span class="kn">import</span> <span class="nn">collections.abc</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Lock</span>
@@ -151,6 +152,8 @@
 
 <span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
 <span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">ICRS</span><span class="p">,</span> <span class="n">SkyCoord</span>
+<span class="kn">from</span> <span class="nn">astropy</span> <span class="kn">import</span> <span class="n">units</span> <span class="k">as</span> <span class="n">u</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -159,7 +162,8 @@
 
 
 <div class="viewcode-block" id="load_image"><a class="viewcode-back" href="../../../api/mergernet.core.utils.load_image.html#mergernet.core.utils.load_image">[docs]</a><span class="k">def</span> <span class="nf">load_image</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-  <span class="sd">&quot;&quot;&quot;Load image from local storage to numpy array.</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Load image from local storage to numpy array.</span>
 <span class="sd">  Supports several types of files, incluing ``.jpg``, ``.png``, ``.npy``,</span>
 <span class="sd">  ``.npz``, ``.fits``</span>
 
@@ -233,11 +237,71 @@
 
 
 
+<div class="viewcode-block" id="deep_update"><a class="viewcode-back" href="../../../api/mergernet.core.utils.deep_update.html#mergernet.core.utils.deep_update">[docs]</a><span class="k">def</span> <span class="nf">deep_update</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+  <span class="n">updates</span> <span class="o">=</span> <span class="p">(</span><span class="n">new</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span>
+  <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">updates</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">u</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Mapping</span><span class="p">):</span>
+        <span class="n">original</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">deep_update</span><span class="p">(</span><span class="n">original</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">{}),</span> <span class="n">v</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">original</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="k">return</span> <span class="n">original</span></div>
+
+
+
+<div class="viewcode-block" id="unique_path"><a class="viewcode-back" href="../../../api/mergernet.core.utils.unique_path.html#mergernet.core.utils.unique_path">[docs]</a><span class="k">def</span> <span class="nf">unique_path</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]):</span>
+  <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+  <span class="n">new_path</span> <span class="o">=</span> <span class="n">path</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="k">while</span><span class="p">(</span><span class="ow">not</span> <span class="n">new_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">new_path</span><span class="o">.</span><span class="n">parent</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_path</span><span class="o">.</span><span class="n">suffixes</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">new_path</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">new_name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">new_path</span> <span class="o">=</span> <span class="n">parent</span> <span class="o">/</span> <span class="p">(</span><span class="n">new_name</span> <span class="o">+</span> <span class="n">ext</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="k">return</span> <span class="n">new_path</span></div>
+
+
+
+<div class="viewcode-block" id="iauname"><a class="viewcode-back" href="../../../api/mergernet.core.utils.iauname.html#mergernet.core.utils.iauname">[docs]</a><span class="k">def</span> <span class="nf">iauname</span><span class="p">(</span><span class="n">ra</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dec</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Receives the angular position of the object and returns IAU2000 name</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  ra: float</span>
+<span class="sd">    The right ascension of the object.</span>
+<span class="sd">  dec: float</span>
+<span class="sd">    The declination of the object.</span>
+
+<span class="sd">  Example</span>
+<span class="sd">  --------</span>
+<span class="sd">  &gt;&gt;&gt; iauname(187.70592, 12.39112)</span>
+<span class="sd">  &#39;J123049.42+122328.03&#39;</span>
+
+<span class="sd">  Returns</span>
+<span class="sd">  -------</span>
+<span class="sd">  str</span>
+<span class="sd">    The formated IAU name of the object</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">coord</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">degree</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">degree</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;icrs&#39;</span><span class="p">)</span>
+  <span class="n">ra_str</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">ra</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">u</span><span class="o">.</span><span class="n">hourangle</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">dec_str</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">dec</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alwayssign</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ra_str</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ra_str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;J</span><span class="si">{</span><span class="n">_ra_str</span><span class="si">}{</span><span class="n">_dec_str</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">_ra_str</span><span class="p">,</span> <span class="n">_dec_str</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ra_str</span><span class="p">,</span> <span class="n">dec_str</span><span class="p">)]</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;J</span><span class="si">{</span><span class="n">ra_str</span><span class="si">}{</span><span class="n">dec_str</span><span class="si">}</span><span class="s1">&#39;</span>
+  <span class="k">return</span> <span class="n">r</span></div>
+
+
 
 <div class="viewcode-block" id="Timming"><a class="viewcode-back" href="../../../api/mergernet.core.utils.Timming.html#mergernet.core.utils.Timming">[docs]</a><span class="k">class</span> <span class="nc">Timming</span><span class="p">:</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">start</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
 
   <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -248,8 +312,9 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="Timming.end"><a class="viewcode-back" href="../../../api/mergernet.core.utils.Timming.html#mergernet.core.utils.Timming.end">[docs]</a>  <span class="k">def</span> <span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span></div>
+<div class="viewcode-block" id="Timming.end"><a class="viewcode-back" href="../../../api/mergernet.core.utils.Timming.html#mergernet.core.utils.Timming.end">[docs]</a>  <span class="k">def</span> <span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Timming.duration"><a class="viewcode-back" href="../../../api/mergernet.core.utils.Timming.html#mergernet.core.utils.Timming.duration">[docs]</a>  <span class="k">def</span> <span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>

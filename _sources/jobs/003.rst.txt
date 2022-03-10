@@ -13,8 +13,8 @@
 Artifacts
 ---------
 
-* `job.log <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_3d69ff/job.log>`_
 * `job.json <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_3d69ff/job.json>`_
+* `job.log <https://raw.githubusercontent.com/nmcardoso/mergernet/main/jobs_artifacts/job_002_run_3d69ff/job.log>`_
 
 
 

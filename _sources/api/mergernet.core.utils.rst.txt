@@ -15,9 +15,12 @@ mergernet.core.utils
       :toctree:
    
       array_fallback
+      deep_update
+      iauname
       load_image
       load_table
       save_table
+      unique_path
    
    
 

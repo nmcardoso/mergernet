@@ -1,0 +1,17 @@
+mergernet.core.match.CrossMatch
+===============================
+
+.. currentmodule:: mergernet.core.match
+
+.. autoclass:: CrossMatch
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

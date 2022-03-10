@@ -1,0 +1,17 @@
+mergernet.core.entity.CategoricalHyperParameter
+===============================================
+
+.. currentmodule:: mergernet.core.entity
+
+.. autoclass:: CategoricalHyperParameter
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

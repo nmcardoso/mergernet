@@ -1,0 +1,40 @@
+mergernet.core.entity
+=====================
+
+.. automodule:: mergernet.core.entity
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class-template.rst
+   
+      CategoricalHyperParameter
+      ConstantHyperParameter
+      DiscreteUniformHyperParameter
+      FloatHyperParameter
+      HyperParameter
+      HyperParameterSet
+      IntHyperParameter
+      JobSpec
+      LogUniformHyperParameter
+      UniformHyperParameter
+   
+   
+
+   
+   
+   
+
+
+

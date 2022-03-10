@@ -14,10 +14,4 @@ mergernet.core.dataset.Dataset
 
    
    
-   .. rubric:: Attributes
-
-   .. autosummary::
-   
-      ~Dataset.RGB_CONFIG
-   
    

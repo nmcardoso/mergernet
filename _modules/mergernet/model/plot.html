@@ -142,7 +142,8 @@
               <div>
                 
   <h1>Source code for mergernet.model.plot</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
@@ -159,7 +160,7 @@
   <span class="s1">&#39;font.family&#39;</span><span class="p">:</span> <span class="s1">&#39;DejaVu Sans&#39;</span><span class="p">,</span>
   <span class="s1">&#39;legend.fontsize&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span>
   <span class="s1">&#39;axes.labelsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
-  <span class="s1">&#39;axes.grid&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+  <span class="c1"># &#39;axes.grid&#39;: True,</span>
   <span class="s1">&#39;axes.grid.axis&#39;</span><span class="p">:</span> <span class="s1">&#39;both&#39;</span><span class="p">,</span>
   <span class="s1">&#39;grid.linestyle&#39;</span><span class="p">:</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
   <span class="s1">&#39;grid.alpha&#39;</span><span class="p">:</span> <span class="mf">0.35</span><span class="p">,</span>
@@ -481,14 +482,64 @@
 
 
 
-<div class="viewcode-block" id="conf_matrix"><a class="viewcode-back" href="../../../api/mergernet.model.plot.conf_matrix.html#mergernet.model.plot.conf_matrix">[docs]</a><span class="k">def</span> <span class="nf">conf_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">one_hot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="conf_matrix"><a class="viewcode-back" href="../../../api/mergernet.model.plot.conf_matrix.html#mergernet.model.plot.conf_matrix">[docs]</a><span class="k">def</span> <span class="nf">conf_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">one_hot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
   <span class="k">if</span> <span class="n">one_hot</span><span class="p">:</span>
     <span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
   <span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-  <span class="n">cm_display</span> <span class="o">=</span> <span class="n">ConfusionMatrixDisplay</span><span class="p">(</span><span class="n">cm</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+  <span class="n">cm_display</span> <span class="o">=</span> <span class="n">ConfusionMatrixDisplay</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">display_labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues_r&#39;</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">cm_display</span><span class="o">.</span><span class="n">ax_</span></div>
+
+
+
+<div class="viewcode-block" id="mag_class_distribution"><a class="viewcode-back" href="../../../api/mergernet.model.plot.mag_class_distribution.html#mergernet.model.plot.mag_class_distribution">[docs]</a><span class="k">def</span> <span class="nf">mag_class_distribution</span><span class="p">(</span>
+  <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+  <span class="n">n_folds</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+  <span class="n">n_bins</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+  <span class="n">color_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+  <span class="n">label_map</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;r mag&#39;</span><span class="p">,</span>
+  <span class="n">ylabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span>
+  <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+  <span class="n">legend_pos</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;best&#39;</span><span class="p">,</span>
+  <span class="n">legend_cols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">):</span>
+  <span class="n">total</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">limit</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">colors</span> <span class="o">=</span> <span class="p">[]</span>
+
+  <span class="n">classes</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+  <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">label_map</span><span class="p">[</span><span class="n">_class</span><span class="p">]</span> <span class="k">for</span> <span class="n">_class</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">]</span>
+
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_folds</span><span class="p">):</span>
+    <span class="n">fold</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">_class</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
+      <span class="n">objects</span> <span class="o">=</span> <span class="n">fold</span><span class="p">[</span><span class="n">fold</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">_class</span><span class="p">]</span>
+      <span class="n">total</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">objects</span><span class="p">[</span><span class="s1">&#39;mag_r&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+      <span class="n">colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">color_map</span><span class="p">[</span><span class="n">_class</span><span class="p">])</span>
+    <span class="n">limit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fold</span><span class="p">[</span><span class="s1">&#39;mag_r&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+
+  <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">stacked</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">limit</span><span class="p">,</span>
+    <span class="n">stacked</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">,)</span><span class="o">*</span><span class="n">n_folds</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">,</span>
+    <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span>
+    <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span>
+  <span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">label_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">legend_pos</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="n">legend_cols</span><span class="p">)</span></div>
 </pre></div>
 
               </div>

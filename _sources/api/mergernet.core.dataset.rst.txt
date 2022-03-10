@@ -5,6 +5,15 @@ mergernet.core.dataset
 
    
    
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      DARG_NO_INSPECTION
+      MESD_SDSS_128_JPG
+      MESD_LEGACY_128_JPG
+   
    
 
    

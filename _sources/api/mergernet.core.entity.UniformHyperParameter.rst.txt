@@ -1,0 +1,17 @@
+mergernet.core.entity.UniformHyperParameter
+===========================================
+
+.. currentmodule:: mergernet.core.entity
+
+.. autoclass:: UniformHyperParameter
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

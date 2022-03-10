@@ -142,26 +142,17 @@
               <div>
                 
   <h1>Source code for mergernet.services.legacy</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Download Module: pure functions to retrieve data from web resources.</span>
-
-<span class="sd">This module define pure utilitary functions to retrieve data from astronomical</span>
-<span class="sd">web services, like `Legacy Survey`, `SDSS` and `S-PLUS`.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">import</span> <span class="nn">concurrent.futures</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
-<span class="kn">from</span> <span class="nn">mergernet.services.utils</span> <span class="kn">import</span> <span class="n">append_query_params</span><span class="p">,</span> <span class="n">download_file</span>
-
+<span class="kn">from</span> <span class="nn">mergernet.services.utils</span> <span class="kn">import</span> <span class="n">append_query_params</span><span class="p">,</span> <span class="n">download_file</span><span class="p">,</span> <span class="n">batch_download_file</span>
 
 
 
 <span class="n">LEGACY_RGB_URL</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;https://www.legacysurvey.org/viewer/jpeg-cutout&#39;</span>
-<span class="n">SLOAN_RGB_URL</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-
 
 
 
@@ -218,6 +209,7 @@
     <span class="n">dec</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
     <span class="n">save_path</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span>
     <span class="n">workers</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">replace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
   <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Downloads a list of objects defined by RA and DEC coordinates.</span>
@@ -238,18 +230,16 @@
 <span class="sd">      Same args as `download_legacy_rgb` function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">workers</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
-      <span class="n">futures</span> <span class="o">=</span> <span class="p">[]</span>
-      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ra</span><span class="p">)):</span>
-        <span class="n">futures</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span>
-          <span class="bp">self</span><span class="o">.</span><span class="n">download_rgb</span><span class="p">,</span>
-          <span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
-          <span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
-          <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
-          <span class="o">**</span><span class="n">kwargs</span>
-        <span class="p">))</span>
-      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">),</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">futures</span><span class="p">),</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39; file&#39;</span><span class="p">):</span>
-        <span class="k">pass</span></div></div>
+    <span class="n">urls</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">append_query_params</span><span class="p">(</span><span class="n">LEGACY_RGB_URL</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;ra&#39;</span><span class="p">:</span> <span class="n">_ra</span><span class="p">,</span> <span class="s1">&#39;dec&#39;</span><span class="p">:</span> <span class="n">_dec</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">})</span>
+      <span class="k">for</span> <span class="n">_ra</span><span class="p">,</span> <span class="n">_dec</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">batch_download_file</span><span class="p">(</span>
+      <span class="n">urls</span><span class="o">=</span><span class="n">urls</span><span class="p">,</span>
+      <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
+      <span class="n">workers</span><span class="o">=</span><span class="n">workers</span><span class="p">,</span>
+      <span class="n">replace</span><span class="o">=</span><span class="n">replace</span>
+    <span class="p">)</span></div></div>
 
 
 

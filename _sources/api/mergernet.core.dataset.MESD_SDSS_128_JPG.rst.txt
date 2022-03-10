@@ -1,0 +1,6 @@
+mergernet.core.dataset.MESD\_SDSS\_128\_JPG
+===========================================
+
+.. currentmodule:: mergernet.core.dataset
+
+.. autodata:: MESD_SDSS_128_JPG

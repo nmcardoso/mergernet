@@ -190,6 +190,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">bins</span> <span class="o">=</span> <span class="n">bins</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">distribution</span> <span class="o">=</span> <span class="n">distribution</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span> <span class="o">=</span> <span class="n">shuffle</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span> <span class="o">=</span> <span class="n">RANDOM_SEED</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span> <span class="k">else</span> <span class="kc">None</span>
 
 
 <div class="viewcode-block" id="StratifiedDistributionKFold.compute_max_bins"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.StratifiedDistributionKFold.html#mergernet.core.dataset.StratifiedDistributionKFold.compute_max_bins">[docs]</a>  <span class="nd">@staticmethod</span>
@@ -224,7 +225,7 @@
     <span class="n">test</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_splits</span><span class="p">)]</span>
 
     <span class="n">dist_kf</span> <span class="o">=</span> <span class="n">DistributionKFold</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bins</span><span class="p">)</span>
-    <span class="n">class_kf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_splits</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_SEED</span><span class="p">)</span>
+    <span class="n">class_kf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_splits</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
 
     <span class="c1"># First split: distribution split</span>
     <span class="k">for</span> <span class="n">bin_ids</span> <span class="ow">in</span> <span class="n">dist_kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">distribution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution</span><span class="p">):</span>
@@ -272,7 +273,6 @@
 
 
 
-
 <div class="viewcode-block" id="DatasetConfig"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.DatasetConfig.html#mergernet.core.dataset.DatasetConfig">[docs]</a><span class="k">class</span> <span class="nc">DatasetConfig</span><span class="p">:</span>
   <span class="sd">&quot;&quot;&quot;Configuration params for dataset.&quot;&quot;&quot;</span>
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -288,7 +288,8 @@
     <span class="n">fold_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;fold&#39;</span><span class="p">,</span>
     <span class="n">X_column_suffix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="c1"># filename extension</span>
     <span class="n">detect_img_extension</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">label_map</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">label_map</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">image_shape</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">archive_url</span> <span class="o">=</span> <span class="n">archive_url</span>
@@ -302,6 +303,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">X_column_suffix</span> <span class="o">=</span> <span class="n">X_column_suffix</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">detect_img_extension</span> <span class="o">=</span> <span class="n">detect_img_extension</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">label_map</span> <span class="o">=</span> <span class="n">label_map</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">image_shape</span> <span class="o">=</span> <span class="n">image_shape</span>
 
   <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="k">return</span> <span class="p">(</span>
@@ -311,6 +313,60 @@
       <span class="sa">f</span><span class="s1">&#39;Table path:</span><span class="se">\t\t</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span>
       <span class="sa">f</span><span class="s1">&#39;Label map:</span><span class="se">\t\t</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_map</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
     <span class="p">)</span></div>
+
+
+
+<span class="n">DARG_NO_INSPECTION</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="c1"># table_url=GDrive.get_url(&#39;1yHnyOdXS-HKzIsbenSi646jyf2AWU9vo&#39;),</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1ltKXhZgA4Ab60FGKCqybhebSiAL2LMgG&#39;</span><span class="p">),</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1QgUYkzcjaCmo-kcgM8s2U8PYlx0C58oD&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sdss_lupton_jpg_128.tar.gz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sdss_lupton_jpg_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;reference_darg.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span>
+  <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+  <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
+  <span class="n">label_map</span><span class="o">=</span><span class="p">{</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="mi">2</span> <span class="p">},</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Default configuration object for RGB dataset.&quot;&quot;&quot;</span>
+
+<span class="n">MESD_SDSS_128_JPG</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1YZ7A9rVglf5NJp27rW8-6aJXBfBNPfYv&#39;</span><span class="p">),</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_sdss_128.tar.gz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_sdss_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
+  <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+  <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
+  <span class="n">label_map</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;merger&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;elliptical&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;spiral&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;disturbed&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;MESD dataset with SDSS 128x128 images.&quot;&quot;&quot;</span>
+
+<span class="n">MESD_LEGACY_128_JPG</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1cTU0SVEv3qVeVxF7pzhtOP7S-bx5cPOP&#39;</span><span class="p">),</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_legacy_128.tar.gz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_legacy_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
+  <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+  <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
+  <span class="n">label_map</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;merger&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;elliptical&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;spiral&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;disturbed&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;MESD dataset with Legacy Survey 128x128 images.&quot;&quot;&quot;</span>
+
+<span class="n">DATASET_REGISTRY</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;darg_no_inspection&#39;</span><span class="p">:</span> <span class="n">DARG_NO_INSPECTION</span><span class="p">,</span>
+  <span class="s1">&#39;mesd_sdss_128&#39;</span><span class="p">:</span> <span class="n">MESD_SDSS_128_JPG</span><span class="p">,</span>
+  <span class="s1">&#39;mesd_legacy_128&#39;</span><span class="p">:</span> <span class="n">MESD_LEGACY_128_JPG</span>
+<span class="p">}</span>
+
 
 
 <div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset">[docs]</a><span class="k">class</span> <span class="nc">Dataset</span><span class="p">:</span>
@@ -326,32 +382,18 @@
 <span class="sd">  config: DatasetConfig</span>
 <span class="sd">    Configuration object.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
-  <span class="n">RGB_CONFIG</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
-    <span class="c1"># table_url=GDrive.get_url(&#39;1yHnyOdXS-HKzIsbenSi646jyf2AWU9vo&#39;),</span>
-    <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1ltKXhZgA4Ab60FGKCqybhebSiAL2LMgG&#39;</span><span class="p">),</span>
-    <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1QgUYkzcjaCmo-kcgM8s2U8PYlx0C58oD&#39;</span><span class="p">),</span>
-    <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sdss_lupton_jpg_128.tar.gz&#39;</span><span class="p">),</span>
-    <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sdss_lupton_jpg_128&#39;</span><span class="p">),</span>
-    <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;reference_darg.csv&#39;</span><span class="p">),</span>
-    <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span>
-    <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
-    <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
-    <span class="n">label_map</span><span class="o">=</span><span class="p">{</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span>
-  <span class="p">)</span>
-  <span class="sd">&quot;&quot;&quot;Default configuration object for RGB dataset.&quot;&quot;&quot;</span>
-
 
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">data_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">),</span>
-    <span class="n">ds_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;rgb&#39;</span><span class="p">,</span>
+    <span class="n">ds</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="n">in_memory</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">ds_type</span> <span class="o">=</span> <span class="n">ds_type</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">in_memory</span> <span class="o">=</span> <span class="n">in_memory</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">RGB_CONFIG</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">DATASET_REGISTRY</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="s1">&#39;mesd_sdss_128_jpg&#39;</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span>
@@ -465,6 +507,7 @@
     <span class="n">n_splits</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
   <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">fname_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="c1"># filenames</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">class_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="c1"># class labels</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">r_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="c1"># r band magnitude</span>
