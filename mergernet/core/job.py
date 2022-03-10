@@ -1,3 +1,4 @@
+import logging
 import secrets
 import shutil
 import yaml
@@ -13,6 +14,8 @@ from mergernet.core.dataset import Dataset
 from mergernet.core.entity import HyperParameterSet
 from mergernet.core.utils import deep_update, unique_path
 from mergernet.model.study import HyperModel
+
+L = logging('job')
 
 
 class Job:
@@ -67,9 +70,11 @@ class Job:
       for run in exp.iterdir():
         artifacts = (run / 'artifacts').glob('*.*')
         for artifact in artifacts:
-          print(artifact)
-          print(mlflow_folder / artifact)
-          # shutil.copy2(artifact, mlflow_folder / artifact)
+          dest = mlflow_folder / artifact
+          if not dest.exists():
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            L.info(f'[ART] copying artifact `{str(artifact)} to `{str(dest)}`.')
+            shutil.copy2(artifact, dest)
 
 
   def _config_mlflow(self):
