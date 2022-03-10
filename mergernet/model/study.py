@@ -76,6 +76,8 @@ class HyperModel:
     ds_train = ds_train.map(one_hot)
     ds_test = ds_test.map(one_hot)
     L.info('[DATASET] apply: one_hot')
+    _x, _y = next(ds_train.take(1).as_numpy_iterator())
+    print('X.shape =', _x.shape, 'y.shape =', _y.shape)
 
     ds_train = ds_train.cache()
     ds_test = ds_test.cache()
@@ -87,7 +89,7 @@ class HyperModel:
     ds_train = ds_train.batch(64)
     ds_test = ds_test.batch(64)
     L.info('[DATASET] apply: batch')
-    _x, _y = next(ds_test.take(1).as_numpy_iterator())
+    _x, _y = next(ds_train.take(1).as_numpy_iterator())
     print('X.shape =', _x.shape, 'y.shape =', _y.shape)
 
     ds_train = ds_train.prefetch(tf.data.AUTOTUNE)
