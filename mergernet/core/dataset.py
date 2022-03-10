@@ -145,7 +145,8 @@ class DatasetConfig:
     X_column_suffix: str = '', # filename extension
     detect_img_extension: bool = False,
     label_map: dict = None,
-    image_shape: tuple = None
+    image_shape: tuple = None,
+    n_classes: int = None
   ):
     self.name = name
     self.archive_url = archive_url
@@ -160,6 +161,7 @@ class DatasetConfig:
     self.detect_img_extension = detect_img_extension
     self.label_map = label_map
     self.image_shape = image_shape
+    self.n_classes = n_classes
 
   def __repr__(self) -> str:
     return (
@@ -183,11 +185,12 @@ DARG_NO_INSPECTION = DatasetConfig(
   y_column='class',
   fold_column='fold',
   label_map={ 'E': 0, 'M': 1, 'S': 2 },
-  image_shape=(128, 128, 3)
+  image_shape=(128, 128, 3),
+  n_classes=3
 )
 """Default configuration object for RGB dataset."""
 
-MESD_SDSS_128_JPG = DatasetConfig(
+MESD_SDSS_128 = DatasetConfig(
   archive_url=GDrive.get_url('1YZ7A9rVglf5NJp27rW8-6aJXBfBNPfYv'),
   table_url=GDrive.get_url('1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H'),
   archive_path=Path('mesd_sdss_128.tar.gz'),
@@ -198,11 +201,12 @@ MESD_SDSS_128_JPG = DatasetConfig(
   y_column='class',
   fold_column='fold',
   label_map={'merger': 0, 'elliptical': 1, 'spiral': 2, 'disturbed': 3},
-  image_shape=(128, 128, 3)
+  image_shape=(128, 128, 3),
+  n_classes=4
 )
 """MESD dataset with SDSS 128x128 images."""
 
-MESD_LEGACY_128_JPG = DatasetConfig(
+MESD_LEGACY_128 = DatasetConfig(
   archive_url=GDrive.get_url('1cTU0SVEv3qVeVxF7pzhtOP7S-bx5cPOP'),
   table_url=GDrive.get_url('1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H'),
   archive_path=Path('mesd_legacy_128.tar.gz'),
@@ -213,14 +217,15 @@ MESD_LEGACY_128_JPG = DatasetConfig(
   y_column='class',
   fold_column='fold',
   label_map={'merger': 0, 'elliptical': 1, 'spiral': 2, 'disturbed': 3},
-  image_shape=(128, 128, 3)
+  image_shape=(128, 128, 3),
+  n_classes=4
 )
 """MESD dataset with Legacy Survey 128x128 images."""
 
 DATASET_REGISTRY = {
   'darg_no_inspection': DARG_NO_INSPECTION,
-  'mesd_sdss_128': MESD_SDSS_128_JPG,
-  'mesd_legacy_128': MESD_LEGACY_128_JPG
+  'mesd_sdss_128': MESD_SDSS_128,
+  'mesd_legacy_128': MESD_LEGACY_128
 }
 
 
@@ -249,7 +254,7 @@ class Dataset:
     self.data_path = Path(data_path)
     self.in_memory = in_memory
 
-    self.config = DATASET_REGISTRY.get(self.ds.lower(), 'mesd_sdss_128_jpg')
+    self.config = DATASET_REGISTRY.get(self.ds.lower(), MESD_SDSS_128)
     self.config.archive_path = data_path / self.config.archive_path
     self.config.images_path = data_path / self.config.images_path
     self.config.table_path = data_path / self.config.table_path

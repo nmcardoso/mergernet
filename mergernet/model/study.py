@@ -141,7 +141,7 @@ class HyperModel:
     x = tf.keras.layers.Dropout(self.hp.dropout_1_rate.suggest())(x)
     x = tf.keras.layers.Dense(self.hp.dense_2_units.suggest(), activation='relu')(x)
     x = tf.keras.layers.Dropout(self.hp.dropout_2_rate.suggest())(x)
-    outputs = tf.keras.layers.Dense(3, activation='softmax')(x)
+    outputs = tf.keras.layers.Dense(self.dataset.config.n_classes, activation='softmax')(x)
 
     model = tf.keras.Model(inputs, outputs)
     model.compile(
