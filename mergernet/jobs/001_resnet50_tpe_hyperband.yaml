@@ -22,13 +22,17 @@ config:
 
 
 hyperparameters:
-  - name: batch_size
+  - name: architecture
     type: constant
-    value: 64
+    value: resnet50v2
 
   - name: pretrained_weights
     type: constant
     value: imagenet
+
+  - name: batch_size
+    type: constant
+    value: 192
 
   - name: dense_1_units
     type: categorical
