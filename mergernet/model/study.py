@@ -87,6 +87,8 @@ class HyperModel:
     ds_train = ds_train.batch(64)
     ds_test = ds_test.batch(64)
     L.info('[DATASET] apply: batch')
+    _x, _y = next(ds_test.take(1).as_numpy_iterator())
+    print('X.shape =', _x.shape, 'y.shape =', _y.shape)
 
     ds_train = ds_train.prefetch(tf.data.AUTOTUNE)
     ds_test = ds_test.prefetch(tf.data.AUTOTUNE)
