@@ -80,14 +80,11 @@ class Job:
       optuna_folder.mkdir(exist_ok=True)
 
     if not self.job['config']['resume']:
-      print('aqui 1')
       db_path = optuna_folder / (self.experiment_name + '.sqlite')
-      print('aqui 2')
       if db_path.exists():
         db_path.unlink()
     else:
       resume_experiment = Path(self.job['config']['resume']).stem
-      print(resume_experiment, self.experiment_name)
       if self.experiment_name == resume_experiment:
         db_path = optuna_folder / (resume_experiment + '.sqlite')
       else:
@@ -115,7 +112,6 @@ class Job:
       hyperparameters=hp,
       epochs=self.job['config']['train_epochs'],
     )
-    print('aqui 4')
     model.hypertrain(
       optuna_uri=self.optuna_uri,
       n_trials=self.job['config']['optuna']['n_trials'],
@@ -161,7 +157,6 @@ class Job:
 
     extends_data = []
     extends_path = set(extends_path) # unique values
-    print(extends_path)
 
     for path in extends_path:
       with open(path, 'r') as fp:
@@ -169,7 +164,5 @@ class Job:
 
     if len(extends_data) > 0:
       data = deep_update(*extends_data, data)
-
-    print(data)
 
     return data
