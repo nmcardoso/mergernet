@@ -209,7 +209,7 @@
 
     <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">mlruns</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
       <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">exp</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
-        <span class="n">artifacts</span> <span class="o">=</span> <span class="p">(</span><span class="n">run</span> <span class="o">/</span> <span class="s1">&#39;artifacts&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+        <span class="n">artifacts</span> <span class="o">=</span> <span class="p">(</span><span class="n">run</span> <span class="o">/</span> <span class="s1">&#39;artifacts&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.*&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">artifact</span> <span class="ow">in</span> <span class="n">artifacts</span><span class="p">:</span>
           <span class="nb">print</span><span class="p">(</span><span class="n">artifact</span><span class="p">)</span>
           <span class="nb">print</span><span class="p">(</span><span class="n">mlflow_folder</span> <span class="o">/</span> <span class="n">artifact</span><span class="p">)</span></div>
