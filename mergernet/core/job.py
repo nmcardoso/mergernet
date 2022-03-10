@@ -65,7 +65,7 @@ class Job:
 
     for exp in mlruns.iterdir():
       for run in exp.iterdir():
-        artifacts = (run / 'artifacts').glob('*')
+        artifacts = (run / 'artifacts').glob('*.*')
         for artifact in artifacts:
           print(artifact)
           print(mlflow_folder / artifact)

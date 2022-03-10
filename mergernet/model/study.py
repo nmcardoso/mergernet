@@ -203,7 +203,7 @@ class HyperModel:
       lm = self.dataset.config.label_map
       labels = [[*lm.keys()][v] for v in lm.values()]
       ax = conf_matrix(y_true, y_pred, one_hot=True, labels=labels)
-      mlflow.log_figure(ax.figure, f'mlflow-artifacts:/confusion_matrix_{trial.number}.png')
+      mlflow.log_figure(ax.figure, f'confusion_matrix_{trial.number}.png')
 
     # generating optuna value to optimize (val_accuracy)
     last_epoch_accuracy = h['val_accuracy'][-1]
