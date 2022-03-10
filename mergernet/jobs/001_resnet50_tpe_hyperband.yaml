@@ -12,7 +12,7 @@ config:
   train_epochs: 1
 
   optuna:
-    n_trials: 2
+    n_trials: 1
     pruner: hyperband
     sampler: tpe
 

@@ -1,4 +1,5 @@
 import secrets
+import shutil
 import yaml
 import re
 from pathlib import Path
@@ -43,6 +44,7 @@ class Job:
     if self.job['config']['job_type'] == 'optuna_train':
       self._config_optuna()
       self._optuna_train()
+
     elif self.job['config']['job_type'] == 'predict':
       self._predict()
 
@@ -57,6 +59,19 @@ class Job:
     self.remote_artifact_path = path
 
 
+  def _upload(self):
+    mlruns = Path('mlruns')
+    mlflow_folder = Path(GDRIVE_PATH) / 'mlflow'
+
+    for exp in mlruns.iterdir():
+      for run in exp.iterdir():
+        artifacts = (run / 'artifacts').glob('*')
+        for artifact in artifacts:
+          print(artifact)
+          print(mlflow_folder / artifact)
+          # shutil.copy2(artifact, mlflow_folder / artifact)
+
+
   def _config_mlflow(self):
     assert GDRIVE_PATH is not None
 
@@ -68,11 +83,9 @@ class Job:
     db_path =  mlflow_folder / db_name
     db_uri = f'sqlite:///{str(db_path.resolve())}'
 
-    # mlflow.set_tracking_uri(db_uri)
-    mlflow.set_tracking_uri(f'file:///{str(mlflow_folder.resolve())}')
-    # e = mlflow.set_experiment(self.experiment_name)
-    mlflow.create_experiment(self.experiment_name + '_2', f'file:///{str(mlflow_folder.resolve())}')
-    # print(e.artifact_location)
+    mlflow.set_tracking_uri(db_uri)
+    # mlflow.set_tracking_uri(f'file:///{str(mlflow_folder.resolve())}')
+    mlflow.set_experiment(self.experiment_name)
 
 
   def _config_optuna(self):
