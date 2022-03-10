@@ -7,10 +7,10 @@ import optuna
 import mlflow
 import tensorflow as tf
 import numpy as np
-from mergernet.core.artifacts import ArtifactHelper
+import matplotlib.pyplot as plt
 from optuna.integration.mlflow import MLflowCallback
-from mergernet.core.constants import MLFLOW_DEFAULT_DB, MLFLOW_DEFAULT_URL, RANDOM_SEED
 
+from mergernet.core.constants import MLFLOW_DEFAULT_DB, MLFLOW_DEFAULT_URL, RANDOM_SEED
 from mergernet.core.dataset import Dataset
 from mergernet.core.entity import HyperParameterSet
 from mergernet.model.callback import DeltaStopping
@@ -204,6 +204,7 @@ class HyperModel:
       labels = [[*lm.keys()][v] for v in lm.values()]
       ax = conf_matrix(y_true, y_pred, one_hot=True, labels=labels)
       mlflow.log_figure(ax.figure, f'confusion_matrix_{trial.number}.png')
+      plt.close(ax.figure)
 
     # generating optuna value to optimize (val_accuracy)
     last_epoch_accuracy = h['val_accuracy'][-1]
