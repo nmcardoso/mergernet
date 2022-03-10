@@ -7,9 +7,9 @@ config:
 
   dataset: mesd_sdss_128
 
-  resume: false
+  resume: true
 
-  train_epochs: 32
+  train_epochs: 40
 
   optuna:
     n_trials: 40
