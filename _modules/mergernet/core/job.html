@@ -214,8 +214,9 @@
 
     <span class="c1"># mlflow.set_tracking_uri(db_uri)</span>
     <span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;file:///</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">mlflow_folder</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">e</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_name</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">artifact_location</span><span class="p">)</span></div>
+    <span class="c1"># e = mlflow.set_experiment(self.experiment_name)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">create_experiment</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_name</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;file:///</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">mlflow_folder</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+    <span class="c1"># print(e.artifact_location)</span>
 
 
 <div class="viewcode-block" id="Job._config_optuna"><a class="viewcode-back" href="../../../api/mergernet.core.job.Job.html#mergernet.core.job.Job._config_optuna">[docs]</a>  <span class="k">def</span> <span class="nf">_config_optuna</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
