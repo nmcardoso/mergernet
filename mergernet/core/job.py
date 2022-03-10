@@ -100,23 +100,9 @@ class Job:
     if not optuna_folder.exists():
       optuna_folder.mkdir(exist_ok=True)
 
-    if not self.job['config']['resume']:
-      db_path = optuna_folder / (self.experiment_name + '.sqlite')
-      if db_path.exists():
-        db_path.unlink()
-    else:
-      resume_experiment = Path(self.job['config']['resume']).stem
-      if self.experiment_name == resume_experiment:
-        db_path = optuna_folder / (resume_experiment + '.sqlite')
-      else:
-        original_path = optuna_folder / (resume_experiment + '.sqlite')
-        db_path = optuna_folder / (self.experiment_name + '.sqlite')
-        optuna.copy_study(
-          from_study_name=resume_experiment,
-          from_storage=f'sqlite:///{original_path.resolve()}',
-          to_storage=f'sqlite:///{db_path.resolve()}',
-          to_study_name=self.experiment_name
-        )
+    db_path = optuna_folder / (self.experiment_name + '.sqlite')
+    if db_path.exists() and not self.job['config']['resume']:
+      db_path.unlink()
 
     self.optuna_uri = f'sqlite:///{str(db_path.resolve())}'
 
