@@ -291,9 +291,9 @@ BLIND_SPLUS_TRILOGY_150 = DatasetConfig(
 """Blind dataset with S-PLUS 150x150 Trilogy images."""
 
 DATASET_REGISTRY = {
-  dataset['name']: dataset for dataset in [
+  dataset.name: dataset for dataset in [
     DARG_NO_INSPECTION, MESD_LEGACY_128, MESD_SDSS_128, BLIND_SPLUS_LUPTON_128,
-    BLIND_SPLUS_TRILOGY_128, BLIND_SPLUS_TRILOGY_128, BLIND_SPLUS_TRILOGY_150
+    BLIND_SPLUS_TRILOGY_128, BLIND_SPLUS_TRILOGY_128, BLIND_SPLUS_TRILOGY_150,
   ]
 }
 
