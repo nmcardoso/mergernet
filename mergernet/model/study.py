@@ -262,10 +262,17 @@ class HyperModel:
       direction='maximize',
       load_if_exists=resume
     )
+
+    mlflow_cb = MLflowCallback(
+      metric_name='optuna_score',
+      nest_trials=self.nest_trials,
+      tag_study_user_attrs=False
+    )
+
     study.optimize(
       self.objective,
       n_trials=n_trials,
-      callbacks=[self.mlflow_cb]
+      callbacks=[mlflow_cb]
     )
 
     L.info(f'[HYPER] optuna optimization finished in {t.end()}')
