@@ -262,6 +262,7 @@ class HyperModel:
       direction='maximize',
       load_if_exists=resume
     )
+    self.study = study
 
     mlflow_cb = MLflowCallback(
       metric_name='optuna_score',
