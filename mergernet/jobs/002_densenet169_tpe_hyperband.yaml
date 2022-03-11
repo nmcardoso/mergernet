@@ -4,12 +4,11 @@ extends:
 
 config:
   job_type: optuna_train
-
   dataset: mesd_sdss_128
-
   resume: true
-
-  train_epochs: 40
+  train_epochs: 35
+  save_model: true
+  override_model: true
 
   optuna:
     n_trials: 40
