@@ -47,9 +47,10 @@ class Job:
     if self.job['config']['job_type'] == 'optuna_train':
       self._config_optuna()
       self._optuna_train()
-      self._upload()
+      self._upload_mldflow_artifacts()
     elif self.job['config']['job_type'] == 'predict':
       self._predict()
+      self._upload_mldflow_artifacts()
 
 
   def _config_remote_artifact_path(self):
@@ -62,7 +63,7 @@ class Job:
     self.remote_artifact_path = path
 
 
-  def _upload(self):
+  def _upload_mldflow_artifacts(self):
     mlruns = Path('mlruns')
     mlflow_folder = Path(GDRIVE_PATH) / 'mlflow'
 
