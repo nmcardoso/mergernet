@@ -58,45 +58,31 @@ class HyperModel:
     self.nest_trials = nest_trials
     self.study = None
 
-    self.mlflow_cb = MLflowCallback(
-      metric_name='optuna_score',
-      nest_trials=self.nest_trials,
-      tag_study_user_attrs=False
-    )
 
-
-  def prepare_data(self, dataset: Dataset):
-    ds_train, ds_test = dataset.get_fold(0)
-    L.info('[DATASET] Fold 0 loaded')
-
-    if not dataset.in_memory:
-      ds_train = ds_train.map(load_jpg)
-      ds_test = ds_test.map(load_jpg)
+  def prepare_data(self, ds: tf.data.Dataset, batch_size: int = 64):
+    if self.dataset.config.X_column_suffix == '.jpg':
+      ds = ds.map(load_jpg)
       L.info('[DATASET] apply: load_jpg')
+    elif self.dataset.config.X_column_suffix == '.png':
+      ds = ds.map(load_png)
+      L.info('[DATASET] apply: load_png')
 
-    ds_train = ds_train.map(one_hot_factory(self.dataset.config.n_classes))
-    ds_test = ds_test.map(one_hot_factory(self.dataset.config.n_classes))
+    ds = ds.map(one_hot_factory(self.dataset.config.n_classes))
     L.info('[DATASET] apply: one_hot')
 
-    ds_train = ds_train.cache()
-    ds_test = ds_test.cache()
+    ds = ds.cache()
+    L.info('[DATASET] apply: cache')
 
-    ds_train = ds_train.shuffle(5000)
-    ds_test = ds_test.shuffle(1000)
+    ds = ds.shuffle(tf.data.AUTOTUNE)
     L.info('[DATASET] apply: shuffle')
 
-    ds_train = ds_train.batch(64)
-    ds_test = ds_test.batch(64)
+    ds = ds.batch(batch_size)
     L.info('[DATASET] apply: batch')
 
-    ds_train = ds_train.prefetch(tf.data.AUTOTUNE)
-    ds_test = ds_test.prefetch(tf.data.AUTOTUNE)
+    ds = ds.prefetch(tf.data.AUTOTUNE)
+    L.info('[DATASET] apply: prefetch')
 
-    ds_train = ds_train
-    ds_test = ds_test
-    class_weights = dataset.compute_class_weight()
-
-    return ds_train, ds_test, class_weights
+    return ds
 
 
 
@@ -166,6 +152,16 @@ class HyperModel:
       trial,
       input_shape=self.dataset.config.image_shape
     )
+
+  def objective(self, trial: optuna.trial.FrozenTrial) -> float:
+    tf.keras.backend.clear_session()
+
+    ds_train, ds_test = self.dataset.get_fold(0)
+    ds_train = self.prepare_data(ds_train, batch_size=self.hp.batch_size.suggest(trial))
+    ds_test = self.prepare_data(ds_test, batch_size=self.hp.batch_size.suggest(trial))
+    class_weights = self.dataset.compute_class_weight()
+
+    model = self.build_model(input_shape=self.dataset.config.image_shape, trial=trial)
 
     t = Timming()
     L.info('[TRAIN] Start of training loop')
