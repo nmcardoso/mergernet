@@ -101,10 +101,11 @@ class HyperModel:
 
   def build_model(
     self,
-    trial: optuna.trial.FrozenTrial,
-    input_shape: Tuple
-  ):
-    self.hp.set_trial(trial)
+    input_shape: Tuple,
+    trial: optuna.trial.FrozenTrial = None,
+  ) -> tf.keras.Model:
+    if trial is not None:
+      self.hp.set_trial(trial)
 
     conv_arch, preprocess_input = self._architecture_switch(
       self.hp.architecture.suggest()
