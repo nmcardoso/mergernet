@@ -2,6 +2,7 @@ import logging
 import secrets
 import shutil
 from typing import Tuple
+from pathlib import Path
 
 import optuna
 import mlflow
@@ -10,9 +11,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from optuna.integration.mlflow import MLflowCallback
 
-from mergernet.core.constants import MLFLOW_DEFAULT_DB, MLFLOW_DEFAULT_URL, RANDOM_SEED
+from mergernet.core.constants import MLFLOW_DEFAULT_DB, MLFLOW_DEFAULT_URL, RANDOM_SEED, SAVED_MODELS_PATH
 from mergernet.core.dataset import Dataset
-from mergernet.core.entity import HyperParameterSet
+from mergernet.core.entity import ConstantHyperParameter, HyperParameterSet
 from mergernet.model.callback import DeltaStopping
 from mergernet.model.plot import conf_matrix
 from mergernet.model.preprocessing import load_jpg, load_png, one_hot_factory
@@ -27,6 +28,7 @@ L = logging.getLogger('job')
 RUN_ID_ATTRIBUTE_KEY = 'mlflow_run_id'
 
 
+
 class PruneCallback(tf.keras.callbacks.Callback):
   def __init__(self, trial: optuna.trial.FrozenTrial):
     super(PruneCallback, self).__init__()
@@ -39,6 +41,22 @@ class PruneCallback(tf.keras.callbacks.Callback):
     if self.trial.should_prune():
       self.model.stop_training = True
       L.info(f'[PRUNER] trial pruned at epoch {epoch + 1}')
+
+
+class SaveCallback(tf.keras.callbacks.Callback):
+  def __init__(self, name: str, study: optuna.study.Study):
+    super(SaveCallback, self).__init__()
+    self.name = name
+    self.study = study
+
+
+  def on_train_end(self, logs):
+    study_min_loss = self.study.best_value
+    if logs['val_loss'] < study_min_loss:
+      save_path = SAVED_MODELS_PATH / (self.name + '.h5')
+      if not save_path.parent.exists():
+        save_path.parent.mkdir(parents=True, exist_ok=True)
+      self.model.save(save_path, overwrite=True)
 
 
 
@@ -83,7 +101,6 @@ class HyperModel:
     L.info('[DATASET] apply: prefetch')
 
     return ds
-
 
 
   def build_model(
@@ -155,6 +172,15 @@ class HyperModel:
     with mlflow.start_run(run_name='predict', nested=self.nest_trials) as run:
       mlflow.log_dict(
         {
+          k: v.value # all HPs are ConstantHyperParameter instances
+          for k, v in self.hp.__dict__.items()
+          if not k.startswith('_') and isinstance(v, ConstantHyperParameter)
+        },
+        'hyperparameters.json'
+      )
+
+      mlflow.log_dict(
+        {
           'dataset': self.dataset.config.name,
           'X': self.dataset.get_X(),
           'y_pred': preds
@@ -175,23 +201,22 @@ class HyperModel:
 
     model = self.build_model(input_shape=self.dataset.config.image_shape, trial=trial)
 
+    callbacks = [PruneCallback(trial)]
+    if self.save_model:
+      callbacks.append(SaveCallback(name=self.name, study=self.study))
+
     t = Timming()
     L.info('[TRAIN] Start of training loop')
-
     history = model.fit(
       ds_train,
       batch_size=self.hp.batch_size.suggest(trial),
       epochs=self.epochs,
       validation_data=ds_test,
       class_weight=class_weights,
-      callbacks=[
-        PruneCallback(trial)
-      ]
+      callbacks=callbacks
     )
-
     L.info(f'[TRAIN] End of training loop, duration: {t.end()}.')
 
-    # mlflow logs
     with mlflow.start_run(run_name=str(trial.number), nested=self.nest_trials) as run:
       # The mlflow run will be created before optuna mlflow callback,
       # so the following line is needed in order to optuna get the current run.

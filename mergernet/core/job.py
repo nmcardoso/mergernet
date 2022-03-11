@@ -9,7 +9,7 @@ from typing import Any, Dict, Union
 import mlflow
 import optuna
 
-from mergernet.core.constants import GDRIVE_PATH, JOBS_PATH
+from mergernet.core.constants import GDRIVE_PATH, JOBS_PATH, SAVED_MODELS_PATH
 from mergernet.core.dataset import Dataset
 from mergernet.core.entity import HyperParameterSet
 from mergernet.core.utils import deep_update, unique_path
@@ -48,6 +48,8 @@ class Job:
       self._config_optuna()
       self._optuna_train()
       self._upload_mldflow_artifacts()
+      if self.job['config']['save_model']:
+        self._upload_models(override=self.job['config']['override_model'])
     elif self.job['config']['job_type'] == 'predict':
       self._predict()
       self._upload_mldflow_artifacts()
@@ -74,8 +76,23 @@ class Job:
           dest = mlflow_folder / artifact
           if not dest.exists():
             dest.parent.mkdir(parents=True, exist_ok=True)
-            L.info(f'[ART] copying artifact `{str(artifact)} to `{str(dest)}`.')
             shutil.copy2(artifact, dest)
+            L.info(f'[ART] artifact copied from `{str(artifact)} to `{str(dest)}`.')
+
+
+  def _upload_models(self, override: bool = False):
+    local_folder = SAVED_MODELS_PATH
+    remote_folder = Path(GDRIVE_PATH) / 'saved_models'
+
+    for model_path in local_folder.iterdir():
+      remote_path = remote_folder / model_path.name
+      if not override:
+        i = 1
+        while remote_path.exists():
+          remote_path = remote_folder / f'{model_path.stem}_{i}{model_path.suffix}'
+          i += 1
+      shutil.copy2(model_path, remote_path)
+      L.info(f'[ART] model copied from `{str(model_path)} to `{str(remote_path)}`.')
 
 
   def _config_mlflow(self):
