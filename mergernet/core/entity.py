@@ -116,7 +116,7 @@ class HyperParameterSet:
         name = item['name']
         self.__dict__.update({ name: HyperParameter.from_dict(item) })
       else:
-        name = item.name
+        name = getattr(item, name)
         self.__dict__.update({ name: item })
 
   def set_trial(self, trial: optuna.trial.FrozenTrial):
