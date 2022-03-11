@@ -15,7 +15,7 @@ from mergernet.core.dataset import Dataset
 from mergernet.core.entity import HyperParameterSet
 from mergernet.model.callback import DeltaStopping
 from mergernet.model.plot import conf_matrix
-from mergernet.model.preprocessing import load_jpg, one_hot_factory
+from mergernet.model.preprocessing import load_jpg, load_png, one_hot_factory
 from mergernet.core.utils import Timming
 
 
