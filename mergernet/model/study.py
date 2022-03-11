@@ -192,8 +192,8 @@ class HyperModel:
       mlflow.log_dict(
         {
           'dataset': self.dataset.config.name,
-          'X': self.dataset.get_X(),
-          'y_pred': preds
+          'X': list(self.dataset.get_X()),
+          'y_pred': list(preds)
         },
         'predictions.json'
       )
@@ -263,9 +263,9 @@ class HyperModel:
       mlflow.log_dict(
         {
           'dataset': self.dataset.config.name,
-          'X': self.dataset.get_X_by_fold(0, kind='test'),
-          'y_pred': y_pred,
-          'y_true': y_true
+          'X': list(self.dataset.get_X_by_fold(0, kind='test')),
+          'y_pred': list(y_pred),
+          'y_true': list(y_true)
         },
         'predictions.json'
       )
