@@ -15,6 +15,13 @@ def load_jpg(X, y):
 
 
 
+def load_png(X, y):
+  img_bytes = tf.io.read_file(X)
+  img = tf.io.decode_png(img_bytes, channels=3)
+  return img, y
+
+
+
 def normalize_rgb(X, y):
   return X / 255., y
 
