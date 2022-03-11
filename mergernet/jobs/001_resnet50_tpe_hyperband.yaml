@@ -17,7 +17,7 @@ config:
 
   mlflow:
     id: 1
-    enabled: false
+    enabled: true
 
 
 hyperparameters:
