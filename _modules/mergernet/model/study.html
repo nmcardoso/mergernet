@@ -219,6 +219,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">epochs</span> <span class="o">=</span> <span class="n">epochs</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">nest_trials</span> <span class="o">=</span> <span class="n">nest_trials</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">study</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">save_model</span> <span class="o">=</span> <span class="kc">None</span>
 
 
 <div class="viewcode-block" id="HyperModel.prepare_data"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.prepare_data">[docs]</a>  <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span>
@@ -415,13 +416,50 @@
 
 
 
+<div class="viewcode-block" id="HyperModel.train"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.train">[docs]</a>  <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save</span><span class="p">):</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">clear_session</span><span class="p">()</span>
+
+    <span class="n">ds_train</span><span class="p">,</span> <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ds_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span>
+      <span class="n">ds_train</span><span class="p">,</span>
+      <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">batch_size</span><span class="o">.</span><span class="n">suggest</span><span class="p">(),</span>
+      <span class="n">buffer_size</span><span class="o">=</span><span class="mi">5000</span>
+    <span class="p">)</span>
+    <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span>
+      <span class="n">ds_test</span><span class="p">,</span>
+      <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">batch_size</span><span class="o">.</span><span class="n">suggest</span><span class="p">(),</span>
+      <span class="n">buffer_size</span><span class="o">=</span><span class="mi">1000</span>
+    <span class="p">)</span>
+    <span class="n">class_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">compute_class_weight</span><span class="p">()</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_model</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_shape</span><span class="p">)</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">Timming</span><span class="p">()</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;[TRAIN] Start of training loop&#39;</span><span class="p">)</span>
+    <span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+      <span class="n">ds_train</span><span class="p">,</span>
+      <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">batch_size</span><span class="o">.</span><span class="n">suggest</span><span class="p">(),</span>
+      <span class="n">epochs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">epochs</span><span class="p">,</span>
+      <span class="n">validation_data</span><span class="o">=</span><span class="n">ds_test</span><span class="p">,</span>
+      <span class="n">class_weight</span><span class="o">=</span><span class="n">class_weights</span><span class="p">,</span>
+      <span class="n">callbacks</span><span class="o">=</span><span class="p">[]</span>
+    <span class="p">)</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[TRAIN] End of training loop, duration: </span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">end</span><span class="p">()</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="s1">&#39;predict&#39;</span><span class="p">,</span> <span class="n">nested</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nest_trials</span><span class="p">)</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
+      <span class="k">pass</span></div>
+
+
 <div class="viewcode-block" id="HyperModel.hypertrain"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.hypertrain">[docs]</a>  <span class="k">def</span> <span class="nf">hypertrain</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">optuna_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">n_trials</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">pruner</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;hyperband&#39;</span><span class="p">,</span>
-    <span class="n">resume</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">resume</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">save_model</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">save_model</span> <span class="o">=</span> <span class="n">save_model</span>
+
     <span class="k">if</span> <span class="n">resume</span><span class="p">:</span>
       <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] resuming previous optimization of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> study&#39;</span><span class="p">)</span>
 
@@ -459,7 +497,6 @@
     <span class="p">)</span>
 
     <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] optuna optimization finished in </span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">end</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-
     <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] number of finished trials: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">trials</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] ----- begin of best trial summary -----&#39;</span><span class="p">)</span>
     <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] optimization score: </span><span class="si">{</span><span class="n">study</span><span class="o">.</span><span class="n">best_trial</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
