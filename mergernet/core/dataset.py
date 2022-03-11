@@ -346,6 +346,17 @@ class Dataset:
     return ds_train, ds_test
 
 
+  def get_X_by_fold(self, fold: int, kind='test') -> np.ndarray:
+    df = pd.read_csv(self.config.table_path)
+
+    if kind == 'test':
+      df = df[df[self.config.fold_column] == fold]
+    else:
+      df = df[df[self.config.fold_column] != fold]
+
+    return df[self.config.X_column].to_numpy()
+
+
   def get_preds_dataset(self) -> tf.data.Dataset:
     df = pd.read_csv(self.config.table_path)
 
