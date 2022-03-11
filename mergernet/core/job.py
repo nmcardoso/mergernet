@@ -143,6 +143,7 @@ class Job:
       pruner=self.job['config']['optuna']['pruner'],
       resume=bool(self.job['config']['resume']),
       save_model=self.job['config']['save_model'],
+      mlflow_enabled=self.job['config']['mlflow']['enabled'],
     )
 
 

@@ -80,6 +80,7 @@ class HyperModel:
     self.nest_trials = nest_trials
     self.study = None
     self.save_model = None
+    self.mlflow_enabled = None
 
 
   def prepare_data(
@@ -235,40 +236,41 @@ class HyperModel:
     )
     L.info(f'[TRAIN] End of training loop, duration: {t.end()}.')
 
-    with mlflow.start_run(run_name=str(trial.number), nested=self.nest_trials) as run:
-      # The mlflow run will be created before optuna mlflow callback,
-      # so the following line is needed in order to optuna get the current run.
-      # https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py
-      trial.set_system_attr(RUN_ID_ATTRIBUTE_KEY, run.info.run_id)
+    if self.mlflow_enabled:
+      with mlflow.start_run(run_name=str(trial.number), nested=self.nest_trials) as run:
+        # The mlflow run will be created before optuna mlflow callback,
+        # so the following line is needed in order to optuna get the current run.
+        # https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py
+        trial.set_system_attr(RUN_ID_ATTRIBUTE_KEY, run.info.run_id)
 
-      # history shape: {metric1: [val1, val2, ...], metric2: [val1, val2, ...]}
-      h = history.history
-      epochs = len(h[list(h.keys())[0]])
+        # history shape: {metric1: [val1, val2, ...], metric2: [val1, val2, ...]}
+        h = history.history
+        epochs = len(h[list(h.keys())[0]])
 
-      for i in range(epochs):
-        # {k1: [v1, v2, ...], k2: [v1, v2, ...]} => {k1: vi, k2: vi}
-        metrics = {name: h[name][i] for name in h.keys()}
-        mlflow.log_metrics(metrics=metrics, step=i)
+        for i in range(epochs):
+          # {k1: [v1, v2, ...], k2: [v1, v2, ...]} => {k1: vi, k2: vi}
+          metrics = {name: h[name][i] for name in h.keys()}
+          mlflow.log_metrics(metrics=metrics, step=i)
 
-      # confusion matrix plot
-      y_pred = model.predict(ds_test)
-      y_true = np.concatenate([y for x, y in ds_test], axis=0)
-      lm = self.dataset.config.label_map
-      labels = [[*lm.keys()][v] for v in lm.values()]
-      ax = conf_matrix(y_true, y_pred, one_hot=True, labels=labels)
-      mlflow.log_figure(ax.figure, f'confusion_matrix.png')
-      plt.close(ax.figure)
+        # confusion matrix plot
+        y_pred = model.predict(ds_test)
+        y_true = np.concatenate([y for x, y in ds_test], axis=0)
+        lm = self.dataset.config.label_map
+        labels = [[*lm.keys()][v] for v in lm.values()]
+        ax = conf_matrix(y_true, y_pred, one_hot=True, labels=labels)
+        mlflow.log_figure(ax.figure, f'confusion_matrix.png')
+        plt.close(ax.figure)
 
-      # log predictions
-      mlflow.log_dict(
-        {
-          'dataset': self.dataset.config.name,
-          'X': np.array(self.dataset.get_X_by_fold(0, kind='test')).tolist(),
-          'y_pred': np.array(y_pred).tolist(),
-          'y_true': np.array(y_true).tolist()
-        },
-        'predictions.json'
-      )
+        # log predictions
+        mlflow.log_dict(
+          {
+            'dataset': self.dataset.config.name,
+            'X': np.array(self.dataset.get_X_by_fold(0, kind='test')).tolist(),
+            'y_pred': np.array(y_pred).tolist(),
+            'y_true': np.array(y_true).tolist()
+          },
+          'predictions.json'
+        )
 
     # generating optuna value to optimize (val_accuracy)
     last_epoch_accuracy = h['val_accuracy'][-1]
@@ -316,9 +318,11 @@ class HyperModel:
     n_trials: int,
     pruner: str = 'hyperband',
     resume: bool = False,
-    save_model: bool = True
+    save_model: bool = True,
+    mlflow_enabled: bool = True
   ):
     self.save_model = save_model
+    self.mlflow_enabled = mlflow_enabled
 
     if resume:
       L.info(f'[HYPER] resuming previous optimization of {self.name} study')
@@ -344,17 +348,21 @@ class HyperModel:
     )
     self.study = study
 
-    mlflow_cb = MLflowCallback(
-      metric_name='optuna_score',
-      nest_trials=self.nest_trials,
-      tag_study_user_attrs=False
-    )
+    optimize_params = {
+      'optimize': self.objective,
+      'n_trials': n_trials
+    }
 
-    study.optimize(
-      self.objective,
-      n_trials=n_trials,
-      callbacks=[mlflow_cb]
-    )
+    if self.mlflow_enabled:
+      mlflow_cb = MLflowCallback(
+        metric_name='optuna_score',
+        nest_trials=self.nest_trials,
+        tag_study_user_attrs=False
+      )
+      optimize_params['callbacks'] = optimize_params.get(
+        'callbacks', []).append(mlflow_cb)
+
+    study.optimize(**optimize_params)
 
     L.info(f'[HYPER] optuna optimization finished in {t.end()}')
     L.info(f'[HYPER] number of finished trials: {len(study.trials)}')
