@@ -128,6 +128,24 @@ class Job:
     )
 
 
+  def _predict(self):
+    ds = Dataset(
+      data_path=self.local_data_path,
+      ds=self.job['config']['dataset']
+    )
+    if self.job.get('load', None) is not None:
+      # handle load
+      pass
+    else:
+      hp = HyperParameterSet(self.job['hyperparameters'])
+      model = HyperModel(
+        dataset=ds,
+        name=self.experiment_name,
+        hyperparameters=hp
+      )
+      model.predict()
+
+
   def _scan_jobs(self) -> Dict[str, Path]:
     jobs_map = {}
     pattern = re.compile('(\d+)_.*\.yaml')
