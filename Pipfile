@@ -20,6 +20,7 @@ tensorboard = "*"
 optuna = "*"
 mlflow = "*"
 plotly = "*"
+mw-plot = "*"
 
 [dev-packages]
 numpydoc = "*"
