@@ -77,7 +77,12 @@ class HyperModel:
     self.study = None
 
 
-  def prepare_data(self, ds: tf.data.Dataset, batch_size: int = 64):
+  def prepare_data(
+    self,
+    ds: tf.data.Dataset,
+    batch_size: int = 64,
+    buffer_size: int = 1000
+  ):
     if self.dataset.config.X_column_suffix == '.jpg':
       ds = ds.map(load_jpg)
       L.info('[DATASET] apply: load_jpg')
@@ -91,7 +96,7 @@ class HyperModel:
     ds = ds.cache()
     L.info('[DATASET] apply: cache')
 
-    ds = ds.shuffle(tf.data.AUTOTUNE)
+    ds = ds.shuffle(buffer_size)
     L.info('[DATASET] apply: shuffle')
 
     ds = ds.batch(batch_size)
@@ -164,7 +169,7 @@ class HyperModel:
     tf.keras.backend.clear_session()
 
     ds = dataset.get_preds_dataset()
-    ds = self.prepare_data(ds, batch_size=128)
+    ds = self.prepare_data(ds, batch_size=128, buffer_size=1000)
 
     model = self.build_model()
     preds = model.predict(ds)
@@ -195,8 +200,16 @@ class HyperModel:
     tf.keras.backend.clear_session()
 
     ds_train, ds_test = self.dataset.get_fold(0)
-    ds_train = self.prepare_data(ds_train, batch_size=self.hp.batch_size.suggest(trial))
-    ds_test = self.prepare_data(ds_test, batch_size=self.hp.batch_size.suggest(trial))
+    ds_train = self.prepare_data(
+      ds_train,
+      batch_size=self.hp.batch_size.suggest(trial),
+      buffer_size=5000
+    )
+    ds_test = self.prepare_data(
+      ds_test,
+      batch_size=self.hp.batch_size.suggest(trial),
+      buffer_size=1000
+    )
     class_weights = self.dataset.compute_class_weight()
 
     model = self.build_model(input_shape=self.dataset.config.image_shape, trial=trial)
