@@ -1,0 +1,17 @@
+mergernet.core.dataset.DistributionKFold
+========================================
+
+.. currentmodule:: mergernet.core.dataset
+
+.. autoclass:: DistributionKFold
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

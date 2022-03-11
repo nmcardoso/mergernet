@@ -1,0 +1,31 @@
+mergernet.jobs.j001\_resnet50\_hyperband
+========================================
+
+.. automodule:: mergernet.jobs.j001_resnet50_hyperband
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class-template.rst
+   
+      Job
+   
+   
+
+   
+   
+   
+
+
+

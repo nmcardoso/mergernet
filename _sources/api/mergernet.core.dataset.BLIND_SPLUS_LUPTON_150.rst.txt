@@ -1,0 +1,6 @@
+mergernet.core.dataset.BLIND\_SPLUS\_LUPTON\_150
+================================================
+
+.. currentmodule:: mergernet.core.dataset
+
+.. autodata:: BLIND_SPLUS_LUPTON_150

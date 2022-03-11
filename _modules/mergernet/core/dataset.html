@@ -1,0 +1,676 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mergernet.core.dataset &#8212; MergerNet  documentation</title>
+    
+    <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  
+    
+    <link rel="stylesheet"
+      href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+    
+      
+  
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/pydata-sphinx-theme.css" />
+    
+    <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+<a class="navbar-brand" href="../../../index.html">
+<p class="title">MergerNet</p>
+</a>
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../reference.html">
+  API Reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../experiments.html">
+  Experiments
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/nmcardoso" rel="noopener" target="_blank" title="Github"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">Github</label></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://natanael.net" rel="noopener" target="_blank" title="Website"><span><i class="fas fa-globe"></i></span>
+            <label class="sr-only">Website</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for mergernet.core.dataset</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Dataset Module: high-level abstraction of dataset.</span>
+
+<span class="sd">This module defines the rules for loading a previously generated ``.tfrecord`` dataset.</span>
+
+<span class="sd">The main class is :py:class:`Dataset`, which is a high-level representation of the</span>
+<span class="sd">dataset and can be used for all development process of this deep learning model.</span>
+
+<span class="sd">This module defines others classes and functions as well, who perform complementary tasks.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">StratifiedKFold</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">load_image</span><span class="p">,</span> <span class="n">load_table</span>
+<span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">RANDOM_SEED</span>
+<span class="kn">from</span> <span class="nn">mergernet.services.google</span> <span class="kn">import</span> <span class="n">GDrive</span>
+<span class="kn">from</span> <span class="nn">mergernet.services.sciserver</span> <span class="kn">import</span> <span class="n">SciServer</span>
+
+
+
+
+<div class="viewcode-block" id="DistributionKFold"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.DistributionKFold.html#mergernet.core.dataset.DistributionKFold">[docs]</a><span class="k">class</span> <span class="nc">DistributionKFold</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bins</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">bins</span> <span class="o">=</span> <span class="n">bins</span>
+
+
+<div class="viewcode-block" id="DistributionKFold.split"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.DistributionKFold.html#mergernet.core.dataset.DistributionKFold.split">[docs]</a>  <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distribution</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">:</span>
+    <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram_bin_edges</span><span class="p">(</span><span class="n">distribution</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bins</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+      <span class="n">bin_ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">distribution</span> <span class="o">&gt;=</span> <span class="n">bin_edges</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">distribution</span> <span class="o">&lt;=</span> <span class="n">bin_edges</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+      <span class="p">)</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="k">yield</span> <span class="n">bin_ids</span></div></div>
+
+
+
+<div class="viewcode-block" id="StratifiedDistributionKFold"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.StratifiedDistributionKFold.html#mergernet.core.dataset.StratifiedDistributionKFold">[docs]</a><span class="k">class</span> <span class="nc">StratifiedDistributionKFold</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distribution</span><span class="p">,</span> <span class="n">n_splits</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">bins</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">n_splits</span> <span class="o">=</span> <span class="n">n_splits</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">bins</span> <span class="o">=</span> <span class="n">bins</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">distribution</span> <span class="o">=</span> <span class="n">distribution</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span> <span class="o">=</span> <span class="n">shuffle</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span> <span class="o">=</span> <span class="n">RANDOM_SEED</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span> <span class="k">else</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="StratifiedDistributionKFold.compute_max_bins"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.StratifiedDistributionKFold.html#mergernet.core.dataset.StratifiedDistributionKFold.compute_max_bins">[docs]</a>  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">compute_max_bins</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">distribution</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">n_classes</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n_splits</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">continue_testing</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">max_bins</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">distribution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">distribution</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="n">continue_testing</span><span class="p">:</span>
+      <span class="n">dist_kf</span> <span class="o">=</span> <span class="n">DistributionKFold</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">max_bins</span><span class="p">)</span>
+
+      <span class="k">for</span> <span class="n">bin_ids</span> <span class="ow">in</span> <span class="n">dist_kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">distribution</span><span class="o">=</span><span class="n">distribution</span><span class="p">):</span>
+        <span class="n">y_bin</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">bin_ids</span><span class="p">]</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_bin</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># class_counts = dict(zip(unique, counts))</span>
+
+        <span class="c1"># check ocurrences for all classes</span>
+        <span class="n">continue_testing</span> <span class="o">=</span> <span class="n">continue_testing</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span> <span class="o">==</span> <span class="n">n_classes</span><span class="p">)</span>
+
+        <span class="c1"># check ocurrences for at least 1 example of each class in each fold</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">:</span>
+          <span class="n">continue_testing</span> <span class="o">=</span> <span class="n">continue_testing</span> <span class="ow">and</span> <span class="p">(</span><span class="n">c</span> <span class="o">&gt;=</span> <span class="n">n_classes</span> <span class="o">*</span> <span class="n">n_splits</span> <span class="o">*</span> <span class="n">max_bins</span><span class="p">)</span>
+
+        <span class="n">max_bins</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">continue_testing</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="n">max_bins</span></div>
+
+
+<div class="viewcode-block" id="StratifiedDistributionKFold.split_ids"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.StratifiedDistributionKFold.html#mergernet.core.dataset.StratifiedDistributionKFold.split_ids">[docs]</a>  <span class="k">def</span> <span class="nf">split_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="n">train</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_splits</span><span class="p">)]</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_splits</span><span class="p">)]</span>
+
+    <span class="n">dist_kf</span> <span class="o">=</span> <span class="n">DistributionKFold</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bins</span><span class="p">)</span>
+    <span class="n">class_kf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_splits</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
+
+    <span class="c1"># First split: distribution split</span>
+    <span class="k">for</span> <span class="n">bin_ids</span> <span class="ow">in</span> <span class="n">dist_kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">distribution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution</span><span class="p">):</span>
+      <span class="n">y_bin</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">bin_ids</span><span class="p">]</span>
+
+      <span class="c1"># Second split: class split</span>
+      <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">train_ids</span><span class="p">,</span> <span class="n">test_ids</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">class_kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">bin_ids</span><span class="p">,</span> <span class="n">y_bin</span><span class="p">)):</span>
+        <span class="n">train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">train</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">bin_ids</span><span class="p">[</span><span class="n">train_ids</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)))</span>
+        <span class="n">test</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">test</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">bin_ids</span><span class="p">[</span><span class="n">test_ids</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)))</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StratifiedDistributionKFold.split_all"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.StratifiedDistributionKFold.html#mergernet.core.dataset.StratifiedDistributionKFold.split_all">[docs]</a>  <span class="k">def</span> <span class="nf">split_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_splits</span><span class="p">)]</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_splits</span><span class="p">)]</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_splits</span><span class="p">)]</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_splits</span><span class="p">)]</span>
+
+    <span class="n">dist_kf</span> <span class="o">=</span> <span class="n">DistributionKFold</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bins</span><span class="p">)</span>
+    <span class="n">class_kf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_splits</span><span class="p">)</span>
+
+    <span class="c1"># First split: distribution split</span>
+    <span class="k">for</span> <span class="n">bin_ids</span> <span class="ow">in</span> <span class="n">dist_kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">distribution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution</span><span class="p">):</span>
+      <span class="n">X_bin</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">bin_ids</span><span class="p">]</span>
+      <span class="n">y_bin</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">bin_ids</span><span class="p">]</span>
+
+      <span class="c1"># Second split: class split</span>
+      <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">train_ids</span><span class="p">,</span> <span class="n">test_ids</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">class_kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X_bin</span><span class="p">,</span> <span class="n">y_bin</span><span class="p">)):</span>
+        <span class="n">X_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_train</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">X_bin</span><span class="p">[</span><span class="n">train_ids</span><span class="p">]))</span>
+        <span class="n">X_test</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_test</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">X_bin</span><span class="p">[</span><span class="n">test_ids</span><span class="p">]))</span>
+        <span class="n">y_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">y_train</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_bin</span><span class="p">[</span><span class="n">train_ids</span><span class="p">]))</span>
+        <span class="n">y_test</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">y_test</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_bin</span><span class="p">[</span><span class="n">test_ids</span><span class="p">]))</span>
+
+    <span class="c1"># Notes:</span>
+    <span class="c1"># len(X_train) == n_splits, each elements of the list represents a fold</span>
+    <span class="c1"># each</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="s1">&#39;X_train&#39;</span><span class="p">:</span> <span class="n">X_train</span><span class="p">,</span>
+      <span class="s1">&#39;X_test&#39;</span><span class="p">:</span> <span class="n">X_test</span><span class="p">,</span>
+      <span class="s1">&#39;y_train&#39;</span><span class="p">:</span> <span class="n">y_train</span><span class="p">,</span>
+      <span class="s1">&#39;y_test&#39;</span><span class="p">:</span> <span class="n">y_test</span>
+    <span class="p">}</span></div></div>
+
+
+
+<div class="viewcode-block" id="DatasetConfig"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.DatasetConfig.html#mergernet.core.dataset.DatasetConfig">[docs]</a><span class="k">class</span> <span class="nc">DatasetConfig</span><span class="p">:</span>
+  <span class="sd">&quot;&quot;&quot;Configuration params for dataset.&quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">archive_url</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">table_url</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">archive_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">images_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">table_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">X_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ID&#39;</span><span class="p">,</span>
+    <span class="n">y_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;class&#39;</span><span class="p">,</span>
+    <span class="n">fold_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;fold&#39;</span><span class="p">,</span>
+    <span class="n">X_column_suffix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="c1"># filename extension</span>
+    <span class="n">detect_img_extension</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">label_map</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">image_shape</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">n_classes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">archive_url</span> <span class="o">=</span> <span class="n">archive_url</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">table_url</span> <span class="o">=</span> <span class="n">table_url</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">archive_path</span> <span class="o">=</span> <span class="n">archive_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">images_path</span> <span class="o">=</span> <span class="n">images_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">table_path</span> <span class="o">=</span> <span class="n">table_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">X_column</span> <span class="o">=</span> <span class="n">X_column</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">y_column</span> <span class="o">=</span> <span class="n">y_column</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fold_column</span> <span class="o">=</span> <span class="n">fold_column</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">X_column_suffix</span> <span class="o">=</span> <span class="n">X_column_suffix</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">detect_img_extension</span> <span class="o">=</span> <span class="n">detect_img_extension</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">label_map</span> <span class="o">=</span> <span class="n">label_map</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">image_shape</span> <span class="o">=</span> <span class="n">image_shape</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span> <span class="o">=</span> <span class="n">n_classes</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="sa">f</span><span class="s1">&#39;Using dataset </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s1">.</span><span class="se">\n</span><span class="s1">&#39;</span>
+      <span class="sa">f</span><span class="s1">&#39;Archive path:</span><span class="se">\t\t</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">archive_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span>
+      <span class="sa">f</span><span class="s1">&#39;Images path:</span><span class="se">\t\t</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">images_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span>
+      <span class="sa">f</span><span class="s1">&#39;Table path:</span><span class="se">\t\t</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span>
+      <span class="sa">f</span><span class="s1">&#39;Label map:</span><span class="se">\t\t</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_map</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="n">DARG_NO_INSPECTION</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="c1"># table_url=GDrive.get_url(&#39;1yHnyOdXS-HKzIsbenSi646jyf2AWU9vo&#39;),</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;darg_no_inspection&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1ltKXhZgA4Ab60FGKCqybhebSiAL2LMgG&#39;</span><span class="p">),</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1QgUYkzcjaCmo-kcgM8s2U8PYlx0C58oD&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sdss_lupton_jpg_128.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sdss_lupton_jpg_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;reference_darg.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span>
+  <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+  <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
+  <span class="n">label_map</span><span class="o">=</span><span class="p">{</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="mi">2</span> <span class="p">},</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+  <span class="n">n_classes</span><span class="o">=</span><span class="mi">3</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Default configuration object for RGB dataset.&quot;&quot;&quot;</span>
+
+<span class="n">MESD_SDSS_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mesd_sdss_128&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1YZ7A9rVglf5NJp27rW8-6aJXBfBNPfYv&#39;</span><span class="p">),</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_sdss_128.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_sdss_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
+  <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+  <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
+  <span class="n">label_map</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;merger&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;elliptical&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;spiral&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;disturbed&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+  <span class="n">n_classes</span><span class="o">=</span><span class="mi">4</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;MESD dataset with SDSS 128x128 images.&quot;&quot;&quot;</span>
+
+<span class="n">MESD_LEGACY_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mesd_legacy_128&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1cTU0SVEv3qVeVxF7pzhtOP7S-bx5cPOP&#39;</span><span class="p">),</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_legacy_128.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_legacy_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
+  <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+  <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
+  <span class="n">label_map</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;merger&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;elliptical&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;spiral&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;disturbed&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+  <span class="n">n_classes</span><span class="o">=</span><span class="mi">4</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;MESD dataset with Legacy Survey 128x128 images.&quot;&quot;&quot;</span>
+
+<span class="n">BLIND_SPLUS_LUPTON_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;blind_splus_lupton_128&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;gdrive&#39;</span><span class="p">:</span> <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1TktT_u_NTqyBPKq5KG8hW0TVYhZe6Q3r&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;sciserver&#39;</span><span class="p">:</span> <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;28d96731-35d9-4eac-bdee-7ccb81c5456d&#39;</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1qd0lxMf2WzPF8bW0NciX1wwfa_mrS0Om&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_128.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_lupton.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Blind dataset with S-PLUS 128x128 Lupton images.&quot;&quot;&quot;</span>
+
+<span class="n">BLIND_SPLUS_LUPTON_150</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;blind_splus_lupton_150&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;gdrive&#39;</span><span class="p">:</span> <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1qERSsv9W4d2ICyKlvhhPaR7a2j6W5HrD&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;sciserver&#39;</span><span class="p">:</span> <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;946b0d5c-741e-463a-bdbc-4a04313c00c7&#39;</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1qd0lxMf2WzPF8bW0NciX1wwfa_mrS0Om&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_150.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_150&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_lupton.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Blind dataset with S-PLUS 150x150 Lupton images.&quot;&quot;&quot;</span>
+
+<span class="n">BLIND_SPLUS_TRILOGY_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;blind_splus_trilogy_128&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;gdrive&#39;</span><span class="p">:</span> <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1lPvOtE6HCJ7Xi5hAGfjgvrfwGiLRT7uH&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;sciserver&#39;</span><span class="p">:</span> <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;4fe38e2a-c1db-4cd3-92ec-1c2c5b2c5284&#39;</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_128.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_trilogy.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Blind dataset with S-PLUS 128x128 Trilogy images.&quot;&quot;&quot;</span>
+
+<span class="n">BLIND_SPLUS_TRILOGY_150</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;blind_splus_trilogy_150&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;gdrive&#39;</span><span class="p">:</span> <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1aiLtmbrJSRQTmSB3XP1AqXi0tfUi3S-H&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;sciserver&#39;</span><span class="p">:</span> <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;74ca0cba-6c9e-4022-95b8-9d7964d70947&#39;</span><span class="p">),</span>
+  <span class="p">},</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_150.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_150&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_trilogy.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Blind dataset with S-PLUS 150x150 Trilogy images.&quot;&quot;&quot;</span>
+
+<span class="n">DATASET_REGISTRY</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">dataset</span> <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="n">DARG_NO_INSPECTION</span><span class="p">,</span> <span class="n">MESD_LEGACY_128</span><span class="p">,</span> <span class="n">MESD_SDSS_128</span><span class="p">,</span> <span class="n">BLIND_SPLUS_LUPTON_128</span><span class="p">,</span>
+    <span class="n">BLIND_SPLUS_TRILOGY_128</span><span class="p">,</span> <span class="n">BLIND_SPLUS_TRILOGY_128</span><span class="p">,</span> <span class="n">BLIND_SPLUS_TRILOGY_150</span><span class="p">,</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+
+
+
+<div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset">[docs]</a><span class="k">class</span> <span class="nc">Dataset</span><span class="p">:</span>
+  <span class="sd">&quot;&quot;&quot;High-level representation of dataset.</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  ds_split: str</span>
+<span class="sd">    Split path.</span>
+
+<span class="sd">  Attributes</span>
+<span class="sd">  ----------</span>
+<span class="sd">  config: DatasetConfig</span>
+<span class="sd">    Configuration object.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">data_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">),</span>
+    <span class="n">ds</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">in_memory</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">in_memory</span> <span class="o">=</span> <span class="n">in_memory</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">DATASET_REGISTRY</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">MESD_SDSS_128</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_dataset_downloaded</span><span class="p">():</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">detect_img_extension</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_detect_img_extension</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="Dataset._detect_img_extension"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset._detect_img_extension">[docs]</a>  <span class="k">def</span> <span class="nf">_detect_img_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column_suffix</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())</span><span class="o">.</span><span class="n">suffix</span></div>
+
+
+<div class="viewcode-block" id="Dataset._discretize_label"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset._discretize_label">[docs]</a>  <span class="k">def</span> <span class="nf">_discretize_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="n">y_int</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">label_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">y_int</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+    <span class="k">return</span> <span class="n">y_int</span></div>
+
+
+<div class="viewcode-block" id="Dataset.is_dataset_downloaded"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset.is_dataset_downloaded">[docs]</a>  <span class="k">def</span> <span class="nf">is_dataset_downloaded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Dataset.download"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset.download">[docs]</a>  <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Check if destination path exists, create missing folders and download</span>
+<span class="sd">    the dataset files from web resource for a specified dataset type.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_url</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+      <span class="n">archive_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_url</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s1">&#39;sciserver&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_url</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;gdrive&#39;</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">archive_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_url</span>
+
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span>
+      <span class="n">fname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(),</span>
+      <span class="n">origin</span><span class="o">=</span><span class="n">archive_url</span><span class="p">,</span>
+      <span class="n">cache_subdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">(),</span>
+      <span class="n">archive_format</span><span class="o">=</span><span class="s1">&#39;tar&#39;</span><span class="p">,</span>
+      <span class="n">extract</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_url</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+      <span class="n">table_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_url</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s1">&#39;sciserver&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_url</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;gdrive&#39;</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">table_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_url</span>
+
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span>
+      <span class="n">fname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(),</span>
+      <span class="n">origin</span><span class="o">=</span><span class="n">table_url</span><span class="p">,</span>
+      <span class="n">cache_subdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset.get_fold"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset.get_fold">[docs]</a>  <span class="k">def</span> <span class="nf">get_fold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)</span>
+
+    <span class="n">df_test</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">fold_column</span><span class="p">]</span> <span class="o">==</span> <span class="n">fold</span><span class="p">]</span>
+    <span class="n">df_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">fold_column</span><span class="p">]</span> <span class="o">!=</span> <span class="n">fold</span><span class="p">]</span>
+
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">y_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">y_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+      <span class="nb">str</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span> <span class="o">/</span> <span class="p">(</span><span class="n">X</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column_suffix</span><span class="p">))</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
+      <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">X_train</span>
+    <span class="p">])</span>
+
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+      <span class="nb">str</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span> <span class="o">/</span> <span class="p">(</span><span class="n">X</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column_suffix</span><span class="p">))</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
+      <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">X_test</span>
+    <span class="p">])</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_memory</span><span class="p">:</span>
+      <span class="n">X_train</span> <span class="o">=</span> <span class="p">[</span><span class="n">load_image</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">X_train</span><span class="p">]</span>
+      <span class="n">X_test</span> <span class="o">=</span> <span class="p">[</span><span class="n">load_image</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">X_test</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">label_map</span><span class="p">:</span>
+      <span class="n">y_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_discretize_label</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+      <span class="n">y_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_discretize_label</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+
+    <span class="n">ds_train</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
+    <span class="n">ds_test</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">ds_train</span><span class="p">,</span> <span class="n">ds_test</span></div>
+
+
+<div class="viewcode-block" id="Dataset.get_X_by_fold"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset.get_X_by_fold">[docs]</a>  <span class="k">def</span> <span class="nf">get_X_by_fold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span><span class="p">:</span>
+      <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">fold_column</span><span class="p">]</span> <span class="o">==</span> <span class="n">fold</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">fold_column</span><span class="p">]</span> <span class="o">!=</span> <span class="n">fold</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Dataset.get_X"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset.get_X">[docs]</a>  <span class="k">def</span> <span class="nf">get_X</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Dataset.get_preds_dataset"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset.get_preds_dataset">[docs]</a>  <span class="k">def</span> <span class="nf">get_preds_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)</span>
+
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+      <span class="nb">str</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span> <span class="o">/</span> <span class="p">(</span><span class="n">_X</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column_suffix</span><span class="p">))</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
+      <span class="k">for</span> <span class="n">_X</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset.compute_class_weight"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset.compute_class_weight">[docs]</a>  <span class="k">def</span> <span class="nf">compute_class_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">y_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">label_map</span><span class="p">:</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_discretize_label</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="n">classes</span><span class="p">,</span> <span class="n">cardinalities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cardinalities</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cardinalities</span><span class="p">)</span>
+
+    <span class="n">weight_map</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">class_</span><span class="p">,</span> <span class="n">cardinality</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">classes</span><span class="p">,</span> <span class="n">cardinalities</span><span class="p">):</span>
+      <span class="n">weight_map</span><span class="p">[</span><span class="n">class_</span><span class="p">]</span> <span class="o">=</span> <span class="n">total</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">cardinality</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">weight_map</span></div>
+
+
+<div class="viewcode-block" id="Dataset.concat_fold_column"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset.concat_fold_column">[docs]</a>  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">concat_fold_column</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">fname_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">class_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">r_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">n_splits</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+  <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">fname_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="c1"># filenames</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">class_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="c1"># class labels</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">r_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="c1"># r band magnitude</span>
+
+    <span class="n">kf</span> <span class="o">=</span> <span class="n">StratifiedDistributionKFold</span><span class="p">(</span><span class="n">distribution</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">n_splits</span><span class="o">=</span><span class="n">n_splits</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">test_ids</span> <span class="o">=</span> <span class="n">kf</span><span class="o">.</span><span class="n">split_ids</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="c1"># using test ids to identify folds</span>
+
+    <span class="n">folds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_ids</span><span class="p">)):</span>
+      <span class="n">folds</span><span class="p">[</span><span class="n">test_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">folds</span>
+
+    <span class="k">return</span> <span class="n">df</span></div></div>
+
+</pre></div>
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+    <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, Natanael M. Cardoso..<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>
