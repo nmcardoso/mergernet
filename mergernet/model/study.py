@@ -143,15 +143,27 @@ class HyperModel:
     return model
 
 
-  def objective(self, trial: optuna.trial.FrozenTrial):
+  def predict(self, dataset: Dataset) -> list:
     tf.keras.backend.clear_session()
 
-    ds_train, ds_test, class_weights = self.prepare_data(self.dataset)
+    ds = dataset.get_preds_dataset()
+    ds = self.prepare_data(ds, batch_size=128)
 
-    model = self.build_model(
-      trial,
-      input_shape=self.dataset.config.image_shape
-    )
+    model = self.build_model()
+    preds = model.predict(ds)
+
+    with mlflow.start_run(run_name='predict', nested=self.nest_trials) as run:
+      mlflow.log_dict(
+        {
+          'dataset': self.dataset.config.name,
+          'X': self.dataset.get_X(),
+          'y_pred': preds
+        },
+        'predictions.json'
+      )
+
+    return preds
+
 
   def objective(self, trial: optuna.trial.FrozenTrial) -> float:
     tf.keras.backend.clear_session()
