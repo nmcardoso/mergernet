@@ -176,6 +176,7 @@ class DatasetConfig:
 
 DARG_NO_INSPECTION = DatasetConfig(
   # table_url=GDrive.get_url('1yHnyOdXS-HKzIsbenSi646jyf2AWU9vo'),
+  name='darg_no_inspection',
   archive_url=GDrive.get_url('1ltKXhZgA4Ab60FGKCqybhebSiAL2LMgG'),
   table_url=GDrive.get_url('1QgUYkzcjaCmo-kcgM8s2U8PYlx0C58oD'),
   archive_path=Path('sdss_lupton_jpg_128.tar.gz'),
@@ -191,6 +192,7 @@ DARG_NO_INSPECTION = DatasetConfig(
 """Default configuration object for RGB dataset."""
 
 MESD_SDSS_128 = DatasetConfig(
+  name='mesd_sdss_128',
   archive_url=GDrive.get_url('1YZ7A9rVglf5NJp27rW8-6aJXBfBNPfYv'),
   table_url=GDrive.get_url('1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H'),
   archive_path=Path('mesd_sdss_128.tar.gz'),
@@ -207,6 +209,7 @@ MESD_SDSS_128 = DatasetConfig(
 """MESD dataset with SDSS 128x128 images."""
 
 MESD_LEGACY_128 = DatasetConfig(
+  name='mesd_legacy_128',
   archive_url=GDrive.get_url('1cTU0SVEv3qVeVxF7pzhtOP7S-bx5cPOP'),
   table_url=GDrive.get_url('1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H'),
   archive_path=Path('mesd_legacy_128.tar.gz'),
