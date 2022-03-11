@@ -56,6 +56,7 @@ class HyperModel:
     self.hp = hyperparameters
     self.epochs = epochs
     self.nest_trials = nest_trials
+    self.study = None
 
     self.mlflow_cb = MLflowCallback(
       metric_name='optuna_score',
