@@ -216,6 +216,17 @@ class HyperModel:
       mlflow.log_figure(ax.figure, f'confusion_matrix.png')
       plt.close(ax.figure)
 
+      # log predictions
+      mlflow.log_dict(
+        {
+          'dataset': self.dataset.config.name,
+          'X': self.dataset.get_X_by_fold(0, kind='test'),
+          'y_pred': y_pred,
+          'y_true': y_true
+        },
+        'predictions.json'
+      )
+
     # generating optuna value to optimize (val_accuracy)
     last_epoch_accuracy = h['val_accuracy'][-1]
     return last_epoch_accuracy
