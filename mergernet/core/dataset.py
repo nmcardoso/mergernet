@@ -346,6 +346,17 @@ class Dataset:
     return ds_train, ds_test
 
 
+  def get_preds_dataset(self) -> tf.data.Dataset:
+    df = pd.read_csv(self.config.table_path)
+
+    X = np.array([
+      str((self.config.images_path / (_X + self.config.X_column_suffix)).resolve())
+      for _X in df[self.config.X_column].to_numpy()
+    ])
+
+    return tf.data.Dataset.from_tensor_slices(X)
+
+
   def compute_class_weight(self) -> dict:
     y = pd.read_csv(self.config.table_path)[self.config.y_column].to_numpy()
     if self.config.label_map:
