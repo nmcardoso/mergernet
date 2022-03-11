@@ -242,26 +242,10 @@ BLIND_SPLUS_LUPTON_128 = DatasetConfig(
 )
 """Blind dataset with S-PLUS 128x128 Lupton images."""
 
-BLIND_SPLUS_TRILOGY_128 = DatasetConfig(
-  name='blind_splus_trilogy_128',
-  archive_url={
-    'gdrive': GDrive.get_url(''),
-    'sciserver': SciServer.get_url('')
-  },
-  table_url=GDrive.get_url('1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG'),
-  archive_path=Path('blind_splus_trilogy_128.tar.xz'),
-  images_path=Path('blind_splus_trilogy_128'),
-  table_path=Path('blind_splus_gal80_r17_trilogy.csv'),
-  X_column='ID',
-  X_column_suffix='.png',
-  image_shape=(128, 128, 3)
-)
-"""Blind dataset with S-PLUS 128x128 Trilogy images."""
-
 BLIND_SPLUS_LUPTON_150 = DatasetConfig(
   name='blind_splus_lupton_150',
   archive_url={
-    'gdrive': GDrive.get_url(''),
+    'gdrive': GDrive.get_url('1qERSsv9W4d2ICyKlvhhPaR7a2j6W5HrD'),
     'sciserver': SciServer.get_url('946b0d5c-741e-463a-bdbc-4a04313c00c7')
   },
   table_url=GDrive.get_url('1qd0lxMf2WzPF8bW0NciX1wwfa_mrS0Om'),
@@ -274,11 +258,27 @@ BLIND_SPLUS_LUPTON_150 = DatasetConfig(
 )
 """Blind dataset with S-PLUS 150x150 Lupton images."""
 
+BLIND_SPLUS_TRILOGY_128 = DatasetConfig(
+  name='blind_splus_trilogy_128',
+  archive_url={
+    'gdrive': GDrive.get_url('1lPvOtE6HCJ7Xi5hAGfjgvrfwGiLRT7uH'),
+    'sciserver': SciServer.get_url('4fe38e2a-c1db-4cd3-92ec-1c2c5b2c5284')
+  },
+  table_url=GDrive.get_url('1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG'),
+  archive_path=Path('blind_splus_trilogy_128.tar.xz'),
+  images_path=Path('blind_splus_trilogy_128'),
+  table_path=Path('blind_splus_gal80_r17_trilogy.csv'),
+  X_column='ID',
+  X_column_suffix='.png',
+  image_shape=(128, 128, 3)
+)
+"""Blind dataset with S-PLUS 128x128 Trilogy images."""
+
 BLIND_SPLUS_TRILOGY_150 = DatasetConfig(
   name='blind_splus_trilogy_150',
   archive_url={
-    'gdrive': GDrive.get_url(''),
-    'sciserver': SciServer.get_url(''),
+    'gdrive': GDrive.get_url('1aiLtmbrJSRQTmSB3XP1AqXi0tfUi3S-H'),
+    'sciserver': SciServer.get_url('74ca0cba-6c9e-4022-95b8-9d7964d70947'),
   },
   table_url=GDrive.get_url('1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG'),
   archive_path=Path('blind_splus_trilogy_150.tar.xz'),
@@ -293,7 +293,7 @@ BLIND_SPLUS_TRILOGY_150 = DatasetConfig(
 DATASET_REGISTRY = {
   dataset['name']: dataset for dataset in [
     DARG_NO_INSPECTION, MESD_LEGACY_128, MESD_SDSS_128, BLIND_SPLUS_LUPTON_128,
-    BLIND_SPLUS_TRILOGY_128,
+    BLIND_SPLUS_TRILOGY_128, BLIND_SPLUS_TRILOGY_128, BLIND_SPLUS_TRILOGY_150
   ]
 }
 
