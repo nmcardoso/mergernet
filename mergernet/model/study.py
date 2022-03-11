@@ -75,6 +75,7 @@ class HyperModel:
     self.epochs = epochs
     self.nest_trials = nest_trials
     self.study = None
+    self.save_model = None
 
 
   def prepare_data(
@@ -271,13 +272,50 @@ class HyperModel:
 
 
 
+  def train(self, save):
+    tf.keras.backend.clear_session()
+
+    ds_train, ds_test = self.dataset.get_fold(0)
+    ds_train = self.prepare_data(
+      ds_train,
+      batch_size=self.hp.batch_size.suggest(),
+      buffer_size=5000
+    )
+    ds_test = self.prepare_data(
+      ds_test,
+      batch_size=self.hp.batch_size.suggest(),
+      buffer_size=1000
+    )
+    class_weights = self.dataset.compute_class_weight()
+
+    model = self.build_model(input_shape=self.dataset.config.image_shape)
+
+    t = Timming()
+    L.info('[TRAIN] Start of training loop')
+    history = model.fit(
+      ds_train,
+      batch_size=self.hp.batch_size.suggest(),
+      epochs=self.epochs,
+      validation_data=ds_test,
+      class_weight=class_weights,
+      callbacks=[]
+    )
+    L.info(f'[TRAIN] End of training loop, duration: {t.end()}.')
+
+    with mlflow.start_run(run_name='predict', nested=self.nest_trials) as run:
+      pass
+
+
   def hypertrain(
     self,
     optuna_uri: str,
     n_trials: int,
     pruner: str = 'hyperband',
-    resume: bool = False
+    resume: bool = False,
+    save_model: bool = True
   ):
+    self.save_model = save_model
+
     if resume:
       L.info(f'[HYPER] resuming previous optimization of {self.name} study')
 
@@ -315,7 +353,6 @@ class HyperModel:
     )
 
     L.info(f'[HYPER] optuna optimization finished in {t.end()}')
-
     L.info(f'[HYPER] number of finished trials: {len(study.trials)}')
     L.info(f'[HYPER] ----- begin of best trial summary -----')
     L.info(f'[HYPER] optimization score: {study.best_trial.value}')

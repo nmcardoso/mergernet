@@ -141,7 +141,8 @@ class Job:
       optuna_uri=self.optuna_uri,
       n_trials=self.job['config']['optuna']['n_trials'],
       pruner=self.job['config']['optuna']['pruner'],
-      resume=bool(self.job['config']['resume'])
+      resume=bool(self.job['config']['resume']),
+      save_model=self.job['config']['save_model'],
     )
 
 
