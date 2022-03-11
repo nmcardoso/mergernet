@@ -51,8 +51,12 @@ class SaveCallback(tf.keras.callbacks.Callback):
 
 
   def on_train_end(self, logs):
-    study_min_loss = self.study.best_value
-    if logs['val_loss'] < study_min_loss:
+    try:
+      best_value = self.study.best_value
+    except:
+      best_value = -1
+
+    if logs['val_accuracy'] > best_value:
       save_path = SAVED_MODELS_PATH / (self.name + '.h5')
       if not save_path.parent.exists():
         save_path.parent.mkdir(parents=True, exist_ok=True)
