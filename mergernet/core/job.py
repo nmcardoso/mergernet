@@ -83,6 +83,7 @@ class Job:
   def _upload_models(self, override: bool = False):
     local_folder = SAVED_MODELS_PATH
     remote_folder = Path(GDRIVE_PATH) / 'saved_models'
+    remote_folder.mkdir(parents=True, exist_ok=True)
 
     for model_path in local_folder.iterdir():
       remote_path = remote_folder / model_path.name
