@@ -20,6 +20,7 @@ import pandas as pd
 from mergernet.core.utils import load_image, load_table
 from mergernet.core.constants import RANDOM_SEED
 from mergernet.services.google import GDrive
+from mergernet.services.sciserver import SciServer
 
 
 
@@ -134,8 +135,8 @@ class DatasetConfig:
   def __init__(
     self,
     name: str = None,
-    archive_url: str = None,
-    table_url: str = None,
+    archive_url: Union[str, Dict[str, str]] = None,
+    table_url: Union[str, Dict[str, str]] = None,
     archive_path: Path = None,
     images_path: Path = None,
     table_path: Path = None,
@@ -225,10 +226,75 @@ MESD_LEGACY_128 = DatasetConfig(
 )
 """MESD dataset with Legacy Survey 128x128 images."""
 
+BLIND_SPLUS_LUPTON_128 = DatasetConfig(
+  name='blind_splus_lupton_128',
+  archive_url={
+    'gdrive': GDrive.get_url('1TktT_u_NTqyBPKq5KG8hW0TVYhZe6Q3r'),
+    'sciserver': SciServer.get_url('28d96731-35d9-4eac-bdee-7ccb81c5456d')
+  },
+  table_url=GDrive.get_url('1qd0lxMf2WzPF8bW0NciX1wwfa_mrS0Om'),
+  archive_path=Path('blind_splus_lupton_128.tar.xz'),
+  images_path=Path('blind_splus_lupton_128'),
+  table_path=Path('blind_splus_gal80_r17_lupton.csv'),
+  X_column='ID',
+  X_column_suffix='.png',
+  image_shape=(128, 128, 3)
+)
+"""Blind dataset with S-PLUS 128x128 Lupton images."""
+
+BLIND_SPLUS_TRILOGY_128 = DatasetConfig(
+  name='blind_splus_trilogy_128',
+  archive_url={
+    'gdrive': GDrive.get_url(''),
+    'sciserver': SciServer.get_url('')
+  },
+  table_url=GDrive.get_url('1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG'),
+  archive_path=Path('blind_splus_trilogy_128.tar.xz'),
+  images_path=Path('blind_splus_trilogy_128'),
+  table_path=Path('blind_splus_gal80_r17_trilogy.csv'),
+  X_column='ID',
+  X_column_suffix='.png',
+  image_shape=(128, 128, 3)
+)
+"""Blind dataset with S-PLUS 128x128 Trilogy images."""
+
+BLIND_SPLUS_LUPTON_150 = DatasetConfig(
+  name='blind_splus_lupton_150',
+  archive_url={
+    'gdrive': GDrive.get_url(''),
+    'sciserver': SciServer.get_url('946b0d5c-741e-463a-bdbc-4a04313c00c7')
+  },
+  table_url=GDrive.get_url('1qd0lxMf2WzPF8bW0NciX1wwfa_mrS0Om'),
+  archive_path=Path('blind_splus_lupton_150.tar.xz'),
+  images_path=Path('blind_splus_lupton_150'),
+  table_path=Path('blind_splus_gal80_r17_lupton.csv'),
+  X_column='ID',
+  X_column_suffix='.png',
+  image_shape=(150, 150, 3)
+)
+"""Blind dataset with S-PLUS 150x150 Lupton images."""
+
+BLIND_SPLUS_TRILOGY_150 = DatasetConfig(
+  name='blind_splus_trilogy_150',
+  archive_url={
+    'gdrive': GDrive.get_url(''),
+    'sciserver': SciServer.get_url(''),
+  },
+  table_url=GDrive.get_url('1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG'),
+  archive_path=Path('blind_splus_trilogy_150.tar.xz'),
+  images_path=Path('blind_splus_trilogy_150'),
+  table_path=Path('blind_splus_gal80_r17_trilogy.csv'),
+  X_column='ID',
+  X_column_suffix='.png',
+  image_shape=(150, 150, 3)
+)
+"""Blind dataset with S-PLUS 150x150 Trilogy images."""
+
 DATASET_REGISTRY = {
-  'darg_no_inspection': DARG_NO_INSPECTION,
-  'mesd_sdss_128': MESD_SDSS_128,
-  'mesd_legacy_128': MESD_LEGACY_128
+  dataset['name']: dataset for dataset in [
+    DARG_NO_INSPECTION, MESD_LEGACY_128, MESD_SDSS_128, BLIND_SPLUS_LUPTON_128,
+    BLIND_SPLUS_TRILOGY_128,
+  ]
 }
 
 
@@ -293,9 +359,16 @@ class Dataset:
     if not self.config.archive_path.parent.exists():
       self.config.archive_path.parent.mkdir(parents=True, exist_ok=True)
 
+    if type(self.config.archive_url) == dict:
+      archive_url = self.config.archive_url.get(
+        'sciserver', self.config.archive_url.get('gdrive')
+      )
+    else:
+      archive_url = self.config.archive_url
+
     tf.keras.utils.get_file(
       fname=self.config.archive_path.resolve(),
-      origin=self.config.archive_url,
+      origin=archive_url,
       cache_subdir=self.config.archive_path.parent.resolve(),
       archive_format='tar',
       extract=True
@@ -304,9 +377,16 @@ class Dataset:
     if not self.config.table_path.parent.exists():
       self.config.table_path.parent.mkdir(parents=True, exist_ok=True)
 
+    if type(self.config.table_url) == dict:
+      table_url = self.config.table_url.get(
+        'sciserver', self.config.table_url.get('gdrive')
+      )
+    else:
+      table_url = self.config.table_url
+
     tf.keras.utils.get_file(
       fname=self.config.table_path.resolve(),
-      origin=self.config.table_url,
+      origin=table_url,
       cache_subdir=self.config.table_path.parent.resolve()
     )
 
