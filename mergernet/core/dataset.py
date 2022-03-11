@@ -357,6 +357,11 @@ class Dataset:
     return df[self.config.X_column].to_numpy()
 
 
+  def get_X(self) -> np.ndarray:
+    df = pd.read_csv(self.config.table_path)
+    return df[self.config.X_column].to_numpy()
+
+
   def get_preds_dataset(self) -> tf.data.Dataset:
     df = pd.read_csv(self.config.table_path)
 
