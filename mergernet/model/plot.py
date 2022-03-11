@@ -15,7 +15,7 @@ plot_params = {
   # 'font.serif': 'Times',
   'font.family': 'DejaVu Sans',
   'legend.fontsize': 13,
-  'axes.labelsize': 15,
+  'axes.labelsize': 16.5,
   # 'axes.grid': True,
   'axes.grid.axis': 'both',
   'grid.linestyle': '-',
@@ -396,3 +396,70 @@ def mag_class_distribution(
 
   if label_map is not None:
     plt.legend(loc=legend_pos, ncol=legend_cols)
+
+
+
+def object_position(
+  ra,
+  dec,
+  sample,
+  color_map,
+  alpha=0.5,
+  size=1,
+  figsize=(12, 6),
+  title=None,
+  save: str = None
+):
+  from mw_plot import mw_radec
+  ra = np.array(ra)
+  dec = np.array(dec)
+  sample = np.array(sample)
+
+  fig = plt.figure(figsize=figsize)
+  ax = fig.gca()
+
+  for _sample, _color in color_map.items():
+    mask = sample == _sample
+    ra_masked = ra[mask]
+    dec_masked = dec[mask]
+    ax.scatter(
+      ra_masked,
+      dec_masked,
+      color=_color,
+      s=size,
+      alpha=alpha,
+      label=_sample
+    )
+
+  mw_ra, mw_dec = mw_radec()
+  ax.plot(mw_ra, mw_dec, c='k', ls='--')
+
+  ax.set_xlim(0, 360)
+  ax.set_ylim(-90, 90)
+  ax.set_xlabel("RA")
+  ax.set_ylabel("DEC")
+  ax.minorticks_on()
+  # ax.tick_params(labelsize=15, width=2, length=10, which='major')
+  # ax.tick_params(width=1, length=5, which='minor')
+
+  if title is not None:
+    ax.set_title(title, fontsize=20)
+
+  l = ax.legend(
+    bbox_to_anchor=(0.5, 0.03),
+    loc="upper center",
+    bbox_transform=fig.transFigure,
+    ncol=5,
+    markerscale=5,
+    fontsize=15,
+    handletextpad=0.2
+  )
+  for lh in l.legendHandles:
+    lh.set_alpha(1)
+
+  if save is not None:
+    plt.savefig(save)
+    plt.show()
+    plt.close(fig)
+
+  return ax
