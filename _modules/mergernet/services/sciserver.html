@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mergernet.jobs.j001_resnet50_hyperband &#8212; MergerNet  documentation</title>
+    <title>mergernet.services.sciserver &#8212; MergerNet  documentation</title>
     
     <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 <link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -141,32 +141,11 @@
               
               <div>
                 
-  <h1>Source code for mergernet.jobs.j001_resnet50_hyperband</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">mergernet.core.jobs</span> <span class="kn">import</span> <span class="n">BaseJob</span>
-<span class="kn">from</span> <span class="nn">mergernet.core.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
-<span class="kn">from</span> <span class="nn">mergernet.model.study</span> <span class="kn">import</span> <span class="n">HyperModel</span>
-
-
-
-<div class="viewcode-block" id="Job"><a class="viewcode-back" href="../../../api/mergernet.jobs.j001_resnet50_hyperband.Job.html#mergernet.jobs.j001_resnet50_hyperband.Job">[docs]</a><span class="k">class</span> <span class="nc">Job</span><span class="p">(</span><span class="n">BaseJob</span><span class="p">):</span>
-  <span class="n">jobid</span> <span class="o">=</span> <span class="mi">1</span>
-  <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Resnet50&#39;</span>
-  <span class="n">description</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s1">&#39;Minimal resnet50 experiment with 3 classes and unclean data. &#39;</span>
-    <span class="s1">&#39;Using all darg mergers with modelMag &lt; 17.2. &#39;</span>
-    <span class="s1">&#39;Using hyperband pruner.&#39;</span>
-  <span class="p">)</span>
-
-<div class="viewcode-block" id="Job.run"><a class="viewcode-back" href="../../../api/mergernet.jobs.j001_resnet50_hyperband.Job.html#mergernet.jobs.j001_resnet50_hyperband.Job.run">[docs]</a>  <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">data_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_path</span><span class="p">)</span>
-
-    <span class="n">model</span> <span class="o">=</span> <span class="n">HyperModel</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="s1">&#39;resnet50_minimal&#39;</span><span class="p">)</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">hypertrain</span><span class="p">(</span>
-      <span class="n">n_trials</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-      <span class="n">epochs</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
-      <span class="n">pruner</span><span class="o">=</span><span class="s1">&#39;hyperband&#39;</span>
-    <span class="p">)</span></div></div>
-
+  <h1>Source code for mergernet.services.sciserver</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="SciServer"><a class="viewcode-back" href="../../../api/mergernet.services.sciserver.SciServer.html#mergernet.services.sciserver.SciServer">[docs]</a><span></span><span class="k">class</span> <span class="nc">SciServer</span><span class="p">:</span>
+<div class="viewcode-block" id="SciServer.get_url"><a class="viewcode-back" href="../../../api/mergernet.services.sciserver.SciServer.html#mergernet.services.sciserver.SciServer.get_url">[docs]</a>  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">get_url</span><span class="p">(</span><span class="n">fileid</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;https://www.scidrive.org/vospace-2.0/data/</span><span class="si">{</span><span class="n">fileid</span><span class="si">}</span><span class="s1">&#39;</span></div></div>
 </pre></div>
 
               </div>

@@ -18,6 +18,7 @@ mergernet.model.plot
       conf_matrix
       data_distribution
       mag_class_distribution
+      object_position
       roc
       train_metrics
    

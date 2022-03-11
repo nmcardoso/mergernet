@@ -32,6 +32,7 @@
    mergernet.services.google
    mergernet.services.imaging
    mergernet.services.legacy
+   mergernet.services.sciserver
    mergernet.services.sdss
    mergernet.services.splus
    mergernet.services.tensorboard

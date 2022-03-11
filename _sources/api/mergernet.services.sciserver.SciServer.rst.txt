@@ -1,0 +1,17 @@
+mergernet.services.sciserver.SciServer
+======================================
+
+.. currentmodule:: mergernet.services.sciserver
+
+.. autoclass:: SciServer
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

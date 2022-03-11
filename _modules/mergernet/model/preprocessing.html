@@ -159,6 +159,13 @@
 
 
 
+<div class="viewcode-block" id="load_png"><a class="viewcode-back" href="../../../api/mergernet.model.preprocessing.load_png.html#mergernet.model.preprocessing.load_png">[docs]</a><span class="k">def</span> <span class="nf">load_png</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+  <span class="n">img_bytes</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+  <span class="n">img</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">decode_png</span><span class="p">(</span><span class="n">img_bytes</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="n">y</span></div>
+
+
+
 <div class="viewcode-block" id="normalize_rgb"><a class="viewcode-back" href="../../../api/mergernet.model.preprocessing.normalize_rgb.html#mergernet.model.preprocessing.normalize_rgb">[docs]</a><span class="k">def</span> <span class="nf">normalize_rgb</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
   <span class="k">return</span> <span class="n">X</span> <span class="o">/</span> <span class="mf">255.</span><span class="p">,</span> <span class="n">y</span></div>
 

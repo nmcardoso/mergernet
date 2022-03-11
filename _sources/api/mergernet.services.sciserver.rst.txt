@@ -1,7 +1,7 @@
-mergernet.model.study
-=====================
+mergernet.services.sciserver
+============================
 
-.. automodule:: mergernet.model.study
+.. automodule:: mergernet.services.sciserver
 
    
    
@@ -19,8 +19,7 @@ mergernet.model.study
       :toctree:
       :template: class-template.rst
    
-      HyperModel
-      PruneCallback
+      SciServer
    
    
 

@@ -159,7 +159,7 @@
   <span class="c1"># &#39;font.serif&#39;: &#39;Times&#39;,</span>
   <span class="s1">&#39;font.family&#39;</span><span class="p">:</span> <span class="s1">&#39;DejaVu Sans&#39;</span><span class="p">,</span>
   <span class="s1">&#39;legend.fontsize&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span>
-  <span class="s1">&#39;axes.labelsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+  <span class="s1">&#39;axes.labelsize&#39;</span><span class="p">:</span> <span class="mf">16.5</span><span class="p">,</span>
   <span class="c1"># &#39;axes.grid&#39;: True,</span>
   <span class="s1">&#39;axes.grid.axis&#39;</span><span class="p">:</span> <span class="s1">&#39;both&#39;</span><span class="p">,</span>
   <span class="s1">&#39;grid.linestyle&#39;</span><span class="p">:</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
@@ -540,6 +540,73 @@
 
   <span class="k">if</span> <span class="n">label_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">legend_pos</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="n">legend_cols</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="object_position"><a class="viewcode-back" href="../../../api/mergernet.model.plot.object_position.html#mergernet.model.plot.object_position">[docs]</a><span class="k">def</span> <span class="nf">object_position</span><span class="p">(</span>
+  <span class="n">ra</span><span class="p">,</span>
+  <span class="n">dec</span><span class="p">,</span>
+  <span class="n">sample</span><span class="p">,</span>
+  <span class="n">color_map</span><span class="p">,</span>
+  <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+  <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+  <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+  <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+  <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">):</span>
+  <span class="kn">from</span> <span class="nn">mw_plot</span> <span class="kn">import</span> <span class="n">mw_radec</span>
+  <span class="n">ra</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ra</span><span class="p">)</span>
+  <span class="n">dec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span>
+  <span class="n">sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+
+  <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+  <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+
+  <span class="k">for</span> <span class="n">_sample</span><span class="p">,</span> <span class="n">_color</span> <span class="ow">in</span> <span class="n">color_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">sample</span> <span class="o">==</span> <span class="n">_sample</span>
+    <span class="n">ra_masked</span> <span class="o">=</span> <span class="n">ra</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">dec_masked</span> <span class="o">=</span> <span class="n">dec</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+      <span class="n">ra_masked</span><span class="p">,</span>
+      <span class="n">dec_masked</span><span class="p">,</span>
+      <span class="n">color</span><span class="o">=</span><span class="n">_color</span><span class="p">,</span>
+      <span class="n">s</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
+      <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span>
+      <span class="n">label</span><span class="o">=</span><span class="n">_sample</span>
+    <span class="p">)</span>
+
+  <span class="n">mw_ra</span><span class="p">,</span> <span class="n">mw_dec</span> <span class="o">=</span> <span class="n">mw_radec</span><span class="p">()</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mw_ra</span><span class="p">,</span> <span class="n">mw_dec</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+  <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;RA&quot;</span><span class="p">)</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;DEC&quot;</span><span class="p">)</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">minorticks_on</span><span class="p">()</span>
+  <span class="c1"># ax.tick_params(labelsize=15, width=2, length=10, which=&#39;major&#39;)</span>
+  <span class="c1"># ax.tick_params(width=1, length=5, which=&#39;minor&#39;)</span>
+
+  <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+  <span class="n">l</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+    <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">),</span>
+    <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper center&quot;</span><span class="p">,</span>
+    <span class="n">bbox_transform</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">transFigure</span><span class="p">,</span>
+    <span class="n">ncol</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">markerscale</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+    <span class="n">handletextpad</span><span class="o">=</span><span class="mf">0.2</span>
+  <span class="p">)</span>
+  <span class="k">for</span> <span class="n">lh</span> <span class="ow">in</span> <span class="n">l</span><span class="o">.</span><span class="n">legendHandles</span><span class="p">:</span>
+    <span class="n">lh</span><span class="o">.</span><span class="n">set_alpha</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">save</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">ax</span></div>
 </pre></div>
 
               </div>
