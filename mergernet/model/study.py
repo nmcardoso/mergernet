@@ -286,13 +286,6 @@ class HyperModel:
       L.info(f'[HYPER] {k}: {str(v)}')
     L.info(f'[HYPER] ----- end of best trial summary -----')
 
-    # ax = optuna.visualization.matplotlib.plot_optimization_history(study)
-    # fig = optuna.visualization.plot_optimization_history(study)
-    # mlflow.log_figure(fig, 'optimization_history.html')
-    # path = str((ah.artifact_path / 'optimization_history.png').resolve())
-    # ax.figure.savefig(path,  pad_inches=0.01, bbox_inches='tight')
-    # ah.upload(fname='optimization_history.png', github=True, gdrive=True)
-
 
   def _architecture_switch(self, pretrained_arch):
     if pretrained_arch == 'xception':
