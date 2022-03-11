@@ -233,7 +233,13 @@ class HyperModel:
 
 
 
-  def hypertrain(self, optuna_uri: str, n_trials: int, pruner: str = 'hyperband', resume: bool = False):
+  def hypertrain(
+    self,
+    optuna_uri: str,
+    n_trials: int,
+    pruner: str = 'hyperband',
+    resume: bool = False
+  ):
     if resume:
       L.info(f'[HYPER] resuming previous optimization of {self.name} study')
 
@@ -243,7 +249,7 @@ class HyperModel:
         n_warmup_steps=10
       )
     elif pruner == 'hyperband':
-      pruner_instance = optuna.pruners.HyperbandPruner(min_resource=4)
+      pruner_instance = optuna.pruners.HyperbandPruner(min_resource=7)
 
     L.info(f'[HYPER] start of optuna optimization')
 
