@@ -349,7 +349,7 @@ class HyperModel:
     self.study = study
 
     optimize_params = {
-      'optimize': self.objective,
+      'func': self.objective,
       'n_trials': n_trials
     }
 
