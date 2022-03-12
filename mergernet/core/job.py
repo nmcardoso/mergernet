@@ -165,7 +165,7 @@ class Job:
       dataset=ds,
       name=self.experiment_name
     )
-    model.predict(model=model_local_path, dataset=ds)
+    model.predict(model_name=self.job['load'], model=model_local_path, dataset=ds)
 
 
   def _scan_jobs(self) -> Dict[str, Path]:

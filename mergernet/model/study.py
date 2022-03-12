@@ -236,6 +236,7 @@ class HyperModel:
 
   def predict(
     self,
+    model_name: str,
     model: Union[str, Path, tf.keras.Model],
     dataset: Dataset
   ) -> list:
@@ -250,13 +251,14 @@ class HyperModel:
     preds = model.predict(ds)
 
     with mlflow.start_run(run_name='predict', nested=self.nest_trials) as run:
-      mlflow.log_params(
-        {
-          hp_name: hp_instance.value
-          for hp_name, hp_instance in self.hp.__dict__.items()
-          if not hp_name.startswith('_') and isinstance(hp_instance, ConstantHyperParameter)
-        }
-      )
+      mlflow.log_param('model', model_name)
+      # mlflow.log_params(
+      #   {
+      #     hp_name: hp_instance.value
+      #     for hp_name, hp_instance in self.hp.__dict__.items()
+      #     if not hp_name.startswith('_') and isinstance(hp_instance, ConstantHyperParameter)
+      #   }
+      # )
 
       mlflow.log_dict(
         {
