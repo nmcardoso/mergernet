@@ -145,7 +145,7 @@
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">secrets</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">optuna</span>
@@ -174,13 +174,14 @@
 
 
 <div class="viewcode-block" id="PruneCallback"><a class="viewcode-back" href="../../../api/mergernet.model.study.PruneCallback.html#mergernet.model.study.PruneCallback">[docs]</a><span class="k">class</span> <span class="nc">PruneCallback</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">Callback</span><span class="p">):</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span><span class="p">,</span> <span class="n">objective_metric</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">PruneCallback</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">trial</span> <span class="o">=</span> <span class="n">trial</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span> <span class="o">=</span> <span class="n">objective_metric</span> <span class="c1"># default: &quot;val_loss&quot;</span>
 
 
-<div class="viewcode-block" id="PruneCallback.on_epoch_end"><a class="viewcode-back" href="../../../api/mergernet.model.study.PruneCallback.html#mergernet.model.study.PruneCallback.on_epoch_end">[docs]</a>  <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">logs</span><span class="p">[</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="n">epoch</span><span class="p">)</span>
+<div class="viewcode-block" id="PruneCallback.on_epoch_end"><a class="viewcode-back" href="../../../api/mergernet.model.study.PruneCallback.html#mergernet.model.study.PruneCallback.on_epoch_end">[docs]</a>  <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">logs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="n">epoch</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">should_prune</span><span class="p">():</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">stop_training</span> <span class="o">=</span> <span class="kc">True</span>
@@ -188,23 +189,82 @@
 
 
 <div class="viewcode-block" id="SaveCallback"><a class="viewcode-back" href="../../../api/mergernet.model.study.SaveCallback.html#mergernet.model.study.SaveCallback">[docs]</a><span class="k">class</span> <span class="nc">SaveCallback</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">Callback</span><span class="p">):</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">study</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">Study</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">study</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">Study</span><span class="p">,</span>
+    <span class="n">objective_metric</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">objective_direction</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">SaveCallback</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">study</span> <span class="o">=</span> <span class="n">study</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span> <span class="o">=</span> <span class="n">objective_metric</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">default_value</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="k">if</span> <span class="n">objective_direction</span> <span class="o">==</span> <span class="s1">&#39;maximize&#39;</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">operator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">greater</span> <span class="k">if</span> <span class="n">objective_direction</span> <span class="o">==</span> <span class="s1">&#39;maximine&#39;</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">less</span>
 
 
-<div class="viewcode-block" id="SaveCallback.on_train_end"><a class="viewcode-back" href="../../../api/mergernet.model.study.SaveCallback.html#mergernet.model.study.SaveCallback.on_train_end">[docs]</a>  <span class="k">def</span> <span class="nf">on_train_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="p">):</span>
+<div class="viewcode-block" id="SaveCallback.on_train_end"><a class="viewcode-back" href="../../../api/mergernet.model.study.SaveCallback.html#mergernet.model.study.SaveCallback.on_train_end">[docs]</a>  <span class="k">def</span> <span class="nf">on_train_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
     <span class="k">try</span><span class="p">:</span>
       <span class="n">best_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">best_value</span>
     <span class="k">except</span><span class="p">:</span>
-      <span class="n">best_value</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+      <span class="n">best_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_value</span>
 
-    <span class="k">if</span> <span class="n">logs</span><span class="p">[</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">best_value</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="n">logs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span><span class="p">],</span> <span class="n">best_value</span><span class="p">):</span>
       <span class="n">save_path</span> <span class="o">=</span> <span class="n">SAVED_MODELS_PATH</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.h5&#39;</span><span class="p">)</span>
       <span class="k">if</span> <span class="ow">not</span> <span class="n">save_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
         <span class="n">save_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="MLflowTensorflowCallback"><a class="viewcode-back" href="../../../api/mergernet.model.study.MLflowTensorflowCallback.html#mergernet.model.study.MLflowTensorflowCallback">[docs]</a><span class="k">class</span> <span class="nc">MLflowTensorflowCallback</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">Callback</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span><span class="p">,</span>
+    <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span>
+    <span class="n">ds_test</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span>
+  <span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">trial</span> <span class="o">=</span> <span class="n">trial</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ds_test</span> <span class="o">=</span> <span class="n">ds_test</span>
+
+
+<div class="viewcode-block" id="MLflowTensorflowCallback.on_epoch_end"><a class="viewcode-back" href="../../../api/mergernet.model.study.MLflowTensorflowCallback.html#mergernet.model.study.MLflowTensorflowCallback.on_epoch_end">[docs]</a>  <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]):</span>
+    <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">number</span><span class="p">),</span> <span class="n">nested</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nest_trials</span><span class="p">)</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
+      <span class="c1"># The mlflow run will be created before optuna mlflow callback,</span>
+      <span class="c1"># so the following line is needed in order to optuna get the current run.</span>
+      <span class="c1"># https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">set_system_attr</span><span class="p">(</span><span class="n">RUN_ID_ATTRIBUTE_KEY</span><span class="p">,</span> <span class="n">run</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span><span class="p">)</span>
+
+      <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="n">logs</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">epoch</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MLflowTensorflowCallback.on_train_end"><a class="viewcode-back" href="../../../api/mergernet.model.study.MLflowTensorflowCallback.html#mergernet.model.study.MLflowTensorflowCallback.on_train_end">[docs]</a>  <span class="k">def</span> <span class="nf">on_train_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+    <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">number</span><span class="p">),</span> <span class="n">nested</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nest_trials</span><span class="p">)</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
+      <span class="c1"># The mlflow run will be created before optuna mlflow callback,</span>
+      <span class="c1"># so the following line is needed in order to optuna get the current run.</span>
+      <span class="c1"># https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">set_system_attr</span><span class="p">(</span><span class="n">RUN_ID_ATTRIBUTE_KEY</span><span class="p">,</span> <span class="n">run</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span><span class="p">)</span>
+
+      <span class="c1"># confusion matrix plot</span>
+      <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds_test</span><span class="p">)</span>
+      <span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">y</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds_test</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+      <span class="n">lm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">label_map</span>
+      <span class="n">labels</span> <span class="o">=</span> <span class="p">[[</span><span class="o">*</span><span class="n">lm</span><span class="o">.</span><span class="n">keys</span><span class="p">()][</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">lm</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+      <span class="n">ax</span> <span class="o">=</span> <span class="n">conf_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">one_hot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+      <span class="n">mlflow</span><span class="o">.</span><span class="n">log_figure</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;confusion_matrix.png&#39;</span><span class="p">)</span>
+      <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="p">)</span>
+
+      <span class="c1"># log predictions</span>
+      <span class="n">mlflow</span><span class="o">.</span><span class="n">log_dict</span><span class="p">(</span>
+        <span class="p">{</span>
+          <span class="s1">&#39;dataset&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+          <span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_X_by_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+          <span class="s1">&#39;y_pred&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+          <span class="s1">&#39;y_true&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;predictions.json&#39;</span>
+      <span class="p">)</span></div></div>
 
 
 
@@ -225,6 +285,8 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">study</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">save_model</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">mlflow_enabled</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span> <span class="o">=</span> <span class="s1">&#39;val_loss&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">objective_direction</span> <span class="o">=</span> <span class="s1">&#39;minimize&#39;</span>
 
 
 <div class="viewcode-block" id="HyperModel.prepare_data"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.prepare_data">[docs]</a>  <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span>
@@ -276,19 +338,19 @@
     <span class="p">)</span>
 
     <span class="n">data_aug_layers</span> <span class="o">=</span> <span class="p">[</span>
-      <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">RandomFlip</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
-      <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">RandomFlip</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+      <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">RandomFlip</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">RANDOM_SEED</span><span class="p">),</span>
+      <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">RandomFlip</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">RANDOM_SEED</span><span class="p">),</span>
       <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">RandomRotation</span><span class="p">(</span>
         <span class="p">(</span><span class="o">-</span><span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.08</span><span class="p">),</span>
         <span class="n">fill_mode</span><span class="o">=</span><span class="s1">&#39;reflect&#39;</span><span class="p">,</span>
         <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;bilinear&#39;</span><span class="p">,</span>
-        <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
+        <span class="n">seed</span><span class="o">=</span><span class="n">RANDOM_SEED</span>
       <span class="p">),</span>
       <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">RandomZoom</span><span class="p">(</span>
         <span class="p">(</span><span class="o">-</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
         <span class="n">fill_mode</span><span class="o">=</span><span class="s1">&#39;reflect&#39;</span><span class="p">,</span>
         <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;bilinear&#39;</span><span class="p">,</span>
-        <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
+        <span class="n">seed</span><span class="o">=</span><span class="n">RANDOM_SEED</span>
       <span class="p">)</span>
     <span class="p">]</span>
     <span class="n">data_aug_block</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">data_aug_layers</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;data_augmentation&#39;</span><span class="p">)</span>
@@ -315,23 +377,28 @@
     <span class="k">return</span> <span class="n">model</span></div>
 
 
-<div class="viewcode-block" id="HyperModel.predict"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.predict">[docs]</a>  <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<div class="viewcode-block" id="HyperModel.predict"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.predict">[docs]</a>  <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">],</span>
+    <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span>
+  <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">clear_session</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
+      <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 
     <span class="n">ds</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_preds_dataset</span><span class="p">()</span>
     <span class="n">ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">buffer_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 
-    <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_model</span><span class="p">()</span>
     <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
 
     <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="s1">&#39;predict&#39;</span><span class="p">,</span> <span class="n">nested</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nest_trials</span><span class="p">)</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
-      <span class="n">mlflow</span><span class="o">.</span><span class="n">log_dict</span><span class="p">(</span>
+      <span class="n">mlflow</span><span class="o">.</span><span class="n">log_params</span><span class="p">(</span>
         <span class="p">{</span>
-          <span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">value</span> <span class="c1"># all HPs are ConstantHyperParameter instances</span>
-          <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-          <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">ConstantHyperParameter</span><span class="p">)</span>
-        <span class="p">},</span>
-        <span class="s1">&#39;hyperparameters.json&#39;</span>
+          <span class="n">hp_name</span><span class="p">:</span> <span class="n">hp_instance</span><span class="o">.</span><span class="n">value</span>
+          <span class="k">for</span> <span class="n">hp_name</span><span class="p">,</span> <span class="n">hp_instance</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+          <span class="k">if</span> <span class="ow">not</span> <span class="n">hp_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hp_instance</span><span class="p">,</span> <span class="n">ConstantHyperParameter</span><span class="p">)</span>
+        <span class="p">}</span>
       <span class="p">)</span>
 
       <span class="n">mlflow</span><span class="o">.</span><span class="n">log_dict</span><span class="p">(</span>
@@ -362,11 +429,31 @@
     <span class="p">)</span>
     <span class="n">class_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">compute_class_weight</span><span class="p">()</span>
 
-    <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_model</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_shape</span><span class="p">,</span> <span class="n">trial</span><span class="o">=</span><span class="n">trial</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_model</span><span class="p">(</span>
+      <span class="n">input_shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_shape</span><span class="p">,</span>
+      <span class="n">trial</span><span class="o">=</span><span class="n">trial</span>
+    <span class="p">)</span>
 
-    <span class="n">callbacks</span> <span class="o">=</span> <span class="p">[</span><span class="n">PruneCallback</span><span class="p">(</span><span class="n">trial</span><span class="p">)]</span>
+    <span class="n">callbacks</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">PruneCallback</span><span class="p">(</span><span class="n">trial</span><span class="o">=</span><span class="n">trial</span><span class="p">,</span> <span class="n">objective_metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mlflow_enabled</span><span class="p">:</span>
+      <span class="n">callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">MLflowTensorflowCallback</span><span class="p">(</span>
+          <span class="n">trial</span><span class="o">=</span><span class="n">trial</span><span class="p">,</span>
+          <span class="n">dataset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span>
+          <span class="n">ds_test</span><span class="o">=</span><span class="n">ds_test</span>
+        <span class="p">)</span>
+      <span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_model</span><span class="p">:</span>
-      <span class="n">callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SaveCallback</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">study</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="p">))</span>
+      <span class="n">callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">SaveCallback</span><span class="p">(</span>
+          <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+          <span class="n">study</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="p">,</span>
+          <span class="n">objective_metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span><span class="p">,</span>
+          <span class="n">objective_direction</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_direction</span>
+        <span class="p">)</span>
+      <span class="p">)</span>
 
     <span class="n">t</span> <span class="o">=</span> <span class="n">Timming</span><span class="p">()</span>
     <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;[TRAIN] Start of training loop&#39;</span><span class="p">)</span>
@@ -382,47 +469,47 @@
 
     <span class="c1"># history shape: {metric1: [val1, val2, ...], metric2: [val1, val2, ...]}</span>
     <span class="n">h</span> <span class="o">=</span> <span class="n">history</span><span class="o">.</span><span class="n">history</span>
-    <span class="n">epochs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]])</span>
+    <span class="c1"># epochs = len(h[list(h.keys())[0]])</span>
 
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mlflow_enabled</span><span class="p">:</span>
-      <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">trial</span><span class="o">.</span><span class="n">number</span><span class="p">),</span> <span class="n">nested</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nest_trials</span><span class="p">)</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
-        <span class="c1"># The mlflow run will be created before optuna mlflow callback,</span>
-        <span class="c1"># so the following line is needed in order to optuna get the current run.</span>
-        <span class="c1"># https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py</span>
-        <span class="n">trial</span><span class="o">.</span><span class="n">set_system_attr</span><span class="p">(</span><span class="n">RUN_ID_ATTRIBUTE_KEY</span><span class="p">,</span> <span class="n">run</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span><span class="p">)</span>
+    <span class="c1"># if self.mlflow_enabled:</span>
+    <span class="c1">#   with mlflow.start_run(run_name=str(trial.number), nested=self.nest_trials) as run:</span>
+    <span class="c1">#     # The mlflow run will be created before optuna mlflow callback,</span>
+    <span class="c1">#     # so the following line is needed in order to optuna get the current run.</span>
+    <span class="c1">#     # https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py</span>
+    <span class="c1">#     trial.set_system_attr(RUN_ID_ATTRIBUTE_KEY, run.info.run_id)</span>
 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
-          <span class="c1"># {k1: [v1, v2, ...], k2: [v1, v2, ...]} =&gt; {k1: vi, k2: vi}</span>
-          <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">h</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">h</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
-          <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+    <span class="c1">#     for i in range(epochs):</span>
+    <span class="c1">#       # {k1: [v1, v2, ...], k2: [v1, v2, ...]} =&gt; {k1: vi, k2: vi}</span>
+    <span class="c1">#       metrics = {name: h[name][i] for name in h.keys()}</span>
+    <span class="c1">#       mlflow.log_metrics(metrics=metrics, step=i)</span>
 
-        <span class="c1"># confusion matrix plot</span>
-        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ds_test</span><span class="p">)</span>
-        <span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">y</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">ds_test</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">lm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">label_map</span>
-        <span class="n">labels</span> <span class="o">=</span> <span class="p">[[</span><span class="o">*</span><span class="n">lm</span><span class="o">.</span><span class="n">keys</span><span class="p">()][</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">lm</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">conf_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">one_hot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
-        <span class="n">mlflow</span><span class="o">.</span><span class="n">log_figure</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;confusion_matrix.png&#39;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="p">)</span>
+    <span class="c1">#     # confusion matrix plot</span>
+    <span class="c1">#     y_pred = model.predict(ds_test)</span>
+    <span class="c1">#     y_true = np.concatenate([y for x, y in ds_test], axis=0)</span>
+    <span class="c1">#     lm = self.dataset.config.label_map</span>
+    <span class="c1">#     labels = [[*lm.keys()][v] for v in lm.values()]</span>
+    <span class="c1">#     ax = conf_matrix(y_true, y_pred, one_hot=True, labels=labels)</span>
+    <span class="c1">#     mlflow.log_figure(ax.figure, f&#39;confusion_matrix.png&#39;)</span>
+    <span class="c1">#     plt.close(ax.figure)</span>
 
-        <span class="c1"># log predictions</span>
-        <span class="n">mlflow</span><span class="o">.</span><span class="n">log_dict</span><span class="p">(</span>
-          <span class="p">{</span>
-            <span class="s1">&#39;dataset&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-            <span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_X_by_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
-            <span class="s1">&#39;y_pred&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
-            <span class="s1">&#39;y_true&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-          <span class="p">},</span>
-          <span class="s1">&#39;predictions.json&#39;</span>
-        <span class="p">)</span>
+    <span class="c1">#     # log predictions</span>
+    <span class="c1">#     mlflow.log_dict(</span>
+    <span class="c1">#       {</span>
+    <span class="c1">#         &#39;dataset&#39;: self.dataset.config.name,</span>
+    <span class="c1">#         &#39;X&#39;: np.array(self.dataset.get_X_by_fold(0, kind=&#39;test&#39;)).tolist(),</span>
+    <span class="c1">#         &#39;y_pred&#39;: np.array(y_pred).tolist(),</span>
+    <span class="c1">#         &#39;y_true&#39;: np.array(y_true).tolist()</span>
+    <span class="c1">#       },</span>
+    <span class="c1">#       &#39;predictions.json&#39;</span>
+    <span class="c1">#     )</span>
 
     <span class="c1"># generating optuna value to optimize (val_accuracy)</span>
-    <span class="n">last_epoch_accuracy</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">last_epoch_accuracy</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">last_epoch_accuracy</span></div>
 
 
 
-<div class="viewcode-block" id="HyperModel.train"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.train">[docs]</a>  <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save</span><span class="p">):</span>
+<div class="viewcode-block" id="HyperModel.train"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.train">[docs]</a>  <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">clear_session</span><span class="p">()</span>
 
     <span class="n">ds_train</span><span class="p">,</span> <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -461,12 +548,16 @@
     <span class="n">optuna_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">n_trials</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">pruner</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;hyperband&#39;</span><span class="p">,</span>
+    <span class="n">objective_metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;val_loss&#39;</span><span class="p">,</span>
+    <span class="n">objective_direction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;minimize&#39;</span><span class="p">,</span>
     <span class="n">resume</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">save_model</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">mlflow_enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
   <span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">save_model</span> <span class="o">=</span> <span class="n">save_model</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">mlflow_enabled</span> <span class="o">=</span> <span class="n">mlflow_enabled</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span> <span class="o">=</span> <span class="n">objective_metric</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">objective_direction</span> <span class="o">=</span> <span class="n">objective_direction</span>
 
     <span class="k">if</span> <span class="n">resume</span><span class="p">:</span>
       <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[HYPER] resuming previous optimization of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> study&#39;</span><span class="p">)</span>
@@ -487,7 +578,7 @@
       <span class="n">study_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
       <span class="n">pruner</span><span class="o">=</span><span class="n">pruner_instance</span><span class="p">,</span>
       <span class="n">sampler</span><span class="o">=</span><span class="n">optuna</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">TPESampler</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">RANDOM_SEED</span><span class="p">),</span>
-      <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;maximize&#39;</span><span class="p">,</span>
+      <span class="n">direction</span><span class="o">=</span><span class="n">objective_direction</span><span class="p">,</span>
       <span class="n">load_if_exists</span><span class="o">=</span><span class="n">resume</span>
     <span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">study</span> <span class="o">=</span> <span class="n">study</span>
@@ -503,8 +594,7 @@
         <span class="n">nest_trials</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nest_trials</span><span class="p">,</span>
         <span class="n">tag_study_user_attrs</span><span class="o">=</span><span class="kc">False</span>
       <span class="p">)</span>
-      <span class="n">optimize_params</span><span class="p">[</span><span class="s1">&#39;callbacks&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">optimize_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-        <span class="s1">&#39;callbacks&#39;</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mlflow_cb</span><span class="p">)</span>
+      <span class="n">optimize_params</span><span class="p">[</span><span class="s1">&#39;callbacks&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mlflow_cb</span>
 
     <span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="o">**</span><span class="n">optimize_params</span><span class="p">)</span>
 

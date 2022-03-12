@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>mergernet.model.study.PruneCallback &#8212; MergerNet  documentation</title>
+    <title>mergernet.model.study.MLflowTensorflowCallback &#8212; MergerNet  documentation</title>
     
     <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -34,8 +34,8 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="mergernet.model.study.SaveCallback" href="mergernet.model.study.SaveCallback.html" />
-    <link rel="prev" title="mergernet.model.study.MLflowTensorflowCallback" href="mergernet.model.study.MLflowTensorflowCallback.html" />
+    <link rel="next" title="mergernet.model.study.PruneCallback" href="mergernet.model.study.PruneCallback.html" />
+    <link rel="prev" title="mergernet.model.study.HyperModel" href="mergernet.model.study.HyperModel.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en">
     
@@ -668,13 +668,13 @@
        mergernet.model.study.HyperModel
       </a>
      </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.model.study.MLflowTensorflowCallback.html">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
        mergernet.model.study.MLflowTensorflowCallback
       </a>
      </li>
-     <li class="toctree-l3 current active">
-      <a class="current reference internal" href="#">
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.study.PruneCallback.html">
        mergernet.model.study.PruneCallback
       </a>
      </li>
@@ -911,11 +911,11 @@
               
               <div>
                 
-  <section id="mergernet-model-study-prunecallback">
-<h1>mergernet.model.study.PruneCallback<a class="headerlink" href="#mergernet-model-study-prunecallback" title="Permalink to this headline">¶</a></h1>
+  <section id="mergernet-model-study-mlflowtensorflowcallback">
+<h1>mergernet.model.study.MLflowTensorflowCallback<a class="headerlink" href="#mergernet-model-study-mlflowtensorflowcallback" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mergernet.model.study.</span></span><span class="sig-name descname"><span class="pre">PruneCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">optuna.trial._frozen.FrozenTrial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">objective_metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/study.html#PruneCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.study.PruneCallback" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mergernet.model.study.</span></span><span class="sig-name descname"><span class="pre">MLflowTensorflowCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">optuna.trial._frozen.FrozenTrial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset" title="mergernet.core.dataset.Dataset"><span class="pre">mergernet.core.dataset.Dataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds_test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tensorflow.python.data.ops.dataset_ops.DatasetV2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/study.html#MLflowTensorflowCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras.callbacks.Callback</span></code></p>
 <p class="rubric">Methods</p>
 <table class="longtable table autosummary">
@@ -924,52 +924,52 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_batch_begin" title="mergernet.model.study.PruneCallback.on_batch_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_batch_begin</span></code></a>(batch[, logs])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_batch_begin" title="mergernet.model.study.MLflowTensorflowCallback.on_batch_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_batch_begin</span></code></a>(batch[, logs])</p></td>
 <td><p>A backwards compatibility alias for <cite>on_train_batch_begin</cite>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_batch_end" title="mergernet.model.study.PruneCallback.on_batch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_batch_end</span></code></a>(batch[, logs])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_batch_end" title="mergernet.model.study.MLflowTensorflowCallback.on_batch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_batch_end</span></code></a>(batch[, logs])</p></td>
 <td><p>A backwards compatibility alias for <cite>on_train_batch_end</cite>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_epoch_begin" title="mergernet.model.study.PruneCallback.on_epoch_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_epoch_begin</span></code></a>(epoch[, logs])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_epoch_begin" title="mergernet.model.study.MLflowTensorflowCallback.on_epoch_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_epoch_begin</span></code></a>(epoch[, logs])</p></td>
 <td><p>Called at the start of an epoch.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_epoch_end" title="mergernet.model.study.PruneCallback.on_epoch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_epoch_end</span></code></a>(epoch, logs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_epoch_end" title="mergernet.model.study.MLflowTensorflowCallback.on_epoch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_epoch_end</span></code></a>(epoch, logs)</p></td>
 <td><p>Called at the end of an epoch.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_predict_batch_begin" title="mergernet.model.study.PruneCallback.on_predict_batch_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_predict_batch_begin</span></code></a>(batch[, logs])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_predict_batch_begin" title="mergernet.model.study.MLflowTensorflowCallback.on_predict_batch_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_predict_batch_begin</span></code></a>(batch[, logs])</p></td>
 <td><p>Called at the beginning of a batch in <cite>predict</cite> methods.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_predict_batch_end" title="mergernet.model.study.PruneCallback.on_predict_batch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_predict_batch_end</span></code></a>(batch[, logs])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_predict_batch_end" title="mergernet.model.study.MLflowTensorflowCallback.on_predict_batch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_predict_batch_end</span></code></a>(batch[, logs])</p></td>
 <td><p>Called at the end of a batch in <cite>predict</cite> methods.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_predict_begin" title="mergernet.model.study.PruneCallback.on_predict_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_predict_begin</span></code></a>([logs])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_predict_begin" title="mergernet.model.study.MLflowTensorflowCallback.on_predict_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_predict_begin</span></code></a>([logs])</p></td>
 <td><p>Called at the beginning of prediction.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_predict_end" title="mergernet.model.study.PruneCallback.on_predict_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_predict_end</span></code></a>([logs])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_predict_end" title="mergernet.model.study.MLflowTensorflowCallback.on_predict_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_predict_end</span></code></a>([logs])</p></td>
 <td><p>Called at the end of prediction.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_test_batch_begin" title="mergernet.model.study.PruneCallback.on_test_batch_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_test_batch_begin</span></code></a>(batch[, logs])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_test_batch_begin" title="mergernet.model.study.MLflowTensorflowCallback.on_test_batch_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_test_batch_begin</span></code></a>(batch[, logs])</p></td>
 <td><p>Called at the beginning of a batch in <cite>evaluate</cite> methods.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_test_batch_end" title="mergernet.model.study.PruneCallback.on_test_batch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_test_batch_end</span></code></a>(batch[, logs])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_test_batch_end" title="mergernet.model.study.MLflowTensorflowCallback.on_test_batch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_test_batch_end</span></code></a>(batch[, logs])</p></td>
 <td><p>Called at the end of a batch in <cite>evaluate</cite> methods.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_test_begin" title="mergernet.model.study.PruneCallback.on_test_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_test_begin</span></code></a>([logs])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_test_begin" title="mergernet.model.study.MLflowTensorflowCallback.on_test_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_test_begin</span></code></a>([logs])</p></td>
 <td><p>Called at the beginning of evaluation or validation.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_test_end" title="mergernet.model.study.PruneCallback.on_test_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_test_end</span></code></a>([logs])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_test_end" title="mergernet.model.study.MLflowTensorflowCallback.on_test_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_test_end</span></code></a>([logs])</p></td>
 <td><p>Called at the end of evaluation or validation.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_train_batch_begin" title="mergernet.model.study.PruneCallback.on_train_batch_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_train_batch_begin</span></code></a>(batch[, logs])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_train_batch_begin" title="mergernet.model.study.MLflowTensorflowCallback.on_train_batch_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_train_batch_begin</span></code></a>(batch[, logs])</p></td>
 <td><p>Called at the beginning of a training batch in <cite>fit</cite> methods.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_train_batch_end" title="mergernet.model.study.PruneCallback.on_train_batch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_train_batch_end</span></code></a>(batch[, logs])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_train_batch_end" title="mergernet.model.study.MLflowTensorflowCallback.on_train_batch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_train_batch_end</span></code></a>(batch[, logs])</p></td>
 <td><p>Called at the end of a training batch in <cite>fit</cite> methods.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_train_begin" title="mergernet.model.study.PruneCallback.on_train_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_train_begin</span></code></a>([logs])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_train_begin" title="mergernet.model.study.MLflowTensorflowCallback.on_train_begin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_train_begin</span></code></a>([logs])</p></td>
 <td><p>Called at the beginning of training.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.PruneCallback.on_train_end" title="mergernet.model.study.PruneCallback.on_train_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_train_end</span></code></a>([logs])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.model.study.MLflowTensorflowCallback.on_train_end" title="mergernet.model.study.MLflowTensorflowCallback.on_train_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_train_end</span></code></a>(logs)</p></td>
 <td><p>Called at the end of training.</p></td>
 </tr>
 </tbody>
@@ -989,48 +989,48 @@
 </tbody>
 </table>
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback._implements_predict_batch_hooks">
-<span class="sig-name descname"><span class="pre">_implements_predict_batch_hooks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback._implements_predict_batch_hooks" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback._implements_predict_batch_hooks">
+<span class="sig-name descname"><span class="pre">_implements_predict_batch_hooks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback._implements_predict_batch_hooks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if this Callback should be called for each predict batch.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback._implements_test_batch_hooks">
-<span class="sig-name descname"><span class="pre">_implements_test_batch_hooks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback._implements_test_batch_hooks" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback._implements_test_batch_hooks">
+<span class="sig-name descname"><span class="pre">_implements_test_batch_hooks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback._implements_test_batch_hooks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if this Callback should be called for each test batch.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback._implements_train_batch_hooks">
-<span class="sig-name descname"><span class="pre">_implements_train_batch_hooks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback._implements_train_batch_hooks" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback._implements_train_batch_hooks">
+<span class="sig-name descname"><span class="pre">_implements_train_batch_hooks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback._implements_train_batch_hooks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if this Callback should be called for each train batch.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback._keras_api_names">
-<span class="sig-name descname"><span class="pre">_keras_api_names</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('keras.callbacks.Callback',)</span></em><a class="headerlink" href="#mergernet.model.study.PruneCallback._keras_api_names" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback._keras_api_names">
+<span class="sig-name descname"><span class="pre">_keras_api_names</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('keras.callbacks.Callback',)</span></em><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback._keras_api_names" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback._keras_api_names_v1">
-<span class="sig-name descname"><span class="pre">_keras_api_names_v1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('keras.callbacks.Callback',)</span></em><a class="headerlink" href="#mergernet.model.study.PruneCallback._keras_api_names_v1" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback._keras_api_names_v1">
+<span class="sig-name descname"><span class="pre">_keras_api_names_v1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('keras.callbacks.Callback',)</span></em><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback._keras_api_names_v1" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_batch_begin">
-<span class="sig-name descname"><span class="pre">on_batch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_batch_begin" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_batch_begin">
+<span class="sig-name descname"><span class="pre">on_batch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_batch_begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>A backwards compatibility alias for <cite>on_train_batch_begin</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_batch_end">
-<span class="sig-name descname"><span class="pre">on_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_batch_end" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_batch_end">
+<span class="sig-name descname"><span class="pre">on_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_batch_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>A backwards compatibility alias for <cite>on_train_batch_end</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_epoch_begin">
-<span class="sig-name descname"><span class="pre">on_epoch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_epoch_begin" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_epoch_begin">
+<span class="sig-name descname"><span class="pre">on_epoch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_epoch_begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the start of an epoch.</p>
 <p>Subclasses should override for any actions to run. This function should only
 be called during TRAIN mode.</p>
@@ -1045,8 +1045,8 @@ logs: Dict. Currently no data is passed to this argument for this method</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_epoch_end">
-<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/study.html#PruneCallback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_epoch_end">
+<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/study.html#MLflowTensorflowCallback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_epoch_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the end of an epoch.</p>
 <p>Subclasses should override for any actions to run. This function should only
 be called during TRAIN mode.</p>
@@ -1068,8 +1068,8 @@ are prefixed with <cite>val_</cite>. For training epoch, the values of the</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_predict_batch_begin">
-<span class="sig-name descname"><span class="pre">on_predict_batch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_predict_batch_begin" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_predict_batch_begin">
+<span class="sig-name descname"><span class="pre">on_predict_batch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_predict_batch_begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the beginning of a batch in <cite>predict</cite> methods.</p>
 <p>Subclasses should override for any actions to run.</p>
 <p>Note that if the <cite>steps_per_execution</cite> argument to <cite>compile</cite> in
@@ -1086,8 +1086,8 @@ logs: Dict. Currently no data is passed to this argument for this method</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_predict_batch_end">
-<span class="sig-name descname"><span class="pre">on_predict_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_predict_batch_end" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_predict_batch_end">
+<span class="sig-name descname"><span class="pre">on_predict_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_predict_batch_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the end of a batch in <cite>predict</cite> methods.</p>
 <p>Subclasses should override for any actions to run.</p>
 <p>Note that if the <cite>steps_per_execution</cite> argument to <cite>compile</cite> in
@@ -1101,8 +1101,8 @@ logs: Dict. Aggregated metric results up until this batch.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_predict_begin">
-<span class="sig-name descname"><span class="pre">on_predict_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_predict_begin" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_predict_begin">
+<span class="sig-name descname"><span class="pre">on_predict_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_predict_begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the beginning of prediction.</p>
 <p>Subclasses should override for any actions to run.</p>
 <dl class="simple">
@@ -1115,8 +1115,8 @@ logs: Dict. Aggregated metric results up until this batch.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_predict_end">
-<span class="sig-name descname"><span class="pre">on_predict_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_predict_end" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_predict_end">
+<span class="sig-name descname"><span class="pre">on_predict_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_predict_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the end of prediction.</p>
 <p>Subclasses should override for any actions to run.</p>
 <dl class="simple">
@@ -1129,8 +1129,8 @@ logs: Dict. Aggregated metric results up until this batch.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_test_batch_begin">
-<span class="sig-name descname"><span class="pre">on_test_batch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_test_batch_begin" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_test_batch_begin">
+<span class="sig-name descname"><span class="pre">on_test_batch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_test_batch_begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the beginning of a batch in <cite>evaluate</cite> methods.</p>
 <p>Also called at the beginning of a validation batch in the <cite>fit</cite>
 methods, if validation data is provided.</p>
@@ -1149,8 +1149,8 @@ logs: Dict. Currently no data is passed to this argument for this method</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_test_batch_end">
-<span class="sig-name descname"><span class="pre">on_test_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_test_batch_end" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_test_batch_end">
+<span class="sig-name descname"><span class="pre">on_test_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_test_batch_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the end of a batch in <cite>evaluate</cite> methods.</p>
 <p>Also called at the end of a validation batch in the <cite>fit</cite>
 methods, if validation data is provided.</p>
@@ -1166,8 +1166,8 @@ logs: Dict. Aggregated metric results up until this batch.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_test_begin">
-<span class="sig-name descname"><span class="pre">on_test_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_test_begin" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_test_begin">
+<span class="sig-name descname"><span class="pre">on_test_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_test_begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the beginning of evaluation or validation.</p>
 <p>Subclasses should override for any actions to run.</p>
 <dl class="simple">
@@ -1180,8 +1180,8 @@ logs: Dict. Aggregated metric results up until this batch.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_test_end">
-<span class="sig-name descname"><span class="pre">on_test_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_test_end" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_test_end">
+<span class="sig-name descname"><span class="pre">on_test_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_test_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the end of evaluation or validation.</p>
 <p>Subclasses should override for any actions to run.</p>
 <dl class="simple">
@@ -1195,8 +1195,8 @@ but that may change in the future.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_train_batch_begin">
-<span class="sig-name descname"><span class="pre">on_train_batch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_train_batch_begin" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_train_batch_begin">
+<span class="sig-name descname"><span class="pre">on_train_batch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_train_batch_begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the beginning of a training batch in <cite>fit</cite> methods.</p>
 <p>Subclasses should override for any actions to run.</p>
 <p>Note that if the <cite>steps_per_execution</cite> argument to <cite>compile</cite> in
@@ -1213,8 +1213,8 @@ logs: Dict. Currently no data is passed to this argument for this method</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_train_batch_end">
-<span class="sig-name descname"><span class="pre">on_train_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_train_batch_end" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_train_batch_end">
+<span class="sig-name descname"><span class="pre">on_train_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_train_batch_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the end of a training batch in <cite>fit</cite> methods.</p>
 <p>Subclasses should override for any actions to run.</p>
 <p>Note that if the <cite>steps_per_execution</cite> argument to <cite>compile</cite> in
@@ -1228,8 +1228,8 @@ logs: Dict. Aggregated metric results up until this batch.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_train_begin">
-<span class="sig-name descname"><span class="pre">on_train_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_train_begin" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_train_begin">
+<span class="sig-name descname"><span class="pre">on_train_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_train_begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the beginning of training.</p>
 <p>Subclasses should override for any actions to run.</p>
 <dl class="simple">
@@ -1242,8 +1242,8 @@ logs: Dict. Aggregated metric results up until this batch.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.on_train_end">
-<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.on_train_end" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.on_train_end">
+<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/study.html#MLflowTensorflowCallback.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.on_train_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the end of training.</p>
 <p>Subclasses should override for any actions to run.</p>
 <dl class="simple">
@@ -1257,13 +1257,13 @@ the future.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.set_model">
-<span class="sig-name descname"><span class="pre">set_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.set_model" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.set_model">
+<span class="sig-name descname"><span class="pre">set_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.set_model" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.model.study.PruneCallback.set_params">
-<span class="sig-name descname"><span class="pre">set_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.PruneCallback.set_params" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.study.MLflowTensorflowCallback.set_params">
+<span class="sig-name descname"><span class="pre">set_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.study.MLflowTensorflowCallback.set_params" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1276,17 +1276,17 @@ the future.</p>
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="mergernet.model.study.MLflowTensorflowCallback.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="mergernet.model.study.HyperModel.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">mergernet.model.study.MLflowTensorflowCallback</p>
+            <p class="prev-next-title">mergernet.model.study.HyperModel</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="mergernet.model.study.SaveCallback.html" title="next page">
+    <a class='right-next' id="next-link" href="mergernet.model.study.PruneCallback.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">mergernet.model.study.SaveCallback</p>
+        <p class="prev-next-title">mergernet.model.study.PruneCallback</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
