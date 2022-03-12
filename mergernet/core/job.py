@@ -135,12 +135,12 @@ class Job:
     model = HyperModel(
       dataset=ds,
       name=self.experiment_name,
-      hyperparameters=hp,
       epochs=self.job['config']['train_epochs'],
     )
     model.hypertrain(
       optuna_uri=self.optuna_uri,
       n_trials=self.job['config']['optuna']['n_trials'],
+      hyperparameters=hp,
       pruner=self.job['config']['optuna']['pruner'],
       objective_metric=self.job['config']['optuna']['objective_metric'],
       objective_direction=self.job['config']['optuna']['objective_direction'],

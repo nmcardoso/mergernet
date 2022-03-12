@@ -129,15 +129,14 @@ class HyperModel:
     self,
     dataset: Dataset,
     name: str,
-    hyperparameters: HyperParameterSet,
     epochs: int = 20,
     nest_trials: bool = False
   ):
     self.dataset = dataset
     self.name = name
-    self.hp = hyperparameters
     self.epochs = epochs
     self.nest_trials = nest_trials
+    self.hp = None
     self.study = None
     self.save_model = None
     self.mlflow_enabled = None
@@ -365,7 +364,13 @@ class HyperModel:
 
 
 
-  def train(self, save_path: Union[str, Path] = None):
+  def train(
+    self,
+    hyperparameters: HyperParameterSet,
+    save_path: Union[str, Path] = None
+  ):
+    self.hp = hyperparameters
+
     tf.keras.backend.clear_session()
 
     ds_train, ds_test = self.dataset.get_fold(0)
@@ -403,6 +408,7 @@ class HyperModel:
     self,
     optuna_uri: str,
     n_trials: int,
+    hyperparameters: HyperParameterSet,
     pruner: str = 'hyperband',
     objective_metric: str = 'val_loss',
     objective_direction: str = 'minimize',
@@ -410,6 +416,7 @@ class HyperModel:
     save_model: bool = True,
     mlflow_enabled: bool = True
   ):
+    self.hp = hyperparameters
     self.save_model = save_model
     self.mlflow_enabled = mlflow_enabled
     self.objective_metric = objective_metric
