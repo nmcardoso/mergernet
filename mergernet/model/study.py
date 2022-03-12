@@ -234,14 +234,18 @@ class HyperModel:
       trial=trial
     )
 
-    callbacks = [PruneCallback(trial=trial, objective_metric=self.objective_metric)]
+    callbacks = [
+      PruneCallback(trial=trial, objective_metric=self.objective_metric)
+    ]
     if self.save_model:
-      callbacks.append(SaveCallback(
-        name=self.name,
-        study=self.study,
-        objective_metric=self.objective_metric,
-        objective_direction=self.objective_direction
-      ))
+      callbacks.append(
+        SaveCallback(
+          name=self.name,
+          study=self.study,
+          objective_metric=self.objective_metric,
+          objective_direction=self.objective_direction
+        )
+      )
 
     t = Timming()
     L.info('[TRAIN] Start of training loop')
