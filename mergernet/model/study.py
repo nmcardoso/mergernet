@@ -386,8 +386,7 @@ class HyperModel:
         nest_trials=self.nest_trials,
         tag_study_user_attrs=False
       )
-      optimize_params['callbacks'] = optimize_params.get(
-        'callbacks', []).append(mlflow_cb)
+      optimize_params['callbacks'] = mlflow_cb
 
     study.optimize(**optimize_params)
 
