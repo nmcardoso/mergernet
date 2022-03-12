@@ -7,8 +7,8 @@ config:
   dataset: mesd_sdss_128
   resume: false
   train_epochs: 1
-  save_model: true
-  override_model: true
+  save_model: false
+  override_model: false
 
   optuna:
     n_trials: 1
