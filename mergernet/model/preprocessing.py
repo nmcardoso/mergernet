@@ -2,7 +2,7 @@ import tensorflow as tf
 
 
 def one_hot_factory(n_class):
-  def one_hot(X, y=None):
+  def one_hot(X, y):
     return X, tf.one_hot(y, n_class)
   return one_hot
 

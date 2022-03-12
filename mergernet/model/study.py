@@ -148,7 +148,8 @@ class HyperModel:
     self,
     ds: tf.data.Dataset,
     batch_size: int = 64,
-    buffer_size: int = 1000
+    buffer_size: int = 1000,
+    kind='train'
   ):
     if self.dataset.config.X_column_suffix == '.jpg':
       ds = ds.map(load_jpg)
@@ -157,8 +158,9 @@ class HyperModel:
       ds = ds.map(load_png)
       L.info('[DATASET] apply: load_png')
 
-    ds = ds.map(one_hot_factory(self.dataset.config.n_classes))
-    L.info('[DATASET] apply: one_hot')
+    if kind == 'train':
+      ds = ds.map(one_hot_factory(self.dataset.config.n_classes))
+      L.info('[DATASET] apply: one_hot')
 
     ds = ds.cache()
     L.info('[DATASET] apply: cache')
@@ -243,7 +245,7 @@ class HyperModel:
       model = tf.keras.models.load_model(model)
 
     ds = dataset.get_preds_dataset()
-    ds = self.prepare_data(ds, batch_size=128, buffer_size=1000)
+    ds = self.prepare_data(ds, batch_size=128, buffer_size=1000, kind='predict')
 
     preds = model.predict(ds)
 
@@ -275,12 +277,14 @@ class HyperModel:
     ds_train = self.prepare_data(
       ds_train,
       batch_size=self.hp.batch_size.suggest(trial),
-      buffer_size=5000
+      buffer_size=5000,
+      kind='train'
     )
     ds_test = self.prepare_data(
       ds_test,
       batch_size=self.hp.batch_size.suggest(trial),
-      buffer_size=1000
+      buffer_size=1000,
+      kind='train'
     )
     class_weights = self.dataset.compute_class_weight()
 
@@ -377,12 +381,14 @@ class HyperModel:
     ds_train = self.prepare_data(
       ds_train,
       batch_size=self.hp.batch_size.suggest(),
-      buffer_size=5000
+      buffer_size=5000,
+      kind='train'
     )
     ds_test = self.prepare_data(
       ds_test,
       batch_size=self.hp.batch_size.suggest(),
-      buffer_size=1000
+      buffer_size=1000,
+      kind='train'
     )
     class_weights = self.dataset.compute_class_weight()
 
