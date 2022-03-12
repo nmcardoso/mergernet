@@ -21,6 +21,7 @@ optuna = "*"
 mlflow = "*"
 plotly = "*"
 mw-plot = "*"
+python-magic = "*"
 
 [dev-packages]
 numpydoc = "*"
