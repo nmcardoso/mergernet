@@ -1,7 +1,7 @@
 import logging
 import secrets
 import shutil
-from typing import Tuple
+from typing import Tuple, Union
 from pathlib import Path
 
 import optuna
@@ -183,13 +183,19 @@ class HyperModel:
     return model
 
 
-  def predict(self, dataset: Dataset) -> list:
+  def predict(
+    self,
+    model: Union[str, Path, tf.keras.Model],
+    dataset: Dataset
+  ) -> list:
     tf.keras.backend.clear_session()
+
+    if isinstance(model, (str, Path)):
+      model = tf.keras.models.load_model(model)
 
     ds = dataset.get_preds_dataset()
     ds = self.prepare_data(ds, batch_size=128, buffer_size=1000)
 
-    model = self.build_model()
     preds = model.predict(ds)
 
     with mlflow.start_run(run_name='predict', nested=self.nest_trials) as run:
