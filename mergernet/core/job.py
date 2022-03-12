@@ -156,7 +156,7 @@ class Job:
       ds=self.job['config']['dataset']
     )
     model_local_path = Path('saved_models') / (Path(self.job['load']).stem + '.h5')
-    model_remote_path = GDRIVE_PATH / 'saved_models' / (Path(self.job['load']).stem + '.h5')
+    model_remote_path = Path(GDRIVE_PATH) / 'saved_models' / (Path(self.job['load']).stem + '.h5')
     if not model_local_path.exists():
       shutil.copy2(model_remote_path, model_local_path)
 
