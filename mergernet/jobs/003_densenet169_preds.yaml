@@ -1,0 +1,14 @@
+extends:
+  - name: defaults
+
+
+config:
+  job_type: predict
+  dataset: blind_splus_lupton_128
+  resume: false
+
+  mlflow:
+    id: 3
+    enabled: true
+
+load: 002_densenet169_tpe_hyperband
