@@ -30,13 +30,14 @@ RUN_ID_ATTRIBUTE_KEY = 'mlflow_run_id'
 
 
 class PruneCallback(tf.keras.callbacks.Callback):
-  def __init__(self, trial: optuna.trial.FrozenTrial):
+  def __init__(self, trial: optuna.trial.FrozenTrial, objective_metric: str):
     super(PruneCallback, self).__init__()
     self.trial = trial
+    self.objective_metric = objective_metric # default: "val_loss"
 
 
   def on_epoch_end(self, epoch, logs):
-    self.trial.report(value=logs['val_accuracy'], step=epoch)
+    self.trial.report(value=logs[self.objective_metric], step=epoch)
 
     if self.trial.should_prune():
       self.model.stop_training = True
@@ -44,19 +45,28 @@ class PruneCallback(tf.keras.callbacks.Callback):
 
 
 class SaveCallback(tf.keras.callbacks.Callback):
-  def __init__(self, name: str, study: optuna.study.Study):
+  def __init__(
+    self,
+    name: str,
+    study: optuna.study.Study,
+    objective_metric: str,
+    objective_direction: str
+  ):
     super(SaveCallback, self).__init__()
     self.name = name
     self.study = study
+    self.objective_metric = objective_metric
+    self.default_value = -np.inf if objective_direction == 'maximize' else np.inf
+    self.operator = np.greater if objective_direction == 'maximine' else np.less
 
 
   def on_train_end(self, logs):
     try:
       best_value = self.study.best_value
     except:
-      best_value = -1
+      best_value = self.default_value
 
-    if logs['val_accuracy'] > best_value:
+    if self.operator(logs[self.objective_metric], best_value):
       save_path = SAVED_MODELS_PATH / (self.name + '.h5')
       if not save_path.parent.exists():
         save_path.parent.mkdir(parents=True, exist_ok=True)
@@ -81,6 +91,8 @@ class HyperModel:
     self.study = None
     self.save_model = None
     self.mlflow_enabled = None
+    self.objective_metric = 'val_loss'
+    self.objective_direction = 'minimize'
 
 
   def prepare_data(
@@ -132,19 +144,19 @@ class HyperModel:
     )
 
     data_aug_layers = [
-      tf.keras.layers.RandomFlip(mode='horizontal', seed=42),
-      tf.keras.layers.RandomFlip(mode='vertical', seed=42),
+      tf.keras.layers.RandomFlip(mode='horizontal', seed=RANDOM_SEED),
+      tf.keras.layers.RandomFlip(mode='vertical', seed=RANDOM_SEED),
       tf.keras.layers.RandomRotation(
         (-0.08, 0.08),
         fill_mode='reflect',
         interpolation='bilinear',
-        seed=42
+        seed=RANDOM_SEED
       ),
       tf.keras.layers.RandomZoom(
         (-0.15, 0.0),
         fill_mode='reflect',
         interpolation='bilinear',
-        seed=42
+        seed=RANDOM_SEED
       )
     ]
     data_aug_block = tf.keras.Sequential(data_aug_layers, name='data_augmentation')
@@ -181,13 +193,12 @@ class HyperModel:
     preds = model.predict(ds)
 
     with mlflow.start_run(run_name='predict', nested=self.nest_trials) as run:
-      mlflow.log_dict(
+      mlflow.log_params(
         {
-          k: v.value # all HPs are ConstantHyperParameter instances
-          for k, v in self.hp.__dict__.items()
-          if not k.startswith('_') and isinstance(v, ConstantHyperParameter)
-        },
-        'hyperparameters.json'
+          hp_name: hp_instance.value
+          for hp_name, hp_instance in self.hp.__dict__.items()
+          if not hp_name.startswith('_') and isinstance(hp_instance, ConstantHyperParameter)
+        }
       )
 
       mlflow.log_dict(
@@ -218,11 +229,19 @@ class HyperModel:
     )
     class_weights = self.dataset.compute_class_weight()
 
-    model = self.build_model(input_shape=self.dataset.config.image_shape, trial=trial)
+    model = self.build_model(
+      input_shape=self.dataset.config.image_shape,
+      trial=trial
+    )
 
-    callbacks = [PruneCallback(trial)]
+    callbacks = [PruneCallback(trial=trial, objective_metric=self.objective_metric)]
     if self.save_model:
-      callbacks.append(SaveCallback(name=self.name, study=self.study))
+      callbacks.append(SaveCallback(
+        name=self.name,
+        study=self.study,
+        objective_metric=self.objective_metric,
+        objective_direction=self.objective_direction
+      ))
 
     t = Timming()
     L.info('[TRAIN] Start of training loop')
@@ -273,7 +292,7 @@ class HyperModel:
         )
 
     # generating optuna value to optimize (val_accuracy)
-    last_epoch_accuracy = h['val_accuracy'][-1]
+    last_epoch_accuracy = h[self.objective_metric][-1]
     return last_epoch_accuracy
 
 
@@ -317,12 +336,16 @@ class HyperModel:
     optuna_uri: str,
     n_trials: int,
     pruner: str = 'hyperband',
+    objective_metric: str = 'val_loss',
+    objective_direction: str = 'minimize',
     resume: bool = False,
     save_model: bool = True,
     mlflow_enabled: bool = True
   ):
     self.save_model = save_model
     self.mlflow_enabled = mlflow_enabled
+    self.objective_metric = objective_metric
+    self.objective_direction = objective_direction
 
     if resume:
       L.info(f'[HYPER] resuming previous optimization of {self.name} study')
@@ -343,7 +366,7 @@ class HyperModel:
       study_name=self.name,
       pruner=pruner_instance,
       sampler=optuna.samplers.TPESampler(seed=RANDOM_SEED),
-      direction='maximize',
+      direction=objective_direction,
       load_if_exists=resume
     )
     self.study = study

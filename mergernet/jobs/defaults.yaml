@@ -11,6 +11,8 @@ config:
     n_trials: 40
     pruner: hyperband
     sampler: tpe
+    objective_metric: val_loss
+    objective_direction: minimize
 
   mlflow:
     id: 1

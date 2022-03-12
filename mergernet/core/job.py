@@ -142,6 +142,8 @@ class Job:
       optuna_uri=self.optuna_uri,
       n_trials=self.job['config']['optuna']['n_trials'],
       pruner=self.job['config']['optuna']['pruner'],
+      objective_metric=self.job['config']['optuna']['objective_metric'],
+      objective_direction=self.job['config']['optuna']['objective_direction'],
       resume=bool(self.job['config']['resume']),
       save_model=self.job['config']['save_model'],
       mlflow_enabled=self.job['config']['mlflow']['enabled'],
@@ -201,8 +203,8 @@ class Job:
         elif 'name' in e:
           extends_path.append(JOBS_PATH / (Path(e['name']).name + '.yaml'))
 
-    extends_data = []
     extends_path = set(extends_path) # unique values
+    extends_data = []
 
     for path in extends_path:
       with open(path, 'r') as fp:
