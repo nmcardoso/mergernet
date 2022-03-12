@@ -1,7 +1,7 @@
 import logging
 import secrets
 import shutil
-from typing import Tuple, Union
+from typing import Any, Dict, Tuple, Union
 from pathlib import Path
 
 import optuna
@@ -36,7 +36,7 @@ class PruneCallback(tf.keras.callbacks.Callback):
     self.objective_metric = objective_metric # default: "val_loss"
 
 
-  def on_epoch_end(self, epoch, logs):
+  def on_epoch_end(self, epoch: int, logs: Dict[str, Any]):
     self.trial.report(value=logs[self.objective_metric], step=epoch)
 
     if self.trial.should_prune():
@@ -60,7 +60,7 @@ class SaveCallback(tf.keras.callbacks.Callback):
     self.operator = np.greater if objective_direction == 'maximine' else np.less
 
 
-  def on_train_end(self, logs):
+  def on_train_end(self, logs: Dict[str, Any]):
     try:
       best_value = self.study.best_value
     except:
@@ -71,6 +71,56 @@ class SaveCallback(tf.keras.callbacks.Callback):
       if not save_path.parent.exists():
         save_path.parent.mkdir(parents=True, exist_ok=True)
       self.model.save(save_path, overwrite=True)
+
+
+class MLflowTensorflowCallback(tf.keras.callbacks.Callback):
+  def __init__(
+    self,
+    trial: optuna.trial.FrozenTrial,
+    dataset: Dataset,
+    ds_test: tf.data.Dataset
+  ):
+    self.trial = trial
+    self.dataset = dataset
+    self.ds_test = ds_test
+
+
+  def on_epoch_end(self, epoch: int, logs: Dict[str, float]):
+    with mlflow.start_run(run_name=str(self.trial.number), nested=self.nest_trials) as run:
+      # The mlflow run will be created before optuna mlflow callback,
+      # so the following line is needed in order to optuna get the current run.
+      # https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py
+      self.trial.set_system_attr(RUN_ID_ATTRIBUTE_KEY, run.info.run_id)
+
+      mlflow.log_metrics(metric=logs, step=epoch)
+
+
+  def on_train_end(self, logs: Dict[str, Any]):
+    with mlflow.start_run(run_name=str(self.trial.number), nested=self.nest_trials) as run:
+      # The mlflow run will be created before optuna mlflow callback,
+      # so the following line is needed in order to optuna get the current run.
+      # https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py
+      self.trial.set_system_attr(RUN_ID_ATTRIBUTE_KEY, run.info.run_id)
+
+      # confusion matrix plot
+      y_pred = self.model.predict(self.ds_test)
+      y_true = np.concatenate([y for _, y in self.ds_test], axis=0)
+      lm = self.dataset.config.label_map
+      labels = [[*lm.keys()][v] for v in lm.values()]
+      ax = conf_matrix(y_true, y_pred, one_hot=True, labels=labels)
+      mlflow.log_figure(ax.figure, f'confusion_matrix.png')
+      plt.close(ax.figure)
+
+      # log predictions
+      mlflow.log_dict(
+        {
+          'dataset': self.dataset.config.name,
+          'X': np.array(self.dataset.get_X_by_fold(0, kind='test')).tolist(),
+          'y_pred': np.array(y_pred).tolist(),
+          'y_true': np.array(y_true).tolist()
+        },
+        'predictions.json'
+      )
 
 
 
@@ -243,6 +293,14 @@ class HyperModel:
     callbacks = [
       PruneCallback(trial=trial, objective_metric=self.objective_metric)
     ]
+    if self.mlflow_enabled:
+      callbacks.append(
+        MLflowTensorflowCallback(
+          trial=trial,
+          dataset=self.dataset,
+          ds_test=ds_test
+        )
+      )
     if self.save_model:
       callbacks.append(
         SaveCallback(
@@ -267,39 +325,39 @@ class HyperModel:
 
     # history shape: {metric1: [val1, val2, ...], metric2: [val1, val2, ...]}
     h = history.history
-    epochs = len(h[list(h.keys())[0]])
+    # epochs = len(h[list(h.keys())[0]])
 
-    if self.mlflow_enabled:
-      with mlflow.start_run(run_name=str(trial.number), nested=self.nest_trials) as run:
-        # The mlflow run will be created before optuna mlflow callback,
-        # so the following line is needed in order to optuna get the current run.
-        # https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py
-        trial.set_system_attr(RUN_ID_ATTRIBUTE_KEY, run.info.run_id)
+    # if self.mlflow_enabled:
+    #   with mlflow.start_run(run_name=str(trial.number), nested=self.nest_trials) as run:
+    #     # The mlflow run will be created before optuna mlflow callback,
+    #     # so the following line is needed in order to optuna get the current run.
+    #     # https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py
+    #     trial.set_system_attr(RUN_ID_ATTRIBUTE_KEY, run.info.run_id)
 
-        for i in range(epochs):
-          # {k1: [v1, v2, ...], k2: [v1, v2, ...]} => {k1: vi, k2: vi}
-          metrics = {name: h[name][i] for name in h.keys()}
-          mlflow.log_metrics(metrics=metrics, step=i)
+    #     for i in range(epochs):
+    #       # {k1: [v1, v2, ...], k2: [v1, v2, ...]} => {k1: vi, k2: vi}
+    #       metrics = {name: h[name][i] for name in h.keys()}
+    #       mlflow.log_metrics(metrics=metrics, step=i)
 
-        # confusion matrix plot
-        y_pred = model.predict(ds_test)
-        y_true = np.concatenate([y for x, y in ds_test], axis=0)
-        lm = self.dataset.config.label_map
-        labels = [[*lm.keys()][v] for v in lm.values()]
-        ax = conf_matrix(y_true, y_pred, one_hot=True, labels=labels)
-        mlflow.log_figure(ax.figure, f'confusion_matrix.png')
-        plt.close(ax.figure)
+    #     # confusion matrix plot
+    #     y_pred = model.predict(ds_test)
+    #     y_true = np.concatenate([y for x, y in ds_test], axis=0)
+    #     lm = self.dataset.config.label_map
+    #     labels = [[*lm.keys()][v] for v in lm.values()]
+    #     ax = conf_matrix(y_true, y_pred, one_hot=True, labels=labels)
+    #     mlflow.log_figure(ax.figure, f'confusion_matrix.png')
+    #     plt.close(ax.figure)
 
-        # log predictions
-        mlflow.log_dict(
-          {
-            'dataset': self.dataset.config.name,
-            'X': np.array(self.dataset.get_X_by_fold(0, kind='test')).tolist(),
-            'y_pred': np.array(y_pred).tolist(),
-            'y_true': np.array(y_true).tolist()
-          },
-          'predictions.json'
-        )
+    #     # log predictions
+    #     mlflow.log_dict(
+    #       {
+    #         'dataset': self.dataset.config.name,
+    #         'X': np.array(self.dataset.get_X_by_fold(0, kind='test')).tolist(),
+    #         'y_pred': np.array(y_pred).tolist(),
+    #         'y_true': np.array(y_true).tolist()
+    #       },
+    #       'predictions.json'
+    #     )
 
     # generating optuna value to optimize (val_accuracy)
     last_epoch_accuracy = h[self.objective_metric][-1]
