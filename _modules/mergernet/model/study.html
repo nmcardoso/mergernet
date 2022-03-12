@@ -380,6 +380,7 @@
 
 <div class="viewcode-block" id="HyperModel.predict"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.predict">[docs]</a>  <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
+    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">],</span>
     <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span>
   <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
@@ -394,13 +395,14 @@
     <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
 
     <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="s1">&#39;predict&#39;</span><span class="p">,</span> <span class="n">nested</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nest_trials</span><span class="p">)</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
-      <span class="n">mlflow</span><span class="o">.</span><span class="n">log_params</span><span class="p">(</span>
-        <span class="p">{</span>
-          <span class="n">hp_name</span><span class="p">:</span> <span class="n">hp_instance</span><span class="o">.</span><span class="n">value</span>
-          <span class="k">for</span> <span class="n">hp_name</span><span class="p">,</span> <span class="n">hp_instance</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-          <span class="k">if</span> <span class="ow">not</span> <span class="n">hp_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hp_instance</span><span class="p">,</span> <span class="n">ConstantHyperParameter</span><span class="p">)</span>
-        <span class="p">}</span>
-      <span class="p">)</span>
+      <span class="n">mlflow</span><span class="o">.</span><span class="n">log_param</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
+      <span class="c1"># mlflow.log_params(</span>
+      <span class="c1">#   {</span>
+      <span class="c1">#     hp_name: hp_instance.value</span>
+      <span class="c1">#     for hp_name, hp_instance in self.hp.__dict__.items()</span>
+      <span class="c1">#     if not hp_name.startswith(&#39;_&#39;) and isinstance(hp_instance, ConstantHyperParameter)</span>
+      <span class="c1">#   }</span>
+      <span class="c1"># )</span>
 
       <span class="n">mlflow</span><span class="o">.</span><span class="n">log_dict</span><span class="p">(</span>
         <span class="p">{</span>
