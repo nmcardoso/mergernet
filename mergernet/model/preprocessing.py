@@ -2,30 +2,30 @@ import tensorflow as tf
 
 
 def one_hot_factory(n_class):
-  def one_hot(X, y):
+  def one_hot(X, y=None):
     return X, tf.one_hot(y, n_class)
   return one_hot
 
 
 
-def load_jpg(X, y):
+def load_jpg(X, y=None):
   img_bytes = tf.io.read_file(X)
   img = tf.io.decode_jpeg(img_bytes, channels=3)
   return img, y
 
 
 
-def load_png(X, y):
+def load_png(X, y=None):
   img_bytes = tf.io.read_file(X)
   img = tf.io.decode_png(img_bytes, channels=3)
   return img, y
 
 
 
-def normalize_rgb(X, y):
+def normalize_rgb(X, y=None):
   return X / 255., y
 
 
 
-def standardize_rgb(X, y):
+def standardize_rgb(X, y=None):
   return tf.image.per_image_standardization(X), y
