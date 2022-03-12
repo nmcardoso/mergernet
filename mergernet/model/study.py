@@ -301,7 +301,7 @@ class HyperModel:
 
 
 
-  def train(self, save):
+  def train(self, save_path: Union[str, Path] = None):
     tf.keras.backend.clear_session()
 
     ds_train, ds_test = self.dataset.get_fold(0)
