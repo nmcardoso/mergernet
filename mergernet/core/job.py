@@ -158,6 +158,7 @@ class Job:
     model_local_path = Path('saved_models') / (Path(self.job['load']).stem + '.h5')
     model_remote_path = Path(GDRIVE_PATH) / 'saved_models' / (Path(self.job['load']).stem + '.h5')
     if not model_local_path.exists():
+      model_local_path.parent.mkdir(parents=True, exist_ok=True)
       shutil.copy2(model_remote_path, model_local_path)
 
     model = HyperModel(
