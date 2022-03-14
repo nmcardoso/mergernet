@@ -6,6 +6,14 @@ ENV = os.environ.get('PYTHON_ENV', 'dev')
 
 
 
+# S-PLUS Bands
+SPLUS_BANDS = [
+  'R', 'I', 'F861', 'Z', 'G', 'F515',
+  'F660', 'U', 'F378', 'F395', 'F410', 'F430'
+]
+
+
+
 # Commom paths
 SOURCE_ROOT = (Path(__file__).parent.parent).resolve()
 PROJECT_ROOT = SOURCE_ROOT.parent
