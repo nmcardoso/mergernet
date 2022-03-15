@@ -36,7 +36,7 @@ def load_image(path: Union[str, Path]) -> np.ndarray:
   path = Path(path)
   if path.suffix in ['.jpg', '.png']:
     img = Image.open(path)
-    return tf.keras.preprocessing.image.img_to_array(img)
+    return np.asarray(img)
   elif path.suffix in ['.npy', '.npz']:
     return np.load(path)
   elif path.suffix == '.fits':
