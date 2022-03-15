@@ -25,7 +25,7 @@ def load_image(path: Union[str, Path]) -> np.ndarray:
 
   Parameters
   ----------
-  path: pathlib.Path
+  path: str or pathlib.Path
     Path to the desired file
 
   Returns
