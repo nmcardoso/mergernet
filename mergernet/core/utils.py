@@ -39,8 +39,8 @@ def load_image(path: Union[str, Path]) -> np.ndarray:
     return np.asarray(img)
   elif path.suffix in ['.npy', '.npz']:
     return np.load(path)
-  elif path.suffix == '.fits':
-    pass
+  elif path.suffix in ['.fits', '.fit', '.fz']:
+    return fits.getdata(path)
 
 
 
