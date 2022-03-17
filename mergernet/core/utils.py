@@ -120,6 +120,27 @@ def unique_path(path: Union[str, Path]):
 
 
 
+def find_by_value(d: dict, search: Any):
+  """
+  Search a dictionary by values and returns the corresponding key.
+
+  Parameters
+  ----------
+  d: dict
+    Dictionary to search.
+
+  search: Any
+    Value of the dictionary to search.
+
+  Returns
+  -------
+  Any
+    The key of corresponding value.
+  """
+  return list(d.keys())[list(d.values()).index(search)]
+
+
+
 def iauname(ra: float, dec: float) -> str:
   """
   Receives the angular position of the object and returns IAU2000 name
