@@ -1,6 +1,6 @@
 import collections.abc
 from pathlib import Path
-from typing import Sequence, Union
+from typing import Any, Sequence, Union
 from datetime import datetime, timedelta
 from threading import Lock
 
