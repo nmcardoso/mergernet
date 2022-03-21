@@ -1,4 +1,3 @@
-import chunk
 from pathlib import Path
 import secrets
 from typing import Dict, List, Sequence, Tuple, Union
@@ -9,12 +8,20 @@ import numpy as np
 import tqdm
 import requests
 import pandas as pd
+import astropy.units as u
+from astropy.io import fits
+from astropy.coordinates import SkyCoord
+from astropy.nddata import Cutout2D
 
 from mergernet.core.utils import array_fallback, save_table
 from mergernet.services.utils import append_query_params, batch_download_file, download_file
 
 
 SDSS_RGB_URL = 'http://skyserver.sdss.org/dr17/SkyServerWS/ImgCutout/getjpeg'
+SDSS_FITS_URL = (
+  'https://data.sdss.org/sas/dr17/eboss/photoObj/frames/'
+  '{rerun}/{run}/{camcol}/frame-{band}-{run:06d}-{camcol}-{field:04d}.fits.bz2'
+)
 XID_URL = 'http://skyserver.sdss.org/dr17/SkyServerWS/SearchTools/CrossIdSearch'
 
 
@@ -39,6 +46,71 @@ class SloanService:
       'opt': opt
     })
     download_file(image_url, save_path)
+
+
+  def cutout(
+    self,
+    file,
+    ra,
+    dec,
+    radius
+  ):
+    header = fits.getheader(file)
+    data = fits.getdata()
+    position = SkyCoord(ra=ra, dec=dec, unit='deg', frame='icrs', equinox='J2000.0')
+    size = u.Quantity((radius, radius), u.pix)
+
+
+
+  def download_fits(
+    self,
+    run: int,
+    rerun: int,
+    camcol: int,
+    field: int,
+    band: str,
+    save_path: Union[str, Path],
+  ):
+    image_url = SDSS_FITS_URL.format(
+      run=run,
+      rerun=rerun,
+      camcol=camcol,
+      field=field,
+      band=band
+    )
+    download_file(image_url, Path(save_path))
+
+
+  def batch_download_fits(
+    self,
+    run: List[int],
+    rerun: List[int],
+    camcol: List[int],
+    field: List[int],
+    bands: Union[str, List[str]],
+    save_path: List[Union[str, Path]],
+    ra: List[float] = None,
+    dec: List[float] = None,
+    workers: int = None,
+    replace: bool = False,
+  ):
+    urls = [
+      SDSS_FITS_URL.format(
+        run=_run,
+        rerun=_rerun,
+        camcol=_camcol,
+        field=_field,
+        band=_band
+      )
+      for _band in bands
+      for _run, _rerun, _camcol, _field in zip(run, rerun, camcol, field)
+    ]
+    batch_download_file(
+      urls=urls,
+      save_path=save_path,
+      workers=workers,
+      replace=replace
+    )
 
 
   def batch_download_rgb(
