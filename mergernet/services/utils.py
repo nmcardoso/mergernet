@@ -1,10 +1,37 @@
 from pathlib import Path
 from types import FunctionType
-from typing import List, Union
+from typing import Any, Callable, Dict, List, Sequence, Union
 import concurrent.futures
 
 import tqdm
 import requests
+
+
+
+def parallel_function_executor(
+  func: Callable,
+  params: Sequence[Dict[str, Any]] = [],
+  workers: int = 2,
+  unit: str = ' it'
+):
+  with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
+    futures = []
+
+    for i in range(len(params)):
+      futures.append(executor.submit(
+        func,
+        **params[i]
+      ))
+
+    for future in tqdm.tqdm(
+      concurrent.futures.as_completed(futures),
+      total=len(futures),
+      unit=unit
+    ):
+      try:
+        future.result()
+      except:
+        pass
 
 
 
