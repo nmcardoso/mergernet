@@ -2,6 +2,7 @@ from pathlib import Path
 from types import FunctionType
 from typing import Any, Callable, Dict, List, Sequence, Union
 import concurrent.futures
+import bz2
 
 import tqdm
 import requests
@@ -39,7 +40,8 @@ def download_file(
   url: str,
   save_path: Union[str, Path],
   replace: bool = False,
-  http_client: requests.Session = None
+  http_client: requests.Session = None,
+  extract: bool = False
 ):
   save_path = Path(save_path)
 
@@ -53,8 +55,13 @@ def download_file(
 
   r = http_client.get(url, allow_redirects=True)
 
+  if extract:
+    file_bytes = bz2.decompress(r.content)
+  else:
+    file_bytes = r.content
+
   with open(str(save_path.resolve()), 'wb') as f:
-    f.write(r.content)
+    f.write(file_bytes)
 
 
 
