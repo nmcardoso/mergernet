@@ -68,26 +68,46 @@ def download_file(
 def batch_download_file(
   urls: List[str],
   save_path: List[Union[str, Path]],
+  replace: bool = False,
+  http_client: requests.Session = None,
   workers: int = 2,
-  replace: bool = False
 ):
-  with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
-    futures = []
+  params = [
+    {
+      'url': _url,
+      'save_path': Path(_save_path),
+      'replace': replace,
+      'http_client': http_client
+    }
+    for _url, _save_path in zip(urls, save_path)
+  ]
+  parallel_function_executor(download_file, params, workers=workers, unit=' files')
 
-    for i in range(len(urls)):
-      futures.append(executor.submit(
-        download_file,
-        url=urls[i],
-        save_path=Path(save_path[i]),
-        replace=replace
-      ))
 
-    for _ in tqdm.tqdm(
-      concurrent.futures.as_completed(futures),
-      total=len(futures),
-      unit=' files'
-    ):
-      pass
+
+# def batch_download_file(
+#   urls: List[str],
+#   save_path: List[Union[str, Path]],
+#   workers: int = 2,
+#   replace: bool = False
+# ):
+#   with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
+#     futures = []
+
+#     for i in range(len(urls)):
+#       futures.append(executor.submit(
+#         download_file,
+#         url=urls[i],
+#         save_path=Path(save_path[i]),
+#         replace=replace
+#       ))
+
+#     for _ in tqdm.tqdm(
+#       concurrent.futures.as_completed(futures),
+#       total=len(futures),
+#       unit=' files'
+#     ):
+#       pass
 
 
 
