@@ -251,7 +251,10 @@ class HyperModel:
     preds = model.predict(ds)
 
     with mlflow.start_run(run_name='predict', nested=self.nest_trials) as run:
-      mlflow.log_param('model', model_name)
+      mlflow.log_params({
+        'model': model_name,
+        'dataset': self.dataset.config.name
+      })
       # mlflow.log_params(
       #   {
       #     hp_name: hp_instance.value
