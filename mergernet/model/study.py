@@ -265,6 +265,7 @@ class HyperModel:
 
       mlflow.log_dict(
         {
+          'model': model_name,
           'dataset': self.dataset.config.name,
           'X': np.array(self.dataset.get_X()).tolist(),
           'y_pred': np.array(preds).tolist()
