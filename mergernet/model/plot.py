@@ -1,4 +1,5 @@
-from typing import Sequence, Tuple
+from pathlib import Path
+from typing import Sequence, Tuple, Union
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -359,6 +360,7 @@ def mag_class_distribution(
   ylabel: str = 'count',
   title: str = None,
   figsize: Tuple[float, float] = (12, 8),
+  save: Union[str, Path] = None,
   legend_pos: str = 'best',
   legend_cols: int = 1
 ):
@@ -377,7 +379,7 @@ def mag_class_distribution(
       colors.append(color_map[_class])
     limit.append(fold['mag_r'].to_numpy())
 
-  plt.figure(figsize=figsize)
+  fig = plt.figure(figsize=figsize)
   plt.hist(total, color=colors, stacked=True, bins=n_bins, label=labels)
   plt.hist(
     limit,
@@ -396,6 +398,11 @@ def mag_class_distribution(
 
   if label_map is not None:
     plt.legend(loc=legend_pos, ncol=legend_cols)
+
+  if save is not None:
+    plt.savefig(save)
+
+  plt.close(fig)
 
 
 
