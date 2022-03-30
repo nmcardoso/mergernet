@@ -44,6 +44,9 @@ def download(df, img_folder, ra='ra', dec='dec'):
 # df = gzauto[gzauto['spiral-arm-count_1_debiased'] > 0.6]
 
 # mesd
-df = pd.read_csv('../data/mesd.csv')
+# df = pd.read_csv('../data/mesd.csv')
 
-download(df, '../data/images/sdss_mesd_128', 'ra', 'dec')
+# bin
+df = pd.read_csv('../data/bin_ds.csv')
+
+download(df, '../data/images/bin_sdss_128', 'ra', 'dec')
