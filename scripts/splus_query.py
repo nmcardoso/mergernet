@@ -13,4 +13,4 @@ with open(sql_file) as fp:
   sql = fp.read()
 
 splus = SplusService()
-splus.batch_query([sql], save_path=['../data/splus_south_gal80.csv'], scope='private')
+splus.batch_query([sql], save_path=['../data/blind_splus_gal80_r13.5-17.csv'], scope='private')
