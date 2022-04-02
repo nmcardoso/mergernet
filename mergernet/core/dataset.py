@@ -340,6 +340,14 @@ class Dataset:
 
 
   def _discretize_label(self, y: np.ndarray) -> np.ndarray:
+    """
+    Find all ocurrences in table that matches ``DatasetConfig.label_map`` key
+    and replaces with respective value.
+
+    Parameters
+    ----------
+    y: np.ndarray
+    """
     y_int = np.empty(y.shape, dtype=np.int64)
 
     for k, v in self.config.label_map.items():
