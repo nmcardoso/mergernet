@@ -226,6 +226,23 @@ MESD_LEGACY_128 = DatasetConfig(
 )
 """MESD dataset with Legacy Survey 128x128 images."""
 
+BIN_SDSS_128 = DatasetConfig(
+  name='bin_sdss_128',
+  archive_url=GDrive.get_url('1pZqGs6xG12Od-g3rnXEOyJ40LPAPu0J2'),
+  table_url=GDrive.get_url('1N-o1N3dYjJRaU4Nu9ZC0j2OHXzhbwYgl'),
+  archive_path=Path('bin_sdss_128.tar.xz'),
+  images_path=Path('bin_sdss_128'),
+  table_path=Path('bin_sdss.csv'),
+  X_column='iauname',
+  X_column_suffix='.jpg',
+  y_column='class',
+  fold_column='fold',
+  label_map={'non_merger': 0, 'merger': 1},
+  image_shape=(128, 128, 3),
+  n_classes=2
+)
+"""Binary dataset (merger and non-merger) with SDSS 128x128 images."""
+
 BLIND_SPLUS_LUPTON_128 = DatasetConfig(
   name='blind_splus_lupton_128',
   archive_url={
@@ -294,6 +311,7 @@ DATASET_REGISTRY = {
   dataset.name: dataset for dataset in [
     DARG_NO_INSPECTION, MESD_LEGACY_128, MESD_SDSS_128, BLIND_SPLUS_LUPTON_128,
     BLIND_SPLUS_TRILOGY_128, BLIND_SPLUS_TRILOGY_128, BLIND_SPLUS_TRILOGY_150,
+    BIN_SDSS_128
   ]
 }
 
