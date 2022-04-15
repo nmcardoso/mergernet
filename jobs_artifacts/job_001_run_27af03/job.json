@@ -1,7 +1,0 @@
-{
- "jobid": 1,
- "runid": "27af03",
- "name": "Resnet50",
- "description": "Minimal resnet50 experiment with 3 classes and unclean data. Using all darg mergers with modelMag < 17.2. Using hyperband pruner.",
- "timestamp": "2022-02-14 09:12:28-03:00"
-}
