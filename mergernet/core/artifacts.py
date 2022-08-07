@@ -1,4 +1,3 @@
-from genericpath import exists
 import logging
 from pathlib import Path
 from typing import Sequence, Union
@@ -8,7 +7,7 @@ import json
 
 import tensorflow as tf
 
-from mergernet.core.constants import GITHUB_BRANCH, GITHUB_USER, GITHUB_TOKEN, GITHUB_REPO, GITHUB_PATH, GDRIVE_PATH, MLFLOW_DEFAULT_DB
+from mergernet.core.constants import GITHUB_BRANCH, GITHUB_USER, GITHUB_TOKEN, GITHUB_REPO, GITHUB_PATH, GDRIVE_PATH
 from mergernet.core.utils import SingletonMeta
 from mergernet.services.github import GithubService
 from mergernet.services.google import GDrive
@@ -30,8 +29,7 @@ class ArtifactHelper(metaclass=SingletonMeta):
     gdrive_path: Union[str, Path] = None,
     use_github: bool = None,
     use_gdrive: bool = None,
-    use_optuna: bool = True,
-    use_mlflow: bool = True
+    use_optuna: bool = True
   ):
     # TODO: always generate artifact path
     if artifact_path:
@@ -51,9 +49,6 @@ class ArtifactHelper(metaclass=SingletonMeta):
 
     if use_optuna:
       (self.artifact_path / 'optuna').mkdir(exist_ok=True)
-
-    if use_mlflow:
-      (self.artifact_path / 'mlflow').mkdir(exist_ok=True)
 
 
   def upload(
@@ -160,47 +155,6 @@ class ArtifactHelper(metaclass=SingletonMeta):
         L.info(f'[GDRIVE] error downloading optuna/{name}.sqlite.')
     else:
       L.info(f'[GDRIVE] optuna/{name}.sqlite was not found in google drive, download skiped.')
-
-
-  def upload_mlflow_db(self, name: str = None):
-    if name is None:
-      name = self.mlflow_db_name
-
-    name = str(Path(name).stem)
-
-    local_path = self.artifact_path / 'mlflow' / f'{name}.sqlite'
-    remote_path = f'mlflow/{name}.sqlite'
-
-    if self.gdrive.exists(remote_path):
-      tz = timezone(timedelta(hours=-3))
-      d = datetime.now(tz)
-      ts = '{}-{:02d}-{:02d}_{:02d}-{:02d}-{:02d}'.format(
-        d.year, d.month, d.day, d.hour, d.minute, d.second
-      )
-      backup_path = f'mlflow/backup/{name}_{ts}.sqlite'
-      self.gdrive.move(remote_path, backup_path)
-      L.info(f'[GDRIVE] created mlflow backup at {backup_path}.')
-
-    if self.gdrive.send(local_path, remote_path):
-      L.info(f'[GDRIVE] uploaded mlflow database {name}.sqlite.')
-    else:
-      L.info(f'[GDRIVE] an error occurred during mlflow dataset upload.')
-
-
-  def download_mlflow_db(self, name: str = None):
-    if name is None:
-      name = self.mlflow_db_name
-
-    name = str(Path(name).stem)
-    remote_path = Path(f'mlflow/{name}.sqlite')
-
-    if remote_path.exists():
-      if self.gdrive.get(remote_path, self.artifact_path / 'mlflow' / f'{name}.sqlite'):
-        L.info(f'[GDRIVE] mlflow/{name}.sqlite successfully downloaded.')
-      else:
-        L.info(f'[GDRIVE] error downloading mlflow/{name}.sqlite.')
-    else:
-      L.info(f'[GDRIVE] mlflow/{name}.sqlite was not found in google drive, download skiped.')
 
 
   def _upload_github(self, path: Union[str, Path]):

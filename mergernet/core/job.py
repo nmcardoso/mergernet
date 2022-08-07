@@ -6,7 +6,6 @@ import re
 from pathlib import Path
 from typing import Any, Dict, Union
 
-import mlflow
 import optuna
 
 from mergernet.core.constants import GDRIVE_PATH, JOBS_PATH, SAVED_MODELS_PATH
@@ -39,45 +38,14 @@ class Job:
     self._config_remote_artifact_path()
 
 
-
   def run(self):
-    if self.job['config']['mlflow']['enabled']:
-      self._config_mlflow()
-
     if self.job['config']['job_type'] == 'optuna_train':
       self._config_optuna()
       self._optuna_train()
-      self._upload_mldflow_artifacts()
       if self.job['config']['save_model']:
         self._upload_models(override=self.job['config']['override_model'])
     elif self.job['config']['job_type'] == 'predict':
       self._predict()
-      self._upload_mldflow_artifacts()
-
-
-  def _config_remote_artifact_path(self):
-    assert GDRIVE_PATH is not None
-
-    path = None
-    if self.job['config']['mlflow']['enabled']:
-      path = Path(GDRIVE_PATH) / 'mlflow' / 'artifacts'
-
-    self.remote_artifact_path = path
-
-
-  def _upload_mldflow_artifacts(self):
-    mlruns = Path('mlruns')
-    mlflow_folder = Path(GDRIVE_PATH) / 'mlflow'
-
-    for exp in mlruns.iterdir():
-      for run in exp.iterdir():
-        artifacts = (run / 'artifacts').glob('*.*')
-        for artifact in artifacts:
-          dest = mlflow_folder / artifact
-          if not dest.exists():
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(artifact, dest)
-            L.info(f'[ART] artifact copied from `{str(artifact)} to `{str(dest)}`.')
 
 
   def _upload_models(self, override: bool = False):
@@ -94,22 +62,6 @@ class Job:
           i += 1
       shutil.copy2(model_path, remote_path)
       L.info(f'[ART] model copied from `{str(model_path)} to `{str(remote_path)}`.')
-
-
-  def _config_mlflow(self):
-    assert GDRIVE_PATH is not None
-
-    mlflow_folder = Path(GDRIVE_PATH) / 'mlflow'
-    if not mlflow_folder.exists():
-      mlflow_folder.mkdir(exist_ok=True)
-
-    db_name = 'mlflow.sqlite'
-    db_path =  mlflow_folder / db_name
-    db_uri = f'sqlite:///{str(db_path.resolve())}'
-
-    mlflow.set_tracking_uri(db_uri)
-    # mlflow.set_tracking_uri(f'file:///{str(mlflow_folder.resolve())}')
-    mlflow.set_experiment(self.experiment_name)
 
 
   def _config_optuna(self):
@@ -146,7 +98,6 @@ class Job:
       objective_direction=self.job['config']['optuna']['objective_direction'],
       resume=bool(self.job['config']['resume']),
       save_model=self.job['config']['save_model'],
-      mlflow_enabled=self.job['config']['mlflow']['enabled'],
     )
 
 

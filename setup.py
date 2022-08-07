@@ -21,7 +21,6 @@ setup(
     'keras-tuner==1.1.0',
     'tensorboard',
     'optuna',
-    'mlflow',
     'plotly'
   ]
 )

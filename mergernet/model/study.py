@@ -1,126 +1,22 @@
 import logging
-import secrets
-import shutil
 from typing import Any, Callable, Dict, Tuple, Union
 from pathlib import Path
 
 import optuna
-import mlflow
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
-from optuna.integration.mlflow import MLflowCallback
 
-from mergernet.core.constants import MLFLOW_DEFAULT_DB, MLFLOW_DEFAULT_URL, RANDOM_SEED, SAVED_MODELS_PATH
+from mergernet.core.constants import RANDOM_SEED, SAVED_MODELS_PATH
 from mergernet.core.dataset import Dataset
 from mergernet.core.entity import ConstantHyperParameter, HyperParameterSet
-from mergernet.model.callback import DeltaStopping
+from mergernet.model.callback import PruneCallback, SaveCallback
 from mergernet.model.plot import conf_matrix
 from mergernet.model.preprocessing import load_jpg, load_png, one_hot_factory
 from mergernet.core.utils import Timming
 
 
 L = logging.getLogger('job')
-
-# this implementation mimics the mlflow integration of optuna
-# `RUN_ID_ATTRIBUTE_KEY` was extracted from following code:
-# https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py
-RUN_ID_ATTRIBUTE_KEY = 'mlflow_run_id'
-
-
-
-class PruneCallback(tf.keras.callbacks.Callback):
-  def __init__(self, trial: optuna.trial.FrozenTrial, objective_metric: str):
-    super(PruneCallback, self).__init__()
-    self.trial = trial
-    self.objective_metric = objective_metric # default: "val_loss"
-
-
-  def on_epoch_end(self, epoch: int, logs: Dict[str, Any]):
-    self.trial.report(value=logs[self.objective_metric], step=epoch)
-
-    if self.trial.should_prune():
-      self.model.stop_training = True
-      L.info(f'[PRUNER] trial pruned at epoch {epoch + 1}')
-
-
-class SaveCallback(tf.keras.callbacks.Callback):
-  def __init__(
-    self,
-    name: str,
-    study: optuna.study.Study,
-    objective_metric: str,
-    objective_direction: str
-  ):
-    super(SaveCallback, self).__init__()
-    self.name = name
-    self.study = study
-    self.objective_metric = objective_metric
-    self.default_value = -np.inf if objective_direction == 'maximize' else np.inf
-    self.operator = np.greater if objective_direction == 'maximine' else np.less
-
-
-  def on_train_end(self, logs: Dict[str, Any]):
-    try:
-      best_value = self.study.best_value
-    except:
-      best_value = self.default_value
-
-    if self.operator(logs[self.objective_metric], best_value):
-      save_path = SAVED_MODELS_PATH / (self.name + '.h5')
-      if not save_path.parent.exists():
-        save_path.parent.mkdir(parents=True, exist_ok=True)
-      self.model.save(save_path, overwrite=True)
-
-
-class MLflowTensorflowCallback(tf.keras.callbacks.Callback):
-  def __init__(
-    self,
-    trial: optuna.trial.FrozenTrial,
-    dataset: Dataset,
-    ds_test: tf.data.Dataset
-  ):
-    self.trial = trial
-    self.dataset = dataset
-    self.ds_test = ds_test
-
-
-  def on_epoch_end(self, epoch: int, logs: Dict[str, float]):
-    with mlflow.start_run(run_name=str(self.trial.number), nested=self.nest_trials) as run:
-      # The mlflow run will be created before optuna mlflow callback,
-      # so the following line is needed in order to optuna get the current run.
-      # https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py
-      self.trial.set_system_attr(RUN_ID_ATTRIBUTE_KEY, run.info.run_id)
-
-      mlflow.log_metrics(metric=logs, step=epoch)
-
-
-  def on_train_end(self, logs: Dict[str, Any]):
-    with mlflow.start_run(run_name=str(self.trial.number), nested=self.nest_trials) as run:
-      # The mlflow run will be created before optuna mlflow callback,
-      # so the following line is needed in order to optuna get the current run.
-      # https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py
-      self.trial.set_system_attr(RUN_ID_ATTRIBUTE_KEY, run.info.run_id)
-
-      # confusion matrix plot
-      y_pred = self.model.predict(self.ds_test)
-      y_true = np.concatenate([y for _, y in self.ds_test], axis=0)
-      lm = self.dataset.config.label_map
-      labels = [[*lm.keys()][v] for v in lm.values()]
-      ax = conf_matrix(y_true, y_pred, one_hot=True, labels=labels)
-      mlflow.log_figure(ax.figure, f'confusion_matrix.png')
-      plt.close(ax.figure)
-
-      # log predictions
-      mlflow.log_dict(
-        {
-          'dataset': self.dataset.config.name,
-          'X': np.array(self.dataset.get_X_by_fold(0, kind='test')).tolist(),
-          'y_pred': np.array(y_pred).tolist(),
-          'y_true': np.array(y_true).tolist()
-        },
-        'predictions.json'
-      )
 
 
 
@@ -139,7 +35,6 @@ class HyperModel:
     self.hp: HyperParameterSet = None
     self.study: optuna.study.Study = None
     self.save_model: bool = None
-    self.mlflow_enabled: bool = None
     self.objective_metric: str = 'val_loss'
     self.objective_direction: str = 'minimize'
     self.class_weights: dict = None
@@ -278,29 +173,6 @@ class HyperModel:
 
     preds = model.predict(ds)
 
-    with mlflow.start_run(run_name='predict', nested=self.nest_trials) as run:
-      mlflow.log_params({
-        'model': model_name,
-        'dataset': self.dataset.config.name
-      })
-      # mlflow.log_params(
-      #   {
-      #     hp_name: hp_instance.value
-      #     for hp_name, hp_instance in self.hp.__dict__.items()
-      #     if not hp_name.startswith('_') and isinstance(hp_instance, ConstantHyperParameter)
-      #   }
-      # )
-
-      mlflow.log_dict(
-        {
-          'model': model_name,
-          'dataset': self.dataset.config.name,
-          'X': np.array(self.dataset.get_X()).tolist(),
-          'y_pred': np.array(preds).tolist()
-        },
-        'predictions.json'
-      )
-
     return preds
 
 
@@ -331,14 +203,7 @@ class HyperModel:
     callbacks = [
       PruneCallback(trial=trial, objective_metric=self.objective_metric)
     ]
-    if self.mlflow_enabled:
-      callbacks.append(
-        MLflowTensorflowCallback(
-          trial=trial,
-          dataset=self.dataset,
-          ds_test=ds_test
-        )
-      )
+
     if self.save_model:
       callbacks.append(
         SaveCallback(
@@ -363,38 +228,6 @@ class HyperModel:
     # history shape: {metric1: [val1, val2, ...], metric2: [val1, val2, ...]}
     h = history.history
     # epochs = len(h[list(h.keys())[0]])
-
-    # if self.mlflow_enabled:
-    #   with mlflow.start_run(run_name=str(trial.number), nested=self.nest_trials) as run:
-    #     # The mlflow run will be created before optuna mlflow callback,
-    #     # so the following line is needed in order to optuna get the current run.
-    #     # https://github.com/optuna/optuna/blob/master/optuna/integration/mlflow.py
-    #     trial.set_system_attr(RUN_ID_ATTRIBUTE_KEY, run.info.run_id)
-
-    #     for i in range(epochs):
-    #       # {k1: [v1, v2, ...], k2: [v1, v2, ...]} => {k1: vi, k2: vi}
-    #       metrics = {name: h[name][i] for name in h.keys()}
-    #       mlflow.log_metrics(metrics=metrics, step=i)
-
-    #     # confusion matrix plot
-    #     y_pred = model.predict(ds_test)
-    #     y_true = np.concatenate([y for x, y in ds_test], axis=0)
-    #     lm = self.dataset.config.label_map
-    #     labels = [[*lm.keys()][v] for v in lm.values()]
-    #     ax = conf_matrix(y_true, y_pred, one_hot=True, labels=labels)
-    #     mlflow.log_figure(ax.figure, f'confusion_matrix.png')
-    #     plt.close(ax.figure)
-
-    #     # log predictions
-    #     mlflow.log_dict(
-    #       {
-    #         'dataset': self.dataset.config.name,
-    #         'X': np.array(self.dataset.get_X_by_fold(0, kind='test')).tolist(),
-    #         'y_pred': np.array(y_pred).tolist(),
-    #         'y_true': np.array(y_true).tolist()
-    #       },
-    #       'predictions.json'
-    #     )
 
     # generating optuna value to optimize (val_accuracy)
     last_epoch_accuracy = h[self.objective_metric][-1]
@@ -489,14 +322,6 @@ class HyperModel:
     initial_epoch: int = 0,
     epochs: int = 10,
   ):
-    if self.mlflow_enabled:
-      callbacks.append(
-        MLflowTensorflowCallback(
-          trial=trial,
-          dataset=self.dataset,
-          ds_test=ds_test
-        )
-      )
     if save_model:
       callbacks.append(
         SaveCallback(
@@ -534,12 +359,10 @@ class HyperModel:
     objective_metric: str = 'val_loss',
     objective_direction: str = 'minimize',
     resume: bool = False,
-    save_model: bool = True,
-    mlflow_enabled: bool = True
+    save_model: bool = True
   ):
     self.hp = hyperparameters
     self.save_model = save_model
-    self.mlflow_enabled = mlflow_enabled
     self.objective_metric = objective_metric
     self.objective_direction = objective_direction
 
@@ -572,14 +395,6 @@ class HyperModel:
       'n_trials': n_trials
     }
 
-    if self.mlflow_enabled:
-      mlflow_cb = MLflowCallback(
-        metric_name='optuna_score',
-        nest_trials=self.nest_trials,
-        tag_study_user_attrs=False
-      )
-      optimize_params['callbacks'] = mlflow_cb
-
     study.optimize(**optimize_params)
 
     L.info(f'[HYPER] optuna optimization finished in {t.end()}')
@@ -597,7 +412,7 @@ class HyperModel:
       self.class_weights = self.dataset.compute_class_weight()
 
 
-  def _architecture_switch(self, pretrained_arch) -> Tuple[Callable, Callable]:
+  def _architecture_switch(self, pretrained_arch: str) -> Tuple[Callable, Callable]:
     if pretrained_arch == 'xception':
       preprocess_input = tf.keras.applications.xception.preprocess_input
       base_model = tf.keras.applications.Xception

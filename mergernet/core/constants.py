@@ -48,9 +48,3 @@ if ENV == 'dev' and not GDRIVE_PATH:
 
 # Random number generation seed
 RANDOM_SEED = 42
-
-
-
-# MLflow default database name
-MLFLOW_DEFAULT_DB = 'mlflow.sqlite'
-MLFLOW_DEFAULT_URL = 'https://mlflow-nmcardoso.cloud.okteto.net'
