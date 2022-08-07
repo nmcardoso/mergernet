@@ -1,7 +1,7 @@
 import logging
 import secrets
 import shutil
-from typing import Any, Dict, Tuple, Union
+from typing import Any, Callable, Dict, Tuple, Union
 from pathlib import Path
 
 import optuna
@@ -136,12 +136,13 @@ class HyperModel:
     self.name = name
     self.epochs = epochs
     self.nest_trials = nest_trials
-    self.hp = None
-    self.study = None
-    self.save_model = None
-    self.mlflow_enabled = None
-    self.objective_metric = 'val_loss'
-    self.objective_direction = 'minimize'
+    self.hp: HyperParameterSet = None
+    self.study: optuna.study.Study = None
+    self.save_model: bool = None
+    self.mlflow_enabled: bool = None
+    self.objective_metric: str = 'val_loss'
+    self.objective_direction: str = 'minimize'
+    self.class_weights: dict = None
 
 
   def prepare_data(
@@ -181,6 +182,7 @@ class HyperModel:
     self,
     input_shape: Tuple,
     trial: optuna.trial.FrozenTrial = None,
+    freeze_conv: bool = False
   ) -> tf.keras.Model:
     if trial is not None:
       self.hp.set_trial(trial)
@@ -193,6 +195,9 @@ class HyperModel:
       include_top=False,
       weights=self.hp.pretrained_weights.suggest()
     )
+    conv_block.name = 'conv_block'
+    conv_block.trainable = (not freeze_conv)
+    L.info(f'[BUILD] Trainable weights (CONV): {conv_block.trainable_weights}')
 
     data_aug_layers = [
       tf.keras.layers.RandomFlip(mode='horizontal', seed=RANDOM_SEED),
@@ -224,6 +229,7 @@ class HyperModel:
     outputs = tf.keras.layers.Dense(self.dataset.config.n_classes, activation='softmax')(x)
 
     model = tf.keras.Model(inputs, outputs)
+    L.info(f'[BUILD] Trainable weights (TOTAL): {model.trainable_weights}')
     model.compile(
       optimizer=tf.keras.optimizers.Adam(self.hp.learning_rate.suggest()),
       loss=tf.keras.losses.CategoricalCrossentropy(from_logits=False),
@@ -232,6 +238,28 @@ class HyperModel:
       ]
     )
     return model
+
+
+  def _compile_model(self, model: tf.keras.Model, lr: None):
+    lr = lr or self.hp.learning_rate.suggest()
+    model.compile(
+      optimizer=tf.keras.optimizers.Adam(lr),
+      loss=tf.keras.losses.CategoricalCrossentropy(from_logits=False),
+      metrics=[
+        tf.keras.metrics.CategoricalAccuracy(name='accuracy')
+      ]
+    )
+
+
+  def _switch_trainable_status(
+    self,
+    model: tf.keras.Model,
+    layer: str,
+    trainable: bool
+  ):
+    for l in model.layers:
+      if l.name == layer:
+        l.trainable = trainable
 
 
   def predict(
@@ -276,7 +304,7 @@ class HyperModel:
     return preds
 
 
-  def objective(self, trial: optuna.trial.FrozenTrial) -> float:
+  def _objective_old(self, trial: optuna.trial.FrozenTrial) -> float:
     tf.keras.backend.clear_session()
 
     ds_train, ds_test = self.dataset.get_fold(0)
@@ -292,7 +320,8 @@ class HyperModel:
       buffer_size=1000,
       kind='train'
     )
-    class_weights = self.dataset.compute_class_weight()
+
+    self._compute_class_weight()
 
     model = self.build_model(
       input_shape=self.dataset.config.image_shape,
@@ -327,7 +356,6 @@ class HyperModel:
       batch_size=self.hp.batch_size.suggest(trial),
       epochs=self.epochs,
       validation_data=ds_test,
-      class_weight=class_weights,
       callbacks=callbacks
     )
     L.info(f'[TRAIN] End of training loop, duration: {t.end()}.')
@@ -374,46 +402,127 @@ class HyperModel:
 
 
 
-  def train(
-    self,
-    hyperparameters: HyperParameterSet,
-    save_path: Union[str, Path] = None
-  ):
-    self.hp = hyperparameters
-
+  def objective(self, trial: optuna.trial.FrozenTrial) -> float:
     tf.keras.backend.clear_session()
 
     ds_train, ds_test = self.dataset.get_fold(0)
     ds_train = self.prepare_data(
       ds_train,
-      batch_size=self.hp.batch_size.suggest(),
+      batch_size=self.hp.batch_size.suggest(trial),
       buffer_size=5000,
       kind='train'
     )
     ds_test = self.prepare_data(
       ds_test,
-      batch_size=self.hp.batch_size.suggest(),
+      batch_size=self.hp.batch_size.suggest(trial),
       buffer_size=1000,
       kind='train'
     )
-    class_weights = self.dataset.compute_class_weight()
+    self._compute_class_weight()
 
-    model = self.build_model(input_shape=self.dataset.config.image_shape)
+    model = self.build_model(
+      input_shape=self.dataset.config.image_shape,
+      trial=trial,
+      freeze_conv=True
+    )
+    self._compile_model(model, self.hp.learning_rate.suggest() / 10)
+
+    ckpt_path = SAVED_MODELS_PATH / f'{self.name}.ckpt.h5'
+
+    ckpt_cb = tf.keras.callbacks.ModelCheckpoint(
+      ckpt_path,
+      monitor=self.objective_metric,
+      save_best_only=True,
+      mode=self.objective_direction[:3] # 'min' or 'max'
+    )
+
+    early_stop_cb = tf.keras.callbacks.EarlyStopping(
+      monitor=self.objective_metric,
+      min_delta=0,
+      patience=2,
+      mode=self.objective_direction[:3], # 'min' or 'max'
+      restore_best_weights=True
+    )
+
+    prune_cb = PruneCallback(
+      trial=trial,
+      objective_metric=self.objective_metric
+    )
+
+    h1 = self._train(
+      model,
+      ds_train,
+      ds_test,
+      trial,
+      callbacks=[early_stop_cb],
+      save_model=False,
+      epochs=10
+    )
+
+    self._switch_trainable_status(model, 'conv_block', True)
+    self._compile_model(model, self.hp.learning_rate.suggest())
+
+    h = self._train(
+      model,
+      ds_train,
+      ds_test,
+      trial,
+      callbacks=[prune_cb],
+      save_model=True,
+      initial_epoch=len(h1),
+      epochs=self.epochs
+    )
+
+    # generating optuna value to optimize (val_accuracy)
+    last_epoch_accuracy = h[self.objective_metric][-1]
+    return last_epoch_accuracy
+
+
+  def _train(
+    self,
+    model: tf.keras.Model,
+    ds_train: Dataset,
+    ds_test: Dataset,
+    trial: optuna.trial.FrozenTrial,
+    save_model: bool,
+    callbacks: list = [],
+    initial_epoch: int = 0,
+    epochs: int = 10,
+  ):
+    if self.mlflow_enabled:
+      callbacks.append(
+        MLflowTensorflowCallback(
+          trial=trial,
+          dataset=self.dataset,
+          ds_test=ds_test
+        )
+      )
+    if save_model:
+      callbacks.append(
+        SaveCallback(
+          name=self.name,
+          study=self.study,
+          objective_metric=self.objective_metric,
+          objective_direction=self.objective_direction
+        )
+      )
 
     t = Timming()
     L.info('[TRAIN] Start of training loop')
     history = model.fit(
       ds_train,
-      batch_size=self.hp.batch_size.suggest(),
-      epochs=self.epochs,
+      batch_size=self.hp.batch_size.suggest(trial),
+      epochs=epochs,
       validation_data=ds_test,
-      class_weight=class_weights,
-      callbacks=[]
+      class_weight=self.class_weights,
+      callbacks=callbacks,
+      initial_epoch=initial_epoch
     )
     L.info(f'[TRAIN] End of training loop, duration: {t.end()}.')
 
-    with mlflow.start_run(run_name='predict', nested=self.nest_trials) as run:
-      pass
+    # history shape: {metric1: [val1, val2, ...], metric2: [val1, val2, ...]}
+    h = history.history
+    return h
 
 
   def hypertrain(
@@ -483,7 +592,12 @@ class HyperModel:
     L.info(f'[HYPER] ----- end of best trial summary -----')
 
 
-  def _architecture_switch(self, pretrained_arch):
+  def _compute_class_weight(self):
+    if self.class_weights is None:
+      self.class_weights = self.dataset.compute_class_weight()
+
+
+  def _architecture_switch(self, pretrained_arch) -> Tuple[Callable, Callable]:
     if pretrained_arch == 'xception':
       preprocess_input = tf.keras.applications.xception.preprocess_input
       base_model = tf.keras.applications.Xception
