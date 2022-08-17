@@ -322,17 +322,19 @@ class DatasetRegistry:
 
 
 class Dataset:
-  """High-level representation of dataset.
-
-  Parameters
-  ----------
-  ds_split: str
-    Split path.
+  """
+  High-level representation of dataset. This class abstracts all IO operations
+  of the dataset (e.g. download, prepare, split)
 
   Attributes
   ----------
+  registry: DatasetRegistry
+    A registry containing all datasets configurations
+
+  Parameters
+  ----------
   config: DatasetConfig
-    Configuration object.
+    The configuration object of the database get from `Dataset.registry` attribute
   """
   registry = DatasetRegistry()
 
