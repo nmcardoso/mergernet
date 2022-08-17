@@ -8,3 +8,6 @@ venv
 # Documentation
 docs/_build
 docs/api
+
+# Development
+dev/
