@@ -24,25 +24,28 @@ SAVED_MODELS_PATH = Path('saved_models')
 
 
 
-# Github authentication
-GITHUB_USER = os.environ.get('GITHUB_USER', None)
-GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', None)
-GITHUB_REPO = os.environ.get('GITHUB_REPO', None)
-GITHUB_PATH = os.environ.get('GITHUB_PATH', 'jobs_artifacts')
-GITHUB_BRANCH = os.environ.get('GITHUB_BRANCH', 'main')
+# Github authentication and paths
+GH_USER = os.environ.get('GITHUB_USER', None)
+GH_TOKEN = os.environ.get('GITHUB_TOKEN', None)
+GH_REPO = os.environ.get('GITHUB_REPO', 'mergernet-artifacts')
+GH_BRANCH = os.environ.get('GITHUB_BRANCH', 'main')
+GH_BASE_PATH = os.environ.get('GITHUB_PATH', '')
+GH_ARTIFACT_PATH = GH_BASE_PATH + '/jobs/{job_id}/{run_id}/{model_name}/{artifact_name}'
+GH_OPTUNA_PATH = GH_BASE_PATH + '/optuna/{artifact_name}'
+
+
+
+# Google Drive paths
+GDRIVE_MOUNT_PATH = os.environ.get('GDRIVE_PATH', None)
+if ENV == 'dev' and not GDRIVE_MOUNT_PATH:
+  GDRIVE_MOUNT_PATH = DATA_ROOT / 'gdrive'
+GDRIVE_ARTIFACT_PATH = str(GDRIVE_MOUNT_PATH) + '/jobs/{job_id}/{run_id}/{artifact_name}'
 
 
 
 # S-PLUS authentication
 SPLUS_USER = os.environ.get('SPLUS_USER', None)
 SPLUS_PASS = os.environ.get('SPLUS_PASS', None)
-
-
-
-# Google Drive
-GDRIVE_PATH = os.environ.get('GDRIVE_PATH', None)
-if ENV == 'dev' and not GDRIVE_PATH:
-  GDRIVE_PATH = DATA_ROOT / 'gdrive'
 
 
 
