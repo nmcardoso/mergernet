@@ -8,7 +8,14 @@ setup(
   author_email='nauxmac@gmail.com',
   packages=find_packages(),
   include_package_data=True,
-  package_data={'mergernet': ['jobs/*.yaml']},
+  package_data={
+    'mergernet': [
+      'jobs/*.yaml',
+      'report/templates/*.j2',
+      'report/templates/*.css',
+      'report/templates/*.js',
+    ]
+  },
   install_requires=[
     'wheel',
     'numpy>=1.19.5',
@@ -18,9 +25,9 @@ setup(
     'requests>=2.23',
     'Pillow>=7.1.2',
     'tensorflow_addons',
-    'keras-tuner==1.1.0',
     'tensorboard',
     'optuna',
-    'plotly'
+    'plotly',
+    'Jinja2>=3.1'
   ]
 )
