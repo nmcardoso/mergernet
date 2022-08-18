@@ -67,7 +67,16 @@ class GithubService:
 
     return True
 
-    # print(response.json())
+
+  def download(self, remote_path: str, dest_path: Union[str, Path]):
+    url = f'https://raw.githubusercontent.com/{self.user}/{self.repo}/main/{remote_path}'
+    resp = requests.get(
+      url=url,
+      headers=HEADERS,
+      auth=(self.user, self.token)
+    )
+    with open(dest_path, 'wb') as fp:
+      fp.write(resp.content)
 
 
   def list_dir(self, path: int) -> dict:
