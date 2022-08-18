@@ -1,0 +1,77 @@
+{% extends "base.html.j2" %}
+{% import "macros.html.j2" as macros %}
+
+
+{% block title %}Report{% endblock %}
+
+{% block content %}
+  {{ macros.breadcrumb([
+    {
+      'title': 'Experiment {}'.format(meta.exp_id),
+      'url': '{}{}'.format(base_url, meta.exp_id)
+    },
+    {
+      'title': 'Run {}'.format(meta.run_id)
+    }
+  ]) }}
+
+  <div class="mt-3">
+    <p>
+      <b>Start:</b> {{ meta.start_time }}
+    </p>
+    <p>
+      <b>End:</b> {{ meta.end_time }}
+    </p>
+    <p>
+      <b>Duration:</b> {{ meta.duration }}
+    </p>
+  </div>
+
+  <nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <button
+      class="nav-link active"
+      id="nav-home-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#nav-home"
+      type="button"
+      role="tab">
+      Artifacts
+    </button>
+    <button
+      class="nav-link"
+      id="nav-profile-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#nav-profile"
+      type="button"
+      role="tab">
+      Figures
+    </button>
+    <button
+      class="nav-link"
+      id="nav-profile-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#nav-profile"
+      type="button"
+      role="tab">
+      Log
+    </button>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div
+    class="tab-pane fade show active"
+    id="nav-home"
+    role="tabpanel"
+    tabindex="0">
+    ....
+  </div>
+  <div
+    class="tab-pane fade"
+    id="nav-profile"
+    role="tabpanel"
+    tabindex="0">
+    ...
+  </div>
+</div>
+{% endblock %}
