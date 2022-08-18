@@ -7,9 +7,10 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 
-from mergernet.core.constants import RANDOM_SEED, SAVED_MODELS_PATH
+from mergernet.core.constants import RANDOM_SEED
 from mergernet.core.dataset import Dataset
 from mergernet.core.entity import ConstantHyperParameter, HyperParameterSet
+from mergernet.core.experiment import Experiment
 from mergernet.core.logging import get_logger
 from mergernet.model.callback import PruneCallback, SaveCallback
 from mergernet.model.plot import conf_matrix
@@ -52,26 +53,26 @@ class HyperModel:
   ):
     if self.dataset.config.X_column_suffix == '.jpg':
       ds = ds.map(load_jpg)
-      L.info('[DATASET] apply: load_jpg')
+      L.info('Apply: load_jpg')
     elif self.dataset.config.X_column_suffix == '.png':
       ds = ds.map(load_png)
-      L.info('[DATASET] apply: load_png')
+      L.info('Apply: load_png')
 
     if kind == 'train':
       ds = ds.map(one_hot_factory(self.dataset.config.n_classes))
-      L.info('[DATASET] apply: one_hot')
+      L.info('Apply: one_hot')
 
     ds = ds.cache()
-    L.info('[DATASET] apply: cache')
+    L.info('Apply: cache')
 
     ds = ds.shuffle(buffer_size)
-    L.info('[DATASET] apply: shuffle')
+    L.info('Apply: shuffle')
 
     ds = ds.batch(batch_size)
-    L.info('[DATASET] apply: batch')
+    L.info('Apply: batch')
 
     ds = ds.prefetch(tf.data.AUTOTUNE)
-    L.info('[DATASET] apply: prefetch')
+    L.info('Apply: prefetch')
 
     return ds
 
@@ -93,9 +94,9 @@ class HyperModel:
       include_top=False,
       weights=self.hp.pretrained_weights.suggest()
     )
-    conv_block.name = 'conv_block'
+    # conv_block.name = 'conv_block'
     conv_block.trainable = (not freeze_conv)
-    L.info(f'[BUILD] Trainable weights (CONV): {conv_block.trainable_weights}')
+    L.info(f'Trainable weights (CONV): {len(conv_block.trainable_weights)}')
 
     data_aug_layers = [
       tf.keras.layers.RandomFlip(mode='horizontal', seed=RANDOM_SEED),
@@ -127,7 +128,7 @@ class HyperModel:
     outputs = tf.keras.layers.Dense(self.dataset.config.n_classes, activation='softmax')(x)
 
     model = tf.keras.Model(inputs, outputs)
-    L.info(f'[BUILD] Trainable weights (TOTAL): {model.trainable_weights}')
+    L.info(f'Trainable weights (TOTAL): {len(model.trainable_weights)}')
     model.compile(
       optimizer=tf.keras.optimizers.Adam(self.hp.learning_rate.suggest()),
       loss=tf.keras.losses.CategoricalCrossentropy(from_logits=False),
@@ -162,14 +163,13 @@ class HyperModel:
 
   def predict(
     self,
-    model_name: str,
-    model: Union[str, Path, tf.keras.Model],
-    dataset: Dataset
+    model: Union[str, tf.keras.Model],
+    dataset: tf.data.Dataset
   ) -> list:
     tf.keras.backend.clear_session()
 
-    if isinstance(model, (str, Path)):
-      model = tf.keras.models.load_model(model)
+    if isinstance(model, str):
+      model = tf.keras.models.load_model(Path(Experiment().local_artifact_path) / model)
 
     ds = dataset.get_preds_dataset()
     ds = self.prepare_data(ds, batch_size=128, buffer_size=1000, kind='predict')
@@ -183,12 +183,14 @@ class HyperModel:
     tf.keras.backend.clear_session()
 
     ds_train, ds_test = self.dataset.get_fold(0)
+    L.info('Preparing train dataset')
     ds_train = self.prepare_data(
       ds_train,
       batch_size=self.hp.batch_size.suggest(trial),
       buffer_size=5000,
       kind='train'
     )
+    L.info('Preparing test dataset')
     ds_test = self.prepare_data(
       ds_test,
       batch_size=self.hp.batch_size.suggest(trial),
@@ -218,7 +220,7 @@ class HyperModel:
       )
 
     t = Timming()
-    L.info('[TRAIN] Start of training loop')
+    L.info('Start of training loop')
     history = model.fit(
       ds_train,
       batch_size=self.hp.batch_size.suggest(trial),
@@ -226,7 +228,7 @@ class HyperModel:
       validation_data=ds_test,
       callbacks=callbacks
     )
-    L.info(f'[TRAIN] End of training loop, duration: {t.end()}.')
+    L.info(f'End of training loop, duration: {t.end()}.')
 
     # history shape: {metric1: [val1, val2, ...], metric2: [val1, val2, ...]}
     h = history.history
@@ -240,6 +242,7 @@ class HyperModel:
 
   def objective(self, trial: optuna.trial.FrozenTrial) -> float:
     tf.keras.backend.clear_session()
+    e = Experiment()
 
     ds_train, ds_test = self.dataset.get_fold(0)
     ds_train = self.prepare_data(
@@ -263,7 +266,7 @@ class HyperModel:
     )
     self._compile_model(model, self.hp.learning_rate.suggest() / 10)
 
-    ckpt_path = SAVED_MODELS_PATH / f'{self.name}.ckpt.h5'
+    ckpt_path = Path(e.local_artifact_path) / f'{self.name}.ckpt.h5'
 
     ckpt_cb = tf.keras.callbacks.ModelCheckpoint(
       ckpt_path,
@@ -310,8 +313,8 @@ class HyperModel:
     )
 
     # generating optuna value to optimize (val_accuracy)
-    last_epoch_accuracy = h[self.objective_metric][-1]
-    return last_epoch_accuracy
+    objective_value = h[self.objective_metric][-1]
+    return objective_value
 
 
   def _train(
@@ -336,7 +339,7 @@ class HyperModel:
       )
 
     t = Timming()
-    L.info('[TRAIN] Start of training loop')
+    L.info('Start of training loop')
     history = model.fit(
       ds_train,
       batch_size=self.hp.batch_size.suggest(trial),
@@ -346,7 +349,7 @@ class HyperModel:
       callbacks=callbacks,
       initial_epoch=initial_epoch
     )
-    L.info(f'[TRAIN] End of training loop, duration: {t.end()}.')
+    L.info(f'End of training loop, duration: {t.end()}.')
 
     # history shape: {metric1: [val1, val2, ...], metric2: [val1, val2, ...]}
     h = history.history
@@ -355,7 +358,6 @@ class HyperModel:
 
   def hypertrain(
     self,
-    optuna_uri: str,
     n_trials: int,
     hyperparameters: HyperParameterSet,
     pruner: str = 'hyperband',
@@ -370,7 +372,7 @@ class HyperModel:
     self.objective_direction = objective_direction
 
     if resume:
-      L.info(f'[HYPER] resuming previous optimization of {self.name} study')
+      L.info(f'resuming previous optimization of {self.name} study')
 
     if pruner == 'median':
       pruner_instance = optuna.pruners.MedianPruner(
@@ -380,7 +382,11 @@ class HyperModel:
     elif pruner == 'hyperband':
       pruner_instance = optuna.pruners.HyperbandPruner(min_resource=7)
 
-    L.info(f'[HYPER] start of optuna optimization')
+    L.info(f'start of optuna optimization')
+
+    exp = Experiment()
+    optuna_path = Path(exp.local_artifact_path) / 'optuna.sqlite'
+    optuna_uri = f'sqlite:///{str(optuna_path.resolve())}' # absolute path
 
     t = Timming()
     study = optuna.create_study(
@@ -399,15 +405,18 @@ class HyperModel:
     }
 
     study.optimize(**optimize_params)
+    t.end()
 
-    L.info(f'[HYPER] optuna optimization finished in {t.end()}')
-    L.info(f'[HYPER] number of finished trials: {len(study.trials)}')
-    L.info(f'[HYPER] ----- begin of best trial summary -----')
-    L.info(f'[HYPER] optimization score: {study.best_trial.value}')
-    L.info(f'[HYPER] params:')
+    exp.upload_file_gh('optuna.sqlite')
+
+    L.info(f'optuna optimization finished in {t.duration()}')
+    L.info(f'number of finished trials: {len(study.trials)}')
+    L.info(f'----- begin of best trial summary -----')
+    L.info(f'optimization score: {study.best_trial.value}')
+    L.info(f'params:')
     for k, v in study.best_params.items():
-      L.info(f'[HYPER] {k}: {str(v)}')
-    L.info(f'[HYPER] ----- end of best trial summary -----')
+      L.info(f'{k}: {str(v)}')
+    L.info(f'----- end of best trial summary -----')
 
 
   def _compute_class_weight(self):

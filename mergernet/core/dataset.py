@@ -1,4 +1,5 @@
-"""Dataset Module: high-level abstraction of dataset.
+"""
+Dataset Module: high-level abstraction of dataset.
 
 This module defines the rules for loading a previously generated ``.tfrecord`` dataset.
 
@@ -17,6 +18,7 @@ import tensorflow as tf
 import numpy as np
 import pandas as pd
 
+from mergernet.core.experiment import Experiment
 from mergernet.core.utils import load_image, load_table
 from mergernet.core.constants import RANDOM_SEED
 from mergernet.services.google import GDrive
@@ -343,10 +345,9 @@ class Dataset:
     config: str = '',
     in_memory: bool = False
   ):
-    self.ds = ds
-    self.data_path = Path(data_path)
     self.in_memory = in_memory
 
+    data_path = Path(Experiment().local_shared_path)
     self.config = config
     self.config.archive_path = data_path / self.config.archive_path
     self.config.images_path = data_path / self.config.images_path
@@ -385,7 +386,8 @@ class Dataset:
 
 
   def download(self) -> None:
-    """Check if destination path exists, create missing folders and download
+    """
+    Check if destination path exists, create missing folders and download
     the dataset files from web resource for a specified dataset type.
     """
     if not self.config.archive_path.parent.exists():
