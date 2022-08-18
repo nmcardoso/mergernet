@@ -1,8 +1,11 @@
 import base64
+from pathlib import Path
 from typing import Union
 import re
 
 import requests
+
+from mergernet.core.constants import GH_USER, GH_TOKEN, GH_BRANCH, GH_REPO
 
 
 BASE_URL = 'https://api.github.com'
@@ -12,14 +15,11 @@ HEADERS = {
 
 
 class GithubService:
-  user = None
-  token = None
-  repo = None
-
   def __init__(self, user: str = None, token: str = None, repo: str = None):
-    if user: self.user = user
-    if token: self.token = token
-    if repo: self.repo = repo
+    self.user = user or GH_USER
+    self.token = token or GH_TOKEN
+    self.repo = repo or GH_REPO
+    self.branch = GH_BRANCH
 
 
   def _get_url(self, route: str) -> str:
@@ -37,7 +37,8 @@ class GithubService:
     return base64_str
 
 
-  def commit(self, path: str, data: str, branch: str, from_bytes: bool = False):
+  def commit(self, path: str, data: str, branch: str = None, from_bytes: bool = False):
+    branch = branch or self.branch
     url = self._get_url(f'repos/{self.user}/{self.repo}/contents/{path}')
 
     commit_data = {
@@ -51,8 +52,6 @@ class GithubService:
       headers=HEADERS,
       auth=(self.user, self.token)
     )
-
-    # print(response.json())
 
     response_data = response.json()
     if 'sha' in response_data:
