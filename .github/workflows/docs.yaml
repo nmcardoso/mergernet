@@ -8,7 +8,7 @@ on:
       - 'docs/**'
       - 'mergernet/**'
       - 'scripts/**'
-      - '.github/workflows/main.yaml'
+      - '.github/workflows/docs.yaml'
 
 jobs:
   docs:
