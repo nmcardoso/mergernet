@@ -4,7 +4,7 @@ from typing import Any, Sequence, Union
 from datetime import datetime, timedelta
 from threading import Lock
 
-from mergernet.core.constants import DATA_ROOT
+from mergernet.core.constants import DATA_ROOT, ENV
 
 from astropy.io import fits
 from astropy.table import Table
@@ -170,6 +170,18 @@ def iauname(ra: float, dec: float) -> str:
   else:
     r = f'J{ra_str}{dec_str}'
   return r
+
+
+
+def skip_dev(func):
+  """
+  Decorator used to skip high complexity functions/methods in development
+  environment with pythonic syntax suggar
+  """
+  if ENV == 'dev':
+    return lambda *args, **kwargs: 0 # null func
+  else:
+    return func
 
 
 

@@ -1,0 +1,40 @@
+{% macro exp_list(items) -%}
+<ul>
+  {% for item in items %}
+  <li>
+    <a href="{{ base_url }}{{ item.url }}">{{ item.title }}</a> (latest run: {{ item.date }})
+  </li>
+  {% endfor %}
+</ul>
+{%- endmacro %}
+
+
+{% macro run_list(items) -%}
+<ul>
+  {% for item in items %}
+  <li>
+    <a href="{{ base_url }}{{ item.url }}">{{ item.title }}</a> ({{ item.date }})
+  </li>
+  {% endfor %}
+</ul>
+{%- endmacro %}
+
+
+{% macro breadcrumb(items = []) -%}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    {% for item in items %}
+      {% if not loop.last %}
+        <li class="breadcrumb-item">
+          <a href="{{ base_url }}{{ item.url }}">{{ item.title}}</a>
+        </li>
+      {% else %}
+        <li class="breadcrumb-item active">
+          {{ item.title}}
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ol>
+</nav>
+{%- endmacro %}

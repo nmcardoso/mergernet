@@ -8,13 +8,33 @@ from typing import Any, Dict, Union
 
 import optuna
 
-from mergernet.core.constants import GDRIVE_PATH, JOBS_PATH, SAVED_MODELS_PATH
+from mergernet.core.constants import GDRIVE_MOUNT_PATH, JOBS_PATH, SAVED_MODELS_PATH
 from mergernet.core.dataset import Dataset
 from mergernet.core.entity import HyperParameterSet
-from mergernet.core.utils import deep_update, unique_path
+from mergernet.core.utils import SingletonMeta, deep_update, unique_path
 from mergernet.model.study import HyperModel
 
 L = logging.getLogger('job')
+
+
+class JobInfo(metaclass=SingletonMeta):
+  job_id = None
+  run_id = None
+  experiment_name = None
+  hp = None
+  use_gdrive = True
+  use_github = True
+
+  def update_info(
+    self,
+    job_id: int = None,
+    experiment_name: str = None,
+    hp: HyperParameterSet = None
+  ):
+    JobInfo.job_id = job_id
+    JobInfo.experiment_name = experiment_name
+    JobInfo.hp = hp
+    JobInfo.run_id = secrets.token_hex(4)
 
 
 class Job:
@@ -37,6 +57,15 @@ class Job:
     self.remote_artifact_path = None
     self._config_remote_artifact_path()
 
+    # update job info
+    JobInfo.update_info(
+      job_id,
+      self.experiment_name,
+      HyperParameterSet(self.job.get('hyperparameters', {}))
+    )
+    JobInfo.use_gdrive = self.job['config'].get('use_gdrive', True)
+    JobInfo.use_github = self.job['config'].get('use_github', True)
+
 
   def run(self):
     if self.job['config']['job_type'] == 'optuna_train':
@@ -50,7 +79,7 @@ class Job:
 
   def _upload_models(self, override: bool = False):
     local_folder = SAVED_MODELS_PATH
-    remote_folder = Path(GDRIVE_PATH) / 'saved_models'
+    remote_folder = Path(GDRIVE_MOUNT_PATH) / 'saved_models'
     remote_folder.mkdir(parents=True, exist_ok=True)
 
     for model_path in local_folder.iterdir():
@@ -65,9 +94,9 @@ class Job:
 
 
   def _config_optuna(self):
-    assert GDRIVE_PATH is not None
+    assert GDRIVE_MOUNT_PATH is not None
 
-    optuna_folder = Path(GDRIVE_PATH) / 'optuna'
+    optuna_folder = Path(GDRIVE_MOUNT_PATH) / 'optuna'
     if not optuna_folder.exists():
       optuna_folder.mkdir(exist_ok=True)
 
@@ -81,7 +110,7 @@ class Job:
   def _optuna_train(self):
     ds = Dataset(
       data_path=self.local_data_path,
-      ds=self.job['config']['dataset']
+      config=self.job['config']['dataset']
     )
     hp = HyperParameterSet(self.job['hyperparameters'])
     model = HyperModel(
@@ -104,10 +133,10 @@ class Job:
   def _predict(self):
     ds = Dataset(
       data_path=self.local_data_path,
-      ds=self.job['config']['dataset']
+      config=self.job['config']['dataset']
     )
     model_local_path = Path('saved_models') / (Path(self.job['load']).stem + '.h5')
-    model_remote_path = Path(GDRIVE_PATH) / 'saved_models' / (Path(self.job['load']).stem + '.h5')
+    model_remote_path = Path(GDRIVE_MOUNT_PATH) / 'saved_models' / (Path(self.job['load']).stem + '.h5')
     if not model_local_path.exists():
       model_local_path.parent.mkdir(parents=True, exist_ok=True)
       shutil.copy2(model_remote_path, model_local_path)

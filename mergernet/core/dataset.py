@@ -1,4 +1,5 @@
-"""Dataset Module: high-level abstraction of dataset.
+"""
+Dataset Module: high-level abstraction of dataset.
 
 This module defines the rules for loading a previously generated ``.tfrecord`` dataset.
 
@@ -17,6 +18,7 @@ import tensorflow as tf
 import numpy as np
 import pandas as pd
 
+from mergernet.core.experiment import Experiment
 from mergernet.core.utils import load_image, load_table
 from mergernet.core.constants import RANDOM_SEED
 from mergernet.services.google import GDrive
@@ -307,41 +309,46 @@ BLIND_SPLUS_TRILOGY_150 = DatasetConfig(
 )
 """Blind dataset with S-PLUS 150x150 Trilogy images."""
 
-DATASET_REGISTRY = {
-  dataset.name: dataset for dataset in [
-    DARG_NO_INSPECTION, MESD_LEGACY_128, MESD_SDSS_128, BLIND_SPLUS_LUPTON_128,
-    BLIND_SPLUS_TRILOGY_128, BLIND_SPLUS_TRILOGY_128, BLIND_SPLUS_TRILOGY_150,
-    BIN_SDSS_128
-  ]
-}
+
+class DatasetRegistry:
+  def __init__(self):
+    self.DARG_NO_INSPECTION = DARG_NO_INSPECTION
+    self.MESD_SDSS_128 = MESD_SDSS_128
+    self.MESD_LEGACY_128 = MESD_LEGACY_128
+    self.BIN_SDSS_128 = BIN_SDSS_128
+    self.BLIND_SPLUS_LUPTON_128 = BLIND_SPLUS_LUPTON_128
+    self.BLIND_SPLUS_LUPTON_150 = BLIND_SPLUS_LUPTON_150
+    self.BLIND_SPLUS_TRILOGY_128 = BLIND_SPLUS_TRILOGY_128
+    self.BLIND_SPLUS_TRILOGY_150 = BLIND_SPLUS_TRILOGY_150
 
 
 
 class Dataset:
-  """High-level representation of dataset.
-
-  Parameters
-  ----------
-  ds_split: str
-    Split path.
+  """
+  High-level representation of dataset. This class abstracts all IO operations
+  of the dataset (e.g. download, prepare, split)
 
   Attributes
   ----------
+  registry: DatasetRegistry
+    A registry containing all datasets configurations
+
+  Parameters
+  ----------
   config: DatasetConfig
-    Configuration object.
+    The configuration object of the database get from `Dataset.registry` attribute
   """
+  registry = DatasetRegistry()
 
   def __init__(
     self,
-    data_path: Union[str, Path] = Path(''),
-    ds: str = '',
+    config: str = '',
     in_memory: bool = False
   ):
-    self.ds = ds
-    self.data_path = Path(data_path)
     self.in_memory = in_memory
 
-    self.config = DATASET_REGISTRY.get(self.ds.lower(), MESD_SDSS_128)
+    data_path = Path(Experiment().local_shared_path)
+    self.config = config
     self.config.archive_path = data_path / self.config.archive_path
     self.config.images_path = data_path / self.config.images_path
     self.config.table_path = data_path / self.config.table_path
@@ -379,7 +386,8 @@ class Dataset:
 
 
   def download(self) -> None:
-    """Check if destination path exists, create missing folders and download
+    """
+    Check if destination path exists, create missing folders and download
     the dataset files from web resource for a specified dataset type.
     """
     if not self.config.archive_path.parent.exists():

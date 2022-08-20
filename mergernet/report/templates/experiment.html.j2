@@ -1,0 +1,10 @@
+{% extends "base.html.j2" %}
+{% import "macros.html.j2" as macros %}
+
+
+{% block title %}Experiment{% endblock %}
+
+{% block content %}
+  {{ macros.breadcrumb([{'title': 'Experiment {}'.format(exp_id)}]) }}
+  {{ macros.run_list(items) }}
+{% endblock %}

@@ -1,14 +1,17 @@
 import logging
+from pathlib import Path
 from typing import Dict, Any
 
 import numpy as np
 import tensorflow as tf
 import optuna
 
-from core.constants import SAVED_MODELS_PATH
+from mergernet.core.constants import SAVED_MODELS_PATH
+from mergernet.core.experiment import Experiment
+from mergernet.core.logging import get_logger
 
 
-L = logging.getLogger('job')
+L = get_logger(__name__)
 
 
 class DeltaStopping(tf.keras.callbacks.Callback):
@@ -58,7 +61,17 @@ class SaveCallback(tf.keras.callbacks.Callback):
       best_value = self.default_value
 
     if self.operator(logs[self.objective_metric], best_value):
-      save_path = SAVED_MODELS_PATH / (self.name + '.h5')
+      e = Experiment()
+      save_path = Path(e.local_artifact_path) / (self.name + '.h5')
       if not save_path.parent.exists():
         save_path.parent.mkdir(parents=True, exist_ok=True)
       self.model.save(save_path, overwrite=True)
+
+
+class TelemetryCallback(tf.keras.callbacks.Callback):
+  def __init__(self, trial: optuna.trial.FrozenTrial):
+    super(TelemetryCallback, self).__init__()
+    self.trial = trial
+
+  def on_train_end(self, logs: Dict[str, Any]):
+    pass

@@ -1,8 +1,11 @@
 import base64
+from pathlib import Path
 from typing import Union
 import re
 
 import requests
+
+from mergernet.core.constants import GH_USER, GH_TOKEN, GH_BRANCH, GH_REPO
 
 
 BASE_URL = 'https://api.github.com'
@@ -12,14 +15,11 @@ HEADERS = {
 
 
 class GithubService:
-  user = None
-  token = None
-  repo = None
-
   def __init__(self, user: str = None, token: str = None, repo: str = None):
-    if user: self.user = user
-    if token: self.token = token
-    if repo: self.repo = repo
+    self.user = user or GH_USER
+    self.token = token or GH_TOKEN
+    self.repo = repo or GH_REPO
+    self.branch = GH_BRANCH
 
 
   def _get_url(self, route: str) -> str:
@@ -37,13 +37,18 @@ class GithubService:
     return base64_str
 
 
-  def commit(self, path: str, data: str, branch: str, from_bytes: bool = False):
+  def commit(self, path: str, data: str, branch: str = None, from_bytes: bool = False):
+    branch = branch or self.branch
     url = self._get_url(f'repos/{self.user}/{self.repo}/contents/{path}')
 
     commit_data = {
       'message': ':package: artifact upload',
       'content': self._encode_content(data, from_bytes=from_bytes),
-      'branch': branch
+      'branch': branch,
+      'committer': {
+        'name': 'Edwin Hubble',
+        'email': 'bot@github.com'
+      }
     }
 
     response = requests.get(
@@ -51,8 +56,6 @@ class GithubService:
       headers=HEADERS,
       auth=(self.user, self.token)
     )
-
-    # print(response.json())
 
     response_data = response.json()
     if 'sha' in response_data:
@@ -67,7 +70,16 @@ class GithubService:
 
     return True
 
-    # print(response.json())
+
+  def download(self, remote_path: str, dest_path: Union[str, Path]):
+    url = f'https://raw.githubusercontent.com/{self.user}/{self.repo}/main/{remote_path}'
+    resp = requests.get(
+      url=url,
+      headers=HEADERS,
+      auth=(self.user, self.token)
+    )
+    with open(dest_path, 'wb') as fp:
+      fp.write(resp.content)
 
 
   def list_dir(self, path: int) -> dict:
