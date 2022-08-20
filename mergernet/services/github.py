@@ -46,8 +46,8 @@ class GithubService:
       'content': self._encode_content(data, from_bytes=from_bytes),
       'branch': branch,
       'committer': {
-        'name': 'Monalisa Octocat',
-        'email': 'octocat@github.com'
+        'name': 'Edwin Hubble',
+        'email': 'bot@github.com'
       }
     }
 
