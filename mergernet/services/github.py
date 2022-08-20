@@ -44,7 +44,11 @@ class GithubService:
     commit_data = {
       'message': ':package: artifact upload',
       'content': self._encode_content(data, from_bytes=from_bytes),
-      'branch': branch
+      'branch': branch,
+      'committer': {
+        'name': 'Monalisa Octocat',
+        'email': 'octocat@github.com'
+      }
     }
 
     response = requests.get(
