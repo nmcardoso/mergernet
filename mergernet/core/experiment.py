@@ -41,8 +41,7 @@ def experiment_run(exp_id: int):
     def wrapper(*args, **kwargs):
       # clear previous log
       log_path = Path('/tmp/mergernet.log')
-      if log_path.exists():
-        open(log_path, 'w').close()
+      open(log_path, 'w').close()
 
       # create new experiment
       e = Experiment()
