@@ -37,7 +37,7 @@ def get_logger(logger_name: str):
   stream_handler.setFormatter(formatter)
   stream_handler.setLevel(logging.DEBUG)
 
-  logger.addHandler(file_handler)
+  # logger.addHandler(file_handler)
   logger.addHandler(stream_handler)
 
   return logger
@@ -64,4 +64,4 @@ def configure_root_logger():
   stream_handler.setLevel(logging.DEBUG)
 
   logger.addHandler(file_handler)
-  logger.addHandler(stream_handler)
+  # logger.addHandler(stream_handler)
