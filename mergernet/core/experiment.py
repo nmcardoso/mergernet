@@ -39,15 +39,21 @@ def experiment_run(exp_id: int):
   def decorator(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
+      # clear previous log
+      log_path = Path('/tmp/mergernet.log')
+      if log_path.exists():
+        log_path.unlink()
+
+      # create new experiment
       e = Experiment()
       e.create(exp_id)
 
+      # track times and execute function
       start_time = int(time())
       func(*args, **kwargs)
       end_time = int(time())
 
-      e.upload_file_gh('/tmp/mergernet.log')
-
+      # post-execution oprations: logs and metadata upload
       metadata = {
         'start_time': start_time,
         'end_time': end_time,
@@ -56,6 +62,7 @@ def experiment_run(exp_id: int):
         'run_id': e.run_id,
         'notes': e.notes
       }
+      e.upload_file_gh(str(log_path))
       e.upload_file_gh('metadata.json', metadata)
     return wrapper
   return decorator
