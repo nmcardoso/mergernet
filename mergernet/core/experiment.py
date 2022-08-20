@@ -42,7 +42,7 @@ def experiment_run(exp_id: int):
       # clear previous log
       log_path = Path('/tmp/mergernet.log')
       if log_path.exists():
-        log_path.unlink()
+        open(log_path, 'w').close()
 
       # create new experiment
       e = Experiment()
