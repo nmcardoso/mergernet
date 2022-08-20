@@ -27,7 +27,6 @@ setup(
     'tensorflow_addons',
     'tensorboard',
     'optuna',
-    'plotly',
-    'Jinja2>=3.1'
+    'plotly'
   ]
 )
