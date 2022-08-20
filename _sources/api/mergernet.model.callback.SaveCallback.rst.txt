@@ -1,0 +1,17 @@
+mergernet.model.callback.SaveCallback
+=====================================
+
+.. currentmodule:: mergernet.model.callback
+
+.. autoclass:: SaveCallback
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

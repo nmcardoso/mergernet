@@ -1,0 +1,32 @@
+﻿mergernet.report
+================
+
+.. automodule:: mergernet.report
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :template: module-template.rst
+   :recursive:
+
+   mergernet.report.generator
+

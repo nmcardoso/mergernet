@@ -14,4 +14,10 @@ mergernet.core.dataset.Dataset
 
    
    
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Dataset.registry
+   
    

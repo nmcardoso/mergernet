@@ -1,0 +1,6 @@
+mergernet.core.logging.configure\_root\_logger
+==============================================
+
+.. currentmodule:: mergernet.core.logging
+
+.. autofunction:: configure_root_logger

@@ -1,0 +1,6 @@
+mergernet.report.generator.format\_date
+=======================================
+
+.. currentmodule:: mergernet.report.generator
+
+.. autofunction:: format_date

@@ -1,0 +1,31 @@
+mergernet.core.logging
+======================
+
+.. automodule:: mergernet.core.logging
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      configure_root_logger
+      get_logger
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

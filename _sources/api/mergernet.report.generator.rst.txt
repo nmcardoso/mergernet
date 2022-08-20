@@ -1,0 +1,34 @@
+mergernet.report.generator
+==========================
+
+.. automodule:: mergernet.report.generator
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      format_date
+      render
+      render_index
+      render_page
+      render_report
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

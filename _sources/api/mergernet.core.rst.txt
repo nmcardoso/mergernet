@@ -28,13 +28,11 @@
    :template: module-template.rst
    :recursive:
 
-   mergernet.core.artifacts
-   mergernet.core.artifacts2
    mergernet.core.constants
    mergernet.core.dataset
    mergernet.core.entity
-   mergernet.core.job
-   mergernet.core.jobs
+   mergernet.core.experiment
+   mergernet.core.logging
    mergernet.core.match
    mergernet.core.rgb
    mergernet.core.trilogy

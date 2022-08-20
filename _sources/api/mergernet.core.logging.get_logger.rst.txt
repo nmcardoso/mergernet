@@ -1,0 +1,6 @@
+mergernet.core.logging.get\_logger
+==================================
+
+.. currentmodule:: mergernet.core.logging
+
+.. autofunction:: get_logger

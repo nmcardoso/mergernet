@@ -1,0 +1,6 @@
+mergernet.services.utils.parallel\_function\_executor
+=====================================================
+
+.. currentmodule:: mergernet.services.utils
+
+.. autofunction:: parallel_function_executor

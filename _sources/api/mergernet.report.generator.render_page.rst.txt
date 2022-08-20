@@ -1,0 +1,6 @@
+mergernet.report.generator.render\_page
+=======================================
+
+.. currentmodule:: mergernet.report.generator
+
+.. autofunction:: render_page

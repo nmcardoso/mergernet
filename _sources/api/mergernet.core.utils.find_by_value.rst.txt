@@ -1,0 +1,6 @@
+mergernet.core.utils.find\_by\_value
+====================================
+
+.. currentmodule:: mergernet.core.utils
+
+.. autofunction:: find_by_value

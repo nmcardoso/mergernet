@@ -14,12 +14,4 @@ mergernet.services.github.GithubService
 
    
    
-   .. rubric:: Attributes
-
-   .. autosummary::
-   
-      ~GithubService.repo
-      ~GithubService.token
-      ~GithubService.user
-   
    

@@ -1,0 +1,6 @@
+mergernet.core.experiment.experiment\_run
+=========================================
+
+.. currentmodule:: mergernet.core.experiment
+
+.. autofunction:: experiment_run

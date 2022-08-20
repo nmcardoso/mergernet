@@ -9,4 +9,5 @@ API Reference
    mergernet.core
    mergernet.jobs
    mergernet.model
+   mergernet.report
    mergernet.services

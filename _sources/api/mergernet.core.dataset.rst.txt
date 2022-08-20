@@ -13,6 +13,7 @@ mergernet.core.dataset
       DARG_NO_INSPECTION
       MESD_SDSS_128
       MESD_LEGACY_128
+      BIN_SDSS_128
       BLIND_SPLUS_LUPTON_128
       BLIND_SPLUS_LUPTON_150
       BLIND_SPLUS_TRILOGY_128
@@ -34,6 +35,7 @@ mergernet.core.dataset
    
       Dataset
       DatasetConfig
+      DatasetRegistry
       DistributionKFold
       StratifiedDistributionKFold
    

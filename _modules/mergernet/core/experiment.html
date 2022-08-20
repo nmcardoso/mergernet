@@ -1,0 +1,439 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mergernet.core.experiment &#8212; MergerNet  documentation</title>
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
+
+    
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
+
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">MergerNet  documentation</p>
+  
+</a>
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="fas fa-bars"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../reference.html">
+  API Reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../experiments.html">
+  Experiments
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/nmcardoso" rel="noopener" target="_blank" title="Github"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">Github</label></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://natanael.net" rel="noopener" target="_blank" title="Website"><span><i class="fas fa-globe"></i></span>
+            <label class="sr-only">Website</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
+          
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
+
+          
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+</div>
+
+
+          
+          
+          <div class="bd-content col-12 col-md-9 col-xl-7">
+              
+              <article class="bd-article" role="main">
+                
+  <h1>Source code for mergernet.core.experiment</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">secrets</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+
+<span class="kn">from</span> <span class="nn">mergernet.core.logging</span> <span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">SingletonMeta</span>
+<span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">DATA_ROOT</span><span class="p">,</span> <span class="n">ENV</span>
+<span class="kn">from</span> <span class="nn">mergernet.services.google</span> <span class="kn">import</span> <span class="n">GDrive</span>
+<span class="kn">from</span> <span class="nn">mergernet.services.github</span> <span class="kn">import</span> <span class="n">GithubService</span>
+
+
+<span class="n">L</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="n">DEV_LOCAL_SHARED_PATTERN</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">DATA_ROOT</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/dev_workspace/shared_data/&#39;</span>
+<span class="n">DEV_LOCAL_ARTIFACT_PATTERN</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">DATA_ROOT</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/dev_workspace/experiments/</span><span class="si">{exp_id}</span><span class="s1">/</span><span class="si">{run_id}</span><span class="s1">/&#39;</span>
+<span class="n">DEV_GH_ARTIFACT_PATTERN</span> <span class="o">=</span> <span class="s1">&#39;dev_experiments/</span><span class="si">{exp_id}</span><span class="s1">/</span><span class="si">{run_id}</span><span class="s1">/&#39;</span>
+<span class="n">DEV_GD_ARTIFACT_PATTERN</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">DATA_ROOT</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/dev_workspace/drive/MyDrive/mergernet/experiments/</span><span class="si">{exp_id}</span><span class="s1">/</span><span class="si">{run_id}</span><span class="s1">/&#39;</span>
+
+<span class="n">LOCAL_SHARED_PATTERN</span> <span class="o">=</span> <span class="s1">&#39;shared_data/&#39;</span>
+<span class="n">LOCAL_ARTIFACT_PATTERN</span> <span class="o">=</span> <span class="s1">&#39;experiments/</span><span class="si">{exp_id}</span><span class="s1">/</span><span class="si">{run_id}</span><span class="s1">/&#39;</span>
+<span class="n">GH_ARTIFACT_PATTERN</span> <span class="o">=</span> <span class="s1">&#39;experiments/</span><span class="si">{exp_id}</span><span class="s1">/</span><span class="si">{run_id}</span><span class="s1">/&#39;</span>
+<span class="n">GD_ARTIFACT_PATTERN</span> <span class="o">=</span> <span class="s1">&#39;drive/MyDrive/mergernet/experiments/</span><span class="si">{exp_id}</span><span class="s1">/</span><span class="si">{run_id}</span><span class="s1">/&#39;</span>
+
+
+
+<div class="viewcode-block" id="experiment_run"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.experiment_run.html#mergernet.core.experiment.experiment_run">[docs]</a><span class="k">def</span> <span class="nf">experiment_run</span><span class="p">(</span><span class="n">exp_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Decorator function used to setup experiment</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  exp_id: int</span>
+<span class="sd">    The human-readable experiment id</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+      <span class="c1"># clear previous log</span>
+      <span class="n">log_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;/tmp/mergernet.log&#39;</span><span class="p">)</span>
+      <span class="nb">open</span><span class="p">(</span><span class="n">log_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+      <span class="c1"># create new experiment</span>
+      <span class="n">e</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">()</span>
+      <span class="n">e</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">exp_id</span><span class="p">)</span>
+
+      <span class="c1"># track times and execute function</span>
+      <span class="n">start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">())</span>
+      <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">end_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">())</span>
+
+      <span class="c1"># post-execution oprations: logs and metadata upload</span>
+      <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;start_time&#39;</span><span class="p">:</span> <span class="n">start_time</span><span class="p">,</span>
+        <span class="s1">&#39;end_time&#39;</span><span class="p">:</span> <span class="n">end_time</span><span class="p">,</span>
+        <span class="s1">&#39;duration&#39;</span><span class="p">:</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">,</span>
+        <span class="s1">&#39;exp_id&#39;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">exp_id</span><span class="p">,</span>
+        <span class="s1">&#39;run_id&#39;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
+        <span class="s1">&#39;notes&#39;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">notes</span>
+      <span class="p">}</span>
+      <span class="n">e</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">log_path</span><span class="p">))</span>
+      <span class="n">e</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;metadata.json&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+  <span class="k">return</span> <span class="n">decorator</span></div>
+
+
+
+<div class="viewcode-block" id="Experiment"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment">[docs]</a><span class="k">class</span> <span class="nc">Experiment</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">SingletonMeta</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  This class stores all relevant information for an experiment, which can be</span>
+<span class="sd">  accessed from anywhere in the application as it&#39;s an implementation of the</span>
+<span class="sd">  Singleton pattern.</span>
+
+<span class="sd">  The experiments are tracked using two values: `exp_id` and `run_id`. The</span>
+<span class="sd">  first value is a human-readable integer set by user and is related with</span>
+<span class="sd">  a task specified in entrypoint file. And the second value is a auto-generated</span>
+<span class="sd">  hex token used to track different re-runs of same experiment.</span>
+
+<span class="sd">  Attributes</span>
+<span class="sd">  ----------</span>
+<span class="sd">  exp_id: int</span>
+<span class="sd">    Identifier of the experiment set by user.</span>
+
+<span class="sd">  run_id: str</span>
+<span class="sd">    Hex token generated automatically that represents the identifier of a run.</span>
+
+<span class="sd">  local_shared_path: str</span>
+<span class="sd">    The path in local environment where shared files (e.g. dataset) are stored.</span>
+<span class="sd">    This path is shared to any run of any experiemnt.</span>
+
+<span class="sd">  local_artifact_path: str</span>
+<span class="sd">    The path in local environment where artifacts (outputs of an experiment,</span>
+<span class="sd">    e.g. model predictions) are stored. This path is relative to a specific run.</span>
+
+<span class="sd">  gh_artifact_path: str</span>
+<span class="sd">    The path in Github artifacts repo where the artifacts of a experiment run</span>
+<span class="sd">    will be uploaded to. This path is relative to a specific run.</span>
+
+<span class="sd">  gd_artifact_path: str</span>
+<span class="sd">    The path in Google Drive where the artifacts of a experiment run will be</span>
+<span class="sd">    uploaded to. This path is relative to a specifict run.</span>
+
+<span class="sd">  notes: str</span>
+<span class="sd">    Notes for current run of this experiment</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_exp_created</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">exp_id</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">run_id</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">local_shared_path</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">local_artifact_path</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">gh_artifact_path</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">gd_artifact_path</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">notes</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="Experiment.create"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.create">[docs]</a>  <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a new experiment, configuring the experiment identifiers</span>
+<span class="sd">    and file system to store the files needed (e.g. dataset) and the files</span>
+<span class="sd">    generated by the experiment (e.g. predictions)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    exp_id: int</span>
+<span class="sd">      Experiment identifier, the same as entrypoint file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">exp_id</span> <span class="o">=</span> <span class="n">exp_id</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">run_id</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_hex</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">exp_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_id</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ENV</span> <span class="o">==</span> <span class="s1">&#39;dev&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">local_shared_path</span> <span class="o">=</span> <span class="n">DEV_LOCAL_SHARED_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">local_artifact_path</span> <span class="o">=</span> <span class="n">DEV_LOCAL_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">gh_artifact_path</span> <span class="o">=</span> <span class="n">DEV_GH_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">gd_artifact_path</span> <span class="o">=</span> <span class="n">DEV_GD_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">local_shared_path</span> <span class="o">=</span> <span class="n">LOCAL_SHARED_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">local_artifact_path</span> <span class="o">=</span> <span class="n">LOCAL_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">gh_artifact_path</span> <span class="o">=</span> <span class="n">GH_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">gd_artifact_path</span> <span class="o">=</span> <span class="n">GD_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_shared_path</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_artifact_path</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gd_artifact_path</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_exp_created</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="Experiment.upload_file_gh"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.upload_file_gh">[docs]</a>  <span class="k">def</span> <span class="nf">upload_file_gh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Uploads a file to github artifacts repo inside `gh_artifact_path`</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname: str</span>
+<span class="sd">      The file name. `fname` can be also an absolute path</span>
+
+<span class="sd">    data: Any, optional</span>
+<span class="sd">      The content of the file. If not specified, this method will consider</span>
+<span class="sd">      the data of the file with same name as `fname` inside the</span>
+<span class="sd">      `local_artifact_path` folder. If specified, it can be a json serializable</span>
+<span class="sd">      python object or the bytes of the file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exp_created</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Experiment must be created&#39;</span><span class="p">)</span>
+    <span class="n">from_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="k">else</span> \
+                <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
+    <span class="n">to_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gh_artifact_path</span> <span class="o">+</span> <span class="n">from_path</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">gh</span> <span class="o">=</span> <span class="n">GithubService</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">from_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">gh</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">to_path</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">from_bytes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+      <span class="n">gh</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">to_path</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">from_bytes</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">gh</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">to_path</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">from_bytes</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Experiment.download_file_gh"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.download_file_gh">[docs]</a>  <span class="k">def</span> <span class="nf">download_file_gh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads a file from github artifacts repo inside `gh_artifact_path`</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname: str</span>
+<span class="sd">      The file name</span>
+
+<span class="sd">    exp_id: int, optional</span>
+<span class="sd">      The experiement identifier</span>
+
+<span class="sd">    run_id: int, optional</span>
+<span class="sd">      The run identifier</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exp_created</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Experiment must be created&#39;</span><span class="p">)</span>
+    <span class="n">exp_id</span> <span class="o">=</span> <span class="n">exp_id</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">exp_id</span>
+    <span class="n">run_id</span> <span class="o">=</span> <span class="n">run_id</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_id</span>
+
+    <span class="n">to_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
+    <span class="n">from_path</span> <span class="o">=</span> <span class="n">GH_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp_id</span><span class="o">=</span><span class="n">exp_id</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">)</span>
+
+    <span class="n">gh</span> <span class="o">=</span> <span class="n">GithubService</span><span class="p">()</span>
+    <span class="n">gh</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">remote_path</span><span class="o">=</span><span class="n">from_path</span><span class="p">,</span> <span class="n">dest_path</span><span class="o">=</span><span class="n">to_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Experiment.upload_file_gd"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.upload_file_gd">[docs]</a>  <span class="k">def</span> <span class="nf">upload_file_gd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Uploads a file to google drive inside `gd_artifact_path`</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname: str</span>
+<span class="sd">      The file name</span>
+
+<span class="sd">    data: Any, optional</span>
+<span class="sd">      The content of the file. If not specified, this method will consider</span>
+<span class="sd">      the data of the file with same name as `fname` inside the</span>
+<span class="sd">      `local_artifact_path` folder. If specified, it can be a json serializable</span>
+<span class="sd">      python object or the bytes of the file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exp_created</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Experiment must be created&#39;</span><span class="p">)</span>
+    <span class="n">from_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
+    <span class="n">to_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gd_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
+    <span class="n">gd</span> <span class="o">=</span> <span class="n">GDrive</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">gd</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">from_path</span><span class="p">,</span> <span class="n">to_path</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span></div></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">DEV_LOCAL_ARTIFACT_PATTERN</span><span class="p">)</span>
+</pre></div>
+
+              </article>
+              
+
+              
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              </footer>
+              
+          </div>
+          
+      </div>
+    </div>
+
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
+    &copy; Copyright 2022, Natanael M. Cardoso..<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
+</p>
+  </div>
+  
+</div>
+</footer>
+  </body>
+</html>

@@ -16,10 +16,12 @@ mergernet.core.utils
    
       array_fallback
       deep_update
+      find_by_value
       iauname
       load_image
       load_table
       save_table
+      skip_dev
       unique_path
    
    

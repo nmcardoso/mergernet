@@ -20,9 +20,6 @@ mergernet.model.study
       :template: class-template.rst
    
       HyperModel
-      MLflowTensorflowCallback
-      PruneCallback
-      SaveCallback
    
    
 

@@ -6,59 +6,69 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>mergernet.services.splus &#8212; MergerNet  documentation</title>
-    
-    <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-  
-    
-    <link rel="stylesheet"
-      href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-    <link rel="preload" as="font" type="font/woff2" crossorigin
-      href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-    <link rel="preload" as="font" type="font/woff2" crossorigin
-      href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
-  
-    
-      
-  
-    
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/pydata-sphinx-theme.css" />
-    
-    <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
-  
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en">
-    
-
-    <!-- Google Analytics -->
-    
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="en">
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
 
     
-    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
 
   <div id="navbar-start">
     
     
-<a class="navbar-brand" href="../../../index.html">
-<p class="title">MergerNet</p>
-</a>
+  
 
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">MergerNet  documentation</p>
+  
+</a>
     
   </div>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <span class="fas fa-bars"></span>
   </button>
 
   
@@ -88,6 +98,14 @@
     <div id="navbar-end">
       
       <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
           <a class="nav-link" href="https://github.com/nmcardoso" rel="noopener" target="_blank" title="Github"><span><i class="fab fa-github-square"></i></span>
@@ -106,13 +124,13 @@
     </nav>
     
 
-    <div class="container-xl">
-      <div class="row">
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
           
-            
-            <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar">
-              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -120,34 +138,51 @@
     
   </div>
 </nav>
-              </div>
-              <div class="sidebar-end-items">
-              </div>
-            </div>
-            
-          
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
 
           
-          <div class="d-none d-xl-block col-xl-2 bd-toc">
-            
-          </div>
-          
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+</div>
+
 
           
           
-            
-          
-          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+          <div class="bd-content col-12 col-md-9 col-xl-7">
               
-              <div>
+              <article class="bd-article" role="main">
                 
   <h1>Source code for mergernet.services.splus</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module performs requests with `splus.cloud` server over https</span>
+
+<span class="sd">Features</span>
+<span class="sd">--------</span>
+<span class="sd">  * Download a single rgb image colored using Lupton or Trilogy method</span>
+<span class="sd">  * Donwload a single fits image of single band</span>
+<span class="sd">  * Fast batch download of rgb images using multiprocessing</span>
+<span class="sd">  * Fast batch download of fits images using multiprocessing</span>
+<span class="sd">  * Single async database query</span>
+<span class="sd">  * Fast batch database queries using multiprocessing</span>
+
+<span class="sd">Authors</span>
+<span class="sd">-------</span>
+<span class="sd">Natanael Magalhães Cardoso &lt;natanael.net&gt;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Lock</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
 <span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">FunctionType</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urljoin</span><span class="p">,</span> <span class="n">quote</span><span class="p">,</span> <span class="n">urlparse</span>
 <span class="kn">import</span> <span class="nn">concurrent.futures</span>
@@ -170,7 +205,20 @@
 
 
 
-<div class="viewcode-block" id="update_authorization"><a class="viewcode-back" href="../../../api/mergernet.services.splus.update_authorization.html#mergernet.services.splus.update_authorization">[docs]</a><span class="k">def</span> <span class="nf">update_authorization</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<div class="viewcode-block" id="update_authorization"><a class="viewcode-back" href="../../../api/mergernet.services.splus.update_authorization.html#mergernet.services.splus.update_authorization">[docs]</a><span class="k">def</span> <span class="nf">update_authorization</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">Callable</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Decorator that can be placed on functions that needs S-PLUS authentication</span>
+<span class="sd">  This decorator will update authorization token before the function call if needed</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  f: the function that will be decorated</span>
+
+<span class="sd">  Returns</span>
+<span class="sd">  -------</span>
+<span class="sd">  Callable</span>
+<span class="sd">    The decorated function</span>
+<span class="sd">  &quot;&quot;&quot;</span>
   <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">kargs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">this</span><span class="p">:</span> <span class="n">SplusService</span> <span class="o">=</span> <span class="n">kargs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">updated</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">update_token</span><span class="p">()</span>
@@ -184,6 +232,9 @@
 
 
 <div class="viewcode-block" id="ImageType"><a class="viewcode-back" href="../../../api/mergernet.services.splus.ImageType.html#mergernet.services.splus.ImageType">[docs]</a><span class="k">class</span> <span class="nc">ImageType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Enum that represents the S-PLUS image types</span>
+<span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">trilogy</span> <span class="o">=</span> <span class="s1">&#39;trilogy&#39;</span>
   <span class="n">lupton</span> <span class="o">=</span> <span class="s1">&#39;lupton&#39;</span>
   <span class="n">fits</span> <span class="o">=</span> <span class="s1">&#39;fits&#39;</span></div>
@@ -191,6 +242,18 @@
 
 
 <div class="viewcode-block" id="SplusService"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService">[docs]</a><span class="k">class</span> <span class="nc">SplusService</span><span class="p">:</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  This service class interacts with splus.cloud server over https</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  username: str (optional)</span>
+<span class="sd">    The username used in splus.cloud authentication, defaults to SPLUS_USER</span>
+<span class="sd">    environment variable</span>
+<span class="sd">  password: str (optional)</span>
+<span class="sd">    The password used in splus.cloud authentication, defaults to SPLUS_PASS</span>
+<span class="sd">    environment variable</span>
+<span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">_lock</span><span class="p">:</span> <span class="n">Lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
 
 
@@ -205,6 +268,14 @@
 
 
 <div class="viewcode-block" id="SplusService.update_token"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.update_token">[docs]</a>  <span class="k">def</span> <span class="nf">update_token</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Updates splus.cloud authorization token</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">      `True` if the token was updated and `False` otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_duration</span><span class="p">):</span>
       <span class="k">with</span> <span class="n">SplusService</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
@@ -238,6 +309,37 @@
     <span class="n">stretch</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
     <span class="n">Q</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
   <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads a single Lupton RGB image based on object posistion, this method</span>
+<span class="sd">    accepts arguments to customize Lupton&#39;s parameters</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ra: float</span>
+<span class="sd">      The right ascension in degrees</span>
+<span class="sd">    dec: float</span>
+<span class="sd">      The declination in degrees</span>
+<span class="sd">    save_path: str or Path</span>
+<span class="sd">      The path where the file will be saved</span>
+<span class="sd">    replace: bool (optional)</span>
+<span class="sd">      This method checks if a file exists in `save_path` location before the</span>
+<span class="sd">      download. If this parameters is `True` and a file exists in `save_path`</span>
+<span class="sd">      location, this method will ovewrite the existing file. If this parameter</span>
+<span class="sd">      is `False` and a file exists in `sava_path` location, this method will</span>
+<span class="sd">      skip the download</span>
+<span class="sd">    size: int (optional)</span>
+<span class="sd">      The image size in pixels</span>
+<span class="sd">    r_band: str (optional)</span>
+<span class="sd">      The S-PLUS band that will be mapped as R channel of the RGB image</span>
+<span class="sd">    g_band: str (optional)</span>
+<span class="sd">      The S-PLUS band that will be mapped as G channel of the RGB image</span>
+<span class="sd">    b_band: str (optional)</span>
+<span class="sd">      The S-PLUS band that will be mapped as B channel of the RGB image</span>
+<span class="sd">    stretch: int or float (optional)</span>
+<span class="sd">      The `stretch` parameter of Lupton&#39;s formula</span>
+<span class="sd">    Q: int or float (optional)</span>
+<span class="sd">      The `Q` parameter of Lupton&#39;s formula</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_download_image</span><span class="p">(</span>
       <span class="n">LUPTON_ROUTE</span><span class="p">,</span>
       <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
@@ -266,6 +368,37 @@
     <span class="n">noise</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.15</span><span class="p">,</span>
     <span class="n">saturation</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.15</span>
   <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads a single Trilogy RGB image based on object posistion, this method</span>
+<span class="sd">    accepts arguments to customize Trilogy parameters</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ra: float</span>
+<span class="sd">      The right ascension in degrees</span>
+<span class="sd">    dec: float</span>
+<span class="sd">      The declination in degrees</span>
+<span class="sd">    save_path: str or Path</span>
+<span class="sd">      The path where the file will be saved</span>
+<span class="sd">    replace: bool (optional)</span>
+<span class="sd">      This method checks if a file exists in `save_path` location before the</span>
+<span class="sd">      download. If this parameters is `True` and a file exists in `save_path`</span>
+<span class="sd">      location, this method will ovewrite the existing file. If this parameter</span>
+<span class="sd">      is `False` and a file exists in `sava_path` location, this method will</span>
+<span class="sd">      skip the download</span>
+<span class="sd">    size: int (optional)</span>
+<span class="sd">      The image size in pixels</span>
+<span class="sd">    r_band: str (optional)</span>
+<span class="sd">      The S-PLUS band that will be mapped as R channel of the RGB image</span>
+<span class="sd">    g_band: str (optional)</span>
+<span class="sd">      The S-PLUS band that will be mapped as G channel of the RGB image</span>
+<span class="sd">    b_band: str (optional)</span>
+<span class="sd">      The S-PLUS band that will be mapped as B channel of the RGB image</span>
+<span class="sd">    noise: int or float (optional)</span>
+<span class="sd">      The `noise` parameter of Trilogy algorithm</span>
+<span class="sd">    saturation: int or float (optional)</span>
+<span class="sd">      The `saturation` parameter of Trilogy algorithm</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_download_image</span><span class="p">(</span>
       <span class="n">TRILOGY_ROUTE</span><span class="p">,</span>
       <span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="p">,</span>
@@ -290,6 +423,28 @@
     <span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
     <span class="n">band</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;R&#39;</span>
   <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads a single FITS image based on object posistion</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ra: float</span>
+<span class="sd">      The right ascension in degrees</span>
+<span class="sd">    dec: float</span>
+<span class="sd">      The declination in degrees</span>
+<span class="sd">    save_path: str or Path</span>
+<span class="sd">      The path where the file will be saved</span>
+<span class="sd">    replace: bool (optional)</span>
+<span class="sd">      This method checks if a file exists in `save_path` location before the</span>
+<span class="sd">      download. If this parameters is `True` and a file exists in `save_path`</span>
+<span class="sd">      location, this method will ovewrite the existing file. If this parameter</span>
+<span class="sd">      is `False` and a file exists in `sava_path` location, this method will</span>
+<span class="sd">      skip the download</span>
+<span class="sd">    size: int (optional)</span>
+<span class="sd">      The image size in pixels</span>
+<span class="sd">    band: str (optional)</span>
+<span class="sd">      The S-PLUS band of the fits file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_download_image</span><span class="p">(</span>
       <span class="n">FITS_ROUTE</span><span class="p">,</span>
       <span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="p">,</span>
@@ -310,6 +465,41 @@
     <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
   <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads a single Lupton RGB image based on object posistion, this method</span>
+<span class="sd">    accepts arguments to customize Lupton&#39;s parameters</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ra: list of float</span>
+<span class="sd">      A list of right ascension in degrees</span>
+<span class="sd">    dec: list of float</span>
+<span class="sd">      A list of declination in degrees</span>
+<span class="sd">    save_path: list of str or list of Path</span>
+<span class="sd">      A list of paths where the file will be saved</span>
+<span class="sd">    img_type: ImageType (optional)</span>
+<span class="sd">      Can be `ImageType.lupton`, `ImageType.trilogy` or `ImageType.fits`.</span>
+<span class="sd">      Defaults to `ImageType.lupton`</span>
+<span class="sd">    workers: int (optional)</span>
+<span class="sd">      The  number of parallel processes that will be spawned. Default to a</span>
+<span class="sd">      single process</span>
+<span class="sd">    kwargs: Any (optional)</span>
+<span class="sd">      Any optional parameter of `download_lupton_rgb` if `img_type` is</span>
+<span class="sd">      `ImageType.lupton`, or  any optional parameter of `download_trilogy_rgb`</span>
+<span class="sd">      if `img_type` is `ImageType.trilogy` or any optional parameter of</span>
+<span class="sd">      `download_fits_rgb` if `img_type` is `ImageType.fits`.</span>
+<span class="sd">      These parameters must have the same type as the mentioned functions,</span>
+<span class="sd">      i.e. pass a single value instead of a list of values and all images</span>
+<span class="sd">      will be downloaded with the same parameter</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt; ra = [172.4, 193.9, 63.3]</span>
+<span class="sd">    &gt;&gt; dec = [0.42, 2.63, -1.24]</span>
+<span class="sd">    &gt;&gt; paths = [&#39;fig1.png&#39;, &#39;fig2.png&#39;, &#39;fig3.png&#39;]</span>
+<span class="sd">    &gt;&gt; service.batch_image_download(ra, dec, paths, ImageType.trilogy,</span>
+<span class="sd">    ...                             size=256, noise=0.2, saturation=0.2)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ra</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">img_type</span> <span class="o">==</span> <span class="n">ImageType</span><span class="o">.</span><span class="n">fits</span><span class="p">:</span>
@@ -331,10 +521,6 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="SplusService.get_image_filename"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.get_image_filename">[docs]</a>  <span class="k">def</span> <span class="nf">get_image_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">pass</span></div>
-
-
 <div class="viewcode-block" id="SplusService.query"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.query">[docs]</a>  <span class="nd">@update_authorization</span>
   <span class="k">def</span> <span class="nf">query</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -344,6 +530,31 @@
     <span class="n">scope</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;public&#39;</span><span class="p">,</span>
     <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;text/csv&#39;</span>
   <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sends a single query to splus.cloud database</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sql: str</span>
+<span class="sd">      The sql query string</span>
+<span class="sd">    save_path: str or Path</span>
+<span class="sd">      The path where the query output will be saved</span>
+<span class="sd">    repalace: bool (optional)</span>
+<span class="sd">      This method checks if a file exists in `save_path` location before the</span>
+<span class="sd">      download. If this parameters is `True` and a file exists in `save_path`</span>
+<span class="sd">      location, this method will ovewrite the existing file. If this parameter</span>
+<span class="sd">      is `False` and a file exists in `sava_path` location, this method will</span>
+<span class="sd">      skip the download. Default to `False`</span>
+<span class="sd">    scope: str (optional)</span>
+<span class="sd">      The splus.cloud scope. Can be `public` or `private`. Use `private` only</span>
+<span class="sd">      if you are assigned as collaborator. Defaults to `public`</span>
+<span class="sd">    fmt: str (optional)</span>
+<span class="sd">      The mimi-type of query output. Defaults to `text/csv`</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt; service.query(&#39;SELECT TOP 10 * FROM dr1.all_dr1&#39;, &#39;query.csv&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">scope</span> <span class="o">==</span> <span class="s1">&#39;public&#39;</span><span class="p">:</span>
       <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_url</span><span class="p">(</span><span class="n">PUBLIC_TAP_ROUTE</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;sql&#39;</span><span class="p">:</span> <span class="n">quote</span><span class="p">(</span><span class="n">sql</span><span class="p">),</span> <span class="s1">&#39;fmt&#39;</span><span class="p">:</span> <span class="n">fmt</span><span class="p">})</span>
     <span class="k">else</span><span class="p">:</span>
@@ -370,6 +581,29 @@
     <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;text/csv&#39;</span><span class="p">,</span>
     <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sends a batch of queries to splus.cloud database</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sql: list of str</span>
+<span class="sd">      The sql query string</span>
+<span class="sd">    save_path: list of str or list of Path</span>
+<span class="sd">      The path where the query output will be saved</span>
+<span class="sd">    repalace: bool (optional)</span>
+<span class="sd">      This method checks if a file exists in `save_path` location before the</span>
+<span class="sd">      download. If this parameters is `True` and a file exists in `save_path`</span>
+<span class="sd">      location, this method will ovewrite the existing file. If this parameter</span>
+<span class="sd">      is `False` and a file exists in `sava_path` location, this method will</span>
+<span class="sd">      skip the download. Default to `False`</span>
+<span class="sd">    scope: str (optional)</span>
+<span class="sd">      The splus.cloud scope. Can be `public` or `private`. Use `private` only</span>
+<span class="sd">      if you are assigned as collaborator. Defaults to `public`</span>
+<span class="sd">    fmt: str (optional)</span>
+<span class="sd">      The mimi-type of query output. Defaults to `text/csv`</span>
+<span class="sd">    workers: int (optional)</span>
+<span class="sd">      The number of parallel processes that will be spawned. Defaults to 1</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
 
     <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
@@ -391,11 +625,30 @@
 
 
 <div class="viewcode-block" id="SplusService._get_url"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._get_url">[docs]</a>  <span class="k">def</span> <span class="nf">_get_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">route</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{})</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the full url based on params</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">BASE_URL</span><span class="p">,</span> <span class="n">route</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="SplusService._track_tap_job"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._track_tap_job">[docs]</a>  <span class="nd">@update_authorization</span>
   <span class="k">def</span> <span class="nf">_track_tap_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">replace</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tracks the async query status in splus.cloud database</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    url: str</span>
+<span class="sd">      The job url</span>
+<span class="sd">    save_path: str or Path</span>
+<span class="sd">      The path where the query output will be saved</span>
+<span class="sd">    repalace: bool (optional)</span>
+<span class="sd">      This method checks if a file exists in `save_path` location before the</span>
+<span class="sd">      download. If this parameters is `True` and a file exists in `save_path`</span>
+<span class="sd">      location, this method will ovewrite the existing file. If this parameter</span>
+<span class="sd">      is `False` and a file exists in `sava_path` location, this method will</span>
+<span class="sd">      skip the download. Default to `False`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
       <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">})</span>
 
@@ -435,6 +688,23 @@
     <span class="n">replace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
   <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generic download method for splus.cloud images</span>
+<span class="sd">    This method performs a generic two stages download, required by splus.cloud</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    route: str</span>
+<span class="sd">      The image request route</span>
+<span class="sd">    save_path: str or Path</span>
+<span class="sd">      The path where the file will be saved</span>
+<span class="sd">    replace: bool (optional)</span>
+<span class="sd">      This method checks if a file exists in `save_path` location before the</span>
+<span class="sd">      download. If this parameters is `True` and a file exists in `save_path`</span>
+<span class="sd">      location, this method will ovewrite the existing file. If this parameter</span>
+<span class="sd">      is `False` and a file exists in `sava_path` location, this method will</span>
+<span class="sd">      skip the download. Default to `False`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">replace</span> <span class="ow">and</span> <span class="n">save_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
       <span class="k">return</span>
 
@@ -458,9 +728,23 @@
 <div class="viewcode-block" id="SplusService._batch_download"><a class="viewcode-back" href="../../../api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._batch_download">[docs]</a>  <span class="k">def</span> <span class="nf">_batch_download</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">download_function</span><span class="p">:</span> <span class="n">FunctionType</span><span class="p">,</span>
-    <span class="n">download_args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">download_args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
     <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generic batch download method.</span>
+<span class="sd">    This method receives a donwload function and perform a multi-theread</span>
+<span class="sd">    execution</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    download_function: function</span>
+<span class="sd">      The download function that will spawned in multiple threads</span>
+<span class="sd">    download_args: list of dict</span>
+<span class="sd">      The list of parameters of `download_function`</span>
+<span class="sd">    workers: int (optional)</span>
+<span class="sd">      The number of parallel processes that will be spawned. Defaults to 1</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">workers</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
       <span class="n">futures</span> <span class="o">=</span> <span class="p">[]</span>
       <span class="n">download_function</span> <span class="o">=</span> <span class="n">download_function</span> <span class="ow">or</span> <span class="n">download_file</span>
@@ -501,36 +785,41 @@
   <span class="n">s</span><span class="o">.</span><span class="n">batch_query</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="n">path4</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
-              </div>
+              </article>
               
+
               
-              <!-- Previous / next buttons -->
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
 <div class='prev-next-area'>
 </div>
+              </footer>
               
-          </main>
+          </div>
           
-
       </div>
     </div>
+
   
-    <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
-  <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    
-    <div class="footer-item">
-      <p class="copyright">
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
     &copy; Copyright 2022, Natanael M. Cardoso..<br>
 </p>
-    </div>
-    
-    <div class="footer-item">
-      <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
-</p>
-    </div>
-    
   </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
+</p>
+  </div>
+  
+</div>
 </footer>
   </body>
 </html>

@@ -6,59 +6,69 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>mergernet.services.sdss &#8212; MergerNet  documentation</title>
-    
-    <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-  
-    
-    <link rel="stylesheet"
-      href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-    <link rel="preload" as="font" type="font/woff2" crossorigin
-      href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-    <link rel="preload" as="font" type="font/woff2" crossorigin
-      href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
-  
-    
-      
-  
-    
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/pydata-sphinx-theme.css" />
-    
-    <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
-  
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en">
-    
-
-    <!-- Google Analytics -->
-    
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="en">
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
 
     
-    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
 
   <div id="navbar-start">
     
     
-<a class="navbar-brand" href="../../../index.html">
-<p class="title">MergerNet</p>
-</a>
+  
 
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">MergerNet  documentation</p>
+  
+</a>
     
   </div>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <span class="fas fa-bars"></span>
   </button>
 
   
@@ -88,6 +98,14 @@
     <div id="navbar-end">
       
       <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
           <a class="nav-link" href="https://github.com/nmcardoso" rel="noopener" target="_blank" title="Github"><span><i class="fab fa-github-square"></i></span>
@@ -106,13 +124,13 @@
     </nav>
     
 
-    <div class="container-xl">
-      <div class="row">
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
           
-            
-            <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar">
-              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -120,30 +138,28 @@
     
   </div>
 </nav>
-              </div>
-              <div class="sidebar-end-items">
-              </div>
-            </div>
-            
-          
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
 
           
-          <div class="d-none d-xl-block col-xl-2 bd-toc">
-            
-          </div>
-          
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+</div>
+
 
           
           
-            
-          
-          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+          <div class="bd-content col-12 col-md-9 col-xl-7">
               
-              <div>
+              <article class="bd-article" role="main">
                 
   <h1>Source code for mergernet.services.sdss</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">chunk</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">import</span> <span class="nn">secrets</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">import</span> <span class="nn">concurrent.futures</span>
@@ -153,12 +169,20 @@
 <span class="kn">import</span> <span class="nn">tqdm</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">astropy.units</span> <span class="k">as</span> <span class="nn">u</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">SkyCoord</span>
+<span class="kn">from</span> <span class="nn">astropy.nddata</span> <span class="kn">import</span> <span class="n">Cutout2D</span>
 
 <span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">array_fallback</span><span class="p">,</span> <span class="n">save_table</span>
 <span class="kn">from</span> <span class="nn">mergernet.services.utils</span> <span class="kn">import</span> <span class="n">append_query_params</span><span class="p">,</span> <span class="n">batch_download_file</span><span class="p">,</span> <span class="n">download_file</span>
 
 
 <span class="n">SDSS_RGB_URL</span> <span class="o">=</span> <span class="s1">&#39;http://skyserver.sdss.org/dr17/SkyServerWS/ImgCutout/getjpeg&#39;</span>
+<span class="n">SDSS_FITS_URL</span> <span class="o">=</span> <span class="p">(</span>
+  <span class="s1">&#39;https://data.sdss.org/sas/dr17/eboss/photoObj/frames/&#39;</span>
+  <span class="s1">&#39;</span><span class="si">{rerun}</span><span class="s1">/</span><span class="si">{run}</span><span class="s1">/</span><span class="si">{camcol}</span><span class="s1">/frame-</span><span class="si">{band}</span><span class="s1">-</span><span class="si">{run:06d}</span><span class="s1">-</span><span class="si">{camcol}</span><span class="s1">-</span><span class="si">{field:04d}</span><span class="s1">.fits.bz2&#39;</span>
+<span class="p">)</span>
 <span class="n">XID_URL</span> <span class="o">=</span> <span class="s1">&#39;http://skyserver.sdss.org/dr17/SkyServerWS/SearchTools/CrossIdSearch&#39;</span>
 
 
@@ -183,6 +207,71 @@
       <span class="s1">&#39;opt&#39;</span><span class="p">:</span> <span class="n">opt</span>
     <span class="p">})</span>
     <span class="n">download_file</span><span class="p">(</span><span class="n">image_url</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SloanService.cutout"><a class="viewcode-back" href="../../../api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.cutout">[docs]</a>  <span class="k">def</span> <span class="nf">cutout</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">file</span><span class="p">,</span>
+    <span class="n">ra</span><span class="p">,</span>
+    <span class="n">dec</span><span class="p">,</span>
+    <span class="n">radius</span>
+  <span class="p">):</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">()</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;deg&#39;</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;icrs&#39;</span><span class="p">,</span> <span class="n">equinox</span><span class="o">=</span><span class="s1">&#39;J2000.0&#39;</span><span class="p">)</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">Quantity</span><span class="p">((</span><span class="n">radius</span><span class="p">,</span> <span class="n">radius</span><span class="p">),</span> <span class="n">u</span><span class="o">.</span><span class="n">pix</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SloanService.download_fits"><a class="viewcode-back" href="../../../api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.download_fits">[docs]</a>  <span class="k">def</span> <span class="nf">download_fits</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">run</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">rerun</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">camcol</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">field</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">band</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+  <span class="p">):</span>
+    <span class="n">image_url</span> <span class="o">=</span> <span class="n">SDSS_FITS_URL</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+      <span class="n">run</span><span class="o">=</span><span class="n">run</span><span class="p">,</span>
+      <span class="n">rerun</span><span class="o">=</span><span class="n">rerun</span><span class="p">,</span>
+      <span class="n">camcol</span><span class="o">=</span><span class="n">camcol</span><span class="p">,</span>
+      <span class="n">field</span><span class="o">=</span><span class="n">field</span><span class="p">,</span>
+      <span class="n">band</span><span class="o">=</span><span class="n">band</span>
+    <span class="p">)</span>
+    <span class="n">download_file</span><span class="p">(</span><span class="n">image_url</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="n">save_path</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="SloanService.batch_download_fits"><a class="viewcode-back" href="../../../api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.batch_download_fits">[docs]</a>  <span class="k">def</span> <span class="nf">batch_download_fits</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">run</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">rerun</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">camcol</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">field</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">bands</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]],</span>
+    <span class="n">ra</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">dec</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">replace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+  <span class="p">):</span>
+    <span class="n">urls</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">SDSS_FITS_URL</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">run</span><span class="o">=</span><span class="n">_run</span><span class="p">,</span>
+        <span class="n">rerun</span><span class="o">=</span><span class="n">_rerun</span><span class="p">,</span>
+        <span class="n">camcol</span><span class="o">=</span><span class="n">_camcol</span><span class="p">,</span>
+        <span class="n">field</span><span class="o">=</span><span class="n">_field</span><span class="p">,</span>
+        <span class="n">band</span><span class="o">=</span><span class="n">_band</span>
+      <span class="p">)</span>
+      <span class="k">for</span> <span class="n">_band</span> <span class="ow">in</span> <span class="n">bands</span>
+      <span class="k">for</span> <span class="n">_run</span><span class="p">,</span> <span class="n">_rerun</span><span class="p">,</span> <span class="n">_camcol</span><span class="p">,</span> <span class="n">_field</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">rerun</span><span class="p">,</span> <span class="n">camcol</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">batch_download_file</span><span class="p">(</span>
+      <span class="n">urls</span><span class="o">=</span><span class="n">urls</span><span class="p">,</span>
+      <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
+      <span class="n">workers</span><span class="o">=</span><span class="n">workers</span><span class="p">,</span>
+      <span class="n">replace</span><span class="o">=</span><span class="n">replace</span>
+    <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SloanService.batch_download_rgb"><a class="viewcode-back" href="../../../api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.batch_download_rgb">[docs]</a>  <span class="k">def</span> <span class="nf">batch_download_rgb</span><span class="p">(</span>
@@ -325,36 +414,41 @@
   <span class="nb">print</span><span class="p">(</span><span class="n">tb</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 </pre></div>
 
-              </div>
+              </article>
               
+
               
-              <!-- Previous / next buttons -->
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
 <div class='prev-next-area'>
 </div>
+              </footer>
               
-          </main>
+          </div>
           
-
       </div>
     </div>
+
   
-    <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
-  <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    
-    <div class="footer-item">
-      <p class="copyright">
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
     &copy; Copyright 2022, Natanael M. Cardoso..<br>
 </p>
-    </div>
-    
-    <div class="footer-item">
-      <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
-</p>
-    </div>
-    
   </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
+</p>
+  </div>
+  
+</div>
 </footer>
   </body>
 </html>

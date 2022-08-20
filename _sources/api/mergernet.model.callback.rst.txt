@@ -20,6 +20,9 @@ mergernet.model.callback
       :template: class-template.rst
    
       DeltaStopping
+      PruneCallback
+      SaveCallback
+      TelemetryCallback
    
    
 

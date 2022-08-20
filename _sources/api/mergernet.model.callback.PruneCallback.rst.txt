@@ -1,0 +1,17 @@
+mergernet.model.callback.PruneCallback
+======================================
+
+.. currentmodule:: mergernet.model.callback
+
+.. autoclass:: PruneCallback
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   
