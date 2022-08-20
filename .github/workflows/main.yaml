@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - 'docs/**'
-      - 'jobs_artifacts/job.json'
       - 'mergernet/**'
       - 'scripts/**'
       - '.github/workflows/main.yaml'
@@ -33,7 +32,6 @@ jobs:
     - name: build docs
       run: |
         cd docs
-        python artifacts.py
         make html &> /dev/null
 
     - name: deploy

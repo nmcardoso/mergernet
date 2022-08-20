@@ -1,9 +1,4 @@
 Experiments
 ===========
 
-.. toctree::
-    :maxdepth: 2
-    :glob:
-    :hidden:
-
-    jobs/*
+`Access Mergernet Experiments <https://nmcardoso.github.io/mergernet-experiments>`_
