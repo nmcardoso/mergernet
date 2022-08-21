@@ -23,7 +23,7 @@
 {% macro breadcrumb(items = []) -%}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ base_url }}">Home</a></li>
     {% for item in items %}
       {% if not loop.last %}
         <li class="breadcrumb-item">
