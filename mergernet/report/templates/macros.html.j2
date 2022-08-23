@@ -2,7 +2,7 @@
 <ul>
   {% for item in items %}
   <li>
-    <a href="{{ base_url }}{{ item.url }}">{{ item.title }}</a> (latest run: {{ item.date }})
+    <a href="{{ base_url }}{{ item.url }}">{{ item.title }}</a> (last run: {{ item.date }})
   </li>
   {% endfor %}
 </ul>
