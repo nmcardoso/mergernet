@@ -17,7 +17,7 @@ sys.path.append(str(PROJECT_ROOT.resolve()))
 if ENV.lower() == 'ci':
   BASE_URL = 'https://nmcardoso.github.io/mergernet-experiments/'
 else:
-  BASE_URL = '/'
+  BASE_URL = 'http://localhost:8000/'
 
 
 
