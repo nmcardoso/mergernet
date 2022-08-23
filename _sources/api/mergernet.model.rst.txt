@@ -28,10 +28,9 @@
    :template: module-template.rst
    :recursive:
 
+   mergernet.model.automl
    mergernet.model.baseline
    mergernet.model.callback
-   mergernet.model.hypermodel
    mergernet.model.plot
    mergernet.model.preprocessing
-   mergernet.model.study
 

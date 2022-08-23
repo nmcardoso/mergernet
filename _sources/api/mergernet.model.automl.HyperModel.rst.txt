@@ -1,7 +1,7 @@
-mergernet.model.study.HyperModel
-================================
+mergernet.model.automl.HyperModel
+=================================
 
-.. currentmodule:: mergernet.model.study
+.. currentmodule:: mergernet.model.automl
 
 .. autoclass:: HyperModel
    :members:

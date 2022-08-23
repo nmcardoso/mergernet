@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mergernet.model.study &#8212; MergerNet  documentation</title>
+    <title>mergernet.model.automl &#8212; MergerNet  documentation</title>
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
   document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
@@ -158,7 +158,7 @@
               
               <article class="bd-article" role="main">
                 
-  <h1>Source code for mergernet.model.study</h1><div class="highlight"><pre>
+  <h1>Source code for mergernet.model.automl</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
@@ -185,7 +185,7 @@
 
 
 
-<div class="viewcode-block" id="HyperModel"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel">[docs]</a><span class="k">class</span> <span class="nc">HyperModel</span><span class="p">:</span>
+<div class="viewcode-block" id="HyperModel"><a class="viewcode-back" href="../../../api/mergernet.model.automl.HyperModel.html#mergernet.model.automl.HyperModel">[docs]</a><span class="k">class</span> <span class="nc">HyperModel</span><span class="p">:</span>
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span>
@@ -205,7 +205,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
 
 
-<div class="viewcode-block" id="HyperModel.prepare_data"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.prepare_data">[docs]</a>  <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span>
+<div class="viewcode-block" id="HyperModel.prepare_data"><a class="viewcode-back" href="../../../api/mergernet.model.automl.HyperModel.html#mergernet.model.automl.HyperModel.prepare_data">[docs]</a>  <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">ds</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
@@ -238,7 +238,7 @@
     <span class="k">return</span> <span class="n">ds</span></div>
 
 
-<div class="viewcode-block" id="HyperModel.build_model"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.build_model">[docs]</a>  <span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span>
+<div class="viewcode-block" id="HyperModel.build_model"><a class="viewcode-back" href="../../../api/mergernet.model.automl.HyperModel.html#mergernet.model.automl.HyperModel.build_model">[docs]</a>  <span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">input_shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">,</span>
     <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -300,7 +300,7 @@
     <span class="k">return</span> <span class="n">model</span></div>
 
 
-<div class="viewcode-block" id="HyperModel._compile_model"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel._compile_model">[docs]</a>  <span class="k">def</span> <span class="nf">_compile_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span> <span class="n">lr</span><span class="p">:</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="HyperModel._compile_model"><a class="viewcode-back" href="../../../api/mergernet.model.automl.HyperModel.html#mergernet.model.automl.HyperModel._compile_model">[docs]</a>  <span class="k">def</span> <span class="nf">_compile_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span> <span class="n">lr</span><span class="p">:</span> <span class="kc">None</span><span class="p">):</span>
     <span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">learning_rate</span><span class="o">.</span><span class="n">suggest</span><span class="p">()</span>
     <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
       <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="p">),</span>
@@ -311,7 +311,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="HyperModel._switch_trainable_status"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel._switch_trainable_status">[docs]</a>  <span class="k">def</span> <span class="nf">_switch_trainable_status</span><span class="p">(</span>
+<div class="viewcode-block" id="HyperModel._switch_trainable_status"><a class="viewcode-back" href="../../../api/mergernet.model.automl.HyperModel.html#mergernet.model.automl.HyperModel._switch_trainable_status">[docs]</a>  <span class="k">def</span> <span class="nf">_switch_trainable_status</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span>
     <span class="n">layer</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -322,7 +322,7 @@
         <span class="n">l</span><span class="o">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="n">trainable</span></div>
 
 
-<div class="viewcode-block" id="HyperModel.predict"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.predict">[docs]</a>  <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
+<div class="viewcode-block" id="HyperModel.predict"><a class="viewcode-back" href="../../../api/mergernet.model.automl.HyperModel.html#mergernet.model.automl.HyperModel.predict">[docs]</a>  <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">],</span>
     <span class="n">dataset</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span>
@@ -340,7 +340,7 @@
     <span class="k">return</span> <span class="n">preds</span></div>
 
 
-<div class="viewcode-block" id="HyperModel._objective_old"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel._objective_old">[docs]</a>  <span class="k">def</span> <span class="nf">_objective_old</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="viewcode-block" id="HyperModel._objective_old"><a class="viewcode-back" href="../../../api/mergernet.model.automl.HyperModel.html#mergernet.model.automl.HyperModel._objective_old">[docs]</a>  <span class="k">def</span> <span class="nf">_objective_old</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">clear_session</span><span class="p">()</span>
 
     <span class="n">ds_train</span><span class="p">,</span> <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -401,7 +401,7 @@
 
 
 
-<div class="viewcode-block" id="HyperModel.objective"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.objective">[docs]</a>  <span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="viewcode-block" id="HyperModel.objective"><a class="viewcode-back" href="../../../api/mergernet.model.automl.HyperModel.html#mergernet.model.automl.HyperModel.objective">[docs]</a>  <span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">clear_session</span><span class="p">()</span>
     <span class="n">e</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">()</span>
 
@@ -478,7 +478,7 @@
     <span class="k">return</span> <span class="n">objective_value</span></div>
 
 
-<div class="viewcode-block" id="HyperModel._train"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel._train">[docs]</a>  <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span>
+<div class="viewcode-block" id="HyperModel._train"><a class="viewcode-back" href="../../../api/mergernet.model.automl.HyperModel.html#mergernet.model.automl.HyperModel._train">[docs]</a>  <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span>
     <span class="n">ds_train</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span>
@@ -517,7 +517,7 @@
     <span class="k">return</span> <span class="n">h</span></div>
 
 
-<div class="viewcode-block" id="HyperModel.hypertrain"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel.hypertrain">[docs]</a>  <span class="k">def</span> <span class="nf">hypertrain</span><span class="p">(</span>
+<div class="viewcode-block" id="HyperModel.hypertrain"><a class="viewcode-back" href="../../../api/mergernet.model.automl.HyperModel.html#mergernet.model.automl.HyperModel.hypertrain">[docs]</a>  <span class="k">def</span> <span class="nf">hypertrain</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">n_trials</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">hyperparameters</span><span class="p">:</span> <span class="n">HyperParameterSet</span><span class="p">,</span>
@@ -580,12 +580,12 @@
     <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;----- end of best trial summary -----&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="HyperModel._compute_class_weight"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel._compute_class_weight">[docs]</a>  <span class="k">def</span> <span class="nf">_compute_class_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="HyperModel._compute_class_weight"><a class="viewcode-back" href="../../../api/mergernet.model.automl.HyperModel.html#mergernet.model.automl.HyperModel._compute_class_weight">[docs]</a>  <span class="k">def</span> <span class="nf">_compute_class_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">compute_class_weight</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="HyperModel._architecture_switch"><a class="viewcode-back" href="../../../api/mergernet.model.study.HyperModel.html#mergernet.model.study.HyperModel._architecture_switch">[docs]</a>  <span class="k">def</span> <span class="nf">_architecture_switch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pretrained_arch</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]:</span>
+<div class="viewcode-block" id="HyperModel._architecture_switch"><a class="viewcode-back" href="../../../api/mergernet.model.automl.HyperModel.html#mergernet.model.automl.HyperModel._architecture_switch">[docs]</a>  <span class="k">def</span> <span class="nf">_architecture_switch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pretrained_arch</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]:</span>
     <span class="k">if</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;xception&#39;</span><span class="p">:</span>
       <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">xception</span><span class="o">.</span><span class="n">preprocess_input</span>
       <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">Xception</span>
@@ -670,7 +670,7 @@
   
   <div class="footer-item">
     <p class="copyright">
-    &copy; Copyright 2022, Natanael M. Cardoso..<br>
+    &copy; Copyright 2022, Natanael M. Cardoso.<br>
 </p>
   </div>
   
