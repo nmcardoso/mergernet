@@ -1,7 +1,7 @@
-mergernet.core.logging
-======================
+mergernet.model.utils
+=====================
 
-.. automodule:: mergernet.core.logging
+.. automodule:: mergernet.model.utils
 
    
    
@@ -14,7 +14,7 @@ mergernet.core.logging
    .. autosummary::
       :toctree:
    
-      configure_root_logger
+      architecture_switch
    
    
 

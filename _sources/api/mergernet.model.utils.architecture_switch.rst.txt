@@ -1,0 +1,6 @@
+mergernet.model.utils.architecture\_switch
+==========================================
+
+.. currentmodule:: mergernet.model.utils
+
+.. autofunction:: architecture_switch
