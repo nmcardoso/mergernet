@@ -1,7 +1,7 @@
 from mergernet.core.entity import HyperParameterSet
 from mergernet.core.dataset import Dataset
 from mergernet.core.experiment import Experiment, experiment_run
-from mergernet.model.study import HyperModel
+from mergernet.model.automl import HyperModel
 
 
 hp = [
