@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 
 project = 'MergerNet'
-copyright = '2022, Natanael M. Cardoso.'
+copyright = '2022, Natanael M. Cardoso'
 author = 'Natanael Magalhães Cardoso'
 
 # The short X.Y version
