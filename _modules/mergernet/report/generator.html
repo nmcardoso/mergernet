@@ -178,7 +178,7 @@
 <span class="k">if</span> <span class="n">ENV</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;ci&#39;</span><span class="p">:</span>
   <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s1">&#39;https://nmcardoso.github.io/mergernet-experiments/&#39;</span>
 <span class="k">else</span><span class="p">:</span>
-  <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span>
+  <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s1">&#39;http://localhost:8000/&#39;</span>
 
 
 
@@ -300,12 +300,21 @@
   <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;start_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%H:%M:%S %Y/%m/</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;start_time&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
   <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;end_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%H:%M:%S %Y/%m/</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;end_time&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
 
+
+  <span class="n">log_path</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.log&#39;</span><span class="p">))</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">log_path</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">log_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">open</span><span class="p">()</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="kc">None</span>
+
+
   <span class="n">render_page</span><span class="p">(</span>
     <span class="n">output_path</span><span class="o">=</span><span class="n">dest</span><span class="p">,</span>
     <span class="n">template</span><span class="o">=</span><span class="s1">&#39;run.html.j2&#39;</span><span class="p">,</span>
     <span class="n">meta</span><span class="o">=</span><span class="n">meta</span><span class="p">,</span>
     <span class="n">train_artifacts</span><span class="o">=</span><span class="n">train_artifacts</span><span class="p">,</span>
-    <span class="n">generated_artifacts</span><span class="o">=</span><span class="n">generated_artifacts</span>
+    <span class="n">generated_artifacts</span><span class="o">=</span><span class="n">generated_artifacts</span><span class="p">,</span>
+    <span class="n">log</span><span class="o">=</span><span class="n">log</span>
   <span class="p">)</span>
 
   <span class="c1"># copy artifacts to output path</span>
