@@ -6,12 +6,10 @@ import numpy as np
 import tensorflow as tf
 import optuna
 
-from mergernet.core.constants import SAVED_MODELS_PATH
 from mergernet.core.experiment import Experiment
-from mergernet.core.logging import get_logger
 
 
-L = get_logger(__name__)
+L = logging.getLogger(__name__)
 
 
 class DeltaStopping(tf.keras.callbacks.Callback):

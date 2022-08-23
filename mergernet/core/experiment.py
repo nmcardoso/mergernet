@@ -4,15 +4,15 @@ import secrets
 from pathlib import Path
 from typing import Any
 from time import time
+import logging
 
-from mergernet.core.logging import get_logger
 from mergernet.core.utils import SingletonMeta
 from mergernet.core.constants import DATA_ROOT, ENV
 from mergernet.services.google import GDrive
 from mergernet.services.github import GithubService
 
 
-L = get_logger(__name__)
+L = logging.getLogger(__name__)
 
 
 DEV_LOCAL_SHARED_PATTERN = str(DATA_ROOT) + '/dev_workspace/shared_data/'

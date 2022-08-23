@@ -11,14 +11,12 @@ from mergernet.core.constants import RANDOM_SEED
 from mergernet.core.dataset import Dataset
 from mergernet.core.entity import ConstantHyperParameter, HyperParameterSet
 from mergernet.core.experiment import Experiment
-from mergernet.core.logging import get_logger
 from mergernet.model.callback import PruneCallback, SaveCallback
-from mergernet.model.plot import conf_matrix
 from mergernet.model.preprocessing import load_jpg, load_png, one_hot_factory
 from mergernet.core.utils import Timming
 
 
-L = get_logger(__name__)
+L = logging.getLogger(__name__)
 optuna.logging.disable_default_handler()
 optuna.logging.enable_propagation()
 
