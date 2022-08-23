@@ -1,0 +1,126 @@
+[22:37:31] [INFO] [numexpr.utils] NumExpr defaulting to 2 threads.
+[22:37:33] [DEBUG] [tensorflow] Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+[22:37:34] [DEBUG] [h5py._conv] Creating converter from 7 to 5
+[22:37:34] [DEBUG] [h5py._conv] Creating converter from 5 to 7
+[22:37:34] [DEBUG] [h5py._conv] Creating converter from 7 to 5
+[22:37:34] [DEBUG] [h5py._conv] Creating converter from 5 to 7
+[22:39:14] [INFO] [mergernet.model.study] start of optuna optimization
+[22:39:14] [INFO] [mergernet.model.study] start of optuna optimization
+[22:39:14] [INFO] [optuna.storages._rdb.storage] A new study created in RDB with name: j001_test
+[22:39:18] [INFO] [mergernet.model.study] Apply: load_jpg
+[22:39:18] [INFO] [mergernet.model.study] Apply: load_jpg
+[22:39:18] [INFO] [mergernet.model.study] Apply: one_hot
+[22:39:18] [INFO] [mergernet.model.study] Apply: one_hot
+[22:39:18] [INFO] [mergernet.model.study] Apply: cache
+[22:39:18] [INFO] [mergernet.model.study] Apply: cache
+[22:39:18] [INFO] [mergernet.model.study] Apply: shuffle
+[22:39:18] [INFO] [mergernet.model.study] Apply: shuffle
+[22:39:18] [INFO] [mergernet.model.study] Apply: batch
+[22:39:18] [INFO] [mergernet.model.study] Apply: batch
+[22:39:18] [INFO] [mergernet.model.study] Apply: prefetch
+[22:39:18] [INFO] [mergernet.model.study] Apply: prefetch
+[22:39:18] [INFO] [mergernet.model.study] Apply: load_jpg
+[22:39:18] [INFO] [mergernet.model.study] Apply: load_jpg
+[22:39:18] [INFO] [mergernet.model.study] Apply: one_hot
+[22:39:18] [INFO] [mergernet.model.study] Apply: one_hot
+[22:39:18] [INFO] [mergernet.model.study] Apply: cache
+[22:39:18] [INFO] [mergernet.model.study] Apply: cache
+[22:39:18] [INFO] [mergernet.model.study] Apply: shuffle
+[22:39:18] [INFO] [mergernet.model.study] Apply: shuffle
+[22:39:18] [INFO] [mergernet.model.study] Apply: batch
+[22:39:18] [INFO] [mergernet.model.study] Apply: batch
+[22:39:18] [INFO] [mergernet.model.study] Apply: prefetch
+[22:39:18] [INFO] [mergernet.model.study] Apply: prefetch
+[22:39:20] [DEBUG] [h5py._conv] Creating converter from 3 to 5
+[22:39:20] [INFO] [mergernet.model.study] Trainable weights (CONV): 0
+[22:39:20] [INFO] [mergernet.model.study] Trainable weights (CONV): 0
+[22:39:21] [INFO] [mergernet.model.study] Trainable weights (TOTAL): 6
+[22:39:21] [INFO] [mergernet.model.study] Trainable weights (TOTAL): 6
+[22:39:21] [INFO] [mergernet.model.study] Start of training loop
+[22:39:21] [INFO] [mergernet.model.study] Start of training loop
+[22:41:33] [INFO] [mergernet.model.study] End of training loop, duration: 00:02:11.
+[22:41:33] [INFO] [mergernet.model.study] End of training loop, duration: 00:02:11.
+[22:41:33] [INFO] [mergernet.model.study] Start of training loop
+[22:41:33] [INFO] [mergernet.model.study] Start of training loop
+[22:42:48] [DEBUG] [h5py._conv] Creating converter from 5 to 3
+[22:42:48] [INFO] [mergernet.model.study] End of training loop, duration: 00:01:14.
+[22:42:48] [INFO] [mergernet.model.study] End of training loop, duration: 00:01:14.
+[22:42:49] [INFO] [optuna.study.study] Trial 0 finished with value: 0.33743977546691895 and parameters: {'dense_1_units': 384, 'dropout_1_rate': 0.4852142919229748, 'dense_2_units': 768, 'dropout_2_rate': 0.379597545259111, 'learning_rate': 2.0513382630874486e-05}. Best is trial 0 with value: 0.33743977546691895.
+[22:42:49] [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): api.github.com:443
+[22:42:49] [DEBUG] [urllib3.connectionpool] https://api.github.com:443 "GET /repos/nmcardoso/mergernet-experiments/contents/experiments/1/d5f427f5/optuna.sqlite HTTP/1.1" 404 None
+[22:42:49] [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): api.github.com:443
+[22:42:50] [DEBUG] [urllib3.connectionpool] https://api.github.com:443 "PUT /repos/nmcardoso/mergernet-experiments/contents/experiments/1/d5f427f5/optuna.sqlite HTTP/1.1" 201 1944
+[22:42:50] [INFO] [mergernet.model.study] optuna optimization finished in 00:03:35
+[22:42:50] [INFO] [mergernet.model.study] optuna optimization finished in 00:03:35
+[22:42:50] [INFO] [mergernet.model.study] number of finished trials: 1
+[22:42:50] [INFO] [mergernet.model.study] number of finished trials: 1
+[22:42:50] [INFO] [mergernet.model.study] ----- begin of best trial summary -----
+[22:42:50] [INFO] [mergernet.model.study] ----- begin of best trial summary -----
+[22:42:50] [INFO] [mergernet.model.study] optimization score: 0.33743977546691895
+[22:42:50] [INFO] [mergernet.model.study] optimization score: 0.33743977546691895
+[22:42:50] [INFO] [mergernet.model.study] params:
+[22:42:50] [INFO] [mergernet.model.study] params:
+[22:42:50] [INFO] [mergernet.model.study] dense_1_units: 384
+[22:42:50] [INFO] [mergernet.model.study] dense_1_units: 384
+[22:42:50] [INFO] [mergernet.model.study] dense_2_units: 768
+[22:42:50] [INFO] [mergernet.model.study] dense_2_units: 768
+[22:42:50] [INFO] [mergernet.model.study] dropout_1_rate: 0.4852142919229748
+[22:42:50] [INFO] [mergernet.model.study] dropout_1_rate: 0.4852142919229748
+[22:42:50] [INFO] [mergernet.model.study] dropout_2_rate: 0.379597545259111
+[22:42:50] [INFO] [mergernet.model.study] dropout_2_rate: 0.379597545259111
+[22:42:50] [INFO] [mergernet.model.study] learning_rate: 2.0513382630874486e-05
+[22:42:50] [INFO] [mergernet.model.study] learning_rate: 2.0513382630874486e-05
+[22:42:50] [INFO] [mergernet.model.study] ----- end of best trial summary -----
+[22:42:50] [INFO] [mergernet.model.study] ----- end of best trial summary -----
+[22:42:50] [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): api.github.com:443
+[22:42:50] [DEBUG] [urllib3.connectionpool] https://api.github.com:443 "GET /repos/nmcardoso/mergernet-experiments/contents/experiments/1/d5f427f5/mergernet.log HTTP/1.1" 404 None
+[22:42:50] [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): api.github.com:443
+[22:42:50] [DEBUG] [urllib3.connectionpool] https://api.github.com:443 "PUT /repos/nmcardoso/mergernet-experiments/contents/experiments/1/d5f427f5/mergernet.log HTTP/1.1" 201 2226
+[22:42:50] [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): api.github.com:443
+[22:42:50] [DEBUG] [urllib3.connectionpool] https://api.github.com:443 "GET /repos/nmcardoso/mergernet-experiments/contents/experiments/1/d5f427f5/metadata.json HTTP/1.1" 404 None
+[22:42:50] [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): api.github.com:443
+[22:42:51] [DEBUG] [urllib3.connectionpool] https://api.github.com:443 "PUT /repos/nmcardoso/mergernet-experiments/contents/experiments/1/d5f427f5/metadata.json HTTP/1.1" 201 2225
+[22:53:29] [INFO] [numexpr.utils] NumExpr defaulting to 2 threads.
+[22:53:30] [DEBUG] [tensorflow] Falling back to TensorFlow client; we recommended you install the Cloud TPU client directly with pip install cloud-tpu-client.
+[22:53:31] [DEBUG] [h5py._conv] Creating converter from 7 to 5
+[22:53:31] [DEBUG] [h5py._conv] Creating converter from 5 to 7
+[22:53:31] [DEBUG] [h5py._conv] Creating converter from 7 to 5
+[22:53:31] [DEBUG] [h5py._conv] Creating converter from 5 to 7
+[22:53:33] [INFO] [mergernet.model.study] start of optuna optimization
+[22:53:33] [INFO] [optuna.storages._rdb.storage] A new study created in RDB with name: j001_test
+[22:53:34] [INFO] [mergernet.model.study] Apply: load_jpg
+[22:53:34] [INFO] [mergernet.model.study] Apply: one_hot
+[22:53:34] [INFO] [mergernet.model.study] Apply: cache
+[22:53:34] [INFO] [mergernet.model.study] Apply: shuffle
+[22:53:34] [INFO] [mergernet.model.study] Apply: batch
+[22:53:34] [INFO] [mergernet.model.study] Apply: prefetch
+[22:53:34] [INFO] [mergernet.model.study] Apply: load_jpg
+[22:53:34] [INFO] [mergernet.model.study] Apply: one_hot
+[22:53:34] [INFO] [mergernet.model.study] Apply: cache
+[22:53:34] [INFO] [mergernet.model.study] Apply: shuffle
+[22:53:34] [INFO] [mergernet.model.study] Apply: batch
+[22:53:34] [INFO] [mergernet.model.study] Apply: prefetch
+[22:53:36] [DEBUG] [h5py._conv] Creating converter from 3 to 5
+[22:53:37] [INFO] [mergernet.model.study] Trainable weights (CONV): 0
+[22:53:37] [INFO] [mergernet.model.study] Trainable weights (TOTAL): 6
+[22:53:37] [INFO] [mergernet.model.study] Start of training loop
+[22:55:30] [INFO] [mergernet.model.study] End of training loop, duration: 00:01:52.
+[22:55:30] [INFO] [mergernet.model.study] Start of training loop
+[22:56:33] [DEBUG] [h5py._conv] Creating converter from 5 to 3
+[22:56:33] [INFO] [mergernet.model.study] End of training loop, duration: 00:01:03.
+[22:56:34] [INFO] [optuna.study.study] Trial 0 finished with value: 0.3361195921897888 and parameters: {'dense_1_units': 384, 'dropout_1_rate': 0.4852142919229748, 'dense_2_units': 768, 'dropout_2_rate': 0.379597545259111, 'learning_rate': 2.0513382630874486e-05}. Best is trial 0 with value: 0.3361195921897888.
+[22:56:34] [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): api.github.com:443
+[22:56:34] [DEBUG] [urllib3.connectionpool] https://api.github.com:443 "GET /repos/nmcardoso/mergernet-experiments/contents/experiments/1/ae331b7f/optuna.sqlite HTTP/1.1" 404 None
+[22:56:34] [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): api.github.com:443
+[22:56:35] [DEBUG] [urllib3.connectionpool] https://api.github.com:443 "PUT /repos/nmcardoso/mergernet-experiments/contents/experiments/1/ae331b7f/optuna.sqlite HTTP/1.1" 201 2228
+[22:56:35] [INFO] [mergernet.model.study] optuna optimization finished in 00:03:02
+[22:56:35] [INFO] [mergernet.model.study] number of finished trials: 1
+[22:56:35] [INFO] [mergernet.model.study] ----- begin of best trial summary -----
+[22:56:35] [INFO] [mergernet.model.study] optimization score: 0.3361195921897888
+[22:56:35] [INFO] [mergernet.model.study] params:
+[22:56:35] [INFO] [mergernet.model.study] dense_1_units: 384
+[22:56:35] [INFO] [mergernet.model.study] dense_2_units: 768
+[22:56:35] [INFO] [mergernet.model.study] dropout_1_rate: 0.4852142919229748
+[22:56:35] [INFO] [mergernet.model.study] dropout_2_rate: 0.379597545259111
+[22:56:35] [INFO] [mergernet.model.study] learning_rate: 2.0513382630874486e-05
+[22:56:35] [INFO] [mergernet.model.study] ----- end of best trial summary -----

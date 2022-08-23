@@ -1,0 +1,38 @@
+[23:24:32] [INFO] [mergernet.model.study] start of optuna optimization
+[23:24:33] [INFO] [optuna.storages._rdb.storage] A new study created in RDB with name: j001_test
+[23:24:35] [INFO] [mergernet.model.study] Apply: load_jpg
+[23:24:35] [INFO] [mergernet.model.study] Apply: one_hot
+[23:24:35] [INFO] [mergernet.model.study] Apply: cache
+[23:24:35] [INFO] [mergernet.model.study] Apply: shuffle
+[23:24:35] [INFO] [mergernet.model.study] Apply: batch
+[23:24:35] [INFO] [mergernet.model.study] Apply: prefetch
+[23:24:35] [INFO] [mergernet.model.study] Apply: load_jpg
+[23:24:35] [INFO] [mergernet.model.study] Apply: one_hot
+[23:24:35] [INFO] [mergernet.model.study] Apply: cache
+[23:24:35] [INFO] [mergernet.model.study] Apply: shuffle
+[23:24:35] [INFO] [mergernet.model.study] Apply: batch
+[23:24:35] [INFO] [mergernet.model.study] Apply: prefetch
+[23:24:36] [DEBUG] [h5py._conv] Creating converter from 3 to 5
+[23:24:36] [INFO] [mergernet.model.study] Trainable weights (CONV): 0
+[23:24:37] [INFO] [mergernet.model.study] Trainable weights (TOTAL): 6
+[23:24:37] [INFO] [mergernet.model.study] Start of training loop
+[23:26:29] [INFO] [mergernet.model.study] End of training loop, duration: 00:01:51.
+[23:26:29] [INFO] [mergernet.model.study] Start of training loop
+[23:27:30] [DEBUG] [h5py._conv] Creating converter from 5 to 3
+[23:27:31] [INFO] [mergernet.model.study] End of training loop, duration: 00:01:02.
+[23:27:32] [INFO] [optuna.study.study] Trial 0 finished with value: 0.33445435762405396 and parameters: {'dense_1_units': 384, 'dropout_1_rate': 0.4852142919229748, 'dense_2_units': 768, 'dropout_2_rate': 0.379597545259111, 'learning_rate': 2.0513382630874486e-05}. Best is trial 0 with value: 0.33445435762405396.
+[23:27:32] [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): api.github.com:443
+[23:27:32] [DEBUG] [urllib3.connectionpool] https://api.github.com:443 "GET /repos/nmcardoso/mergernet-experiments/contents/experiments/1/d305ea95/optuna.sqlite HTTP/1.1" 404 None
+[23:27:32] [DEBUG] [urllib3.connectionpool] Starting new HTTPS connection (1): api.github.com:443
+[23:27:32] [DEBUG] [urllib3.connectionpool] https://api.github.com:443 "PUT /repos/nmcardoso/mergernet-experiments/contents/experiments/1/d305ea95/optuna.sqlite HTTP/1.1" 201 2196
+[23:27:32] [INFO] [mergernet.model.study] optuna optimization finished in 00:03:00
+[23:27:32] [INFO] [mergernet.model.study] number of finished trials: 1
+[23:27:32] [INFO] [mergernet.model.study] ----- begin of best trial summary -----
+[23:27:32] [INFO] [mergernet.model.study] optimization score: 0.33445435762405396
+[23:27:32] [INFO] [mergernet.model.study] params:
+[23:27:32] [INFO] [mergernet.model.study] dense_1_units: 384
+[23:27:32] [INFO] [mergernet.model.study] dense_2_units: 768
+[23:27:32] [INFO] [mergernet.model.study] dropout_1_rate: 0.4852142919229748
+[23:27:32] [INFO] [mergernet.model.study] dropout_2_rate: 0.379597545259111
+[23:27:32] [INFO] [mergernet.model.study] learning_rate: 2.0513382630874486e-05
+[23:27:32] [INFO] [mergernet.model.study] ----- end of best trial summary -----
