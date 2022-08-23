@@ -139,12 +139,21 @@ def render_report(source: Path, dest: Path):
   meta['start_time'] = strftime('%H:%M:%S %Y/%m/%d', gmtime(meta.get('start_time', 0)))
   meta['end_time'] = strftime('%H:%M:%S %Y/%m/%d', gmtime(meta.get('end_time', 0)))
 
+
+  log_path = list(source.glob('*.log'))
+  if len(log_path) > 0:
+    log = log_path[0].open().read()
+  else:
+    log = None
+
+
   render_page(
     output_path=dest,
     template='run.html.j2',
     meta=meta,
     train_artifacts=train_artifacts,
-    generated_artifacts=generated_artifacts
+    generated_artifacts=generated_artifacts,
+    log=log
   )
 
   # copy artifacts to output path
