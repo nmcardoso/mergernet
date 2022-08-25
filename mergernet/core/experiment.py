@@ -116,7 +116,7 @@ def backup_model(
     e.upload_file_gh('test_preds.json', test_preds)
 
   if save_dataset_config:
-    e.upload_file_gh('dataset_config.json', dataset.__dict__)
+    e.upload_file_gh('dataset_config.json', dataset.config.__dict__)
 
   if save_model:
     model.save(Path(e.gd_artifact_path) / 'model.h5')
