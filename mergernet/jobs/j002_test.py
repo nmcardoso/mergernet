@@ -16,6 +16,11 @@ hps = [
     'value': 'imagenet'
   },
   {
+    'name': 'epochs',
+    'type': 'constant',
+    'value': 10
+  },
+  {
     'name': 'batch_size',
     'type': 'constant',
     'value': 64
