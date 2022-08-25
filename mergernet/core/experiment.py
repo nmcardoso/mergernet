@@ -1,10 +1,12 @@
 import functools
 import json
 import secrets
+import logging
 from pathlib import Path
 from typing import Any
 from time import time
-import logging
+
+import tensorflow as tf
 
 from mergernet.core.utils import SingletonMeta
 from mergernet.core.constants import DATA_ROOT, ENV
@@ -65,6 +67,57 @@ def experiment_run(exp_id: int):
       e.upload_file_gh('metadata.json', metadata)
     return wrapper
   return decorator
+
+
+
+def backup_model(
+  model: tf.keras.Model,
+  dataset: Any,
+  save_history: bool = True,
+  save_test_preds: bool = True,
+  save_dataset_config: bool = True,
+  save_model: bool = True,
+):
+  """
+  Parameters
+  ----------
+  model: tf.keras.Model
+    The keras model to backup
+
+  dataset: Dataset
+    The dataset instance
+
+  save_history: bool
+    True if train history must be saved in github
+
+  save_test_preds: bool
+    True if the predictions in test dataset must be saved in github
+
+  save_dataset_config: bool
+    True if dataset_config must be saved in github
+
+  save_model: bool
+    True if tensorflow model must be saved in google drive
+  """
+  e = Experiment()
+
+  if save_history:
+    history = model.history.history
+    e.upload_file_gh('history.json', history)
+
+  if save_test_preds:
+    _, ds_test = dataset.get_fold(0)
+    ds_test = dataset.prepare_data(ds_test, kind='pred')
+    X = dataset.get_X_by_fold(0, kind='test')
+    test_preds = model.predict(ds_test)
+    test_preds = {'X': X, 'preds': test_preds}
+    e.upload_file_gh('test_preds.json', test_preds)
+
+  if save_dataset_config:
+    e.upload_file_gh('dataset_config.json', dataset.__dict__)
+
+  if save_model:
+    model.save(Path(e.gd_artifact_path) / 'model.h5')
 
 
 

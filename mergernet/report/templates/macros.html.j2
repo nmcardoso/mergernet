@@ -20,7 +20,7 @@
 {%- endmacro %}
 
 
-{% macro breadcrumb(items = []) -%}
+{% macro breadcrumb(base_url, items = []) -%}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ base_url }}">Home</a></li>

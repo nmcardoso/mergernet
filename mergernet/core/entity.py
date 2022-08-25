@@ -7,7 +7,11 @@ class HyperParameter:
   def set_trial(self, trial: optuna.trial.FrozenTrial):
     self._trial = trial
 
+
   def suggest(self, trial: optuna.trial.FrozenTrial = None):
+    if isinstance(self, ConstantHyperParameter):
+      return self.value
+
     _trial = trial or self._trial
     if isinstance(self, CategoricalHyperParameter):
       fn = _trial.suggest_categorical
@@ -21,13 +25,14 @@ class HyperParameter:
       fn = _trial.suggest_loguniform
     elif isinstance(self, UniformHyperParameter):
       fn = _trial.suggest_uniform
-    elif isinstance(self, ConstantHyperParameter):
-      return self.value
+
     filtered_args = {
       k: v for k, v in self.__dict__.items()
       if not k.startswith('_')
     }
+
     return fn(**filtered_args)
+
 
   @classmethod
   def from_dict(cls, params: dict):

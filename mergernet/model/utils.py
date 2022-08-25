@@ -1,10 +1,33 @@
+import logging
 from typing import Callable, Tuple
 
 import tensorflow as tf
 
+from mergernet.core.entity import HyperParameterSet
+from mergernet.model.preprocessing import load_jpg, load_png, one_hot_factory
 
 
-def architecture_switch(pretrained_arch: str) -> Tuple[Callable, Callable]:
+L = logging.getLogger(__name__)
+
+
+
+def set_trainable_state(
+  model: tf.keras.Model,
+  layer: str,
+  trainable: bool
+):
+  for l in model.layers:
+    if l.name == layer:
+      l.trainable = trainable
+
+
+def get_optimizer(hp: HyperParameterSet):
+  pass
+
+
+def get_conv_arch(
+  pretrained_arch: str
+) -> Tuple[Callable, Callable]:
   if pretrained_arch == 'xception':
     preprocess_input = tf.keras.applications.xception.preprocess_input
     base_model = tf.keras.applications.Xception

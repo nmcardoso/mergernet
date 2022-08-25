@@ -47,7 +47,7 @@ hp = [
     'high': 0.5
   },
   {
-    'name': 'learning_rate',
+    'name': 'opt_lr',
     'type': 'loguniform',
     'low': 1.0e-5,
     'high': 1.0e-3

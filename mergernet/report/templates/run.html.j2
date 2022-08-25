@@ -5,15 +5,18 @@
 {% block title %}Report{% endblock %}
 
 {% block content %}
-  {{ macros.breadcrumb([
-    {
-      'title': 'Experiment {}'.format(meta.exp_id),
-      'url': '{}{}'.format(base_url, meta.exp_id)
-    },
-    {
-      'title': 'Run {}'.format(meta.run_id)
-    }
-  ]) }}
+  {{ macros.breadcrumb(
+    base_url,
+    [
+      {
+        'title': 'Experiment {}'.format(meta.exp_id),
+        'url': meta.exp_id
+      },
+      {
+        'title': 'Run {}'.format(meta.run_id)
+      }
+    ]
+  ) }}
 
   <div class="my-4">
     <p>
