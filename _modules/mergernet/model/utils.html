@@ -159,13 +159,36 @@
               <article class="bd-article" role="main">
                 
   <h1>Source code for mergernet.model.utils</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Tuple</span>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
+<span class="kn">from</span> <span class="nn">mergernet.core.entity</span> <span class="kn">import</span> <span class="n">HyperParameterSet</span>
+<span class="kn">from</span> <span class="nn">mergernet.model.preprocessing</span> <span class="kn">import</span> <span class="n">load_jpg</span><span class="p">,</span> <span class="n">load_png</span><span class="p">,</span> <span class="n">one_hot_factory</span>
 
 
-<div class="viewcode-block" id="architecture_switch"><a class="viewcode-back" href="../../../api/mergernet.model.utils.architecture_switch.html#mergernet.model.utils.architecture_switch">[docs]</a><span class="k">def</span> <span class="nf">architecture_switch</span><span class="p">(</span><span class="n">pretrained_arch</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]:</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+
+<div class="viewcode-block" id="set_trainable_state"><a class="viewcode-back" href="../../../api/mergernet.model.utils.set_trainable_state.html#mergernet.model.utils.set_trainable_state">[docs]</a><span class="k">def</span> <span class="nf">set_trainable_state</span><span class="p">(</span>
+  <span class="n">model</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span>
+  <span class="n">layer</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+  <span class="n">trainable</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="p">):</span>
+  <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">layer</span><span class="p">:</span>
+      <span class="n">l</span><span class="o">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="n">trainable</span></div>
+
+
+<div class="viewcode-block" id="get_optimizer"><a class="viewcode-back" href="../../../api/mergernet.model.utils.get_optimizer.html#mergernet.model.utils.get_optimizer">[docs]</a><span class="k">def</span> <span class="nf">get_optimizer</span><span class="p">(</span><span class="n">hp</span><span class="p">:</span> <span class="n">HyperParameterSet</span><span class="p">):</span>
+  <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="get_conv_arch"><a class="viewcode-back" href="../../../api/mergernet.model.utils.get_conv_arch.html#mergernet.model.utils.get_conv_arch">[docs]</a><span class="k">def</span> <span class="nf">get_conv_arch</span><span class="p">(</span>
+  <span class="n">pretrained_arch</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]:</span>
   <span class="k">if</span> <span class="n">pretrained_arch</span> <span class="o">==</span> <span class="s1">&#39;xception&#39;</span><span class="p">:</span>
     <span class="n">preprocess_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">xception</span><span class="o">.</span><span class="n">preprocess_input</span>
     <span class="n">base_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">Xception</span>

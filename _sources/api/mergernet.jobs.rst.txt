@@ -29,4 +29,5 @@
    :recursive:
 
    mergernet.jobs.j001_test
+   mergernet.jobs.j002_test
 

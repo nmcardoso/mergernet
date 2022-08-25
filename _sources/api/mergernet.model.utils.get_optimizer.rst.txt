@@ -1,0 +1,6 @@
+mergernet.model.utils.get\_optimizer
+====================================
+
+.. currentmodule:: mergernet.model.utils
+
+.. autofunction:: get_optimizer

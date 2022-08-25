@@ -162,10 +162,12 @@
 <span></span><span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">secrets</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
-<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">SingletonMeta</span>
 <span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">DATA_ROOT</span><span class="p">,</span> <span class="n">ENV</span>
@@ -226,6 +228,57 @@
       <span class="n">e</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;metadata.json&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wrapper</span>
   <span class="k">return</span> <span class="n">decorator</span></div>
+
+
+
+<div class="viewcode-block" id="backup_model"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.backup_model.html#mergernet.core.experiment.backup_model">[docs]</a><span class="k">def</span> <span class="nf">backup_model</span><span class="p">(</span>
+  <span class="n">model</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span>
+  <span class="n">dataset</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+  <span class="n">save_history</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+  <span class="n">save_test_preds</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+  <span class="n">save_dataset_config</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+  <span class="n">save_model</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  model: tf.keras.Model</span>
+<span class="sd">    The keras model to backup</span>
+
+<span class="sd">  dataset: Dataset</span>
+<span class="sd">    The dataset instance</span>
+
+<span class="sd">  save_history: bool</span>
+<span class="sd">    True if train history must be saved in github</span>
+
+<span class="sd">  save_test_preds: bool</span>
+<span class="sd">    True if the predictions in test dataset must be saved in github</span>
+
+<span class="sd">  save_dataset_config: bool</span>
+<span class="sd">    True if dataset_config must be saved in github</span>
+
+<span class="sd">  save_model: bool</span>
+<span class="sd">    True if tensorflow model must be saved in google drive</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">e</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">()</span>
+
+  <span class="k">if</span> <span class="n">save_history</span><span class="p">:</span>
+    <span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span>
+    <span class="n">e</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;history.json&#39;</span><span class="p">,</span> <span class="n">history</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">save_test_preds</span><span class="p">:</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ds_test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ds_test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span><span class="n">ds_test</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;pred&#39;</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_X_by_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+    <span class="n">test_preds</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ds_test</span><span class="p">)</span>
+    <span class="n">test_preds</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="s1">&#39;preds&#39;</span><span class="p">:</span> <span class="n">test_preds</span><span class="p">}</span>
+    <span class="n">e</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;test_preds.json&#39;</span><span class="p">,</span> <span class="n">test_preds</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">save_dataset_config</span><span class="p">:</span>
+    <span class="n">e</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;dataset_config.json&#39;</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">save_model</span><span class="p">:</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">gd_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="s1">&#39;model.h5&#39;</span><span class="p">)</span></div>
 
 
 

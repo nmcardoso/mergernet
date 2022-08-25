@@ -33,5 +33,6 @@
    mergernet.model.callback
    mergernet.model.plot
    mergernet.model.preprocessing
+   mergernet.model.train
    mergernet.model.utils
 

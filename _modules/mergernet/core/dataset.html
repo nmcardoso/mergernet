@@ -170,7 +170,7 @@
 <span class="sd">This module defines others classes and functions as well, who perform complementary tasks.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
@@ -184,7 +184,10 @@
 <span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">RANDOM_SEED</span>
 <span class="kn">from</span> <span class="nn">mergernet.services.google</span> <span class="kn">import</span> <span class="n">GDrive</span>
 <span class="kn">from</span> <span class="nn">mergernet.services.sciserver</span> <span class="kn">import</span> <span class="n">SciServer</span>
+<span class="kn">from</span> <span class="nn">mergernet.model.preprocessing</span> <span class="kn">import</span> <span class="n">load_jpg</span><span class="p">,</span> <span class="n">load_png</span><span class="p">,</span> <span class="n">one_hot_factory</span>
 
+
+<span class="n">L</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 
@@ -503,7 +506,7 @@
 
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
-    <span class="n">config</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">DatasetConfig</span><span class="p">,</span>
     <span class="n">in_memory</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">in_memory</span> <span class="o">=</span> <span class="n">in_memory</span>
@@ -662,6 +665,39 @@
       <span class="n">weight_map</span><span class="p">[</span><span class="n">class_</span><span class="p">]</span> <span class="o">=</span> <span class="n">total</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">cardinality</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">weight_map</span></div>
+
+
+<div class="viewcode-block" id="Dataset.prepare_data"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset.prepare_data">[docs]</a>  <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">ds</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
+    <span class="n">buffer_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;train&#39;</span>
+  <span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column_suffix</span> <span class="o">==</span> <span class="s1">&#39;.jpg&#39;</span><span class="p">:</span>
+      <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">load_jpg</span><span class="p">)</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Apply: load_jpg&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column_suffix</span> <span class="o">==</span> <span class="s1">&#39;.png&#39;</span><span class="p">:</span>
+      <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">load_png</span><span class="p">)</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Apply: load_png&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;train&#39;</span><span class="p">:</span>
+      <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">one_hot_factory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n_classes</span><span class="p">))</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Apply: one_hot&#39;</span><span class="p">)</span>
+
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Apply: cache&#39;</span><span class="p">)</span>
+
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">buffer_size</span><span class="p">)</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Apply: shuffle&#39;</span><span class="p">)</span>
+
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Apply: batch&#39;</span><span class="p">)</span>
+
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">AUTOTUNE</span><span class="p">)</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Apply: prefetch&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ds</span></div>
 
 
 <div class="viewcode-block" id="Dataset.concat_fold_column"><a class="viewcode-back" href="../../../api/mergernet.core.dataset.Dataset.html#mergernet.core.dataset.Dataset.concat_fold_column">[docs]</a>  <span class="nd">@staticmethod</span>

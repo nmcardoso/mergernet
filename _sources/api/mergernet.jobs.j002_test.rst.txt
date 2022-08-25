@@ -1,7 +1,7 @@
-mergernet.jobs.j001\_test
+mergernet.jobs.j002\_test
 =========================
 
-.. automodule:: mergernet.jobs.j001_test
+.. automodule:: mergernet.jobs.j002_test
 
    
    
