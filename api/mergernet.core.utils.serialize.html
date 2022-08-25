@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>mergernet.core.rgb.RGB &#8212; MergerNet  documentation</title>
+    <title>mergernet.core.utils.serialize &#8212; MergerNet  documentation</title>
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
   document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
@@ -36,8 +36,8 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="mergernet.core.trilogy" href="mergernet.core.trilogy.html" />
-    <link rel="prev" title="mergernet.core.rgb" href="mergernet.core.rgb.html" />
+    <link rel="next" title="mergernet.core.utils.skip_dev" href="mergernet.core.utils.skip_dev.html" />
+    <link rel="prev" title="mergernet.core.utils.save_table" href="mergernet.core.utils.save_table.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -364,18 +364,18 @@
      </li>
     </ul>
    </li>
-   <li class="toctree-l2 current active has-children">
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="mergernet.core.rgb.html">
      mergernet.core.rgb
     </a>
-    <input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
     <label for="toctree-checkbox-7">
      <i class="fas fa-chevron-down">
      </i>
     </label>
-    <ul class="current">
-     <li class="toctree-l3 current active">
-      <a class="current reference internal" href="#">
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.core.rgb.RGB.html">
        mergernet.core.rgb.RGB
       </a>
      </li>
@@ -448,16 +448,16 @@
      </li>
     </ul>
    </li>
-   <li class="toctree-l2 has-children">
+   <li class="toctree-l2 current active has-children">
     <a class="reference internal" href="mergernet.core.utils.html">
      mergernet.core.utils
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
     <label for="toctree-checkbox-9">
      <i class="fas fa-chevron-down">
      </i>
     </label>
-    <ul>
+    <ul class="current">
      <li class="toctree-l3">
       <a class="reference internal" href="mergernet.core.utils.array_fallback.html">
        mergernet.core.utils.array_fallback
@@ -493,8 +493,8 @@
        mergernet.core.utils.save_table
       </a>
      </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.core.utils.serialize.html">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
        mergernet.core.utils.serialize
       </a>
      </li>
@@ -1005,34 +1005,12 @@
               
               <article class="bd-article" role="main">
                 
-  <section id="mergernet-core-rgb-rgb">
-<h1>mergernet.core.rgb.RGB<a class="headerlink" href="#mergernet-core-rgb-rgb" title="Permalink to this heading">#</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="mergernet.core.rgb.RGB">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mergernet.core.rgb.</span></span><span class="sig-name descname"><span class="pre">RGB</span></span><a class="reference internal" href="../_modules/mergernet/core/rgb.html#RGB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.rgb.RGB" title="Permalink to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p class="rubric">Methods</p>
-<table class="table">
-<tbody>
-<tr class="row-odd"><td><p><strong>make_trilogy_fits</strong></p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p><strong>trilogy_fits_to_png</strong></p></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<dl class="py method">
-<dt class="sig sig-object py" id="mergernet.core.rgb.RGB.make_trilogy_fits">
-<span class="sig-name descname"><span class="pre">make_trilogy_fits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sdss'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/rgb.html#RGB.make_trilogy_fits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.rgb.RGB.make_trilogy_fits" title="Permalink to this definition">#</a></dt>
+  <section id="mergernet-core-utils-serialize">
+<h1>mergernet.core.utils.serialize<a class="headerlink" href="#mergernet-core-utils-serialize" title="Permalink to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="mergernet.core.utils.serialize">
+<span class="sig-prename descclassname"><span class="pre">mergernet.core.utils.</span></span><span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/mergernet/core/utils.html#serialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.utils.serialize" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mergernet.core.rgb.RGB.trilogy_fits_to_png">
-<span class="sig-name descname"><span class="pre">trilogy_fits_to_png</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_fits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g_fits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b_fits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sky_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">70.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">128</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/rgb.html#RGB.trilogy_fits_to_png"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.rgb.RGB.trilogy_fits_to_png" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
 
 </section>
 
@@ -1044,17 +1022,17 @@
               <footer class="bd-footer-article">
                   <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-  <a class='left-prev' id="prev-link" href="mergernet.core.rgb.html" title="previous page">
+  <a class='left-prev' id="prev-link" href="mergernet.core.utils.save_table.html" title="previous page">
       <i class="fas fa-angle-left"></i>
       <div class="prev-next-info">
           <p class="prev-next-subtitle">previous</p>
-          <p class="prev-next-title">mergernet.core.rgb</p>
+          <p class="prev-next-title">mergernet.core.utils.save_table</p>
       </div>
   </a>
-  <a class='right-next' id="next-link" href="mergernet.core.trilogy.html" title="next page">
+  <a class='right-next' id="next-link" href="mergernet.core.utils.skip_dev.html" title="next page">
   <div class="prev-next-info">
       <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">mergernet.core.trilogy</p>
+      <p class="prev-next-title">mergernet.core.utils.skip_dev</p>
   </div>
   <i class="fas fa-angle-right"></i>
   </a>

@@ -21,6 +21,7 @@ mergernet.core.utils
       load_image
       load_table
       save_table
+      serialize
       skip_dev
       unique_path
    
