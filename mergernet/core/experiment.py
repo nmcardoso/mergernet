@@ -10,7 +10,6 @@ import tensorflow as tf
 
 from mergernet.core.utils import SingletonMeta
 from mergernet.core.constants import DATA_ROOT, ENV
-from mergernet.core.dataset import Dataset
 from mergernet.services.google import GDrive
 from mergernet.services.github import GithubService
 
@@ -73,7 +72,7 @@ def experiment_run(exp_id: int):
 
 def backup_model(
   model: tf.keras.Model,
-  dataset: Dataset,
+  dataset: Any,
   save_history: bool = True,
   save_test_preds: bool = True,
   save_dataset_config: bool = True,
