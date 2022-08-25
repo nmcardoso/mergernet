@@ -18,7 +18,7 @@ hps = [
   {
     'name': 'epochs',
     'type': 'constant',
-    'value': 10
+    'value': 1
   },
   {
     'name': 'batch_size',
