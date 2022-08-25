@@ -8,7 +8,7 @@ from time import time
 
 import tensorflow as tf
 
-from mergernet.core.utils import SingletonMeta
+from mergernet.core.utils import SingletonMeta, serialize
 from mergernet.core.constants import DATA_ROOT, ENV
 from mergernet.services.google import GDrive
 from mergernet.services.github import GithubService
@@ -229,7 +229,7 @@ class Experiment(metaclass=SingletonMeta):
     elif type(data) == str:
       gh.commit(to_path, data=data, from_bytes=False)
     else:
-      gh.commit(to_path, data=json.dumps(data), from_bytes=False)
+      gh.commit(to_path, data=serialize(data), from_bytes=False)
 
 
   def download_file_gh(self, fname: str, exp_id: int = None, run_id: str = None):
@@ -285,7 +285,7 @@ class Experiment(metaclass=SingletonMeta):
         fp.write(data)
     else:
       with open(to_path, 'w') as fp:
-        json.dump(data, fp)
+        fp.write(serialize(data))
 
 
 

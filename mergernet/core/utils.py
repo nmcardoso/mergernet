@@ -1,4 +1,5 @@
 import collections.abc
+import json
 from pathlib import Path
 from typing import Any, Sequence, Union
 from datetime import datetime, timedelta
@@ -256,3 +257,20 @@ class SingletonMeta(type):
         instance = super().__call__(*args, **kwargs)
         cls._instances[cls] = instance
     return cls._instances[cls]
+
+
+
+def serialize(obj: Any) -> str:
+  def to_primitive(v):
+    if isinstance(v, np.ndarray):
+      return v.tolist()
+    elif isinstance(v, Path):
+      return str(v)
+    else:
+      return v
+
+  prepared_obj = {
+    k: to_primitive(v) for k, v in obj.items()
+  }
+
+  return json.dumps(prepared_obj)
