@@ -110,7 +110,9 @@ def backup_model(
     ds_test = dataset.prepare_data(ds_test, kind='pred')
     X = dataset.get_X_by_fold(0, kind='test')
     test_preds = model.predict(ds_test)
-    test_preds = {'X': list(X), 'preds': list(test_preds)}
+    print(X)
+    print(test_preds)
+    test_preds = {'X': X.tolist(), 'preds': test_preds.tolist()}
     e.upload_file_gh('test_preds.json', test_preds)
 
   if save_dataset_config:
