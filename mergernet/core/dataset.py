@@ -9,7 +9,7 @@ dataset and can be used for all development process of this deep learning model.
 This module defines others classes and functions as well, who perform complementary tasks.
 """
 
-
+import logging
 from pathlib import Path
 from typing import Dict, List, Generator, Sequence, Tuple, Union
 
@@ -23,7 +23,10 @@ from mergernet.core.utils import load_image, load_table
 from mergernet.core.constants import RANDOM_SEED
 from mergernet.services.google import GDrive
 from mergernet.services.sciserver import SciServer
+from mergernet.model.preprocessing import load_jpg, load_png, one_hot_factory
 
+
+L = logging.getLogger(__name__)
 
 
 
@@ -342,7 +345,7 @@ class Dataset:
 
   def __init__(
     self,
-    config: str = '',
+    config: DatasetConfig,
     in_memory: bool = False
   ):
     self.in_memory = in_memory
@@ -501,6 +504,39 @@ class Dataset:
       weight_map[class_] = total / (n * cardinality)
 
     return weight_map
+
+
+  def prepare_data(
+    self,
+    ds: tf.data.Dataset,
+    batch_size: int = 64,
+    buffer_size: int = 1000,
+    kind='train'
+  ):
+    if self.config.X_column_suffix == '.jpg':
+      ds = ds.map(load_jpg)
+      L.info('Apply: load_jpg')
+    elif self.config.X_column_suffix == '.png':
+      ds = ds.map(load_png)
+      L.info('Apply: load_png')
+
+    if kind == 'train':
+      ds = ds.map(one_hot_factory(self.config.n_classes))
+      L.info('Apply: one_hot')
+
+    ds = ds.cache()
+    L.info('Apply: cache')
+
+    ds = ds.shuffle(buffer_size)
+    L.info('Apply: shuffle')
+
+    ds = ds.batch(batch_size)
+    L.info('Apply: batch')
+
+    ds = ds.prefetch(tf.data.AUTOTUNE)
+    L.info('Apply: prefetch')
+
+    return ds
 
 
   @staticmethod
