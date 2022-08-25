@@ -8,7 +8,6 @@ from mergernet.core.constants import RANDOM_SEED
 from mergernet.core.dataset import Dataset
 from mergernet.core.utils import Timming
 from mergernet.model.preprocessing import load_jpg, one_hot
-from mergernet.core.artifacts import ArtifactHelper
 
 import tensorflow as tf
 import numpy as np
@@ -252,8 +251,6 @@ class ConvolutionalClassifier:
     L.info(f'[TRAIN] Training finished without errors in {t.duration()}.')
 
     print(history)
-    ah = ArtifactHelper()
-    ah.save_json(history.history, 'history.json')
 
     L.info('[TRAIN] History artifact saved.')
 
