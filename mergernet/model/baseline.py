@@ -34,13 +34,13 @@ def finetune_train(dataset: Dataset, hp: HyperParameterSet) -> tf.keras.Model:
   ds_train, ds_test = dataset.get_fold(0)
   ds_train = dataset.prepare_data(
     ds_train,
-    batch_size=hp.batch_size.suggest(),
+    batch_size=hp.get('batch_size'),
     buffer_size=5000,
     kind='train'
   )
   ds_test = dataset.prepare_data(
     ds_test,
-    batch_size=hp.batch_size.suggest(),
+    batch_size=hp.get('batch_size'),
     buffer_size=1000,
     kind='train'
   )
@@ -53,7 +53,7 @@ def finetune_train(dataset: Dataset, hp: HyperParameterSet) -> tf.keras.Model:
     freeze_conv=True,
     hp=hp
   )
-  _compile_model(model, tf.keras.optimizers.Adam(hp.opt_lr.suggest()))
+  _compile_model(model, tf.keras.optimizers.Adam(hp.get('opt_lr')))
 
   ckpt_cb = tf.keras.callbacks.ModelCheckpoint(
     Path(Experiment.local_artifact_path) / f'model.ckpt.h5',
@@ -74,7 +74,7 @@ def finetune_train(dataset: Dataset, hp: HyperParameterSet) -> tf.keras.Model:
   L.info('Start of training loop')
   h1 = model.fit(
     ds_train,
-    batch_size=hp.batch_size.suggest(),
+    batch_size=hp.get('batch_size'),
     epochs=10,
     validation_data=ds_test,
     class_weight=class_weights,
@@ -83,14 +83,14 @@ def finetune_train(dataset: Dataset, hp: HyperParameterSet) -> tf.keras.Model:
   L.info(f'End of training loop, duration: {t.end()}.')
 
   set_trainable_state(model, 'conv_block', True)
-  _compile_model(model, tf.keras.optimizers.Adam(hp.opt_lr.suggest()))
+  _compile_model(model, tf.keras.optimizers.Adam(hp.get('opt_lr')))
 
   t = Timming()
   L.info('Start of training loop')
   model.fit(
     ds_train,
-    batch_size=hp.batch_size.suggest(),
-    epochs=hp.epochs.suggest(),
+    batch_size=hp.get('batch_size'),
+    epochs=hp.get('epochs'),
     validation_data=ds_test,
     class_weight=class_weights,
     initial_epoch=len(h1.history),
@@ -109,12 +109,12 @@ def _build_model(
 ) -> tf.keras.Model:
   # dataset.config.n_classes
   conv_arch, preprocess_input = get_conv_arch(
-    hp.architecture.suggest()
+    hp.get('architecture')
   )
   conv_block = conv_arch(
     input_shape=input_shape,
     include_top=False,
-    weights=hp.pretrained_weights.suggest(),
+    weights=hp.get('pretrained_weights'),
   )
   conv_block._name = 'conv_block'
   conv_block.trainable = (not freeze_conv)
@@ -143,10 +143,10 @@ def _build_model(
   x = preprocess_input(x)
   x = conv_block(x)
   x = tf.keras.layers.Flatten()(x)
-  x = tf.keras.layers.Dense(hp.dense_1_units.suggest(), activation='relu')(x)
-  x = tf.keras.layers.Dropout(hp.dropout_1_rate.suggest())(x)
-  x = tf.keras.layers.Dense(hp.dense_2_units.suggest(), activation='relu')(x)
-  x = tf.keras.layers.Dropout(hp.dropout_2_rate.suggest())(x)
+  x = tf.keras.layers.Dense(hp.get('dense_1_units'), activation='relu')(x)
+  x = tf.keras.layers.Dropout(hp.get('dropout_1_rate'))(x)
+  x = tf.keras.layers.Dense(hp.get('dense_2_units'), activation='relu')(x)
+  x = tf.keras.layers.Dropout(hp.get('dropout_2_rate'))(x)
   outputs = tf.keras.layers.Dense(n_classes, activation='softmax')(x)
 
   model = tf.keras.Model(inputs, outputs)

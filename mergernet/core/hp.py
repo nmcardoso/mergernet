@@ -116,32 +116,24 @@ class ConstantHyperParameter(HyperParameter):
 
 class HyperParameterSet:
   def __init__(self, hyperparameters: Sequence[Union[dict, HyperParameter]]):
+    self.hps = {}
+
     for item in hyperparameters:
       if type(item) == dict:
         name = item['name']
-        self.__dict__.update({ name: HyperParameter.from_dict(item) })
+        self.hps.update({ name: HyperParameter.from_dict(item) })
       else:
         name = getattr(item, name)
-        self.__dict__.update({ name: item })
+        self.hps.update({ name: item })
+
+
+  def get(self, hp: str, trial: optuna.trial.FrozenTrial = None):
+    if trial is None:
+      return self.hps[hp].suggest()
+    else:
+      return self.hps[hp].suggest(trial)
+
 
   def set_trial(self, trial: optuna.trial.FrozenTrial):
-    for hp in self.__dict__.values():
+    for hp in self.hps.values():
       hp.set_trial(trial)
-
-
-
-class JobSpec:
-  name: str
-  dataset: str
-  hyperparameters: HyperParameterSet
-
-
-
-if __name__ == '__main__':
-  hp = HyperParameter.from_dict({
-    'type': 'categorical',
-    'name': 'params',
-    'choices': [0, 1, 2]
-  })
-  print(type(hp))
-  print(hp.__dict__)
