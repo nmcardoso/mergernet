@@ -117,9 +117,6 @@ def _build_model(
     weights=hp.pretrained_weights.suggest(),
   )
   conv_block._name = 'conv_block'
-  print(conv_block.name)
-  print(conv_block.name)
-  print(conv_block.name)
   conv_block.trainable = (not freeze_conv)
   L.info(f'Trainable weights (CONV): {len(conv_block.trainable_weights)}')
 
