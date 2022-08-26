@@ -46,8 +46,7 @@ def experiment_run(exp_id: int):
       open(log_path, 'w').close()
 
       # create new experiment
-      e = Experiment()
-      e.create(exp_id)
+      Experiment.create(exp_id)
 
       # track times and execute function
       start_time = int(time())
@@ -59,12 +58,12 @@ def experiment_run(exp_id: int):
         'start_time': start_time,
         'end_time': end_time,
         'duration': end_time - start_time,
-        'exp_id': e.exp_id,
-        'run_id': e.run_id,
-        'notes': e.notes
+        'exp_id': Experiment.exp_id,
+        'run_id': Experiment.run_id,
+        'notes': Experiment.notes
       }
-      e.upload_file_gh(str(log_path))
-      e.upload_file_gh('metadata.json', metadata)
+      Experiment.upload_file_gh(str(log_path))
+      Experiment.upload_file_gh('metadata.json', metadata)
     return wrapper
   return decorator
 
@@ -99,27 +98,23 @@ def backup_model(
   save_model: bool
     True if tensorflow model must be saved in google drive
   """
-  e = Experiment()
-
   if save_history:
     history = model.history.history
-    e.upload_file_gh('history.json', history)
+    Experiment.upload_file_gh('history.json', history)
 
   if save_test_preds:
     _, ds_test = dataset.get_fold(0)
     ds_test = dataset.prepare_data(ds_test, kind='pred')
     X = dataset.get_X_by_fold(0, kind='test')
     test_preds = model.predict(ds_test)
-    print(X)
-    print(test_preds)
     test_preds = {'X': X.tolist(), 'preds': test_preds.tolist()}
-    e.upload_file_gh('test_preds.json', test_preds)
+    Experiment.upload_file_gh('test_preds.json', test_preds)
 
   if save_dataset_config:
-    e.upload_file_gh('dataset_config.json', dataset.config.__dict__)
+    Experiment.upload_file_gh('dataset_config.json', dataset.config.__dict__)
 
   if save_model:
-    model.save(Path(e.gd_artifact_path) / 'model.h5')
+    model.save(Path(Experiment.gd_artifact_path) / 'model.h5')
 
 
 
@@ -161,18 +156,18 @@ class Experiment(metaclass=SingletonMeta):
   notes: str
     Notes for current run of this experiment
   """
-  def __init__(self):
-    self._exp_created = False
-    self.exp_id = None
-    self.run_id = None
-    self.local_shared_path = None
-    self.local_artifact_path = None
-    self.gh_artifact_path = None
-    self.gd_artifact_path = None
-    self.notes = None
+  _exp_created = False
+  exp_id = None
+  run_id = None
+  local_shared_path = None
+  local_artifact_path = None
+  gh_artifact_path = None
+  gd_artifact_path = None
+  notes = None
 
 
-  def create(self, exp_id: int):
+  @classmethod
+  def create(cls, exp_id: int):
     """
     Creates a new experiment, configuring the experiment identifiers
     and file system to store the files needed (e.g. dataset) and the files
@@ -183,26 +178,27 @@ class Experiment(metaclass=SingletonMeta):
     exp_id: int
       Experiment identifier, the same as entrypoint file
     """
-    self.exp_id = exp_id
-    self.run_id = secrets.token_hex(4)
-    params = dict(exp_id=self.exp_id, run_id=self.run_id)
+    cls.exp_id = exp_id
+    cls.run_id = secrets.token_hex(4)
+    params = dict(exp_id=cls.exp_id, run_id=cls.run_id)
     if ENV == 'dev':
-      self.local_shared_path = DEV_LOCAL_SHARED_PATTERN.format(**params)
-      self.local_artifact_path = DEV_LOCAL_ARTIFACT_PATTERN.format(**params)
-      self.gh_artifact_path = DEV_GH_ARTIFACT_PATTERN.format(**params)
-      self.gd_artifact_path = DEV_GD_ARTIFACT_PATTERN.format(**params)
+      cls.local_shared_path = DEV_LOCAL_SHARED_PATTERN.format(**params)
+      cls.local_artifact_path = DEV_LOCAL_ARTIFACT_PATTERN.format(**params)
+      cls.gh_artifact_path = DEV_GH_ARTIFACT_PATTERN.format(**params)
+      cls.gd_artifact_path = DEV_GD_ARTIFACT_PATTERN.format(**params)
     else:
-      self.local_shared_path = LOCAL_SHARED_PATTERN.format(**params)
-      self.local_artifact_path = LOCAL_ARTIFACT_PATTERN.format(**params)
-      self.gh_artifact_path = GH_ARTIFACT_PATTERN.format(**params)
-      self.gd_artifact_path = GD_ARTIFACT_PATTERN.format(**params)
-    Path(self.local_shared_path).mkdir(parents=True, exist_ok=True)
-    Path(self.local_artifact_path).mkdir(parents=True, exist_ok=True)
-    Path(self.gd_artifact_path).mkdir(parents=True, exist_ok=True)
-    self._exp_created = True
+      cls.local_shared_path = LOCAL_SHARED_PATTERN.format(**params)
+      cls.local_artifact_path = LOCAL_ARTIFACT_PATTERN.format(**params)
+      cls.gh_artifact_path = GH_ARTIFACT_PATTERN.format(**params)
+      cls.gd_artifact_path = GD_ARTIFACT_PATTERN.format(**params)
+    Path(cls.local_shared_path).mkdir(parents=True, exist_ok=True)
+    Path(cls.local_artifact_path).mkdir(parents=True, exist_ok=True)
+    Path(cls.gd_artifact_path).mkdir(parents=True, exist_ok=True)
+    cls._exp_created = True
 
 
-  def upload_file_gh(self, fname: str, data: Any = None):
+  @classmethod
+  def upload_file_gh(cls, fname: str, data: Any = None):
     """
     Uploads a file to github artifacts repo inside `gh_artifact_path`
 
@@ -217,10 +213,10 @@ class Experiment(metaclass=SingletonMeta):
       `local_artifact_path` folder. If specified, it can be a json serializable
       python object or the bytes of the file.
     """
-    if not self._exp_created: raise ValueError('Experiment must be created')
+    if not cls._exp_created: raise ValueError('Experiment must be created')
     from_path = Path(fname) if fname.startswith('/') else \
-                Path(self.local_artifact_path) / fname
-    to_path = self.gh_artifact_path + from_path.name
+                Path(cls.local_artifact_path) / fname
+    to_path = cls.gh_artifact_path + from_path.name
     gh = GithubService()
 
     if data is None:
@@ -232,7 +228,8 @@ class Experiment(metaclass=SingletonMeta):
       gh.commit(to_path, data=serialize(data), from_bytes=False)
 
 
-  def download_file_gh(self, fname: str, exp_id: int = None, run_id: str = None):
+  @classmethod
+  def download_file_gh(cls, fname: str, exp_id: int = None, run_id: str = None):
     """
     Downloads a file from github artifacts repo inside `gh_artifact_path`
 
@@ -247,18 +244,19 @@ class Experiment(metaclass=SingletonMeta):
     run_id: int, optional
       The run identifier
     """
-    if not self._exp_created: raise ValueError('Experiment must be created')
-    exp_id = exp_id or self.exp_id
-    run_id = run_id or self.run_id
+    if not cls._exp_created: raise ValueError('Experiment must be created')
+    exp_id = exp_id or cls.exp_id
+    run_id = run_id or cls.run_id
 
-    to_path = Path(self.local_artifact_path) / fname
+    to_path = Path(cls.local_artifact_path) / fname
     from_path = GH_ARTIFACT_PATTERN.format(exp_id=exp_id, run_id=run_id)
 
     gh = GithubService()
     gh.download(remote_path=from_path, dest_path=to_path)
 
 
-  def upload_file_gd(self, fname: str, data: Any = None):
+  @classmethod
+  def upload_file_gd(cls, fname: str, data: Any = None):
     """
     Uploads a file to google drive inside `gd_artifact_path`
 
@@ -273,9 +271,9 @@ class Experiment(metaclass=SingletonMeta):
       `local_artifact_path` folder. If specified, it can be a json serializable
       python object or the bytes of the file.
     """
-    if not self._exp_created: raise ValueError('Experiment must be created')
-    from_path = Path(self.local_artifact_path) / fname
-    to_path = Path(self.gd_artifact_path) / fname
+    if not cls._exp_created: raise ValueError('Experiment must be created')
+    from_path = Path(cls.local_artifact_path) / fname
+    to_path = Path(cls.gd_artifact_path) / fname
     gd = GDrive()
 
     if data is None:

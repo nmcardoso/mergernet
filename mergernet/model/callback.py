@@ -59,8 +59,7 @@ class SaveCallback(tf.keras.callbacks.Callback):
       best_value = self.default_value
 
     if self.operator(logs[self.objective_metric], best_value):
-      e = Experiment()
-      save_path = Path(e.local_artifact_path) / (self.name + '.h5')
+      save_path = Path(Experiment.local_artifact_path) / (self.name + '.h5')
       if not save_path.parent.exists():
         save_path.parent.mkdir(parents=True, exist_ok=True)
       self.model.save(save_path, overwrite=True)

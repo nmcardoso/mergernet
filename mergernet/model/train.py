@@ -30,7 +30,6 @@ os.environ['PYTHONHASHSEED'] = str(RANDOM_SEED)
 
 def finetune_train(dataset: Dataset, hp: HyperParameterSet):
   tf.keras.backend.clear_session()
-  e = Experiment()
 
   ds_train, ds_test = dataset.get_fold(0)
   ds_train = dataset.prepare_data(
@@ -57,7 +56,7 @@ def finetune_train(dataset: Dataset, hp: HyperParameterSet):
   _compile_model(model, tf.keras.optimizers.Adam(hp.opt_lr.suggest()))
 
   ckpt_cb = tf.keras.callbacks.ModelCheckpoint(
-    Path(e.local_artifact_path) / f'model.ckpt.h5',
+    Path(Experiment.local_artifact_path) / f'model.ckpt.h5',
     monitor='val_loss',
     save_best_only=True,
     mode='min' # 'min' or 'max'

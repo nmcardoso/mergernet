@@ -168,7 +168,7 @@ class HyperModel:
     tf.keras.backend.clear_session()
 
     if isinstance(model, str):
-      model = tf.keras.models.load_model(Path(Experiment().local_artifact_path) / model)
+      model = tf.keras.models.load_model(Path(Experiment.local_artifact_path) / model)
 
     ds = dataset.get_preds_dataset()
     ds = self.prepare_data(ds, batch_size=128, buffer_size=1000, kind='predict')
@@ -241,7 +241,6 @@ class HyperModel:
 
   def objective(self, trial: optuna.trial.FrozenTrial) -> float:
     tf.keras.backend.clear_session()
-    e = Experiment()
 
     ds_train, ds_test = self.dataset.get_fold(0)
     ds_train = self.prepare_data(
@@ -265,7 +264,7 @@ class HyperModel:
     )
     self._compile_model(model, self.hp.learning_rate.suggest() / 10)
 
-    ckpt_path = Path(e.local_artifact_path) / f'{self.name}.ckpt.h5'
+    ckpt_path = Path(Experiment.local_artifact_path) / f'{self.name}.ckpt.h5'
 
     ckpt_cb = tf.keras.callbacks.ModelCheckpoint(
       ckpt_path,
@@ -383,8 +382,7 @@ class HyperModel:
 
     L.info(f'start of optuna optimization')
 
-    exp = Experiment()
-    optuna_path = Path(exp.local_artifact_path) / 'optuna.sqlite'
+    optuna_path = Path(Experiment.local_artifact_path) / 'optuna.sqlite'
     optuna_uri = f'sqlite:///{str(optuna_path.resolve())}' # absolute path
 
     t = Timming()
@@ -406,7 +404,7 @@ class HyperModel:
     study.optimize(**optimize_params)
     t.end()
 
-    exp.upload_file_gh('optuna.sqlite')
+    Experiment.upload_file_gh('optuna.sqlite')
 
     L.info(f'optuna optimization finished in {t.duration()}')
     L.info(f'number of finished trials: {len(study.trials)}')

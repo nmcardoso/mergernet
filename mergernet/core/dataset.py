@@ -350,7 +350,7 @@ class Dataset:
   ):
     self.in_memory = in_memory
 
-    data_path = Path(Experiment().local_shared_path)
+    data_path = Path(Experiment.local_shared_path)
     self.config = config
     self.config.archive_path = data_path / self.config.archive_path
     self.config.images_path = data_path / self.config.images_path
