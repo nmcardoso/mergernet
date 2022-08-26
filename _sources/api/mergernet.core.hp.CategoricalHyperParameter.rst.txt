@@ -1,0 +1,17 @@
+mergernet.core.hp.CategoricalHyperParameter
+===========================================
+
+.. currentmodule:: mergernet.core.hp
+
+.. autoclass:: CategoricalHyperParameter
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

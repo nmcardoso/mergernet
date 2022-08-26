@@ -1,0 +1,17 @@
+mergernet.core.hp.FloatHyperParameter
+=====================================
+
+.. currentmodule:: mergernet.core.hp
+
+.. autoclass:: FloatHyperParameter
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

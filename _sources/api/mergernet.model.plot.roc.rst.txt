@@ -1,6 +1,0 @@
-mergernet.model.plot.roc
-========================
-
-.. currentmodule:: mergernet.model.plot
-
-.. autofunction:: roc

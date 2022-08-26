@@ -1,6 +1,0 @@
-mergernet.core.trilogy.da
-=========================
-
-.. currentmodule:: mergernet.core.trilogy
-
-.. autofunction:: da

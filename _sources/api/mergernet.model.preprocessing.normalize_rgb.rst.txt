@@ -1,6 +1,0 @@
-mergernet.model.preprocessing.normalize\_rgb
-============================================
-
-.. currentmodule:: mergernet.model.preprocessing
-
-.. autofunction:: normalize_rgb

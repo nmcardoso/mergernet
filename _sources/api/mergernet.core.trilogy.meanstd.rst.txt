@@ -1,6 +1,0 @@
-mergernet.core.trilogy.meanstd
-==============================
-
-.. currentmodule:: mergernet.core.trilogy
-
-.. autofunction:: meanstd

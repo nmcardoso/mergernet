@@ -1,0 +1,34 @@
+mergernet.model.callbacks
+=========================
+
+.. automodule:: mergernet.model.callbacks
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class-template.rst
+   
+      DeltaStopping
+      PruneCallback
+      SaveCallback
+      TelemetryCallback
+   
+   
+
+   
+   
+   
+
+
+

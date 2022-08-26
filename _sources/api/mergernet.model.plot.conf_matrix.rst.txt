@@ -1,6 +1,0 @@
-mergernet.model.plot.conf\_matrix
-=================================
-
-.. currentmodule:: mergernet.model.plot
-
-.. autofunction:: conf_matrix

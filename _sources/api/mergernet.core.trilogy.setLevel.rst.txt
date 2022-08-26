@@ -1,6 +1,0 @@
-mergernet.core.trilogy.setLevel
-===============================
-
-.. currentmodule:: mergernet.core.trilogy
-
-.. autofunction:: setLevel

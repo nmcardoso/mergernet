@@ -29,12 +29,8 @@
    :recursive:
 
    mergernet.core.constants
-   mergernet.core.dataset
-   mergernet.core.entity
    mergernet.core.experiment
+   mergernet.core.hp
    mergernet.core.logging
-   mergernet.core.match
-   mergernet.core.rgb
-   mergernet.core.trilogy
    mergernet.core.utils
 

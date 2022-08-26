@@ -1,6 +1,0 @@
-mergernet.model.plot.data\_distribution
-=======================================
-
-.. currentmodule:: mergernet.model.plot
-
-.. autofunction:: data_distribution
