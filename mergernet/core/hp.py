@@ -34,8 +34,8 @@ class HyperParameter:
     return fn(**filtered_args)
 
 
-  @classmethod
-  def from_dict(cls, params: dict):
+  @staticmethod
+  def from_dict(params: dict):
     t = params.pop('type')
     if t == 'categorical':
       E = CategoricalHyperParameter
