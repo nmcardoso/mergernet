@@ -73,7 +73,7 @@ def finetune_train(dataset: Dataset, hp: HyperParameterSet):
 
   t = Timming()
   L.info('Start of training loop')
-  model.fit(
+  h1 = model.fit(
     ds_train,
     batch_size=hp.batch_size.suggest(),
     epochs=10,
@@ -94,6 +94,7 @@ def finetune_train(dataset: Dataset, hp: HyperParameterSet):
     epochs=hp.epochs.suggest(),
     validation_data=ds_test,
     class_weight=class_weights,
+    initial_epoch=len(h1.history),
   )
   L.info(f'End of training loop, duration: {t.end()}.')
 
