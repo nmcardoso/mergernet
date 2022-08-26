@@ -207,8 +207,7 @@
       <span class="nb">open</span><span class="p">(</span><span class="n">log_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
       <span class="c1"># create new experiment</span>
-      <span class="n">e</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">()</span>
-      <span class="n">e</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">exp_id</span><span class="p">)</span>
+      <span class="n">Experiment</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">exp_id</span><span class="p">)</span>
 
       <span class="c1"># track times and execute function</span>
       <span class="n">start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">())</span>
@@ -220,12 +219,12 @@
         <span class="s1">&#39;start_time&#39;</span><span class="p">:</span> <span class="n">start_time</span><span class="p">,</span>
         <span class="s1">&#39;end_time&#39;</span><span class="p">:</span> <span class="n">end_time</span><span class="p">,</span>
         <span class="s1">&#39;duration&#39;</span><span class="p">:</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">,</span>
-        <span class="s1">&#39;exp_id&#39;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">exp_id</span><span class="p">,</span>
-        <span class="s1">&#39;run_id&#39;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
-        <span class="s1">&#39;notes&#39;</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">notes</span>
+        <span class="s1">&#39;exp_id&#39;</span><span class="p">:</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">exp_id</span><span class="p">,</span>
+        <span class="s1">&#39;run_id&#39;</span><span class="p">:</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
+        <span class="s1">&#39;notes&#39;</span><span class="p">:</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">notes</span>
       <span class="p">}</span>
-      <span class="n">e</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">log_path</span><span class="p">))</span>
-      <span class="n">e</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;metadata.json&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
+      <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">log_path</span><span class="p">))</span>
+      <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;metadata.json&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wrapper</span>
   <span class="k">return</span> <span class="n">decorator</span></div>
 
@@ -260,27 +259,23 @@
 <span class="sd">  save_model: bool</span>
 <span class="sd">    True if tensorflow model must be saved in google drive</span>
 <span class="sd">  &quot;&quot;&quot;</span>
-  <span class="n">e</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">()</span>
-
   <span class="k">if</span> <span class="n">save_history</span><span class="p">:</span>
     <span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span>
-    <span class="n">e</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;history.json&#39;</span><span class="p">,</span> <span class="n">history</span><span class="p">)</span>
+    <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;history.json&#39;</span><span class="p">,</span> <span class="n">history</span><span class="p">)</span>
 
   <span class="k">if</span> <span class="n">save_test_preds</span><span class="p">:</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">ds_test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">ds_test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span><span class="n">ds_test</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;pred&#39;</span><span class="p">)</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_X_by_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
     <span class="n">test_preds</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ds_test</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">test_preds</span><span class="p">)</span>
     <span class="n">test_preds</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">X</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="s1">&#39;preds&#39;</span><span class="p">:</span> <span class="n">test_preds</span><span class="o">.</span><span class="n">tolist</span><span class="p">()}</span>
-    <span class="n">e</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;test_preds.json&#39;</span><span class="p">,</span> <span class="n">test_preds</span><span class="p">)</span>
+    <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;test_preds.json&#39;</span><span class="p">,</span> <span class="n">test_preds</span><span class="p">)</span>
 
   <span class="k">if</span> <span class="n">save_dataset_config</span><span class="p">:</span>
-    <span class="n">e</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;dataset_config.json&#39;</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+    <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;dataset_config.json&#39;</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
 
   <span class="k">if</span> <span class="n">save_model</span><span class="p">:</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">gd_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="s1">&#39;model.h5&#39;</span><span class="p">)</span></div>
+    <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">Experiment</span><span class="o">.</span><span class="n">gd_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="s1">&#39;model.h5&#39;</span><span class="p">)</span></div>
 
 
 
@@ -322,18 +317,18 @@
 <span class="sd">  notes: str</span>
 <span class="sd">    Notes for current run of this experiment</span>
 <span class="sd">  &quot;&quot;&quot;</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_exp_created</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">exp_id</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">run_id</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">local_shared_path</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">local_artifact_path</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">gh_artifact_path</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">gd_artifact_path</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">notes</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">_exp_created</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">exp_id</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">run_id</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">local_shared_path</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">local_artifact_path</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">gh_artifact_path</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">gd_artifact_path</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">notes</span> <span class="o">=</span> <span class="kc">None</span>
 
 
-<div class="viewcode-block" id="Experiment.create"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.create">[docs]</a>  <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<div class="viewcode-block" id="Experiment.create"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.create">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a new experiment, configuring the experiment identifiers</span>
 <span class="sd">    and file system to store the files needed (e.g. dataset) and the files</span>
@@ -344,26 +339,27 @@
 <span class="sd">    exp_id: int</span>
 <span class="sd">      Experiment identifier, the same as entrypoint file</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">exp_id</span> <span class="o">=</span> <span class="n">exp_id</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">run_id</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_hex</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-    <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">exp_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_id</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run_id</span><span class="p">)</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">exp_id</span> <span class="o">=</span> <span class="n">exp_id</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">run_id</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_hex</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">exp_id</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">exp_id</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">run_id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">ENV</span> <span class="o">==</span> <span class="s1">&#39;dev&#39;</span><span class="p">:</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">local_shared_path</span> <span class="o">=</span> <span class="n">DEV_LOCAL_SHARED_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">local_artifact_path</span> <span class="o">=</span> <span class="n">DEV_LOCAL_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">gh_artifact_path</span> <span class="o">=</span> <span class="n">DEV_GH_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">gd_artifact_path</span> <span class="o">=</span> <span class="n">DEV_GD_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+      <span class="bp">cls</span><span class="o">.</span><span class="n">local_shared_path</span> <span class="o">=</span> <span class="n">DEV_LOCAL_SHARED_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+      <span class="bp">cls</span><span class="o">.</span><span class="n">local_artifact_path</span> <span class="o">=</span> <span class="n">DEV_LOCAL_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+      <span class="bp">cls</span><span class="o">.</span><span class="n">gh_artifact_path</span> <span class="o">=</span> <span class="n">DEV_GH_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+      <span class="bp">cls</span><span class="o">.</span><span class="n">gd_artifact_path</span> <span class="o">=</span> <span class="n">DEV_GD_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">local_shared_path</span> <span class="o">=</span> <span class="n">LOCAL_SHARED_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">local_artifact_path</span> <span class="o">=</span> <span class="n">LOCAL_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">gh_artifact_path</span> <span class="o">=</span> <span class="n">GH_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">gd_artifact_path</span> <span class="o">=</span> <span class="n">GD_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
-    <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_shared_path</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_artifact_path</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gd_artifact_path</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_exp_created</span> <span class="o">=</span> <span class="kc">True</span></div>
+      <span class="bp">cls</span><span class="o">.</span><span class="n">local_shared_path</span> <span class="o">=</span> <span class="n">LOCAL_SHARED_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+      <span class="bp">cls</span><span class="o">.</span><span class="n">local_artifact_path</span> <span class="o">=</span> <span class="n">LOCAL_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+      <span class="bp">cls</span><span class="o">.</span><span class="n">gh_artifact_path</span> <span class="o">=</span> <span class="n">GH_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+      <span class="bp">cls</span><span class="o">.</span><span class="n">gd_artifact_path</span> <span class="o">=</span> <span class="n">GD_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">Path</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">local_shared_path</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Path</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">local_artifact_path</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Path</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">gd_artifact_path</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">_exp_created</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 
-<div class="viewcode-block" id="Experiment.upload_file_gh"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.upload_file_gh">[docs]</a>  <span class="k">def</span> <span class="nf">upload_file_gh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Experiment.upload_file_gh"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.upload_file_gh">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">upload_file_gh</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Uploads a file to github artifacts repo inside `gh_artifact_path`</span>
 
@@ -378,10 +374,10 @@
 <span class="sd">      `local_artifact_path` folder. If specified, it can be a json serializable</span>
 <span class="sd">      python object or the bytes of the file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exp_created</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Experiment must be created&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_exp_created</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Experiment must be created&#39;</span><span class="p">)</span>
     <span class="n">from_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="k">else</span> \
-                <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
-    <span class="n">to_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gh_artifact_path</span> <span class="o">+</span> <span class="n">from_path</span><span class="o">.</span><span class="n">name</span>
+                <span class="n">Path</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">local_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
+    <span class="n">to_path</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">gh_artifact_path</span> <span class="o">+</span> <span class="n">from_path</span><span class="o">.</span><span class="n">name</span>
     <span class="n">gh</span> <span class="o">=</span> <span class="n">GithubService</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -393,7 +389,8 @@
       <span class="n">gh</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="n">to_path</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">serialize</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">from_bytes</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Experiment.download_file_gh"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.download_file_gh">[docs]</a>  <span class="k">def</span> <span class="nf">download_file_gh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Experiment.download_file_gh"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.download_file_gh">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">download_file_gh</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Downloads a file from github artifacts repo inside `gh_artifact_path`</span>
 
@@ -408,18 +405,19 @@
 <span class="sd">    run_id: int, optional</span>
 <span class="sd">      The run identifier</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exp_created</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Experiment must be created&#39;</span><span class="p">)</span>
-    <span class="n">exp_id</span> <span class="o">=</span> <span class="n">exp_id</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">exp_id</span>
-    <span class="n">run_id</span> <span class="o">=</span> <span class="n">run_id</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_id</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_exp_created</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Experiment must be created&#39;</span><span class="p">)</span>
+    <span class="n">exp_id</span> <span class="o">=</span> <span class="n">exp_id</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">exp_id</span>
+    <span class="n">run_id</span> <span class="o">=</span> <span class="n">run_id</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">run_id</span>
 
-    <span class="n">to_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
+    <span class="n">to_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">local_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
     <span class="n">from_path</span> <span class="o">=</span> <span class="n">GH_ARTIFACT_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp_id</span><span class="o">=</span><span class="n">exp_id</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">)</span>
 
     <span class="n">gh</span> <span class="o">=</span> <span class="n">GithubService</span><span class="p">()</span>
     <span class="n">gh</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">remote_path</span><span class="o">=</span><span class="n">from_path</span><span class="p">,</span> <span class="n">dest_path</span><span class="o">=</span><span class="n">to_path</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Experiment.upload_file_gd"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.upload_file_gd">[docs]</a>  <span class="k">def</span> <span class="nf">upload_file_gd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Experiment.upload_file_gd"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.upload_file_gd">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">upload_file_gd</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Uploads a file to google drive inside `gd_artifact_path`</span>
 
@@ -434,9 +432,9 @@
 <span class="sd">      `local_artifact_path` folder. If specified, it can be a json serializable</span>
 <span class="sd">      python object or the bytes of the file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exp_created</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Experiment must be created&#39;</span><span class="p">)</span>
-    <span class="n">from_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
-    <span class="n">to_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gd_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_exp_created</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Experiment must be created&#39;</span><span class="p">)</span>
+    <span class="n">from_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">local_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
+    <span class="n">to_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">gd_artifact_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
     <span class="n">gd</span> <span class="o">=</span> <span class="n">GDrive</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>

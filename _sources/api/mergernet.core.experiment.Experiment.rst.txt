@@ -14,4 +14,16 @@ mergernet.core.experiment.Experiment
 
    
    
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Experiment.exp_id
+      ~Experiment.gd_artifact_path
+      ~Experiment.gh_artifact_path
+      ~Experiment.local_artifact_path
+      ~Experiment.local_shared_path
+      ~Experiment.notes
+      ~Experiment.run_id
+   
    
