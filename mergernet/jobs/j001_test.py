@@ -1,7 +1,8 @@
 from mergernet.core.hp import HyperParameterSet
 from mergernet.data.dataset import Dataset
 from mergernet.core.experiment import Experiment, experiment_run
-from mergernet.model.automl import HyperModel
+from mergernet.model.automl import optuna_train
+from mergernet.model.baseline import finetune_train
 
 
 hp = [
@@ -57,16 +58,15 @@ hp = [
 
 @experiment_run(1)
 def run():
-  NAME = 'j001_test'
-
   ds = Dataset(config=Dataset.registry.BIN_SDSS_128)
-  model = HyperModel(dataset=ds, name=NAME, epochs=10)
-  model.hypertrain(
-    n_trials=1,
-    hyperparameters=HyperParameterSet(hp),
-    pruner='hyperband',
-    objective_metric='val_loss',
-    objective_direction='minimize',
-    resume=False,
-    save_model=True
+  optuna_train(
+    train_func=finetune_train,
+    dataset=ds,
+    hp=HyperParameterSet(hp),
+    n_trials=30
   )
+
+
+
+if __name__ == '__main__':
+  run()
