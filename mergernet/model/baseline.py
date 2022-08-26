@@ -28,7 +28,7 @@ os.environ['PYTHONHASHSEED'] = str(RANDOM_SEED)
 
 
 
-def finetune_train(dataset: Dataset, hp: HyperParameterSet):
+def finetune_train(dataset: Dataset, hp: HyperParameterSet) -> tf.keras.Model:
   tf.keras.backend.clear_session()
 
   ds_train, ds_test = dataset.get_fold(0)
