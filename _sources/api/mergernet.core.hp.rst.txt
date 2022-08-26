@@ -26,7 +26,6 @@ mergernet.core.hp
       HyperParameter
       HyperParameterSet
       IntHyperParameter
-      JobSpec
       LogUniformHyperParameter
       UniformHyperParameter
    
