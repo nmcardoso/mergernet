@@ -8,7 +8,7 @@ from astropy.nddata import Cutout2D
 from PIL import Image
 import numpy as np
 
-from mergernet.core.trilogy import MakeImg
+from mergernet.data.trilogy import MakeImg
 
 
 

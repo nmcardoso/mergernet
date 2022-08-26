@@ -8,7 +8,7 @@ sys.path.append(project_root)
 
 import pandas as pd
 import numpy as np
-from mergernet.core.match import XTable, CrossMatch
+from mergernet.data.match import XTable, CrossMatch
 from mergernet.services.sdss import SloanService
 
 

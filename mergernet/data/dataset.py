@@ -23,7 +23,7 @@ from mergernet.core.utils import load_image, load_table
 from mergernet.core.constants import RANDOM_SEED
 from mergernet.services.google import GDrive
 from mergernet.services.sciserver import SciServer
-from mergernet.model.preprocessing import load_jpg, load_png, one_hot_factory
+from mergernet.data.preprocessing import load_jpg, load_png, one_hot_factory
 
 
 L = logging.getLogger(__name__)

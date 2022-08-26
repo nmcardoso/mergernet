@@ -3,8 +3,8 @@ from typing import Callable, Tuple
 
 import tensorflow as tf
 
-from mergernet.core.entity import HyperParameterSet
-from mergernet.model.preprocessing import load_jpg, load_png, one_hot_factory
+from mergernet.core.hp import HyperParameterSet
+from mergernet.data.preprocessing import load_jpg, load_png, one_hot_factory
 
 
 L = logging.getLogger(__name__)

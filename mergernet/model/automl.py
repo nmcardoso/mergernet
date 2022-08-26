@@ -8,11 +8,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from mergernet.core.constants import RANDOM_SEED
-from mergernet.core.dataset import Dataset
-from mergernet.core.entity import ConstantHyperParameter, HyperParameterSet
+from mergernet.data.dataset import Dataset
+from mergernet.core.hp import ConstantHyperParameter, HyperParameterSet
 from mergernet.core.experiment import Experiment
-from mergernet.model.callback import PruneCallback, SaveCallback
-from mergernet.model.preprocessing import load_jpg, load_png, one_hot_factory
+from mergernet.model.callbacks import PruneCallback, SaveCallback
+from mergernet.data.preprocessing import load_jpg, load_png, one_hot_factory
 from mergernet.core.utils import Timming
 from mergernet.model.utils import architecture_switch
 
