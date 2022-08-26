@@ -278,9 +278,6 @@
     <span class="n">weights</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">pretrained_weights</span><span class="o">.</span><span class="n">suggest</span><span class="p">(),</span>
   <span class="p">)</span>
   <span class="n">conv_block</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="s1">&#39;conv_block&#39;</span>
-  <span class="nb">print</span><span class="p">(</span><span class="n">conv_block</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="n">conv_block</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="n">conv_block</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
   <span class="n">conv_block</span><span class="o">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="p">(</span><span class="ow">not</span> <span class="n">freeze_conv</span><span class="p">)</span>
   <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Trainable weights (CONV): </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">conv_block</span><span class="o">.</span><span class="n">trainable_weights</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
