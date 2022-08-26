@@ -189,7 +189,7 @@
 
 
 
-<div class="viewcode-block" id="finetune_train"><a class="viewcode-back" href="../../../api/mergernet.model.baseline.finetune_train.html#mergernet.model.baseline.finetune_train">[docs]</a><span class="k">def</span> <span class="nf">finetune_train</span><span class="p">(</span><span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">hp</span><span class="p">:</span> <span class="n">HyperParameterSet</span><span class="p">):</span>
+<div class="viewcode-block" id="finetune_train"><a class="viewcode-back" href="../../../api/mergernet.model.baseline.finetune_train.html#mergernet.model.baseline.finetune_train">[docs]</a><span class="k">def</span> <span class="nf">finetune_train</span><span class="p">(</span><span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">hp</span><span class="p">:</span> <span class="n">HyperParameterSet</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">:</span>
   <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">clear_session</span><span class="p">()</span>
 
   <span class="n">ds_train</span><span class="p">,</span> <span class="n">ds_test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
