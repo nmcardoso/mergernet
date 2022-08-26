@@ -1,14 +1,15 @@
 """
 Trilogy Program
-Credits:
+
+Credits
+-------
 Original author: Dan Coe (https://www.stsci.edu/~dcoe/trilogy/Intro.html)
 
-Changes:
+Changes
+-------
 - Gustavo B. O. Schwarz (https://github.com/schwarzam/)
   - Rewrote the code in Python 3 with way less code
   - Adapted for S-PLUS usage
-- Natanael M. Cardoso (https://github.com/nmcardoso)
-  - Reduced ~50% of memory usage
 """
 
 
@@ -293,4 +294,4 @@ if __name__ == '__main__':
 
   m = MakeImg()
   m.color(image)
-  m.savefig('broca.png')
+  m.savefig('test.png')
