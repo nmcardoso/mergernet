@@ -7,7 +7,9 @@ API Reference
    :recursive:
 
    mergernet.core
+   mergernet.data
    mergernet.jobs
    mergernet.model
    mergernet.report
    mergernet.services
+   mergernet.visualization

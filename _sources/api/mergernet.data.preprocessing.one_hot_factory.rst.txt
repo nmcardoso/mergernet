@@ -1,0 +1,6 @@
+mergernet.data.preprocessing.one\_hot\_factory
+==============================================
+
+.. currentmodule:: mergernet.data.preprocessing
+
+.. autofunction:: one_hot_factory

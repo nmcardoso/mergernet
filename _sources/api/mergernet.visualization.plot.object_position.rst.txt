@@ -1,0 +1,6 @@
+mergernet.visualization.plot.object\_position
+=============================================
+
+.. currentmodule:: mergernet.visualization.plot
+
+.. autofunction:: object_position

@@ -1,0 +1,17 @@
+mergernet.data.dataset.DatasetRegistry
+======================================
+
+.. currentmodule:: mergernet.data.dataset
+
+.. autoclass:: DatasetRegistry
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

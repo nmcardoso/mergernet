@@ -1,0 +1,49 @@
+mergernet.data.dataset
+======================
+
+.. automodule:: mergernet.data.dataset
+
+   
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+      :toctree:
+   
+      DARG_NO_INSPECTION
+      MESD_SDSS_128
+      MESD_LEGACY_128
+      BIN_SDSS_128
+      BLIND_SPLUS_LUPTON_128
+      BLIND_SPLUS_LUPTON_150
+      BLIND_SPLUS_TRILOGY_128
+      BLIND_SPLUS_TRILOGY_150
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class-template.rst
+   
+      Dataset
+      DatasetConfig
+      DatasetRegistry
+      DistributionKFold
+      StratifiedDistributionKFold
+   
+   
+
+   
+   
+   
+
+
+

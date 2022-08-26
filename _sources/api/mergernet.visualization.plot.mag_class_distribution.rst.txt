@@ -1,0 +1,6 @@
+mergernet.visualization.plot.mag\_class\_distribution
+=====================================================
+
+.. currentmodule:: mergernet.visualization.plot
+
+.. autofunction:: mag_class_distribution

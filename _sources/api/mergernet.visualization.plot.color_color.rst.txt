@@ -1,0 +1,6 @@
+mergernet.visualization.plot.color\_color
+=========================================
+
+.. currentmodule:: mergernet.visualization.plot
+
+.. autofunction:: color_color

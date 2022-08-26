@@ -1,0 +1,36 @@
+﻿mergernet.data
+==============
+
+.. automodule:: mergernet.data
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :template: module-template.rst
+   :recursive:
+
+   mergernet.data.dataset
+   mergernet.data.match
+   mergernet.data.preprocessing
+   mergernet.data.rgb
+   mergernet.data.trilogy
+

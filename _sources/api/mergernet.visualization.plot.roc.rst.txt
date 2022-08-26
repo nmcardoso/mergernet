@@ -1,0 +1,6 @@
+mergernet.visualization.plot.roc
+================================
+
+.. currentmodule:: mergernet.visualization.plot
+
+.. autofunction:: roc

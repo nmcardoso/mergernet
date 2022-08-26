@@ -1,0 +1,34 @@
+mergernet.data.preprocessing
+============================
+
+.. automodule:: mergernet.data.preprocessing
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      load_jpg
+      load_png
+      normalize_rgb
+      one_hot_factory
+      standardize_rgb
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

@@ -1,0 +1,6 @@
+mergernet.data.preprocessing.load\_png
+======================================
+
+.. currentmodule:: mergernet.data.preprocessing
+
+.. autofunction:: load_png
