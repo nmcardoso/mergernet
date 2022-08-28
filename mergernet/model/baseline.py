@@ -15,16 +15,14 @@ from mergernet.core.experiment import Experiment
 from mergernet.model.callbacks import PruneCallback, SaveCallback
 from mergernet.data.preprocessing import load_jpg, load_png, one_hot_factory
 from mergernet.core.utils import Timming
-from mergernet.model.utils import get_conv_arch, set_trainable_state
+from mergernet.model.utils import get_conv_arch, set_trainable_state, setup_seeds
 
+
+
+setup_seeds()
 
 L = logging.getLogger(__name__)
 
-
-np.random.seed(RANDOM_SEED)
-random.seed(RANDOM_SEED)
-tf.random.set_seed(RANDOM_SEED)
-os.environ['PYTHONHASHSEED'] = str(RANDOM_SEED)
 
 
 

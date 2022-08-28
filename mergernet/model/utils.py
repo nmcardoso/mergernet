@@ -1,14 +1,25 @@
 import logging
 from typing import Callable, Tuple
+import os
+import random
 
+import numpy as np
 import tensorflow as tf
 
+from mergernet.core.constants import RANDOM_SEED
 from mergernet.core.hp import HyperParameterSet
 from mergernet.data.preprocessing import load_jpg, load_png, one_hot_factory
 
 
 L = logging.getLogger(__name__)
 
+
+
+def setup_seeds():
+  np.random.seed(RANDOM_SEED)
+  random.seed(RANDOM_SEED)
+  tf.random.set_seed(RANDOM_SEED)
+  os.environ['PYTHONHASHSEED'] = str(RANDOM_SEED)
 
 
 def set_trainable_state(
