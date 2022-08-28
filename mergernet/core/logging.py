@@ -1,10 +1,11 @@
 from pathlib import Path
 from typing import Union
+from tempfile import gettempdir
 import shutil
 import logging
 
 
-LOG_PATH = '/tmp/mergernet.log'
+LOG_PATH = Path(gettempdir()) / 'mergernet.log'
 
 
 def configure_root_logger():
