@@ -402,7 +402,7 @@ def mag_class_distribution(
   if save is not None:
     plt.savefig(save)
 
-  plt.close(fig)
+  plt.show()
 
 
 
