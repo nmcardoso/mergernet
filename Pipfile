@@ -21,6 +21,9 @@ plotly = "*"
 mw-plot = "*"
 python-magic = "*"
 jinja2 = "*"
+splusdata = "*"
+sciserver = {subdirectory = "py3", git = "https://github.com/sciserver/SciScript-Python.git/"}
+docutils = "*"
 
 [dev-packages]
 numpydoc = "*"
