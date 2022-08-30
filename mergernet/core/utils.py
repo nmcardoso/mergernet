@@ -142,16 +142,19 @@ def find_by_value(d: dict, search: Any):
 
 
 
-def iauname(ra: float, dec: float) -> str:
+def iauname(
+  ra: Union[float, np.ndarray],
+  dec: Union[float, np.ndarray]
+) -> Union[str, List[str]]:
   """
-  Receives the angular position of the object and returns IAU2000 name
+  Receives the angular position(s) of the object(s) and returns IAU2000 name(s)
 
   Parameters
   ----------
-  ra: float
-    The right ascension of the object.
-  dec: float
-    The declination of the object.
+  ra: float or array of float
+    The right ascension of the object(s).
+  dec: float or array of float
+    The declination of the object(s).
 
   Example
   --------
@@ -160,13 +163,13 @@ def iauname(ra: float, dec: float) -> str:
 
   Returns
   -------
-  str
-    The formated IAU name of the object
+  str or list of str
+    The formated IAU name of the object(s)
   """
   coord = SkyCoord(ra=ra*u.degree, dec=dec*u.degree, frame='icrs')
   ra_str = coord.ra.to_string(unit=u.hourangle, sep='', precision=2, pad=True)
   dec_str = coord.dec.to_string(sep='', precision=1, alwayssign=True, pad=True)
-  if isinstance(ra_str, list) or isinstance(ra_str, np.ndarray):
+  if isinstance(ra_str, np.ndarray):
     r = [f'J{_ra_str}{_dec_str}' for _ra_str, _dec_str in zip(ra_str, dec_str)]
   else:
     r = f'J{ra_str}{dec_str}'
