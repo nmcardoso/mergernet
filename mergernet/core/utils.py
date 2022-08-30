@@ -264,6 +264,19 @@ class SingletonMeta(type):
 
 
 def serialize(obj: Any) -> str:
+  """
+  Serializes an object performing type cast depending of the object type
+
+  Parameters
+  ----------
+  obj: Any
+    The object to be serialized
+
+  Returns
+  -------
+  str
+    The serialized object
+  """
   def to_primitive(v):
     if isinstance(v, np.ndarray):
       return v.tolist()
