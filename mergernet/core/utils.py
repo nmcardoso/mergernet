@@ -1,7 +1,7 @@
 import collections.abc
 import json
 from pathlib import Path
-from typing import Any, Sequence, Union
+from typing import Any, Iterable, List, Sequence, Union
 from datetime import datetime, timedelta
 from threading import Lock
 
@@ -14,7 +14,6 @@ from astropy import units as u
 from PIL import Image
 import pandas as pd
 import numpy as np
-import tensorflow as tf
 
 
 
