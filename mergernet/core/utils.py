@@ -318,3 +318,22 @@ def serialize(obj: Any) -> str:
   }
 
   return json.dumps(prepared_obj)
+
+
+
+def heading(msg: str, sep: str = '-'):
+  """
+  Prints a message with a rule bellow with same width of the message
+
+  Parameters
+  ----------
+  msg: str
+    The message string
+  sep: str
+    The rule character
+  """
+  print(msg)
+  print(sep*len(msg))
+
+
+
