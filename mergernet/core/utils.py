@@ -263,6 +263,34 @@ class SingletonMeta(type):
 
 
 
+class CachedDataFrame:
+  """
+  Holds a cached version of a pandas dataframe in memory for later access
+  """
+  _cache = {}
+
+  @classmethod
+  def load(cls, path: Union[str, Path]) -> pd.DataFrame:
+    """
+    Loads a dataframe in memory
+
+    Parameters
+    ----------
+    path: str or Path
+      The path of the dataframe
+
+    Returns
+    -------
+    pd.DataFrame
+      The cached/loaded dataframe
+    """
+    path_str = str(path)
+    if path_str not in cls._cache:
+      cls._cache[path_str] = pd.read_csv(path, comment='#')
+    return cls._cache[path_str]
+
+
+
 def serialize(obj: Any) -> str:
   """
   Serializes an object performing type cast depending of the object type
