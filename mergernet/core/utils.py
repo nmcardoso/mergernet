@@ -337,3 +337,20 @@ def heading(msg: str, sep: str = '-'):
 
 
 
+def not_in(ref: list, comp: list):
+  """
+  Computes elements in ``ref`` that are not in ``comp``
+
+  Parameters
+  ----------
+  ref: list
+    The reference list
+  comp: list
+    The comparison list
+
+  Returns
+  -------
+  list
+    A list containing all elements in ``ref`` that are not in ``comp``
+  """
+  return list(set(ref) - set(comp))
