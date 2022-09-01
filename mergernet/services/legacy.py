@@ -105,17 +105,27 @@ class LegacyService:
     kwargs: optional
       Same args as ``download_legacy_rgb`` function.
     """
-
-    urls = [
-      append_query_params(LEGACY_RGB_URL, {'ra': _ra, 'dec': _dec, **kwargs})
-      for _ra, _dec in zip(ra, dec)
+    params = [
+      {
+        'ra': _ra,
+        'dec': _dec,
+        'save_path': _save_path,
+        'replace': replace,
+        **kwargs
+      }
+      for _ra, _dec, _save_path in zip(ra, dec, save_path)
     ]
-    batch_download_file(
-      urls=urls,
-      save_path=save_path,
+
+    parallel_function_executor(
+      self.download_rgb,
+      params=params,
       workers=workers,
-      replace=replace
+      unit=' files'
     )
+
+    success = [p for p in save_path if p.exists()]
+    error = [p for p in save_path if not p.exists()]
+    return success, error
 
 
 
@@ -127,6 +137,3 @@ if __name__ == '__main__':
     save_path=[Path(f'broca/{i}.jpg') for i in range(20)],
     workers=6
   )
-  # ls.download_legacy_rgb(185.1458, 12.8624, Path('stamps/broca.jpg'))
-  # ls._download_file('https://natanael.net', Path('broca/broca.html'))
-  # print(ls._append_query_params('http://natanael.net?key0=val0', {'key1': 'val1', 'key2': 'val2'}))
