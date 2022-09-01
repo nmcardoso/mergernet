@@ -1,23 +1,25 @@
 from pathlib import Path
-import concurrent.futures
-from typing import Union, List
+from typing import List, Tuple, Union
 
-from tqdm import tqdm
+import requests
 
-from mergernet.services.utils import append_query_params, download_file, batch_download_file
+from mergernet.services.utils import (append_query_params, download_file,
+                                      parallel_function_executor)
 
-
-
-LEGACY_RGB_URL: str = 'https://www.legacysurvey.org/viewer/jpeg-cutout'
 
 
 
 class LegacyService:
+  def __init__(self):
+    self.http_client = requests.Session()
+
+
   def download_rgb(
     self,
     ra: float,
     dec: float,
     save_path: Path,
+    replace: bool = False,
     width: float = 256,
     height: float = 256,
     pixscale: float = 0.27,
@@ -35,6 +37,8 @@ class LegacyService:
       Declination of the object.
     save_path: pathlib.Path
       Path where downloaded file will be stored.
+    replace: bool (optional)
+      Replace file if exists in ``save_path`` location
     width: float (optional)
       Stamp width.
     height: float (optional)
@@ -56,7 +60,13 @@ class LegacyService:
       'bands': bands,
       'layer': layer
     })
-    download_file(image_url, save_path)
+
+    download_file(
+      url=image_url,
+      save_path=save_path,
+      http_client=self.http_client,
+      replace=replace
+    )
 
 
 
