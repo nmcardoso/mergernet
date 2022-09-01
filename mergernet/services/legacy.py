@@ -6,6 +6,9 @@ import requests
 from mergernet.services.utils import (append_query_params, download_file,
                                       parallel_function_executor)
 
+LEGACY_RGB_URL = 'https://www.legacysurvey.org/viewer/jpeg-cutout'
+LEGACY_RGB_URL_DEV = 'https://www.legacysurvey.org/viewer-dev/jpeg-cutout'
+LEGACY_FITS_URL = ''
 
 
 
@@ -24,7 +27,8 @@ class LegacyService:
     height: float = 256,
     pixscale: float = 0.27,
     bands: str = 'grz',
-    layer: str = 'ls-dr9'
+    layer: str = 'ls-dr9',
+    use_dev: bool = False
   ) -> None:
     """
     Downloads a single Legacy Survey object RGB stamp defined by RA and DEC.
@@ -49,9 +53,12 @@ class LegacyService:
       Image bands
     layer: str (optional)
       Legacy Survey image layer.
+    use_dev: bool (optional)
+      Use the dev env of Legacy Cutout API
     """
+    url = LEGACY_RGB_URL_DEV if use_dev else LEGACY_RGB_URL
 
-    image_url = append_query_params(LEGACY_RGB_URL, {
+    image_url = append_query_params(url, {
       'ra': ra,
       'dec': dec,
       'width': width,
