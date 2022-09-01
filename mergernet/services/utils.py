@@ -55,13 +55,14 @@ def download_file(
 
   r = http_client.get(url, allow_redirects=True)
 
-  if extract:
-    file_bytes = bz2.decompress(r.content)
-  else:
-    file_bytes = r.content
+  if r.status_code == 200:
+    if extract:
+      file_bytes = bz2.decompress(r.content)
+    else:
+      file_bytes = r.content
 
-  with open(str(save_path.resolve()), 'wb') as f:
-    f.write(file_bytes)
+    with open(str(save_path.resolve()), 'wb') as f:
+      f.write(file_bytes)
 
 
 
