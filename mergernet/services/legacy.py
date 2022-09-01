@@ -24,7 +24,8 @@ class LegacyService:
     bands: str = 'grz',
     layer: str = 'ls-dr9'
   ) -> None:
-    """Downloads a single Legacy Survey object RGB stamp defined by RA and DEC.
+    """
+    Downloads a single Legacy Survey object RGB stamp defined by RA and DEC.
 
     Parameters
     ----------
@@ -34,15 +35,15 @@ class LegacyService:
       Declination of the object.
     save_path: pathlib.Path
       Path where downloaded file will be stored.
-    width: float
+    width: float (optional)
       Stamp width.
-    height: float
+    height: float (optional)
       Stamp height.
-    pixscale: float
+    pixscale: float (optional)
       Pixel scale of the sky.
-    bands: str
+    bands: str (optional)
       Image bands
-    layer: str
+    layer: str (optional)
       Legacy Survey image layer.
     """
 
@@ -67,23 +68,25 @@ class LegacyService:
     workers: Union[int, None] = None,
     replace: bool = False,
     **kwargs
-  ) -> None:
-    """Downloads a list of objects defined by RA and DEC coordinates.
+  ) -> Tuple[List[Path], List[Path]]:
+    """
+    Downloads a list of objects defined by RA and DEC coordinates.
 
-    `ra`, `dec` and `save_path` lists are mandatory and must have same length.
+    The ``ra``, ``dec`` and ``save_path`` lists are mandatory and
+    must have same length.
 
     Parameters
     ----------
-    ra: list(float)
+    ra: list of float
       The list of RA coordinates of the desired objects.
-    dec: list(float)
+    dec: list of float
       The list of DEC coordinates of the desired objects.
-    save_path: list(Path)
+    save_path: list of Path
       The list of path where files should be saved.
     workers: int, optional
       Maximum spawned threads.
     kwargs: optional
-      Same args as `download_legacy_rgb` function.
+      Same args as ``download_legacy_rgb`` function.
     """
 
     urls = [
