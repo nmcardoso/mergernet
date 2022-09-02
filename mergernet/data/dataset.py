@@ -29,8 +29,8 @@ L = logging.getLogger(__name__)
 
 class Dataset:
   """
-  High-level representation of dataset. This class abstracts all IO operations
-  of the dataset (e.g. download, prepare, split)
+  High-level representation of the dataset. This class abstracts all IO
+  operations of the dataset (e.g. download, prepare, split)
 
   Attributes
   ----------
@@ -40,7 +40,8 @@ class Dataset:
   Parameters
   ----------
   config: DatasetConfig
-    The configuration object of the database get from `Dataset.registry` attribute
+    The configuration object of the database get from `Dataset.registry`
+    attribute
   """
   registry = DatasetRegistry()
 
@@ -89,11 +90,12 @@ class Dataset:
     return self.config.images_path.is_dir() and self.config.table_path.is_file()
 
 
-  def download(self) -> None:
+  def download(self):
     """
     Check if destination path exists, create missing folders and download
     the dataset files from web resource for a specified dataset type.
     """
+    # Download images
     if not self.config.archive_path.parent.exists():
       self.config.archive_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -112,6 +114,7 @@ class Dataset:
       extract=True
     )
 
+    # Download table
     if not self.config.table_path.parent.exists():
       self.config.table_path.parent.mkdir(parents=True, exist_ok=True)
 
