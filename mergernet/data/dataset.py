@@ -66,6 +66,9 @@ class Dataset:
 
 
   def _detect_img_extension(self):
+    """
+    Set X_column_suffix attribute of DatasetConfig to detected image extension
+    """
     self.config.X_column_suffix = next(self.config.images_path.iterdir()).suffix
 
 
@@ -86,7 +89,16 @@ class Dataset:
     return y_int
 
 
-  def is_dataset_downloaded(self):
+  def is_dataset_downloaded(self) -> bool:
+    """
+    Check if dataset files are downloaded locally at
+    ``Experiment.local_shared_path``
+
+    Returns
+    -------
+    bool
+      True if the images dir and the table are found, False otherwise
+    """
     return self.config.images_path.is_dir() and self.config.table_path.is_file()
 
 
@@ -133,6 +145,21 @@ class Dataset:
 
 
   def get_fold(self, fold: int) -> Tuple[tf.data.Dataset, tf.data.Dataset]:
+    """
+    Generates the train and test dataset based on selected fold
+
+    Parameters
+    ----------
+    fold: int
+      The fold which will be used as test, the all other folds will be used as
+      train
+
+    Retruns
+    -------
+    tuple of tf.data.Dataset
+      A tuple containing two datasets, the first is the train dataset and the
+      secound is the test dataset
+    """
     df = pd.read_csv(self.config.table_path)
 
     df_test = df[df[self.config.fold_column] == fold]
