@@ -64,6 +64,8 @@ class Dataset:
     if self.config.detect_img_extension:
       self._detect_img_extension()
 
+    self._weight_map = None
+
 
   def _detect_img_extension(self):
     """
@@ -222,6 +224,9 @@ class Dataset:
 
 
   def compute_class_weight(self) -> dict:
+    if self._weight_map is not None:
+      return self._weight_map
+
     y = pd.read_csv(self.config.table_path)[self.config.y_column].to_numpy()
     if self.config.label_map:
       y = self._discretize_label(y)
@@ -233,6 +238,8 @@ class Dataset:
     weight_map = {}
     for class_, cardinality in zip(classes, cardinalities):
       weight_map[class_] = total / (n * cardinality)
+
+    self._weight_map = weight_map
 
     return weight_map
 
