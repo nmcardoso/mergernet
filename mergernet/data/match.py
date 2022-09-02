@@ -8,7 +8,7 @@ from astropy.coordinates import SkyCoord, match_coordinates_sky
 
 
 
-arcsec = 1. / 3600
+arcsec_in_deg = 1. / 3600
 
 
 
@@ -86,7 +86,7 @@ class CrossMatch:
     df1 = table1.to_df()
     df2 = table2.to_df()
 
-    mask = d < (radius * arcsec)
+    mask = d < (radius * arcsec_in_deg)
 
     primary_idx = mask.nonzero()[0]
     secondary_idx = idx[mask]
@@ -119,7 +119,7 @@ class CrossMatch:
   ):
     idx, d = self.pair_match(table, table, nthneighbor=2)
 
-    mask = d < (radius * arcsec)
+    mask = d < (radius * arcsec_in_deg)
     primary_idx = mask.nonzero()[0]
     secondary_idx = idx[mask]
     removed_idx = []
