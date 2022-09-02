@@ -1,20 +1,14 @@
 import logging
-from types import FunctionType
-from typing import Any, Callable, Dict, Tuple, Union
 from pathlib import Path
+from types import FunctionType
 
 import optuna
-import tensorflow as tf
-import numpy as np
 
 from mergernet.core.constants import RANDOM_SEED
-from mergernet.data.dataset import Dataset
-from mergernet.core.hp import ConstantHyperParameter, HyperParameterSet
 from mergernet.core.experiment import Experiment
-from mergernet.model.callbacks import PruneCallback, SaveCallback
-from mergernet.data.preprocessing import load_jpg, load_png, one_hot_factory
+from mergernet.core.hp import HyperParameterSet
 from mergernet.core.utils import Timming
-
+from mergernet.data.dataset import Dataset
 
 L = logging.getLogger(__name__)
 optuna.logging.disable_default_handler()
