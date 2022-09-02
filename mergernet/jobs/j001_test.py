@@ -1,9 +1,8 @@
+from mergernet.core.experiment import Experiment, experiment_run
 from mergernet.core.hp import HyperParameterSet
 from mergernet.data.dataset import Dataset
-from mergernet.core.experiment import Experiment, experiment_run
 from mergernet.model.automl import optuna_train
 from mergernet.model.baseline import finetune_train
-
 
 hp = [
   {
@@ -58,6 +57,10 @@ hp = [
 
 @experiment_run(1)
 def run():
+  """
+  Experiment created for test purposes. This experiments tests the
+  ``Artifacts API``
+  """
   ds = Dataset(config=Dataset.registry.BIN_SDSS_128)
   optuna_train(
     train_func=finetune_train,

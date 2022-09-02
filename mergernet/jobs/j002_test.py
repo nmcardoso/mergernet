@@ -1,8 +1,7 @@
+from mergernet.core.experiment import backup_model, experiment_run
 from mergernet.core.hp import HyperParameterSet
 from mergernet.data.dataset import Dataset
-from mergernet.core.experiment import backup_model, experiment_run
 from mergernet.model.baseline import finetune_train
-
 
 hps = [
   {
@@ -56,7 +55,17 @@ hps = [
 @experiment_run(2)
 def run():
   """
-  Test the finetune train with constant hyperparameters
+  Test the finetune train with constant hyperparameters of binary
+  classification (merger/non-merger) on Legacy North with RGB images
+
+  Dataset
+  -------
+    - BIN_LEGACY_NORTH_RGB_128: binary dataset merger/non-merger with
+    128x128 RGB stamps of Legacy Survey with 0.55 pixscale
+
+  Train
+  -----
+    - Training baseline model with finetune
   """
   ds = Dataset(config=Dataset.registry.BIN_SDSS_128)
   model = finetune_train(ds, HyperParameterSet(hps))
