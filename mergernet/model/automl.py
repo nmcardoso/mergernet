@@ -9,6 +9,7 @@ from mergernet.core.experiment import Experiment
 from mergernet.core.hp import HyperParameterSet
 from mergernet.core.utils import Timming
 from mergernet.data.dataset import Dataset
+from mergernet.model.callbacks import SaveBestTrialCallback
 
 L = logging.getLogger(__name__)
 optuna.logging.disable_default_handler()
@@ -19,12 +20,13 @@ optuna.logging.enable_propagation()
 def _objective_factory(
   train_func: FunctionType,
   dataset: Dataset,
-  hp: HyperParameterSet
+  hp: HyperParameterSet,
+  callbacks: list = []
 ) -> FunctionType:
   def objective(trial: optuna.trial.FrozenTrial) -> float:
     # run train function
     hp.set_trial(trial)
-    model = train_func(dataset=dataset, hp=hp)
+    model = train_func(dataset=dataset, hp=hp, callbacks=callbacks)
 
     # generating optuna value to optimize (val_accuracy)
     h = model.history.history
@@ -71,8 +73,14 @@ def optuna_train(
     load_if_exists=True
   )
 
+  callbacks = []
+  if save_model:
+    callbacks.append(
+      SaveBestTrialCallback(study, objective_metric, objective_direction, name)
+    )
+
   study.optimize(
-    func=_objective_factory(train_func, dataset, hp),
+    func=_objective_factory(train_func, dataset, hp, callbacks=callbacks),
     n_trials=n_trials
   )
   t.end()

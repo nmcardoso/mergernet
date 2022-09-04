@@ -11,6 +11,7 @@ from mergernet.core.experiment import Experiment
 L = logging.getLogger(__name__)
 
 
+
 class DeltaStopping(tf.keras.callbacks.Callback):
   def __init__(self):
     super(DeltaStopping, self).__init__()
@@ -18,6 +19,7 @@ class DeltaStopping(tf.keras.callbacks.Callback):
   def on_epoch_end(self, epoch, logs=None):
     if (epoch > 2) and (logs['accuracy'] - logs['val_accuracy']) > 0.1:
       self.model.stop_training = True
+
 
 
 class PruneCallback(tf.keras.callbacks.Callback):
@@ -35,15 +37,16 @@ class PruneCallback(tf.keras.callbacks.Callback):
       L.info(f'[PRUNER] trial pruned at epoch {epoch + 1}')
 
 
-class SaveCallback(tf.keras.callbacks.Callback):
+
+class SaveBestTrialCallback(tf.keras.callbacks.Callback):
   def __init__(
     self,
-    name: str,
     study: optuna.study.Study,
     objective_metric: str,
-    objective_direction: str
+    objective_direction: str,
+    name: str = 'model'
   ):
-    super(SaveCallback, self).__init__()
+    super(SaveBestTrialCallback, self).__init__()
     self.name = name
     self.study = study
     self.objective_metric = objective_metric
@@ -62,6 +65,7 @@ class SaveCallback(tf.keras.callbacks.Callback):
       if not save_path.parent.exists():
         save_path.parent.mkdir(parents=True, exist_ok=True)
       self.model.save(save_path, overwrite=True)
+
 
 
 class TelemetryCallback(tf.keras.callbacks.Callback):

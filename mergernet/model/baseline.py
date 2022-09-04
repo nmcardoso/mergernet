@@ -1,23 +1,16 @@
 import logging
-import random
-import os
-from typing import Any, Callable, Dict, Tuple, Union
 from pathlib import Path
+from typing import List, Tuple
 
 import tensorflow as tf
-import numpy as np
-import matplotlib.pyplot as plt
 
 from mergernet.core.constants import RANDOM_SEED
-from mergernet.data.dataset import Dataset
-from mergernet.core.hp import ConstantHyperParameter, HyperParameterSet
 from mergernet.core.experiment import Experiment
-from mergernet.model.callbacks import PruneCallback, SaveBestTrialCallback
-from mergernet.data.preprocessing import load_jpg, load_png, one_hot_factory
+from mergernet.core.hp import HyperParameterSet
 from mergernet.core.utils import Timming
-from mergernet.model.utils import get_conv_arch, set_trainable_state, setup_seeds
-
-
+from mergernet.data.dataset import Dataset
+from mergernet.model.utils import (get_conv_arch, set_trainable_state,
+                                   setup_seeds)
 
 setup_seeds()
 
@@ -26,7 +19,11 @@ L = logging.getLogger(__name__)
 
 
 
-def finetune_train(dataset: Dataset, hp: HyperParameterSet) -> tf.keras.Model:
+def finetune_train(
+  dataset: Dataset,
+  hp: HyperParameterSet,
+  callbacks: List[tf.keras.callbacks.Callback] = None
+) -> tf.keras.Model:
   tf.keras.backend.clear_session()
 
   ds_train, ds_test = dataset.get_fold(0)
@@ -52,13 +49,6 @@ def finetune_train(dataset: Dataset, hp: HyperParameterSet) -> tf.keras.Model:
     hp=hp
   )
   _compile_model(model, tf.keras.optimizers.Adam(hp.get('opt_lr')))
-
-  ckpt_cb = tf.keras.callbacks.ModelCheckpoint(
-    Path(Experiment.local_run_path) / f'model.ckpt.h5',
-    monitor='val_loss',
-    save_best_only=True,
-    mode='min' # 'min' or 'max'
-  )
 
   early_stop_cb = tf.keras.callbacks.EarlyStopping(
     monitor='val_loss',
@@ -92,6 +82,7 @@ def finetune_train(dataset: Dataset, hp: HyperParameterSet) -> tf.keras.Model:
     validation_data=ds_test,
     class_weight=class_weights,
     initial_epoch=len(h1.history),
+    callbacks=callbacks
   )
   L.info(f'End of training loop, duration: {t.end()}.')
 
