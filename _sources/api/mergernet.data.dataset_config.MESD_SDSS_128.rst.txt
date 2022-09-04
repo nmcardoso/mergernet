@@ -1,0 +1,6 @@
+mergernet.data.dataset\_config.MESD\_SDSS\_128
+==============================================
+
+.. currentmodule:: mergernet.data.dataset_config
+
+.. autodata:: MESD_SDSS_128

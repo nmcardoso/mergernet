@@ -1,0 +1,6 @@
+mergernet.model.utils.setup\_seeds
+==================================
+
+.. currentmodule:: mergernet.model.utils
+
+.. autofunction:: setup_seeds

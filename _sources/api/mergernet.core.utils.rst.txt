@@ -17,9 +17,11 @@ mergernet.core.utils
       array_fallback
       deep_update
       find_by_value
+      heading
       iauname
       load_image
       load_table
+      not_in
       save_table
       serialize
       skip_dev
@@ -35,6 +37,7 @@ mergernet.core.utils
       :toctree:
       :template: class-template.rst
    
+      CachedDataFrame
       SingletonMeta
       Timming
    

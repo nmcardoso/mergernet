@@ -1,0 +1,565 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mergernet.data.dataset_config &#8212; MergerNet  documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=9b1a4fa89bdd0e95b23b" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/mergernet/data/dataset_config';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fas fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">MergerNet  documentation</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../reference.html">
+                        API Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../experiments.html">
+                        Experiments
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
+  <i class="fas fa-search"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/nmcardoso" title="Github" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">Github</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          <a href="https://natanael.net" title="Website" class="nav-link" rel="noopener" target="_blank"><span><i class="fas fa-globe"></i></span>
+            <label class="sr-only">Website</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search">
+  <i class="fas fa-search"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fas fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../reference.html">
+                        API Reference
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../experiments.html">
+                        Experiments
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/nmcardoso" title="Github" class="nav-link" rel="noopener" target="_blank"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">Github</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          <a href="https://natanael.net" title="Website" class="nav-link" rel="noopener" target="_blank"><span><i class="fas fa-globe"></i></span>
+            <label class="sr-only">Website</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <h1>Source code for mergernet.data.dataset_config</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">mergernet.services.google</span> <span class="kn">import</span> <span class="n">GDrive</span>
+<span class="kn">from</span> <span class="nn">mergernet.services.sciserver</span> <span class="kn">import</span> <span class="n">SciServer</span>
+
+
+
+<div class="viewcode-block" id="DatasetConfig"><a class="viewcode-back" href="../../../api/mergernet.data.dataset_config.DatasetConfig.html#mergernet.data.dataset_config.DatasetConfig">[docs]</a><span class="k">class</span> <span class="nc">DatasetConfig</span><span class="p">:</span>
+  <span class="sd">&quot;&quot;&quot;Configuration params for dataset.&quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">archive_url</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">table_url</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">archive_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">images_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">table_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">X_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ID&#39;</span><span class="p">,</span>
+    <span class="n">y_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;class&#39;</span><span class="p">,</span>
+    <span class="n">fold_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;fold&#39;</span><span class="p">,</span>
+    <span class="n">X_column_suffix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="c1"># filename extension</span>
+    <span class="n">detect_img_extension</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">label_map</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">image_shape</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">n_classes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">archive_url</span> <span class="o">=</span> <span class="n">archive_url</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">table_url</span> <span class="o">=</span> <span class="n">table_url</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">archive_path</span> <span class="o">=</span> <span class="n">archive_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">images_path</span> <span class="o">=</span> <span class="n">images_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">table_path</span> <span class="o">=</span> <span class="n">table_path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">X_column</span> <span class="o">=</span> <span class="n">X_column</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">y_column</span> <span class="o">=</span> <span class="n">y_column</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fold_column</span> <span class="o">=</span> <span class="n">fold_column</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">X_column_suffix</span> <span class="o">=</span> <span class="n">X_column_suffix</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">detect_img_extension</span> <span class="o">=</span> <span class="n">detect_img_extension</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">label_map</span> <span class="o">=</span> <span class="n">label_map</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">image_shape</span> <span class="o">=</span> <span class="n">image_shape</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span> <span class="o">=</span> <span class="n">n_classes</span></div>
+
+
+
+<span class="n">DARG_NO_INSPECTION</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="c1"># table_url=GDrive.get_url(&#39;1yHnyOdXS-HKzIsbenSi646jyf2AWU9vo&#39;),</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;darg_no_inspection&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1ltKXhZgA4Ab60FGKCqybhebSiAL2LMgG&#39;</span><span class="p">),</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1QgUYkzcjaCmo-kcgM8s2U8PYlx0C58oD&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sdss_lupton_jpg_128.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sdss_lupton_jpg_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;reference_darg.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span>
+  <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+  <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
+  <span class="n">label_map</span><span class="o">=</span><span class="p">{</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="mi">2</span> <span class="p">},</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+  <span class="n">n_classes</span><span class="o">=</span><span class="mi">3</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Default configuration object for RGB dataset.&quot;&quot;&quot;</span>
+
+<span class="n">MESD_SDSS_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mesd_sdss_128&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1YZ7A9rVglf5NJp27rW8-6aJXBfBNPfYv&#39;</span><span class="p">),</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_sdss_128.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_sdss_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
+  <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+  <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
+  <span class="n">label_map</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;merger&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;elliptical&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;spiral&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;disturbed&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+  <span class="n">n_classes</span><span class="o">=</span><span class="mi">4</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;MESD dataset with SDSS 128x128 images.&quot;&quot;&quot;</span>
+
+<span class="n">MESD_LEGACY_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mesd_legacy_128&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1cTU0SVEv3qVeVxF7pzhtOP7S-bx5cPOP&#39;</span><span class="p">),</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_legacy_128.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_legacy_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
+  <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+  <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
+  <span class="n">label_map</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;merger&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;elliptical&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;spiral&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;disturbed&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+  <span class="n">n_classes</span><span class="o">=</span><span class="mi">4</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;MESD dataset with Legacy Survey 128x128 images.&quot;&quot;&quot;</span>
+
+<span class="n">BIN_SDSS_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;bin_sdss_128&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1pZqGs6xG12Od-g3rnXEOyJ40LPAPu0J2&#39;</span><span class="p">),</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1N-o1N3dYjJRaU4Nu9ZC0j2OHXzhbwYgl&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_sdss_128.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_sdss_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_sdss.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
+  <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+  <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
+  <span class="n">label_map</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;non_merger&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;merger&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+  <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Binary dataset (merger and non-merger) with SDSS 128x128 images.&quot;&quot;&quot;</span>
+
+<span class="n">BLIND_SPLUS_LUPTON_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;blind_splus_lupton_128&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;gdrive&#39;</span><span class="p">:</span> <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1TktT_u_NTqyBPKq5KG8hW0TVYhZe6Q3r&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;sciserver&#39;</span><span class="p">:</span> <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;28d96731-35d9-4eac-bdee-7ccb81c5456d&#39;</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1qd0lxMf2WzPF8bW0NciX1wwfa_mrS0Om&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_128.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_lupton.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Blind dataset with S-PLUS 128x128 Lupton images.&quot;&quot;&quot;</span>
+
+<span class="n">BLIND_SPLUS_LUPTON_150</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;blind_splus_lupton_150&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;gdrive&#39;</span><span class="p">:</span> <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1qERSsv9W4d2ICyKlvhhPaR7a2j6W5HrD&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;sciserver&#39;</span><span class="p">:</span> <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;946b0d5c-741e-463a-bdbc-4a04313c00c7&#39;</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1qd0lxMf2WzPF8bW0NciX1wwfa_mrS0Om&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_150.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_150&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_lupton.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Blind dataset with S-PLUS 150x150 Lupton images.&quot;&quot;&quot;</span>
+
+<span class="n">BLIND_SPLUS_TRILOGY_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;blind_splus_trilogy_128&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;gdrive&#39;</span><span class="p">:</span> <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1lPvOtE6HCJ7Xi5hAGfjgvrfwGiLRT7uH&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;sciserver&#39;</span><span class="p">:</span> <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;4fe38e2a-c1db-4cd3-92ec-1c2c5b2c5284&#39;</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_128.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_trilogy.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Blind dataset with S-PLUS 128x128 Trilogy images.&quot;&quot;&quot;</span>
+
+<span class="n">BLIND_SPLUS_TRILOGY_150</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;blind_splus_trilogy_150&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;gdrive&#39;</span><span class="p">:</span> <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1aiLtmbrJSRQTmSB3XP1AqXi0tfUi3S-H&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;sciserver&#39;</span><span class="p">:</span> <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;74ca0cba-6c9e-4022-95b8-9d7964d70947&#39;</span><span class="p">),</span>
+  <span class="p">},</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_150.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_150&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_trilogy.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Blind dataset with S-PLUS 150x150 Trilogy images.&quot;&quot;&quot;</span>
+
+<span class="n">BIN_LEGACY_NORTH_RGB_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;bin_legacy_north_rgb_128&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">{</span>
+    <span class="s1">&#39;sciserver&#39;</span><span class="p">:</span> <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;f0332ec2-a3c8-4d62-9a19-5d1e4063a7ed&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;gdrive&#39;</span><span class="p">:</span> <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1eyumx1QCfXVTzPtdaKT67REl3XEo03eS&#39;</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1oybZ9zcRX8670bDtpRmI3j_VzYY30ldI&#39;</span><span class="p">),</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_legacy_north_rgb_128.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_legacy_north_rgb_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_legacy_north.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;Binary dataset (merger and non-merger) with Legacy 128x128 RGB images on north sky.&quot;&quot;&quot;</span>
+
+
+
+<div class="viewcode-block" id="DatasetRegistry"><a class="viewcode-back" href="../../../api/mergernet.data.dataset_config.DatasetRegistry.html#mergernet.data.dataset_config.DatasetRegistry">[docs]</a><span class="k">class</span> <span class="nc">DatasetRegistry</span><span class="p">:</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  A registry for all datasets</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">DARG_NO_INSPECTION</span> <span class="o">=</span> <span class="n">DARG_NO_INSPECTION</span>
+  <span class="n">MESD_SDSS_128</span> <span class="o">=</span> <span class="n">MESD_SDSS_128</span>
+  <span class="n">MESD_LEGACY_128</span> <span class="o">=</span> <span class="n">MESD_LEGACY_128</span>
+  <span class="n">BIN_SDSS_128</span> <span class="o">=</span> <span class="n">BIN_SDSS_128</span>
+  <span class="n">BLIND_SPLUS_LUPTON_128</span> <span class="o">=</span> <span class="n">BLIND_SPLUS_LUPTON_128</span>
+  <span class="n">BLIND_SPLUS_LUPTON_150</span> <span class="o">=</span> <span class="n">BLIND_SPLUS_LUPTON_150</span>
+  <span class="n">BLIND_SPLUS_TRILOGY_128</span> <span class="o">=</span> <span class="n">BLIND_SPLUS_TRILOGY_128</span>
+  <span class="n">BLIND_SPLUS_TRILOGY_150</span> <span class="o">=</span> <span class="n">BLIND_SPLUS_TRILOGY_150</span>
+  <span class="n">BIN_LEGACY_NORTH_RGB_128</span> <span class="o">=</span> <span class="n">BIN_LEGACY_NORTH_RGB_128</span></div>
+</pre></div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=9b1a4fa89bdd0e95b23b"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022, Natanael M. Cardoso.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

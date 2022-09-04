@@ -1,0 +1,6 @@
+mergernet.data.dataset\_config.BIN\_LEGACY\_NORTH\_RGB\_128
+===========================================================
+
+.. currentmodule:: mergernet.data.dataset_config
+
+.. autodata:: BIN_LEGACY_NORTH_RGB_128

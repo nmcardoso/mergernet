@@ -1,6 +1,0 @@
-mergernet.data.dataset.BIN\_SDSS\_128
-=====================================
-
-.. currentmodule:: mergernet.data.dataset
-
-.. autodata:: BIN_SDSS_128

@@ -1,6 +1,0 @@
-mergernet.data.dataset.BLIND\_SPLUS\_TRILOGY\_150
-=================================================
-
-.. currentmodule:: mergernet.data.dataset
-
-.. autodata:: BLIND_SPLUS_TRILOGY_150

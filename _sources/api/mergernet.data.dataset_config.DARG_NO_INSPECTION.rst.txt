@@ -1,0 +1,6 @@
+mergernet.data.dataset\_config.DARG\_NO\_INSPECTION
+===================================================
+
+.. currentmodule:: mergernet.data.dataset_config
+
+.. autodata:: DARG_NO_INSPECTION

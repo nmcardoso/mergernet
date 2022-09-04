@@ -1,0 +1,31 @@
+mergernet.data.dataset\_config.DatasetRegistry
+==============================================
+
+.. currentmodule:: mergernet.data.dataset_config
+
+.. autoclass:: DatasetRegistry
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~DatasetRegistry.BIN_LEGACY_NORTH_RGB_128
+      ~DatasetRegistry.BIN_SDSS_128
+      ~DatasetRegistry.BLIND_SPLUS_LUPTON_128
+      ~DatasetRegistry.BLIND_SPLUS_LUPTON_150
+      ~DatasetRegistry.BLIND_SPLUS_TRILOGY_128
+      ~DatasetRegistry.BLIND_SPLUS_TRILOGY_150
+      ~DatasetRegistry.DARG_NO_INSPECTION
+      ~DatasetRegistry.MESD_LEGACY_128
+      ~DatasetRegistry.MESD_SDSS_128
+   
+   

@@ -1,0 +1,6 @@
+mergernet.data.dataset\_config.MESD\_LEGACY\_128
+================================================
+
+.. currentmodule:: mergernet.data.dataset_config
+
+.. autodata:: MESD_LEGACY_128

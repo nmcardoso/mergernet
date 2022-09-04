@@ -1,0 +1,17 @@
+mergernet.data.sanitization.DatasetSanitization
+===============================================
+
+.. currentmodule:: mergernet.data.sanitization
+
+.. autoclass:: DatasetSanitization
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   
