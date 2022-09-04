@@ -58,7 +58,7 @@ def optuna_train(
 
   L.info(f'start of optuna optimization')
 
-  optuna_path = Path(Experiment.local_artifact_path) / 'optuna.sqlite'
+  optuna_path = Path(Experiment.local_run_path) / 'optuna.sqlite'
   optuna_uri = f'sqlite:///{str(optuna_path.resolve())}' # absolute path
 
   t = Timming()

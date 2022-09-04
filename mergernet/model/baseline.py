@@ -12,7 +12,7 @@ from mergernet.core.constants import RANDOM_SEED
 from mergernet.data.dataset import Dataset
 from mergernet.core.hp import ConstantHyperParameter, HyperParameterSet
 from mergernet.core.experiment import Experiment
-from mergernet.model.callbacks import PruneCallback, SaveCallback
+from mergernet.model.callbacks import PruneCallback, SaveBestTrialCallback
 from mergernet.data.preprocessing import load_jpg, load_png, one_hot_factory
 from mergernet.core.utils import Timming
 from mergernet.model.utils import get_conv_arch, set_trainable_state, setup_seeds
@@ -54,7 +54,7 @@ def finetune_train(dataset: Dataset, hp: HyperParameterSet) -> tf.keras.Model:
   _compile_model(model, tf.keras.optimizers.Adam(hp.get('opt_lr')))
 
   ckpt_cb = tf.keras.callbacks.ModelCheckpoint(
-    Path(Experiment.local_artifact_path) / f'model.ckpt.h5',
+    Path(Experiment.local_run_path) / f'model.ckpt.h5',
     monitor='val_loss',
     save_best_only=True,
     mode='min' # 'min' or 'max'
