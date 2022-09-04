@@ -1,11 +1,12 @@
-from typing import Union
-from pathlib import Path
-from datetime import datetime
-from time import strftime, gmtime
-import sys
-import shutil
 import json
+import shutil
+import sys
+from datetime import datetime
+from pathlib import Path
+from time import gmtime, strftime
+from typing import Union
 
+from docutils.core import publish_parts
 from jinja2 import Environment, PackageLoader, select_autoescape
 
 from mergernet.core.constants import DATA_ROOT, ENV, PROJECT_ROOT
@@ -63,17 +64,17 @@ def render_index(source: Path, dest: Path, order: str, kind: str):
   dest: Path
     The path where the file will be saved
   order: str
-    The order of the list (`mumerical` or `date`)
+    The order of the list (``mumerical`` or ``date``)
   kind: str
-    The type of index (`experiment` or `run`)
+    The type of index (``exp`` or ``run``)
   """
-  if kind == 'experiment':
+  if kind == 'exp':
     title = 'Experiment'
-    metadata_glob = '/**/metadata.json'
+    run_metadata_glob = '/**/metadata.json'
     template = 'index.html.j2'
   else:
     title = 'Run'
-    metadata_glob = '/metadata.json'
+    run_metadata_glob = '/metadata.json'
     template = 'experiment.html.j2'
 
   dirs = [p for p in source.glob('*') if p.is_dir()]
@@ -81,7 +82,7 @@ def render_index(source: Path, dest: Path, order: str, kind: str):
   for d in dirs:
     metas = [
       json.loads(p.read_text(encoding='utf-8'))
-      for p in source.glob(f'{d.stem}{metadata_glob}')
+      for p in source.glob(f'{d.stem}{run_metadata_glob}')
     ]
 
     if len(metas) == 0:
@@ -90,7 +91,7 @@ def render_index(source: Path, dest: Path, order: str, kind: str):
 
     metas_sorted = sorted(
       metas,
-      key=lambda m: m['end_time'],
+      key=lambda m: m.get('end_time', -999),
       reverse=True
     )
     ts = metas_sorted[0]['end_time']
@@ -112,11 +113,23 @@ def render_index(source: Path, dest: Path, order: str, kind: str):
     for d, ts in zip(dirs, latest_ts)
   ]
 
+  exp_meta = {}
+  if kind == 'run':
+    exp_meta_path = source / 'metadata.json'
+    if exp_meta_path.exists():
+      exp_meta = json.loads(exp_meta_path.read_text(encoding='utf-8'))
+      if 'exp_desc' in exp_meta:
+        html_desc = publish_parts(
+          exp_meta['exp_desc'], writer_name='html'
+        )['html_body']
+        exp_meta['exp_desc'] = html_desc
+
   render_page(
     output_path=dest,
     template=template,
     items=items,
-    exp_id=source.stem
+    exp_id=source.stem,
+    exp_meta=exp_meta
   )
 
 
@@ -162,7 +175,7 @@ def render_report(source: Path, dest: Path):
 
 
 
-def render(source: Path, dest: Path):
+def render(source: Union[str, Path], dest: Union[str, Path]):
   source = Path(source)
   dest = Path(dest)
 
@@ -170,8 +183,8 @@ def render(source: Path, dest: Path):
     shutil.rmtree(dest)
   dest.mkdir(parents=True, exist_ok=True)
 
-  render_index(source, dest / 'index.html', 'numerical', 'experiment') # /index.html
-  render_index(source, dest / 'date.html', 'date', 'experiment') # /date.html
+  render_index(source, dest / 'index.html', 'numerical', 'exp') # /index.html
+  render_index(source, dest / 'date.html', 'date', 'exp') # /date.html
 
   for s in source.glob('*'):
     render_index(s, dest / s.name / 'index.html', 'date', 'run') # 2/index.html

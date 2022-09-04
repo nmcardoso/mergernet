@@ -6,5 +6,12 @@
 
 {% block content %}
   {{ macros.breadcrumb(base_url, [{'title': 'Experiment {}'.format(exp_id)}]) }}
+
+  {% if exp_meta.exp_desc %}
+  <div class="py-2">
+    {{ exp_meta.exp_desc|safe }}
+  </div>
+  {%- endif %}
+
   {{ macros.run_list(items) }}
 {% endblock %}
