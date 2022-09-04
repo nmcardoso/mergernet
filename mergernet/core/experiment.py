@@ -1,31 +1,41 @@
 import functools
-import json
-import secrets
 import logging
+import secrets
+import tempfile
+from inspect import getdoc
+from io import StringIO
 from pathlib import Path
-from typing import Any
 from time import time
+from types import FunctionType
+from typing import Any
 
+import numpy as np
+import pandas as pd
 import tensorflow as tf
 
-from mergernet.core.utils import SingletonMeta, serialize
 from mergernet.core.constants import DATA_ROOT, ENV
-from mergernet.services.google import GDrive
+from mergernet.core.utils import SingletonMeta, serialize
 from mergernet.services.github import GithubService
-
+from mergernet.services.google import GDrive
 
 L = logging.getLogger(__name__)
 
 
 DEV_LOCAL_SHARED_PATTERN = str(DATA_ROOT) + '/dev_workspace/shared_data/'
-DEV_LOCAL_ARTIFACT_PATTERN = str(DATA_ROOT) + '/dev_workspace/experiments/{exp_id}/{run_id}/'
-DEV_GH_ARTIFACT_PATTERN = 'dev_experiments/{exp_id}/{run_id}/'
-DEV_GD_ARTIFACT_PATTERN = str(DATA_ROOT) + '/dev_workspace/drive/MyDrive/mergernet/experiments/{exp_id}/{run_id}/'
+DEV_LOCAL_EXP_PATTERN = str(DATA_ROOT) + '/dev_workspace/experiments/{exp_id}/'
+DEV_LOCAL_RUN_PATTERN = str(DATA_ROOT) + '/dev_workspace/experiments/{exp_id}/{run_id}/'
+DEV_GH_EXP_PATTERN = 'dev_experiments/{exp_id}/'
+DEV_GH_RUN_PATTERN = 'dev_experiments/{exp_id}/{run_id}/'
+DEV_GD_EXP_PATTERN = str(DATA_ROOT) + '/dev_workspace/drive/MyDrive/mergernet/experiments/{exp_id}/'
+DEV_GD_RUN_PATTERN = str(DATA_ROOT) + '/dev_workspace/drive/MyDrive/mergernet/experiments/{exp_id}/{run_id}/'
 
 LOCAL_SHARED_PATTERN = 'shared_data/'
-LOCAL_ARTIFACT_PATTERN = 'experiments/{exp_id}/{run_id}/'
-GH_ARTIFACT_PATTERN = 'experiments/{exp_id}/{run_id}/'
-GD_ARTIFACT_PATTERN = 'drive/MyDrive/mergernet/experiments/{exp_id}/{run_id}/'
+LOCAL_EXP_PATTERN = 'experiments/{exp_id}/'
+LOCAL_RUN_PATTERN = 'experiments/{exp_id}/{run_id}/'
+GH_EXP_PATTERN = 'experiments/{exp_id}/'
+GH_RUN_PATTERN = 'experiments/{exp_id}/{run_id}/'
+GD_EXP_PATTERN = 'drive/MyDrive/mergernet/experiments/{exp_id}/'
+GD_RUN_PATTERN = 'drive/MyDrive/mergernet/experiments/{exp_id}/{run_id}/'
 
 
 
@@ -38,23 +48,35 @@ def experiment_run(exp_id: int):
   exp_id: int
     The human-readable experiment id
   """
-  def decorator(func):
+  def decorator(func: FunctionType):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
       # clear previous log
-      log_path = Path('/tmp/mergernet.log')
+      log_path = Path(tempfile.gettempdir()) / 'mergernet.log'
       open(log_path, 'w').close()
 
       # create new experiment
-      Experiment.create(exp_id)
+      exp_desc = getdoc(func)
+      Experiment.create(exp_id=exp_id, exp_desc=exp_desc)
 
       # track times and execute function
       start_time = int(time())
       func(*args, **kwargs)
       end_time = int(time())
 
-      # post-execution oprations: logs and metadata upload
-      metadata = {
+      # post-execution oprations:
+      # 1. experiment metadata upload
+      exp_metadata = {
+        'exp_id': Experiment.exp_id,
+        'exp_desc': Experiment.exp_desc
+      }
+      Experiment.upload_file_gh('metadata.json', exp_metadata, scope='exp')
+
+      # 2. logs upload
+      Experiment.upload_file_gh(str(log_path))
+
+      # 3. run metadata upload
+      run_metadata = {
         'start_time': start_time,
         'end_time': end_time,
         'duration': end_time - start_time,
@@ -62,8 +84,7 @@ def experiment_run(exp_id: int):
         'run_id': Experiment.run_id,
         'notes': Experiment.notes
       }
-      Experiment.upload_file_gh(str(log_path))
-      Experiment.upload_file_gh('metadata.json', metadata)
+      Experiment.upload_file_gh('metadata.json', run_metadata)
     return wrapper
   return decorator
 
@@ -110,11 +131,19 @@ def backup_model(
     test_preds = {'X': X.tolist(), 'preds': test_preds.tolist()}
     Experiment.upload_file_gh('test_preds.json', test_preds)
 
+    df = pd.read_csv(dataset.config.table_path)
+    x_col_name = dataset.config.X_column
+    df = df.set_index(x_col_name).loc[X].reset_index(inplace=False)
+    for label, index in dataset.config.label_map.items():
+      y_hat = [pred[index] for pred in test_preds]
+      df[f'prob_{label}'] = y_hat
+    Experiment.upload_file_gh('test_preds_fold_0.csv', df)
+
   if save_dataset_config:
     Experiment.upload_file_gh('dataset_config.json', dataset.config.__dict__)
 
   if save_model:
-    model.save(Path(Experiment.gd_artifact_path) / 'model.h5')
+    model.save(Path(Experiment.gd_run_path) / 'model.h5')
 
 
 
@@ -160,14 +189,14 @@ class Experiment(metaclass=SingletonMeta):
   exp_id = None
   run_id = None
   local_shared_path = None
-  local_artifact_path = None
-  gh_artifact_path = None
-  gd_artifact_path = None
+  local_run_path = None
+  gh_run_path = None
+  gd_run_path = None
   notes = None
 
 
   @classmethod
-  def create(cls, exp_id: int):
+  def create(cls, exp_id: int, exp_desc: str = ''):
     """
     Creates a new experiment, configuring the experiment identifiers
     and file system to store the files needed (e.g. dataset) and the files
@@ -177,28 +206,38 @@ class Experiment(metaclass=SingletonMeta):
     ----------
     exp_id: int
       Experiment identifier, the same as entrypoint file
+    exp_desc: str
+      Experiment description
     """
+    cls.exp_desc = exp_desc
     cls.exp_id = exp_id
     cls.run_id = secrets.token_hex(4)
-    params = dict(exp_id=cls.exp_id, run_id=cls.run_id)
+    exp_params = dict(exp_id=cls.exp_id)
+    run_params = dict(exp_id=cls.exp_id, run_id=cls.run_id)
     if ENV == 'dev':
-      cls.local_shared_path = DEV_LOCAL_SHARED_PATTERN.format(**params)
-      cls.local_artifact_path = DEV_LOCAL_ARTIFACT_PATTERN.format(**params)
-      cls.gh_artifact_path = DEV_GH_ARTIFACT_PATTERN.format(**params)
-      cls.gd_artifact_path = DEV_GD_ARTIFACT_PATTERN.format(**params)
+      cls.local_shared_path = DEV_LOCAL_SHARED_PATTERN.format(**run_params)
+      cls.local_exp_path = DEV_LOCAL_EXP_PATTERN.format(**exp_params)
+      cls.local_run_path = DEV_LOCAL_RUN_PATTERN.format(**run_params)
+      cls.gh_exp_path = DEV_GH_EXP_PATTERN.format(**exp_params)
+      cls.gh_run_path = DEV_GH_RUN_PATTERN.format(**run_params)
+      cls.gd_exp_path = DEV_GD_EXP_PATTERN.format(**exp_params)
+      cls.gd_run_path = DEV_GD_RUN_PATTERN.format(**run_params)
     else:
-      cls.local_shared_path = LOCAL_SHARED_PATTERN.format(**params)
-      cls.local_artifact_path = LOCAL_ARTIFACT_PATTERN.format(**params)
-      cls.gh_artifact_path = GH_ARTIFACT_PATTERN.format(**params)
-      cls.gd_artifact_path = GD_ARTIFACT_PATTERN.format(**params)
+      cls.local_shared_path = LOCAL_SHARED_PATTERN.format(**run_params)
+      cls.local_exp_path = LOCAL_EXP_PATTERN.format(**exp_params)
+      cls.local_run_path = LOCAL_RUN_PATTERN.format(**run_params)
+      cls.gh_exp_path = GH_EXP_PATTERN.format(**exp_params)
+      cls.gh_run_path = GH_RUN_PATTERN.format(**run_params)
+      cls.gd_exp_path = GD_EXP_PATTERN.format(**exp_params)
+      cls.gd_run_path = GD_RUN_PATTERN.format(**run_params)
     Path(cls.local_shared_path).mkdir(parents=True, exist_ok=True)
-    Path(cls.local_artifact_path).mkdir(parents=True, exist_ok=True)
-    Path(cls.gd_artifact_path).mkdir(parents=True, exist_ok=True)
+    Path(cls.local_run_path).mkdir(parents=True, exist_ok=True)
+    Path(cls.gd_run_path).mkdir(parents=True, exist_ok=True)
     cls._exp_created = True
 
 
   @classmethod
-  def upload_file_gh(cls, fname: str, data: Any = None):
+  def upload_file_gh(cls, fname: str, data: Any = None, scope: str = 'run'):
     """
     Uploads a file to github artifacts repo inside `gh_artifact_path`
 
@@ -212,11 +251,20 @@ class Experiment(metaclass=SingletonMeta):
       the data of the file with same name as `fname` inside the
       `local_artifact_path` folder. If specified, it can be a json serializable
       python object or the bytes of the file.
+
+    scope: str, optional
+      The scope (or folder) that the artifact will be uploaded. Can be one of:
+      ``run`` or ``exp``. The ``run`` scope uploads the file to the run
+      folder and the ``exp`` scope uploads the file to the experiment folder
+      (the parent of the run folder)
     """
     if not cls._exp_created: raise ValueError('Experiment must be created')
+
     from_path = Path(fname) if fname.startswith('/') else \
-                Path(cls.local_artifact_path) / fname
-    to_path = cls.gh_artifact_path + from_path.name
+                Path(cls.local_run_path) / fname
+    base_to_path = cls.gh_run_path if scope == 'run' else cls.gh_exp_path
+    to_path = base_to_path + from_path.name
+
     gh = GithubService()
 
     if data is None:
@@ -224,6 +272,11 @@ class Experiment(metaclass=SingletonMeta):
         gh.commit(to_path, data=fp.read(), from_bytes=True)
     elif type(data) == str:
       gh.commit(to_path, data=data, from_bytes=False)
+    elif isinstance(data, pd.DataFrame):
+      buffer = StringIO()
+      data.to_csv(buffer, index=False)
+      buffer.seek(0)
+      gh.commit(to_path, data=buffer, from_bytes=True)
     else:
       gh.commit(to_path, data=serialize(data), from_bytes=False)
 
@@ -248,15 +301,15 @@ class Experiment(metaclass=SingletonMeta):
     exp_id = exp_id or cls.exp_id
     run_id = run_id or cls.run_id
 
-    to_path = Path(cls.local_artifact_path) / fname
-    from_path = GH_ARTIFACT_PATTERN.format(exp_id=exp_id, run_id=run_id)
+    to_path = Path(cls.local_run_path) / fname
+    from_path = GH_RUN_PATTERN.format(exp_id=exp_id, run_id=run_id)
 
     gh = GithubService()
     gh.download(remote_path=from_path, dest_path=to_path)
 
 
   @classmethod
-  def upload_file_gd(cls, fname: str, data: Any = None):
+  def upload_file_gd(cls, fname: str, data: Any = None, scope: str = 'run'):
     """
     Uploads a file to google drive inside `gd_artifact_path`
 
@@ -272,8 +325,11 @@ class Experiment(metaclass=SingletonMeta):
       python object or the bytes of the file.
     """
     if not cls._exp_created: raise ValueError('Experiment must be created')
-    from_path = Path(cls.local_artifact_path) / fname
-    to_path = Path(cls.gd_artifact_path) / fname
+
+    from_path = Path(cls.local_run_path) / fname
+    base_to_path = cls.gd_run_path if scope == 'run' else cls.gd_exp_path
+    to_path = base_to_path / fname
+
     gd = GDrive()
 
     if data is None:
@@ -288,4 +344,4 @@ class Experiment(metaclass=SingletonMeta):
 
 
 if __name__ == '__main__':
-  print(DEV_LOCAL_ARTIFACT_PATTERN)
+  print(DEV_LOCAL_RUN_PATTERN)
