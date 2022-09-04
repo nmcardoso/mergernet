@@ -1,9 +1,9 @@
-mergernet.model.callbacks.SaveCallback
-======================================
+mergernet.model.callbacks.SaveBestTrialCallback
+===============================================
 
 .. currentmodule:: mergernet.model.callbacks
 
-.. autoclass:: SaveCallback
+.. autoclass:: SaveBestTrialCallback
    :members:
    :private-members:
    :undoc-members:

@@ -21,7 +21,7 @@ mergernet.model.callbacks
    
       DeltaStopping
       PruneCallback
-      SaveCallback
+      SaveBestTrialCallback
       TelemetryCallback
    
    
