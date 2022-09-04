@@ -23,11 +23,13 @@ def download(df, img_folder, ra='ra', dec='dec'):
     ra=df[ra].to_numpy(),
     dec=df[dec].to_numpy(),
     save_path=paths,
-    workers=10,
+    workers=4,
     replace=False,
     width=128,
     height=128,
-    pixscale=0.55
+    pixscale=0.55,
+    use_dev=True,
+    layer='ls-dr10-early-grz'
   )
 
 # gz2
@@ -44,6 +46,6 @@ def download(df, img_folder, ra='ra', dec='dec'):
 # df = gzauto[gzauto['spiral-arm-count_1_debiased'] > 0.6]
 
 # mesd
-df = pd.read_csv('../data/mesd.csv')
+df = pd.read_csv('../data/blind_splus_gal80_r13.5-17.csv')
 
-download(df, '../data/images/legacy_mesd_128', 'ra', 'dec')
+download(df, '../data/images/blind_splus_gal80_r13.5-17_ls10_rgb_128', 'RA', 'DEC')
