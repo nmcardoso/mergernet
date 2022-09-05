@@ -191,7 +191,10 @@ BIN_LEGACY_NORTH_RGB_128 = DatasetConfig(
   image_shape=(128, 128, 3),
   n_classes=2
 )
-"""Binary dataset (merger and non-merger) with Legacy 128x128 RGB images on north sky."""
+"""
+Binary dataset (merger and non-merger) with Legacy 128x128 RGB images
+on north sky with of pixscale 0.55 arcsec/pixel.
+"""
 
 
 class DatasetRegistry:

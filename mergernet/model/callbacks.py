@@ -72,10 +72,12 @@ class SaveBestTrialCallback(tf.keras.callbacks.Callback):
       Experiment.register_artifact(f'{self.name}.h5', 'gdrive')
 
       # save history as csv
-      hist = self.model.history.history.copy()
-      hist['epoch'] = range(len(hist['loss']))
+      hist = {
+        'epoch': range(len(hist['loss'])),
+        **self.model.history.history
+      }
       hist_df = pd.DataFrame(hist)
-      save_path = Path(Experiment.local_run_path) / f'history_{self.name}.json'
+      save_path = Path(Experiment.local_run_path) / f'history_{self.name}.csv'
       hist_df.to_csv(save_path, index=False)
       L.info(f'History saved in {str(save_path)}')
       Experiment.register_artifact(f'history_{self.name}.json', 'github')

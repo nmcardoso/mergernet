@@ -294,7 +294,6 @@ class Experiment(metaclass=SingletonMeta):
     elif isinstance(data, pd.DataFrame):
       buffer = BytesIO()
       data.to_csv(buffer, index=False)
-      # buffer.seek(0)
       gh.commit(to_path, data=buffer.getbuffer(), from_bytes=True)
     else:
       gh.commit(to_path, data=serialize(data), from_bytes=False)
@@ -404,6 +403,7 @@ class Experiment(metaclass=SingletonMeta):
       'name': fname,
       'service': service
     })
+    L.info(f'New artifact registered. name: {fname}, service: {service}')
 
 
   @classmethod
