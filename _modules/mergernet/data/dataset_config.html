@@ -294,7 +294,6 @@
 <span class="kn">from</span> <span class="nn">mergernet.services.sciserver</span> <span class="kn">import</span> <span class="n">SciServer</span>
 
 
-
 <div class="viewcode-block" id="DatasetConfig"><a class="viewcode-back" href="../../../api/mergernet.data.dataset_config.DatasetConfig.html#mergernet.data.dataset_config.DatasetConfig">[docs]</a><span class="k">class</span> <span class="nc">DatasetConfig</span><span class="p">:</span>
   <span class="sd">&quot;&quot;&quot;Configuration params for dataset.&quot;&quot;&quot;</span>
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -475,10 +474,13 @@
   <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_legacy_north.csv&#39;</span><span class="p">),</span>
   <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
   <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
-  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+  <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+  <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
+  <span class="n">label_map</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;non-merger&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;merger&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+  <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span>
 <span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;Binary dataset (merger and non-merger) with Legacy 128x128 RGB images on north sky.&quot;&quot;&quot;</span>
-
 
 
 <div class="viewcode-block" id="DatasetRegistry"><a class="viewcode-back" href="../../../api/mergernet.data.dataset_config.DatasetRegistry.html#mergernet.data.dataset_config.DatasetRegistry">[docs]</a><span class="k">class</span> <span class="nc">DatasetRegistry</span><span class="p">:</span>
