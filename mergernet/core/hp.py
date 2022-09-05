@@ -4,29 +4,18 @@ import optuna
 
 
 class HyperParameter:
+  def __init__(self):
+    self._trial = None
+    self.attrs = {}
+
+  def set_attr(self, key, value):
+    self.attrs[key] = value
+
   def set_trial(self, trial: optuna.trial.FrozenTrial):
     self._trial = trial
 
-
   def suggest(self, trial: optuna.trial.FrozenTrial = None):
-    if isinstance(self, ConstantHyperParameter):
-      return self.value
-
-    _trial = trial or self._trial
-    if isinstance(self, CategoricalHyperParameter):
-      fn = _trial.suggest_categorical
-    elif isinstance(self, FloatHyperParameter):
-      fn = _trial.suggest_float
-    elif isinstance(self, IntHyperParameter):
-      fn = _trial.suggest_int
-
-    filtered_args = {
-      k: v for k, v in self.__dict__.items()
-      if not k.startswith('_')
-    }
-
-    return fn(**filtered_args)
-
+    pass
 
   @staticmethod
   def from_dict(params: dict):
@@ -45,8 +34,13 @@ class HyperParameter:
 
 class CategoricalHyperParameter(HyperParameter):
   def __init__(self, name: str, choices: Sequence):
-    self.name = name
-    self.choices = choices
+    super(CategoricalHyperParameter, self).__init__()
+    self.set_attr('name', name)
+    self.set_attr('choices', choices)
+
+  def suggest(self, trial: optuna.trial.FrozenTrial) -> Any:
+    _trial = trial or self._trial
+    return _trial.suggest_categorical(**self.attrs)
 
 
 
@@ -59,11 +53,16 @@ class FloatHyperParameter(HyperParameter):
     step: float = None,
     log: bool = False
   ):
-    self.name = name
-    self.low = low
-    self.high = high
-    self.step = step
-    self.log = log
+    super(FloatHyperParameter, self).__init__()
+    self.set_attr('name', name)
+    self.set_attr('low', low)
+    self.set_attr('high', high)
+    self.set_attr('step', step)
+    self.set_attr('log', log)
+
+  def suggest(self, trial: optuna.trial.FrozenTrial) -> float:
+    _trial = trial or self._trial
+    return _trial.suggest_float(**self.attrs)
 
 
 
@@ -76,18 +75,27 @@ class IntHyperParameter(HyperParameter):
     step: int = 1,
     log: bool = False
   ):
-    self.name = name
-    self.low = low
-    self.high = high
-    self.step = step
-    self.log = log
+    super(IntHyperParameter, self).__init__()
+    self.set_attr('name', name)
+    self.set_attr('low', low)
+    self.set_attr('high', high)
+    self.set_attr('step', step)
+    self.set_attr('log', log)
+
+  def suggest(self, trial: optuna.trial.FrozenTrial = None) -> int:
+    _trial = trial or self._trial
+    return _trial.suggest_int(**self.attrs)
 
 
 
 class ConstantHyperParameter(HyperParameter):
   def __init__(self, name: str, value: Any):
-    self.name = name
-    self.value = value
+    super(ConstantHyperParameter, self).__init__()
+    self.set_attr('name', name)
+    self.set_attr('value', value)
+
+  def suggest(self, trial: optuna.trial.FrozenTrial = None) -> Any:
+    return self.attrs['value']
 
 
 
@@ -99,7 +107,7 @@ class HP:
 
   @staticmethod
   def const(name: str, value: Any) -> ConstantHyperParameter:
-    return CategoricalHyperParameter(name, value)
+    return ConstantHyperParameter(name, value)
 
 
   @staticmethod
