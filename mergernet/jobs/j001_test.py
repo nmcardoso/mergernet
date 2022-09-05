@@ -10,9 +10,9 @@ hps = HyperParameterSet(
   HP.const('epochs', 20),
   HP.const('batch_size', 64),
   HP.num('dense_1_units', low=64, high=1024, step=64, dtype=int),
-  HP.num('dropout_1_rate', low=0.2, hight=0.5),
+  HP.num('dropout_1_rate', low=0.2, high=0.5),
   HP.num('dense_2_units', low=64, high=1024, step=64, dtype=int),
-  HP.num('dropout_1_rate', low=0.2, hight=0.5),
+  HP.num('dropout_1_rate', low=0.2, high=0.5),
   HP.num('opt_lr', low=1e-5, high=1e-3, log=True)
 )
 
