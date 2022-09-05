@@ -3,6 +3,7 @@ from pathlib import Path
 from types import FunctionType
 
 import optuna
+import tensorflow as tf
 
 from mergernet.core.constants import RANDOM_SEED
 from mergernet.core.experiment import Experiment
@@ -46,9 +47,11 @@ def optuna_train(
   objective_metric: str = 'val_loss',
   objective_direction: str = 'minimize',
   save_model: bool = True,
-  name: str = None
+  name: str = None,
+  resume_hash: str = None
 ):
-  name = name or f'exp_{Experiment.exp_id}'
+  exp_id = Experiment.exp_id
+  name = name or f'exp_{exp_id}'
 
   if pruner == 'median':
     pruner_instance = optuna.pruners.MedianPruner(
@@ -62,6 +65,10 @@ def optuna_train(
 
   optuna_path = Path(Experiment.local_run_path) / 'optuna.sqlite'
   optuna_uri = f'sqlite:///{str(optuna_path.resolve())}' # absolute path
+
+  if resume_hash is not None:
+    L.info(f'Downloading optuna study of exp {exp_id} run {resume_hash}')
+    Experiment.download_file_gh('optuna.sqlite', exp_id, resume_hash)
 
   t = Timming()
   study = optuna.create_study(
@@ -83,6 +90,7 @@ def optuna_train(
     func=_objective_factory(train_func, dataset, hp, callbacks=callbacks),
     n_trials=n_trials
   )
+
   t.end()
 
   Experiment.upload_file_gh('optuna.sqlite')
@@ -95,3 +103,8 @@ def optuna_train(
   for k, v in study.best_params.items():
     L.info(f'{k}: {str(v)}')
   L.info(f'----- end of best trial summary -----')
+
+  model = tf.keras.models.load_model(
+    Path(Experiment.local_run_path) / f'{name}.h5'
+  )
+  return model
