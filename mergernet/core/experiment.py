@@ -5,6 +5,7 @@ import tempfile
 from inspect import getdoc
 from io import BytesIO, StringIO
 from pathlib import Path
+from shutil import copy2
 from time import time
 from types import FunctionType
 from typing import Any
@@ -346,12 +347,10 @@ class Experiment(metaclass=SingletonMeta):
 
     from_path = Path(cls.local_run_path) / fname
     base_to_path = cls.gd_run_path if scope == 'run' else cls.gd_exp_path
-    to_path = base_to_path / fname
-
-    gd = GDrive()
+    to_path = Path(base_to_path) / fname
 
     if data is None:
-      gd.send(from_path, to_path)
+      copy2(from_path, to_path)
     elif type(data) == str:
       with open(to_path, 'w') as fp:
         fp.write(data)
@@ -383,9 +382,7 @@ class Experiment(metaclass=SingletonMeta):
     to_path = Path(cls.local_run_path) / fname
     from_path = GD_RUN_PATTERN.format(exp_id=exp_id, run_id=run_id)
 
-    gd = GDrive()
-    path = gd.get(from_path, to_path)
-    print(path)
+    path = copy2(from_path, to_path)
     return Path(path)
 
 
