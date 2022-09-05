@@ -119,6 +119,13 @@ def backup_model(
   save_model: bool
     True if tensorflow model must be saved in google drive
   """
+  if save_dataset_config:
+    Experiment.upload_file_gh('dataset_config.json', dataset.config.__dict__)
+
+  if model is None:
+    L.info('No model received. Nothing to backup')
+    return
+
   if save_history:
     history = model.history.history
     Experiment.upload_file_gh('history.json', history)
@@ -138,9 +145,6 @@ def backup_model(
       y_hat = [pred[index] for pred in test_preds]
       df[f'prob_{label}'] = y_hat
     Experiment.upload_file_gh('test_preds_fold_0.csv', df)
-
-  if save_dataset_config:
-    Experiment.upload_file_gh('dataset_config.json', dataset.config.__dict__)
 
   if save_model:
     model.save(Path(Experiment.gd_run_path) / 'model.h5')
