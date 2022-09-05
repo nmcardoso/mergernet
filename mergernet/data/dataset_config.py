@@ -5,7 +5,6 @@ from mergernet.services.google import GDrive
 from mergernet.services.sciserver import SciServer
 
 
-
 class DatasetConfig:
   """Configuration params for dataset."""
   def __init__(
@@ -186,10 +185,13 @@ BIN_LEGACY_NORTH_RGB_128 = DatasetConfig(
   table_path=Path('bin_legacy_north.csv'),
   X_column='iauname',
   X_column_suffix='.jpg',
-  image_shape=(128, 128, 3)
+  y_column='class',
+  fold_column='fold',
+  label_map={'non-merger': 0, 'merger': 1},
+  image_shape=(128, 128, 3),
+  n_classes=2
 )
 """Binary dataset (merger and non-merger) with Legacy 128x128 RGB images on north sky."""
-
 
 
 class DatasetRegistry:
