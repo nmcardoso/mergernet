@@ -356,17 +356,20 @@
       <span class="n">end_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">())</span>
 
       <span class="c1"># post-execution oprations:</span>
-      <span class="c1"># 1. experiment metadata upload</span>
+      <span class="c1"># 1. upload all registered artifacts</span>
+      <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_registered_artifacts</span><span class="p">()</span>
+
+      <span class="c1"># 2. experiment metadata upload</span>
       <span class="n">exp_metadata</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;exp_id&#39;</span><span class="p">:</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">exp_id</span><span class="p">,</span>
         <span class="s1">&#39;exp_desc&#39;</span><span class="p">:</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">exp_desc</span>
       <span class="p">}</span>
       <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;exp_metadata.json&#39;</span><span class="p">,</span> <span class="n">exp_metadata</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s1">&#39;exp&#39;</span><span class="p">)</span>
 
-      <span class="c1"># 2. logs upload</span>
+      <span class="c1"># 3. logs upload</span>
       <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">log_path</span><span class="p">))</span>
 
-      <span class="c1"># 3. run metadata upload</span>
+      <span class="c1"># 4. run metadata upload</span>
       <span class="n">run_metadata</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;start_time&#39;</span><span class="p">:</span> <span class="n">start_time</span><span class="p">,</span>
         <span class="s1">&#39;end_time&#39;</span><span class="p">:</span> <span class="n">end_time</span><span class="p">,</span>
@@ -418,8 +421,9 @@
     <span class="k">return</span>
 
   <span class="k">if</span> <span class="n">save_history</span><span class="p">:</span>
-    <span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span>
-    <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;history.json&#39;</span><span class="p">,</span> <span class="n">history</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">history</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span>
+      <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;history.json&#39;</span><span class="p">,</span> <span class="n">history</span><span class="p">)</span>
 
   <span class="k">if</span> <span class="n">save_test_preds</span><span class="p">:</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">ds_test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -479,6 +483,7 @@
 <span class="sd">    Notes for current run of this experiment</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">_exp_created</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="n">_registered_artifacts</span> <span class="o">=</span> <span class="p">[]</span>
   <span class="n">exp_id</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">run_id</span> <span class="o">=</span> <span class="kc">None</span>
   <span class="n">local_shared_path</span> <span class="o">=</span> <span class="kc">None</span>
@@ -670,7 +675,39 @@
     <span class="n">gd</span> <span class="o">=</span> <span class="n">GDrive</span><span class="p">()</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">from_path</span><span class="p">,</span> <span class="n">to_path</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div></div>
+    <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Experiment.register_artifact"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.register_artifact">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">register_artifact</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Register an artifact that will be automatically uploaded to corresponding</span>
+<span class="sd">    service at the end of the experiment</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname: str</span>
+<span class="sd">      The artifact filename</span>
+<span class="sd">    service: str</span>
+<span class="sd">      The service name, one of: ``gdrive``, ``github`` or ``both``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_exp_created</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Experiment must be created&#39;</span><span class="p">)</span>
+    <span class="bp">cls</span><span class="o">.</span><span class="n">_registered_artifacts</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+      <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">fname</span><span class="p">,</span>
+      <span class="s1">&#39;service&#39;</span><span class="p">:</span> <span class="n">service</span>
+    <span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="Experiment.upload_registered_artifacts"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.upload_registered_artifacts">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">upload_registered_artifacts</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Uploads all registered artifacts</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">artifact</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_registered_artifacts</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">artifact</span><span class="p">[</span><span class="s1">&#39;service&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;gdrive&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span><span class="n">artifact</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+      <span class="k">if</span> <span class="n">artifact</span><span class="p">[</span><span class="s1">&#39;service&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;github&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="n">artifact</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span></div></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
