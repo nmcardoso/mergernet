@@ -359,7 +359,7 @@
         <span class="s1">&#39;exp_id&#39;</span><span class="p">:</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">exp_id</span><span class="p">,</span>
         <span class="s1">&#39;exp_desc&#39;</span><span class="p">:</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">exp_desc</span>
       <span class="p">}</span>
-      <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;metadata.json&#39;</span><span class="p">,</span> <span class="n">exp_metadata</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s1">&#39;exp&#39;</span><span class="p">)</span>
+      <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;exp_metadata.json&#39;</span><span class="p">,</span> <span class="n">exp_metadata</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s1">&#39;exp&#39;</span><span class="p">)</span>
 
       <span class="c1"># 2. logs upload</span>
       <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">log_path</span><span class="p">))</span>
@@ -373,7 +373,7 @@
         <span class="s1">&#39;run_id&#39;</span><span class="p">:</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">run_id</span><span class="p">,</span>
         <span class="s1">&#39;notes&#39;</span><span class="p">:</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">notes</span>
       <span class="p">}</span>
-      <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;metadata.json&#39;</span><span class="p">,</span> <span class="n">run_metadata</span><span class="p">)</span>
+      <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;run_metadata.json&#39;</span><span class="p">,</span> <span class="n">run_metadata</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wrapper</span>
   <span class="k">return</span> <span class="n">decorator</span></div>
 
