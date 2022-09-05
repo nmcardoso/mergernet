@@ -61,6 +61,7 @@ class SaveBestTrialCallback(tf.keras.callbacks.Callback):
     except:
       best_value = self.default_value
 
+    print(logs)
     current_value = logs[self.objective_metric]
     if self.operator(current_value, best_value):
       L.info(f'New best metric detected. {self.objective_metric}: {current_value}')
@@ -72,7 +73,7 @@ class SaveBestTrialCallback(tf.keras.callbacks.Callback):
       Experiment.register_artifact(f'{self.name}.h5', 'gdrive')
 
       # save history as csv
-      hist = self.model.history.history
+      hist = self.model.history.history.copy()
       hist['epoch'] = range(len(hist['loss']))
       hist_df = pd.DataFrame(hist)
       save_path = Path(Experiment.local_run_path) / f'history_{self.name}.json'
