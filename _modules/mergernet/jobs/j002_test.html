@@ -322,7 +322,7 @@
 <span class="sd">    - Training baseline model with finetune</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">Dataset</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">BIN_LEGACY_NORTH_RGB_128</span><span class="p">)</span>
-  <span class="n">model</span> <span class="o">=</span> <span class="n">finetune_train</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">HyperParameterSet</span><span class="p">(</span><span class="n">hps</span><span class="p">))</span>
+  <span class="n">model</span> <span class="o">=</span> <span class="n">finetune_train</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">hps</span><span class="p">)</span>
   <span class="n">backup_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ds</span><span class="p">)</span></div>
 
 
