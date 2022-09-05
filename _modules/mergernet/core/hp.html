@@ -288,8 +288,8 @@
               
   <h1>Source code for mergernet.core.hp</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
-<span class="kn">import</span> <span class="nn">optuna</span>
 
+<span class="kn">import</span> <span class="nn">optuna</span>
 
 
 <div class="viewcode-block" id="HyperParameter"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HyperParameter.html#mergernet.core.hp.HyperParameter">[docs]</a><span class="k">class</span> <span class="nc">HyperParameter</span><span class="p">:</span>
@@ -304,16 +304,10 @@
     <span class="n">_trial</span> <span class="o">=</span> <span class="n">trial</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trial</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">CategoricalHyperParameter</span><span class="p">):</span>
       <span class="n">fn</span> <span class="o">=</span> <span class="n">_trial</span><span class="o">.</span><span class="n">suggest_categorical</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">DiscreteUniformHyperParameter</span><span class="p">):</span>
-      <span class="n">fn</span> <span class="o">=</span> <span class="n">_trial</span><span class="o">.</span><span class="n">suggest_discrete_uniform</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">FloatHyperParameter</span><span class="p">):</span>
       <span class="n">fn</span> <span class="o">=</span> <span class="n">_trial</span><span class="o">.</span><span class="n">suggest_float</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">IntHyperParameter</span><span class="p">):</span>
       <span class="n">fn</span> <span class="o">=</span> <span class="n">_trial</span><span class="o">.</span><span class="n">suggest_int</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">LogUniformHyperParameter</span><span class="p">):</span>
-      <span class="n">fn</span> <span class="o">=</span> <span class="n">_trial</span><span class="o">.</span><span class="n">suggest_loguniform</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">UniformHyperParameter</span><span class="p">):</span>
-      <span class="n">fn</span> <span class="o">=</span> <span class="n">_trial</span><span class="o">.</span><span class="n">suggest_uniform</span>
 
     <span class="n">filtered_args</span> <span class="o">=</span> <span class="p">{</span>
       <span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
@@ -328,16 +322,10 @@
     <span class="n">t</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="s1">&#39;categorical&#39;</span><span class="p">:</span>
       <span class="n">E</span> <span class="o">=</span> <span class="n">CategoricalHyperParameter</span>
-    <span class="k">elif</span> <span class="n">t</span> <span class="o">==</span> <span class="s1">&#39;discrete_uniform&#39;</span><span class="p">:</span>
-      <span class="n">E</span> <span class="o">=</span> <span class="n">DiscreteUniformHyperParameter</span>
     <span class="k">elif</span> <span class="n">t</span> <span class="o">==</span> <span class="s1">&#39;float&#39;</span><span class="p">:</span>
       <span class="n">E</span> <span class="o">=</span> <span class="n">FloatHyperParameter</span>
     <span class="k">elif</span> <span class="n">t</span> <span class="o">==</span> <span class="s1">&#39;int&#39;</span><span class="p">:</span>
       <span class="n">E</span> <span class="o">=</span> <span class="n">IntHyperParameter</span>
-    <span class="k">elif</span> <span class="n">t</span> <span class="o">==</span> <span class="s1">&#39;loguniform&#39;</span><span class="p">:</span>
-      <span class="n">E</span> <span class="o">=</span> <span class="n">LogUniformHyperParameter</span>
-    <span class="k">elif</span> <span class="n">t</span> <span class="o">==</span> <span class="s1">&#39;uniform&#39;</span><span class="p">:</span>
-      <span class="n">E</span> <span class="o">=</span> <span class="n">UniformHyperParameter</span>
     <span class="k">elif</span> <span class="n">t</span> <span class="o">==</span> <span class="s1">&#39;constant&#39;</span><span class="p">:</span>
       <span class="n">E</span> <span class="o">=</span> <span class="n">ConstantHyperParameter</span>
     <span class="k">return</span> <span class="n">E</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span></div></div>
@@ -351,17 +339,15 @@
 
 
 
-<div class="viewcode-block" id="DiscreteUniformHyperParameter"><a class="viewcode-back" href="../../../api/mergernet.core.hp.DiscreteUniformHyperParameter.html#mergernet.core.hp.DiscreteUniformHyperParameter">[docs]</a><span class="k">class</span> <span class="nc">DiscreteUniformHyperParameter</span><span class="p">(</span><span class="n">HyperParameter</span><span class="p">):</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">low</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">high</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">low</span> <span class="o">=</span> <span class="n">low</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">high</span> <span class="o">=</span> <span class="n">high</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">q</span></div>
-
-
-
 <div class="viewcode-block" id="FloatHyperParameter"><a class="viewcode-back" href="../../../api/mergernet.core.hp.FloatHyperParameter.html#mergernet.core.hp.FloatHyperParameter">[docs]</a><span class="k">class</span> <span class="nc">FloatHyperParameter</span><span class="p">(</span><span class="n">HyperParameter</span><span class="p">):</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">low</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">high</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">log</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">low</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">high</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">step</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">low</span> <span class="o">=</span> <span class="n">low</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">high</span> <span class="o">=</span> <span class="n">high</span>
@@ -371,28 +357,19 @@
 
 
 <div class="viewcode-block" id="IntHyperParameter"><a class="viewcode-back" href="../../../api/mergernet.core.hp.IntHyperParameter.html#mergernet.core.hp.IntHyperParameter">[docs]</a><span class="k">class</span> <span class="nc">IntHyperParameter</span><span class="p">(</span><span class="n">HyperParameter</span><span class="p">):</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">low</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">high</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">step</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">log</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">low</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">high</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">step</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">log</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">low</span> <span class="o">=</span> <span class="n">low</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">high</span> <span class="o">=</span> <span class="n">high</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="n">step</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">log</span></div>
-
-
-
-<div class="viewcode-block" id="LogUniformHyperParameter"><a class="viewcode-back" href="../../../api/mergernet.core.hp.LogUniformHyperParameter.html#mergernet.core.hp.LogUniformHyperParameter">[docs]</a><span class="k">class</span> <span class="nc">LogUniformHyperParameter</span><span class="p">(</span><span class="n">HyperParameter</span><span class="p">):</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">low</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">high</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">low</span> <span class="o">=</span> <span class="n">low</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">high</span> <span class="o">=</span> <span class="n">high</span></div>
-
-
-
-<div class="viewcode-block" id="UniformHyperParameter"><a class="viewcode-back" href="../../../api/mergernet.core.hp.UniformHyperParameter.html#mergernet.core.hp.UniformHyperParameter">[docs]</a><span class="k">class</span> <span class="nc">UniformHyperParameter</span><span class="p">(</span><span class="n">HyperParameter</span><span class="p">):</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">low</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">high</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">low</span> <span class="o">=</span> <span class="n">low</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">high</span> <span class="o">=</span> <span class="n">high</span></div>
 
 
 
@@ -403,20 +380,92 @@
 
 
 
+<div class="viewcode-block" id="HP"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HP.html#mergernet.core.hp.HP">[docs]</a><span class="k">class</span> <span class="nc">HP</span><span class="p">:</span>
+<div class="viewcode-block" id="HP.cat"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HP.html#mergernet.core.hp.HP.cat">[docs]</a>  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">cat</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">choices</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CategoricalHyperParameter</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">CategoricalHyperParameter</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">choices</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HP.const"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HP.html#mergernet.core.hp.HP.const">[docs]</a>  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">const</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConstantHyperParameter</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">CategoricalHyperParameter</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HP.num"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HP.html#mergernet.core.hp.HP.num">[docs]</a>  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">num</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">low</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+    <span class="n">high</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+    <span class="n">step</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span>
+  <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">FloatHyperParameter</span><span class="p">,</span> <span class="n">IntHyperParameter</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="nb">float</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">FloatHyperParameter</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">IntHyperParameter</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">log</span><span class="p">)</span></div></div>
+
+
+
 <div class="viewcode-block" id="HyperParameterSet"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HyperParameterSet.html#mergernet.core.hp.HyperParameterSet">[docs]</a><span class="k">class</span> <span class="nc">HyperParameterSet</span><span class="p">:</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hyperparameters</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">]]):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Represents a set of hyperparameters and handles the hyperparameters</span>
+<span class="sd">  register and access.</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  *args: HyperParameter</span>
+<span class="sd">    Any sequence of HyperParameter subclass</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">HyperParameter</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">hps</span> <span class="o">=</span> <span class="p">{}</span>
 
+    <span class="k">for</span> <span class="n">hp</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="p">[</span><span class="n">hp</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">hp</span>
+
+
+<div class="viewcode-block" id="HyperParameterSet.add"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HyperParameterSet.html#mergernet.core.hp.HyperParameterSet.add">[docs]</a>  <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hyperparameters</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">]]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parses a sequence of dictionaries that represents the hyperparameters</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    hyperparameters: array-like of dictionaries or arrar-like of HyperParameter</span>
+<span class="sd">      The list of hyperparameters that will be added to this</span>
+<span class="sd">      hyperparameters set</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">hyperparameters</span><span class="p">:</span>
       <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">name</span><span class="p">:</span> <span class="n">HyperParameter</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="p">})</span>
       <span class="k">else</span><span class="p">:</span>
         <span class="n">name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">name</span><span class="p">:</span> <span class="n">item</span> <span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">name</span><span class="p">:</span> <span class="n">item</span> <span class="p">})</span></div>
 
 
-<div class="viewcode-block" id="HyperParameterSet.get"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HyperParameterSet.html#mergernet.core.hp.HyperParameterSet.get">[docs]</a>  <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="HyperParameterSet.get"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HyperParameterSet.html#mergernet.core.hp.HyperParameterSet.get">[docs]</a>  <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the value of a hyperparameter identified by its name.</span>
+<span class="sd">    For hyperparameters different than ConstantHyperParameter, this method</span>
+<span class="sd">    will use optuna&#39;s seggest api</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    hp: str</span>
+<span class="sd">      The hyperparamer name</span>
+<span class="sd">    trial: optuna.trial.FrozenTrial</span>
+<span class="sd">      The optuan trial instance</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Any</span>
+<span class="sd">      The hyperparameter value</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    mergernet.core.hp.HyperParameter.suggest</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">trial</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="p">[</span><span class="n">hp</span><span class="p">]</span><span class="o">.</span><span class="n">suggest</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
@@ -424,6 +473,14 @@
 
 
 <div class="viewcode-block" id="HyperParameterSet.set_trial"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HyperParameterSet.html#mergernet.core.hp.HyperParameterSet.set_trial">[docs]</a>  <span class="k">def</span> <span class="nf">set_trial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sets the optuna&#39;s trial for all hyperparameter in this set</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    trial: optuna.trial.FrozenTrial</span>
+<span class="sd">      The trial that will be added</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">hp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
       <span class="n">hp</span><span class="o">.</span><span class="n">set_trial</span><span class="p">(</span><span class="n">trial</span><span class="p">)</span></div></div>
 </pre></div>

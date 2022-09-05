@@ -338,13 +338,13 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.core.hp.DiscreteUniformHyperParameter.html">
-       mergernet.core.hp.DiscreteUniformHyperParameter
+      <a class="reference internal" href="mergernet.core.hp.FloatHyperParameter.html">
+       mergernet.core.hp.FloatHyperParameter
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.core.hp.FloatHyperParameter.html">
-       mergernet.core.hp.FloatHyperParameter
+      <a class="reference internal" href="mergernet.core.hp.HP.html">
+       mergernet.core.hp.HP
       </a>
      </li>
      <li class="toctree-l3">
@@ -360,16 +360,6 @@
      <li class="toctree-l3">
       <a class="reference internal" href="mergernet.core.hp.IntHyperParameter.html">
        mergernet.core.hp.IntHyperParameter
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.core.hp.LogUniformHyperParameter.html">
-       mergernet.core.hp.LogUniformHyperParameter
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.core.hp.UniformHyperParameter.html">
-       mergernet.core.hp.UniformHyperParameter
       </a>
      </li>
     </ul>
@@ -1254,28 +1244,90 @@
 <h1>mergernet.core.hp.HyperParameterSet<a class="headerlink" href="#mergernet-core-hp-hyperparameterset" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="mergernet.core.hp.HyperParameterSet">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mergernet.core.hp.</span></span><span class="sig-name descname"><span class="pre">HyperParameterSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hyperparameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="mergernet.core.hp.HyperParameter.html#mergernet.core.hp.HyperParameter" title="mergernet.core.hp.HyperParameter"><span class="pre">HyperParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/hp.html#HyperParameterSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.hp.HyperParameterSet" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mergernet.core.hp.</span></span><span class="sig-name descname"><span class="pre">HyperParameterSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="mergernet.core.hp.HyperParameter.html#mergernet.core.hp.HyperParameter" title="mergernet.core.hp.HyperParameter"><span class="pre">HyperParameter</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/hp.html#HyperParameterSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.hp.HyperParameterSet" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a set of hyperparameters and handles the hyperparameters
+register and access.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>*args: HyperParameter</strong></dt><dd><p>Any sequence of HyperParameter subclass</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Methods</p>
-<table class="table">
+<table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><strong>get</strong></p></td>
-<td></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.core.hp.HyperParameterSet.add" title="mergernet.core.hp.HyperParameterSet.add"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add</span></code></a>(hyperparameters)</p></td>
+<td><p>Parses a sequence of dictionaries that represents the hyperparameters</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>set_trial</strong></p></td>
-<td></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.core.hp.HyperParameterSet.get" title="mergernet.core.hp.HyperParameterSet.get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code></a>(hp[, trial])</p></td>
+<td><p>Get the value of a hyperparameter identified by its name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.core.hp.HyperParameterSet.set_trial" title="mergernet.core.hp.HyperParameterSet.set_trial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_trial</span></code></a>(trial)</p></td>
+<td><p>Sets the optuna's trial for all hyperparameter in this set</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
+<dt class="sig sig-object py" id="mergernet.core.hp.HyperParameterSet.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hyperparameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="mergernet.core.hp.HyperParameter.html#mergernet.core.hp.HyperParameter" title="mergernet.core.hp.HyperParameter"><span class="pre">HyperParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/hp.html#HyperParameterSet.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.hp.HyperParameterSet.add" title="Permalink to this definition">#</a></dt>
+<dd><p>Parses a sequence of dictionaries that represents the hyperparameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>hyperparameters: array-like of dictionaries or arrar-like of HyperParameter</strong></dt><dd><p>The list of hyperparameters that will be added to this
+hyperparameters set</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="mergernet.core.hp.HyperParameterSet.get">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">FrozenTrial</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/hp.html#HyperParameterSet.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.hp.HyperParameterSet.get" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">FrozenTrial</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/mergernet/core/hp.html#HyperParameterSet.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.hp.HyperParameterSet.get" title="Permalink to this definition">#</a></dt>
+<dd><p>Get the value of a hyperparameter identified by its name.
+For hyperparameters different than ConstantHyperParameter, this method
+will use optuna’s seggest api</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>hp: str</strong></dt><dd><p>The hyperparamer name</p>
+</dd>
+<dt><strong>trial: optuna.trial.FrozenTrial</strong></dt><dd><p>The optuan trial instance</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>Any</dt><dd><p>The hyperparameter value</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="mergernet.core.hp.HyperParameter.html#mergernet.core.hp.HyperParameter.suggest" title="mergernet.core.hp.HyperParameter.suggest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mergernet.core.hp.HyperParameter.suggest</span></code></a></dt><dd></dd>
+</dl>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mergernet.core.hp.HyperParameterSet.set_trial">
 <span class="sig-name descname"><span class="pre">set_trial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FrozenTrial</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/hp.html#HyperParameterSet.set_trial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.hp.HyperParameterSet.set_trial" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Sets the optuna’s trial for all hyperparameter in this set</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>trial: optuna.trial.FrozenTrial</strong></dt><dd><p>The trial that will be added</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

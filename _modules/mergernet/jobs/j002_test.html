@@ -288,64 +288,29 @@
               
   <h1>Source code for mergernet.jobs.j002_test</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">mergernet.core.experiment</span> <span class="kn">import</span> <span class="n">backup_model</span><span class="p">,</span> <span class="n">experiment_run</span>
-<span class="kn">from</span> <span class="nn">mergernet.core.hp</span> <span class="kn">import</span> <span class="n">HyperParameterSet</span>
+<span class="kn">from</span> <span class="nn">mergernet.core.hp</span> <span class="kn">import</span> <span class="n">HP</span><span class="p">,</span> <span class="n">HyperParameterSet</span>
 <span class="kn">from</span> <span class="nn">mergernet.data.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 <span class="kn">from</span> <span class="nn">mergernet.model.baseline</span> <span class="kn">import</span> <span class="n">finetune_train</span>
 
-<span class="n">hps</span> <span class="o">=</span> <span class="p">[</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;architecture&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;resnet50&#39;</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;pretrained_weights&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;imagenet&#39;</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;epochs&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">1</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;batch_size&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">64</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;dense_1_units&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">128</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;dropout_1_rate&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mf">0.4</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;dense_2_units&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">64</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;dropout_2_rate&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mf">0.4</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;opt_lr&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mf">1e-4</span>
-  <span class="p">}</span>
-<span class="p">]</span>
+<span class="n">hps</span> <span class="o">=</span> <span class="n">HyperParameterSet</span><span class="p">(</span>
+  <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;architecture&#39;</span><span class="p">,</span> <span class="s1">&#39;resnet50&#39;</span><span class="p">),</span>
+  <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;pretrained_weights&#39;</span><span class="p">,</span> <span class="s1">&#39;imagenet&#39;</span><span class="p">),</span>
+  <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;epochs&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+  <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;batch_size&#39;</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+  <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;dense_1_units&#39;</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+  <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;dropout_1_rate&#39;</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span>
+  <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;dense_2_units&#39;</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+  <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;dropout_2_rate&#39;</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span>
+  <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;opt_lr&#39;</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">)</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="run"><a class="viewcode-back" href="../../../api/mergernet.jobs.j002_test.run.html#mergernet.jobs.j002_test.run">[docs]</a><span class="nd">@experiment_run</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Test the finetune train with constant hyperparameters of binary</span>
-<span class="sd">  classification (merger/non-merger) on Legacy North with RGB images</span>
+<span class="sd">  classification (merger/non-merger) on Legacy North with RGB images.</span>
+<span class="sd">  This experiment uses the new hyperparameter API</span>
 
 <span class="sd">  Dataset</span>
 <span class="sd">  -------</span>

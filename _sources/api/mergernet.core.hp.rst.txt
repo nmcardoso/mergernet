@@ -21,13 +21,11 @@ mergernet.core.hp
    
       CategoricalHyperParameter
       ConstantHyperParameter
-      DiscreteUniformHyperParameter
       FloatHyperParameter
+      HP
       HyperParameter
       HyperParameterSet
       IntHyperParameter
-      LogUniformHyperParameter
-      UniformHyperParameter
    
    
 
