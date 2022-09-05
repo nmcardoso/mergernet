@@ -350,7 +350,6 @@
     <span class="k">except</span><span class="p">:</span>
       <span class="n">best_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_value</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">logs</span><span class="p">)</span>
     <span class="n">current_value</span> <span class="o">=</span> <span class="n">logs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span><span class="p">]</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="n">current_value</span><span class="p">,</span> <span class="n">best_value</span><span class="p">):</span>
       <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;New best metric detected. </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">current_value</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
