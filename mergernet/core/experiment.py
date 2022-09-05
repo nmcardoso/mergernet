@@ -209,9 +209,12 @@ class Experiment(metaclass=SingletonMeta):
     exp_desc: str
       Experiment description
     """
+    # setup ids
     cls.exp_desc = exp_desc
     cls.exp_id = exp_id
     cls.run_id = secrets.token_hex(4)
+
+    # setup paths
     exp_params = dict(exp_id=cls.exp_id)
     run_params = dict(exp_id=cls.exp_id, run_id=cls.run_id)
     if ENV == 'dev':
@@ -230,10 +233,16 @@ class Experiment(metaclass=SingletonMeta):
       cls.gh_run_path = GH_RUN_PATTERN.format(**run_params)
       cls.gd_exp_path = GD_EXP_PATTERN.format(**exp_params)
       cls.gd_run_path = GD_RUN_PATTERN.format(**run_params)
+
+    # prepare local experiment environment creating directory structure
     Path(cls.local_shared_path).mkdir(parents=True, exist_ok=True)
     Path(cls.local_run_path).mkdir(parents=True, exist_ok=True)
     Path(cls.gd_run_path).mkdir(parents=True, exist_ok=True)
+
+    # signaling that this method was called
     cls._exp_created = True
+
+    L.info(f'New experiment created with exp_id = {exp_id} and run_id = {cls.run_id}')
 
 
   @classmethod
