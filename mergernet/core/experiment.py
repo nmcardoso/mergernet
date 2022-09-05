@@ -3,7 +3,7 @@ import logging
 import secrets
 import tempfile
 from inspect import getdoc
-from io import StringIO
+from io import BytesIO, StringIO
 from pathlib import Path
 from time import time
 from types import FunctionType
@@ -286,10 +286,10 @@ class Experiment(metaclass=SingletonMeta):
     elif type(data) == str:
       gh.commit(to_path, data=data, from_bytes=False)
     elif isinstance(data, pd.DataFrame):
-      buffer = StringIO()
+      buffer = BytesIO()
       data.to_csv(buffer, index=False)
-      buffer.seek(0)
-      gh.commit(to_path, data=buffer, from_bytes=True)
+      # buffer.seek(0)
+      gh.commit(to_path, data=buffer.getbuffer(), from_bytes=True)
     else:
       gh.commit(to_path, data=serialize(data), from_bytes=False)
 
