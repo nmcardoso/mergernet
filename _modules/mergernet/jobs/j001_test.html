@@ -305,6 +305,11 @@
     <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;imagenet&#39;</span>
   <span class="p">},</span>
   <span class="p">{</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;epochs&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">40</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
     <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;batch_size&#39;</span><span class="p">,</span>
     <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
     <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">64</span>
@@ -350,12 +355,12 @@
 <span class="sd">  Experiment created for test purposes. This experiments tests the</span>
 <span class="sd">  ``Artifacts API``</span>
 <span class="sd">  &quot;&quot;&quot;</span>
-  <span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">Dataset</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">BIN_SDSS_128</span><span class="p">)</span>
+  <span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">Dataset</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">BIN_LEGACY_NORTH_RGB_128</span><span class="p">)</span>
   <span class="n">optuna_train</span><span class="p">(</span>
     <span class="n">train_func</span><span class="o">=</span><span class="n">finetune_train</span><span class="p">,</span>
     <span class="n">dataset</span><span class="o">=</span><span class="n">ds</span><span class="p">,</span>
     <span class="n">hp</span><span class="o">=</span><span class="n">HyperParameterSet</span><span class="p">(</span><span class="n">hp</span><span class="p">),</span>
-    <span class="n">n_trials</span><span class="o">=</span><span class="mi">30</span>
+    <span class="n">n_trials</span><span class="o">=</span><span class="mi">2</span>
   <span class="p">)</span></div>
 
 

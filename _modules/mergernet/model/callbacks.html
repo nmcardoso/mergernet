@@ -323,7 +323,7 @@
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">should_prune</span><span class="p">():</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">stop_training</span> <span class="o">=</span> <span class="kc">True</span>
-      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[PRUNER] trial pruned at epoch </span><span class="si">{</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div></div>
+      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Trial pruned at epoch </span><span class="si">{</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div></div>
 
 
 
@@ -349,11 +349,12 @@
     <span class="k">except</span><span class="p">:</span>
       <span class="n">best_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_value</span>
 
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="n">logs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span><span class="p">],</span> <span class="n">best_value</span><span class="p">):</span>
+    <span class="n">current_value</span> <span class="o">=</span> <span class="n">logs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span><span class="p">]</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">operator</span><span class="p">(</span><span class="n">current_value</span><span class="p">,</span> <span class="n">best_value</span><span class="p">):</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;New best metric detected: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">current_value</span><span class="si">}</span><span class="s1">s&#39;</span><span class="p">)</span>
       <span class="n">save_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">Experiment</span><span class="o">.</span><span class="n">local_run_path</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.h5&#39;</span><span class="p">)</span>
-      <span class="k">if</span> <span class="ow">not</span> <span class="n">save_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-        <span class="n">save_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
+      <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Trial saved at </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div></div>
 
 
 
