@@ -38,7 +38,7 @@ class CategoricalHyperParameter(HyperParameter):
     self.set_attr('name', name)
     self.set_attr('choices', choices)
 
-  def suggest(self, trial: optuna.trial.FrozenTrial) -> Any:
+  def suggest(self, trial: optuna.trial.FrozenTrial = None) -> Any:
     _trial = trial or self._trial
     return _trial.suggest_categorical(**self.attrs)
 
@@ -60,7 +60,7 @@ class FloatHyperParameter(HyperParameter):
     self.set_attr('step', step)
     self.set_attr('log', log)
 
-  def suggest(self, trial: optuna.trial.FrozenTrial) -> float:
+  def suggest(self, trial: optuna.trial.FrozenTrial = None) -> float:
     _trial = trial or self._trial
     return _trial.suggest_float(**self.attrs)
 
