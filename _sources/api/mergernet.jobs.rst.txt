@@ -30,4 +30,5 @@
 
    mergernet.jobs.j001_test
    mergernet.jobs.j002_test
+   mergernet.jobs.j003
 
