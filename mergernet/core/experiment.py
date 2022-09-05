@@ -70,7 +70,7 @@ def experiment_run(exp_id: int):
         'exp_id': Experiment.exp_id,
         'exp_desc': Experiment.exp_desc
       }
-      Experiment.upload_file_gh('metadata.json', exp_metadata, scope='exp')
+      Experiment.upload_file_gh('exp_metadata.json', exp_metadata, scope='exp')
 
       # 2. logs upload
       Experiment.upload_file_gh(str(log_path))
@@ -84,7 +84,7 @@ def experiment_run(exp_id: int):
         'run_id': Experiment.run_id,
         'notes': Experiment.notes
       }
-      Experiment.upload_file_gh('metadata.json', run_metadata)
+      Experiment.upload_file_gh('run_metadata.json', run_metadata)
     return wrapper
   return decorator
 

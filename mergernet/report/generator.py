@@ -70,11 +70,11 @@ def render_index(source: Path, dest: Path, order: str, kind: str):
   """
   if kind == 'exp':
     title = 'Experiment'
-    run_metadata_glob = '/**/metadata.json'
+    run_metadata_glob = '/**/run_metadata.json'
     template = 'index.html.j2'
   else:
     title = 'Run'
-    run_metadata_glob = '/metadata.json'
+    run_metadata_glob = '/run_metadata.json'
     template = 'experiment.html.j2'
 
   dirs = [p for p in source.glob('*') if p.is_dir()]
@@ -115,7 +115,7 @@ def render_index(source: Path, dest: Path, order: str, kind: str):
 
   exp_meta = {}
   if kind == 'run':
-    exp_meta_path = source / 'metadata.json'
+    exp_meta_path = source / 'exp_metadata.json'
     if exp_meta_path.exists():
       exp_meta = json.loads(exp_meta_path.read_text(encoding='utf-8'))
       if 'exp_desc' in exp_meta:
@@ -135,7 +135,7 @@ def render_index(source: Path, dest: Path, order: str, kind: str):
 
 
 def render_report(source: Path, dest: Path):
-  meta_path = source / 'metadata.json'
+  meta_path = source / 'run_metadata.json'
   meta = json.loads(meta_path.read_text('utf-8')) if meta_path.exists() else {}
 
   train_artifacts_path = list(source.glob('*'))
