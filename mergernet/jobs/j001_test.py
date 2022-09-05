@@ -67,10 +67,12 @@ def run():
   ``Artifacts API``
   """
   ds = Dataset(config=Dataset.registry.BIN_LEGACY_NORTH_RGB_128)
+  hps = HyperParameterSet()
+  hps.add(hp)
   model = optuna_train(
     train_func=finetune_train,
     dataset=ds,
-    hp=HyperParameterSet.add(hp),
+    hp=hps,
     n_trials=1,
     resume_hash='2ee5aef1'
   )

@@ -32,7 +32,7 @@ def run():
   -----
     - Training baseline model with finetune
   """
-  ds = Dataset(config=Dataset.registry.BIN_SDSS_128)
+  ds = Dataset(config=Dataset.registry.BIN_LEGACY_NORTH_RGB_128)
   model = finetune_train(ds, HyperParameterSet(hps))
   backup_model(model, ds)
 
