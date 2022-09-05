@@ -288,14 +288,13 @@
               
   <h1>Source code for mergernet.services.github</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
-<span class="kn">import</span> <span class="nn">re</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">GH_USER</span><span class="p">,</span> <span class="n">GH_TOKEN</span><span class="p">,</span> <span class="n">GH_BRANCH</span><span class="p">,</span> <span class="n">GH_REPO</span>
-
+<span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">GH_BRANCH</span><span class="p">,</span> <span class="n">GH_REPO</span><span class="p">,</span> <span class="n">GH_TOKEN</span><span class="p">,</span> <span class="n">GH_USER</span>
 
 <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.github.com&#39;</span>
 <span class="n">HEADERS</span> <span class="o">=</span> <span class="p">{</span>
@@ -367,8 +366,9 @@
       <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">,</span>
       <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">)</span>
     <span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dest_path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
-      <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dest_path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="GithubService.list_dir"><a class="viewcode-back" href="../../../api/mergernet.services.github.GithubService.html#mergernet.services.github.GithubService.list_dir">[docs]</a>  <span class="k">def</span> <span class="nf">list_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
