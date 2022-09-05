@@ -34,7 +34,7 @@ class PruneCallback(tf.keras.callbacks.Callback):
 
     if self.trial.should_prune():
       self.model.stop_training = True
-      L.info(f'[PRUNER] trial pruned at epoch {epoch + 1}')
+      L.info(f'Trial pruned at epoch {epoch + 1}')
 
 
 
@@ -60,11 +60,12 @@ class SaveBestTrialCallback(tf.keras.callbacks.Callback):
     except:
       best_value = self.default_value
 
-    if self.operator(logs[self.objective_metric], best_value):
+    current_value = logs[self.objective_metric]
+    if self.operator(current_value, best_value):
+      L.info(f'New best metric detected: {self.objective_metric} = {current_value}s')
       save_path = Path(Experiment.local_run_path) / (self.name + '.h5')
-      if not save_path.parent.exists():
-        save_path.parent.mkdir(parents=True, exist_ok=True)
       self.model.save(save_path, overwrite=True)
+      L.info(f'Trial saved at {str(save_path)}')
 
 
 
