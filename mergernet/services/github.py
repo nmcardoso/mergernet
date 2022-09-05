@@ -1,12 +1,11 @@
 import base64
+import re
 from pathlib import Path
 from typing import Union
-import re
 
 import requests
 
-from mergernet.core.constants import GH_USER, GH_TOKEN, GH_BRANCH, GH_REPO
-
+from mergernet.core.constants import GH_BRANCH, GH_REPO, GH_TOKEN, GH_USER
 
 BASE_URL = 'https://api.github.com'
 HEADERS = {
@@ -78,8 +77,9 @@ class GithubService:
       headers=HEADERS,
       auth=(self.user, self.token)
     )
-    with open(dest_path, 'wb') as fp:
-      fp.write(resp.content)
+    if resp.status_code == 200:
+      with open(dest_path, 'wb') as fp:
+        fp.write(resp.content)
 
 
   def list_dir(self, path: int) -> dict:
