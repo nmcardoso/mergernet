@@ -578,6 +578,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/mergernet.services.utils.download_file.html#mergernet.services.utils.download_file">download_file() (in module mergernet.services.utils)</a>
 </li>
+      <li><a href="api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.download_file_gd">download_file_gd() (mergernet.core.experiment.Experiment class method)</a>
+</li>
       <li><a href="api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.download_file_gh">download_file_gh() (mergernet.core.experiment.Experiment class method)</a>
 </li>
       <li><a href="api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.download_fits">download_fits() (mergernet.services.sdss.SloanService method)</a>
@@ -684,15 +686,13 @@
 </li>
       <li><a href="api/mergernet.data.sanitization.DatasetSanitization.html#mergernet.data.sanitization.DatasetSanitization.get_iauname_by_filesize">get_iauname_by_filesize() (mergernet.data.sanitization.DatasetSanitization method)</a>
 </li>
-      <li><a href="api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.get_image_filename">get_image_filename() (mergernet.services.sdss.SloanService method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.get_image_filename">get_image_filename() (mergernet.services.sdss.SloanService method)</a>
+</li>
       <li><a href="api/mergernet.services.github.GithubService.html#mergernet.services.github.GithubService.get_lastest_job_run">get_lastest_job_run() (mergernet.services.github.GithubService method)</a>
 </li>
       <li><a href="api/mergernet.data.trilogy.get_levels.html#mergernet.data.trilogy.get_levels">get_levels() (in module mergernet.data.trilogy)</a>
-</li>
-      <li><a href="api/mergernet.model.utils.get_optimizer.html#mergernet.model.utils.get_optimizer">get_optimizer() (in module mergernet.model.utils)</a>
 </li>
       <li><a href="api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset.get_preds_dataset">get_preds_dataset() (mergernet.data.dataset.Dataset method)</a>
 </li>
@@ -770,6 +770,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mergernet.model.utils.load_model.html#mergernet.model.utils.load_model">load_model() (in module mergernet.model.utils)</a>
+</li>
       <li><a href="api/mergernet.data.preprocessing.load_png.html#mergernet.data.preprocessing.load_png">load_png() (in module mergernet.data.preprocessing)</a>
 </li>
       <li><a href="api/mergernet.core.utils.load_table.html#mergernet.core.utils.load_table">load_table() (in module mergernet.core.utils)</a>
@@ -907,13 +909,6 @@
 </li>
       </ul></li>
       <li>
-    mergernet.jobs.j001_test
-
-      <ul>
-        <li><a href="api/mergernet.jobs.j001_test.html#module-mergernet.jobs.j001_test">module</a>
-</li>
-      </ul></li>
-      <li>
     mergernet.jobs.j002_test
 
       <ul>
@@ -946,6 +941,13 @@
 
       <ul>
         <li><a href="api/mergernet.model.callbacks.html#module-mergernet.model.callbacks">module</a>
+</li>
+      </ul></li>
+      <li>
+    mergernet.model.inference
+
+      <ul>
+        <li><a href="api/mergernet.model.inference.html#module-mergernet.model.inference">module</a>
 </li>
       </ul></li>
       <li>
@@ -1103,8 +1105,6 @@
 </li>
         <li><a href="api/mergernet.jobs.html#module-mergernet.jobs">mergernet.jobs</a>
 </li>
-        <li><a href="api/mergernet.jobs.j001_test.html#module-mergernet.jobs.j001_test">mergernet.jobs.j001_test</a>
-</li>
         <li><a href="api/mergernet.jobs.j002_test.html#module-mergernet.jobs.j002_test">mergernet.jobs.j002_test</a>
 </li>
         <li><a href="api/mergernet.model.html#module-mergernet.model">mergernet.model</a>
@@ -1114,6 +1114,8 @@
         <li><a href="api/mergernet.model.baseline.html#module-mergernet.model.baseline">mergernet.model.baseline</a>
 </li>
         <li><a href="api/mergernet.model.callbacks.html#module-mergernet.model.callbacks">mergernet.model.callbacks</a>
+</li>
+        <li><a href="api/mergernet.model.inference.html#module-mergernet.model.inference">mergernet.model.inference</a>
 </li>
         <li><a href="api/mergernet.model.utils.html#module-mergernet.model.utils">mergernet.model.utils</a>
 </li>
@@ -1350,8 +1352,12 @@
 </li>
       <li><a href="api/mergernet.services.utils.parallel_function_executor.html#mergernet.services.utils.parallel_function_executor">parallel_function_executor() (in module mergernet.services.utils)</a>
 </li>
+      <li><a href="api/mergernet.model.inference.Predictor.html#mergernet.model.inference.Predictor.predict">predict() (mergernet.model.inference.Predictor method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mergernet.model.inference.Predictor.html#mergernet.model.inference.Predictor">Predictor (class in mergernet.model.inference)</a>
+</li>
       <li><a href="api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset.prepare_data">prepare_data() (mergernet.data.dataset.Dataset method)</a>
 </li>
       <li><a href="api/mergernet.data.match.CrossMatchResult.html#mergernet.data.match.CrossMatchResult.primary_idx">primary_idx (mergernet.data.match.CrossMatchResult attribute)</a>
@@ -1382,22 +1388,18 @@
 </li>
       <li><a href="api/mergernet.report.generator.render_report.html#mergernet.report.generator.render_report">render_report() (in module mergernet.report.generator)</a>
 </li>
-      <li><a href="api/mergernet.data.rgb.RGB.html#mergernet.data.rgb.RGB">RGB (class in mergernet.data.rgb)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mergernet.data.rgb.RGB.html#mergernet.data.rgb.RGB">RGB (class in mergernet.data.rgb)</a>
+</li>
       <li><a href="api/mergernet.data.trilogy.RGB2im.html#mergernet.data.trilogy.RGB2im">RGB2im() (in module mergernet.data.trilogy)</a>
 </li>
       <li><a href="api/mergernet.data.trilogy.rms.html#mergernet.data.trilogy.rms">rms() (in module mergernet.data.trilogy)</a>
 </li>
       <li><a href="api/mergernet.visualization.plot.roc.html#mergernet.visualization.plot.roc">roc() (in module mergernet.visualization.plot)</a>
 </li>
-      <li><a href="api/mergernet.jobs.j001_test.run.html#mergernet.jobs.j001_test.run">run() (in module mergernet.jobs.j001_test)</a>
-
-      <ul>
-        <li><a href="api/mergernet.jobs.j002_test.run.html#mergernet.jobs.j002_test.run">(in module mergernet.jobs.j002_test)</a>
+      <li><a href="api/mergernet.jobs.j002_test.run.html#mergernet.jobs.j002_test.run">run() (in module mergernet.jobs.j002_test)</a>
 </li>
-      </ul></li>
       <li><a href="api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.run_id">run_id (mergernet.core.experiment.Experiment attribute)</a>
 </li>
   </ul></td>
@@ -1552,9 +1554,11 @@
 </li>
       <li><a href="api/mergernet.services.splus.update_authorization.html#mergernet.services.splus.update_authorization">update_authorization() (in module mergernet.services.splus)</a>
 </li>
+      <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.update_token">update_token() (mergernet.services.splus.SplusService method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.update_token">update_token() (mergernet.services.splus.SplusService method)</a>
+      <li><a href="api/mergernet.model.inference.Predictor.html#mergernet.model.inference.Predictor.upload">upload() (mergernet.model.inference.Predictor method)</a>
 </li>
       <li><a href="api/mergernet.services.tensorboard.TensorboardService.html#mergernet.services.tensorboard.TensorboardService.upload_assets">upload_assets() (mergernet.services.tensorboard.TensorboardService method)</a>
 </li>

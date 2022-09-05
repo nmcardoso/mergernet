@@ -340,14 +340,16 @@
   <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">FunctionType</span><span class="p">):</span>
     <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-      <span class="c1"># clear previous log</span>
+      <span class="c1"># pre-execution operations:</span>
+      <span class="c1"># 1. clear previous log</span>
       <span class="n">log_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">())</span> <span class="o">/</span> <span class="s1">&#39;mergernet.log&#39;</span>
       <span class="nb">open</span><span class="p">(</span><span class="n">log_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-      <span class="c1"># create new experiment</span>
+      <span class="c1"># 2. create new experiment</span>
       <span class="n">exp_desc</span> <span class="o">=</span> <span class="n">getdoc</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
       <span class="n">Experiment</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">exp_id</span><span class="o">=</span><span class="n">exp_id</span><span class="p">,</span> <span class="n">exp_desc</span><span class="o">=</span><span class="n">exp_desc</span><span class="p">)</span>
 
+      <span class="c1"># function execution:</span>
       <span class="c1"># track times and execute function</span>
       <span class="n">start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">())</span>
       <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -424,14 +426,12 @@
     <span class="n">ds_test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span><span class="n">ds_test</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;pred&#39;</span><span class="p">)</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_X_by_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
     <span class="n">test_preds</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ds_test</span><span class="p">)</span>
-    <span class="n">test_preds</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">X</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="s1">&#39;preds&#39;</span><span class="p">:</span> <span class="n">test_preds</span><span class="o">.</span><span class="n">tolist</span><span class="p">()}</span>
-    <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;test_preds.json&#39;</span><span class="p">,</span> <span class="n">test_preds</span><span class="p">)</span>
 
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)</span>
     <span class="n">x_col_name</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">x_col_name</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">X</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">label_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-      <span class="n">y_hat</span> <span class="o">=</span> <span class="p">[</span><span class="n">pred</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="k">for</span> <span class="n">pred</span> <span class="ow">in</span> <span class="n">test_preds</span><span class="p">[</span><span class="s1">&#39;preds&#39;</span><span class="p">]]</span>
+      <span class="n">y_hat</span> <span class="o">=</span> <span class="p">[</span><span class="n">pred</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="k">for</span> <span class="n">pred</span> <span class="ow">in</span> <span class="n">test_preds</span><span class="p">]</span>
       <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;prob_</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_hat</span>
     <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;test_preds_fold_0.csv&#39;</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
 
@@ -641,8 +641,36 @@
         <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
-        <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">serialize</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div></div>
+        <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">serialize</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
 
+
+<div class="viewcode-block" id="Experiment.download_file_gd"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.download_file_gd">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">download_file_gd</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads a file from google drive inside `gd_artifact_path`</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname: str</span>
+<span class="sd">      The file name</span>
+
+<span class="sd">    exp_id: int, optional</span>
+<span class="sd">      The experiement identifier</span>
+
+<span class="sd">    run_id: int, optional</span>
+<span class="sd">      The run identifier</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_exp_created</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Experiment must be created&#39;</span><span class="p">)</span>
+    <span class="n">exp_id</span> <span class="o">=</span> <span class="n">exp_id</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">exp_id</span>
+    <span class="n">run_id</span> <span class="o">=</span> <span class="n">run_id</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">run_id</span>
+
+    <span class="n">to_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">local_run_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
+    <span class="n">from_path</span> <span class="o">=</span> <span class="n">GD_RUN_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp_id</span><span class="o">=</span><span class="n">exp_id</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">)</span>
+
+    <span class="n">gd</span> <span class="o">=</span> <span class="n">GDrive</span><span class="p">()</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">from_path</span><span class="p">,</span> <span class="n">to_path</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>

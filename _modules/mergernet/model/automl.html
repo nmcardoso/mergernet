@@ -360,14 +360,25 @@
     <span class="n">Experiment</span><span class="o">.</span><span class="n">download_file_gh</span><span class="p">(</span><span class="s1">&#39;optuna.sqlite&#39;</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">,</span> <span class="n">resume_hash</span><span class="p">)</span>
 
   <span class="n">t</span> <span class="o">=</span> <span class="n">Timming</span><span class="p">()</span>
-  <span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span>
-    <span class="n">storage</span><span class="o">=</span><span class="n">optuna_uri</span><span class="p">,</span>
-    <span class="n">study_name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
-    <span class="n">pruner</span><span class="o">=</span><span class="n">pruner_instance</span><span class="p">,</span>
-    <span class="n">sampler</span><span class="o">=</span><span class="n">optuna</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">TPESampler</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">RANDOM_SEED</span><span class="p">),</span>
-    <span class="n">direction</span><span class="o">=</span><span class="n">objective_direction</span><span class="p">,</span>
-    <span class="n">load_if_exists</span><span class="o">=</span><span class="kc">True</span>
-  <span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">resume_hash</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span>
+      <span class="n">storage</span><span class="o">=</span><span class="n">optuna_uri</span><span class="p">,</span>
+      <span class="n">study_name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+      <span class="n">pruner</span><span class="o">=</span><span class="n">pruner_instance</span><span class="p">,</span>
+      <span class="n">sampler</span><span class="o">=</span><span class="n">optuna</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">TPESampler</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">RANDOM_SEED</span><span class="p">),</span>
+      <span class="n">direction</span><span class="o">=</span><span class="n">objective_direction</span><span class="p">,</span>
+      <span class="n">load_if_exists</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">load_study</span><span class="p">(</span>
+      <span class="n">storage</span><span class="o">=</span><span class="n">optuna_uri</span><span class="p">,</span>
+      <span class="n">study_name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+      <span class="n">pruner</span><span class="o">=</span><span class="n">pruner_instance</span><span class="p">,</span>
+      <span class="n">sampler</span><span class="o">=</span><span class="n">optuna</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">TPESampler</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">RANDOM_SEED</span><span class="p">),</span>
+      <span class="n">direction</span><span class="o">=</span><span class="n">objective_direction</span><span class="p">,</span>
+      <span class="n">load_if_exists</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
 
   <span class="n">callbacks</span> <span class="o">=</span> <span class="p">[]</span>
   <span class="k">if</span> <span class="n">save_model</span><span class="p">:</span>

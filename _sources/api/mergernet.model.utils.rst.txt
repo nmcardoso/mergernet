@@ -15,7 +15,7 @@ mergernet.model.utils
       :toctree:
    
       get_conv_arch
-      get_optimizer
+      load_model
       set_trainable_state
       setup_seeds
    

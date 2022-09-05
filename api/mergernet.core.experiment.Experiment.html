@@ -764,28 +764,11 @@
   </label>
   <ul>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="mergernet.jobs.j001_test.html">
-     mergernet.jobs.j001_test
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label class="toctree-toggle" for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.jobs.j001_test.run.html">
-       mergernet.jobs.j001_test.run
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="mergernet.jobs.j002_test.html">
      mergernet.jobs.j002_test
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label class="toctree-toggle" for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label class="toctree-toggle" for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -803,8 +786,8 @@
   <a class="reference internal" href="mergernet.model.html">
    mergernet.model
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-  <label class="toctree-toggle" for="toctree-checkbox-18">
+  <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+  <label class="toctree-toggle" for="toctree-checkbox-17">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -813,8 +796,8 @@
     <a class="reference internal" href="mergernet.model.automl.html">
      mergernet.model.automl
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label class="toctree-toggle" for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label class="toctree-toggle" for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -830,8 +813,8 @@
     <a class="reference internal" href="mergernet.model.baseline.html">
      mergernet.model.baseline
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label class="toctree-toggle" for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label class="toctree-toggle" for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -847,8 +830,8 @@
     <a class="reference internal" href="mergernet.model.callbacks.html">
      mergernet.model.callbacks
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label class="toctree-toggle" for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label class="toctree-toggle" for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -876,6 +859,23 @@
     </ul>
    </li>
    <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.model.inference.html">
+     mergernet.model.inference
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label class="toctree-toggle" for="toctree-checkbox-21">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.inference.Predictor.html">
+       mergernet.model.inference.Predictor
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
     <a class="reference internal" href="mergernet.model.utils.html">
      mergernet.model.utils
     </a>
@@ -891,8 +891,8 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.model.utils.get_optimizer.html">
-       mergernet.model.utils.get_optimizer
+      <a class="reference internal" href="mergernet.model.utils.load_model.html">
+       mergernet.model.utils.load_model
       </a>
      </li>
      <li class="toctree-l3">
@@ -1283,13 +1283,16 @@ uploaded to. This path is relative to a specifict run.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.core.experiment.Experiment.create" title="mergernet.core.experiment.Experiment.create"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create</span></code></a>(exp_id[, exp_desc])</p></td>
 <td><p>Creates a new experiment, configuring the experiment identifiers and file system to store the files needed (e.g.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.core.experiment.Experiment.download_file_gh" title="mergernet.core.experiment.Experiment.download_file_gh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">download_file_gh</span></code></a>(fname[, exp_id, run_id])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.core.experiment.Experiment.download_file_gd" title="mergernet.core.experiment.Experiment.download_file_gd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">download_file_gd</span></code></a>(fname[, exp_id, run_id])</p></td>
+<td><p>Downloads a file from google drive inside <cite>gd_artifact_path</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.core.experiment.Experiment.download_file_gh" title="mergernet.core.experiment.Experiment.download_file_gh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">download_file_gh</span></code></a>(fname[, exp_id, run_id])</p></td>
 <td><p>Downloads a file from github artifacts repo inside <cite>gh_artifact_path</cite></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.core.experiment.Experiment.upload_file_gd" title="mergernet.core.experiment.Experiment.upload_file_gd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">upload_file_gd</span></code></a>(fname[, data, scope])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.core.experiment.Experiment.upload_file_gd" title="mergernet.core.experiment.Experiment.upload_file_gd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">upload_file_gd</span></code></a>(fname[, data, scope])</p></td>
 <td><p>Uploads a file to google drive inside <cite>gd_artifact_path</cite></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.core.experiment.Experiment.upload_file_gh" title="mergernet.core.experiment.Experiment.upload_file_gh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">upload_file_gh</span></code></a>(fname[, data, scope])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.core.experiment.Experiment.upload_file_gh" title="mergernet.core.experiment.Experiment.upload_file_gh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">upload_file_gh</span></code></a>(fname[, data, scope])</p></td>
 <td><p>Uploads a file to github artifacts repo inside <cite>gh_artifact_path</cite></p></td>
 </tr>
 </tbody>
@@ -1342,6 +1345,24 @@ generated by the experiment (e.g. predictions)</p>
 <dt><strong>exp_id: int</strong></dt><dd><p>Experiment identifier, the same as entrypoint file</p>
 </dd>
 <dt><strong>exp_desc: str</strong></dt><dd><p>Experiment description</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.core.experiment.Experiment.download_file_gd">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">download_file_gd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/experiment.html#Experiment.download_file_gd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.experiment.Experiment.download_file_gd" title="Permalink to this definition">#</a></dt>
+<dd><p>Downloads a file from google drive inside <cite>gd_artifact_path</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>fname: str</strong></dt><dd><p>The file name</p>
+</dd>
+<dt><strong>exp_id: int, optional</strong></dt><dd><p>The experiement identifier</p>
+</dd>
+<dt><strong>run_id: int, optional</strong></dt><dd><p>The run identifier</p>
 </dd>
 </dl>
 </dd>

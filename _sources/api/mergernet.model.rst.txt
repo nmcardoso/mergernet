@@ -31,5 +31,6 @@
    mergernet.model.automl
    mergernet.model.baseline
    mergernet.model.callbacks
+   mergernet.model.inference
    mergernet.model.utils
 

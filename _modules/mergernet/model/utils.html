@@ -288,17 +288,15 @@
               
   <h1>Source code for mergernet.model.utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Tuple</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">RANDOM_SEED</span>
-<span class="kn">from</span> <span class="nn">mergernet.core.hp</span> <span class="kn">import</span> <span class="n">HyperParameterSet</span>
-<span class="kn">from</span> <span class="nn">mergernet.data.preprocessing</span> <span class="kn">import</span> <span class="n">load_jpg</span><span class="p">,</span> <span class="n">load_png</span><span class="p">,</span> <span class="n">one_hot_factory</span>
-
+<span class="kn">from</span> <span class="nn">mergernet.core.experiment</span> <span class="kn">import</span> <span class="n">Experiment</span>
 
 <span class="n">L</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -321,8 +319,9 @@
       <span class="n">l</span><span class="o">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="n">trainable</span></div>
 
 
-<div class="viewcode-block" id="get_optimizer"><a class="viewcode-back" href="../../../api/mergernet.model.utils.get_optimizer.html#mergernet.model.utils.get_optimizer">[docs]</a><span class="k">def</span> <span class="nf">get_optimizer</span><span class="p">(</span><span class="n">hp</span><span class="p">:</span> <span class="n">HyperParameterSet</span><span class="p">):</span>
-  <span class="k">pass</span></div>
+<div class="viewcode-block" id="load_model"><a class="viewcode-back" href="../../../api/mergernet.model.utils.load_model.html#mergernet.model.utils.load_model">[docs]</a><span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+  <span class="n">path</span> <span class="o">=</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">download_file_gd</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">,</span> <span class="n">run_id</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_conv_arch"><a class="viewcode-back" href="../../../api/mergernet.model.utils.get_conv_arch.html#mergernet.model.utils.get_conv_arch">[docs]</a><span class="k">def</span> <span class="nf">get_conv_arch</span><span class="p">(</span>

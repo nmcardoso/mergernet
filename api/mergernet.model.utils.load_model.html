@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>mergernet.model.utils.get_optimizer &#8212; MergerNet  documentation</title>
+    <title>mergernet.model.utils.load_model &#8212; MergerNet  documentation</title>
   <script>
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
@@ -34,7 +34,7 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'api/mergernet.model.utils.get_optimizer';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/mergernet.model.utils.load_model';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="mergernet.model.utils.set_trainable_state" href="mergernet.model.utils.set_trainable_state.html" />
@@ -764,28 +764,11 @@
   </label>
   <ul>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="mergernet.jobs.j001_test.html">
-     mergernet.jobs.j001_test
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label class="toctree-toggle" for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="mergernet.jobs.j001_test.run.html">
-       mergernet.jobs.j001_test.run
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
     <a class="reference internal" href="mergernet.jobs.j002_test.html">
      mergernet.jobs.j002_test
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
-    <label class="toctree-toggle" for="toctree-checkbox-17">
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label class="toctree-toggle" for="toctree-checkbox-16">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -803,8 +786,8 @@
   <a class="reference internal" href="mergernet.model.html">
    mergernet.model
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
-  <label class="toctree-toggle" for="toctree-checkbox-18">
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+  <label class="toctree-toggle" for="toctree-checkbox-17">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -813,8 +796,8 @@
     <a class="reference internal" href="mergernet.model.automl.html">
      mergernet.model.automl
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
-    <label class="toctree-toggle" for="toctree-checkbox-19">
+    <input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/>
+    <label class="toctree-toggle" for="toctree-checkbox-18">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -830,8 +813,8 @@
     <a class="reference internal" href="mergernet.model.baseline.html">
      mergernet.model.baseline
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
-    <label class="toctree-toggle" for="toctree-checkbox-20">
+    <input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/>
+    <label class="toctree-toggle" for="toctree-checkbox-19">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -847,8 +830,8 @@
     <a class="reference internal" href="mergernet.model.callbacks.html">
      mergernet.model.callbacks
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
-    <label class="toctree-toggle" for="toctree-checkbox-21">
+    <input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/>
+    <label class="toctree-toggle" for="toctree-checkbox-20">
      <i class="fas fa-chevron-down">
      </i>
     </label>
@@ -875,6 +858,23 @@
      </li>
     </ul>
    </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mergernet.model.inference.html">
+     mergernet.model.inference
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/>
+    <label class="toctree-toggle" for="toctree-checkbox-21">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.model.inference.Predictor.html">
+       mergernet.model.inference.Predictor
+      </a>
+     </li>
+    </ul>
+   </li>
    <li class="toctree-l2 current active has-children">
     <a class="reference internal" href="mergernet.model.utils.html">
      mergernet.model.utils
@@ -892,7 +892,7 @@
      </li>
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
-       mergernet.model.utils.get_optimizer
+       mergernet.model.utils.load_model
       </a>
      </li>
      <li class="toctree-l3">
@@ -1240,11 +1240,11 @@
             
             <article class="bd-article" role="main">
               
-  <section id="mergernet-model-utils-get-optimizer">
-<h1>mergernet.model.utils.get_optimizer<a class="headerlink" href="#mergernet-model-utils-get-optimizer" title="Permalink to this heading">#</a></h1>
+  <section id="mergernet-model-utils-load-model">
+<h1>mergernet.model.utils.load_model<a class="headerlink" href="#mergernet-model-utils-load-model" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="mergernet.model.utils.get_optimizer">
-<span class="sig-prename descclassname"><span class="pre">mergernet.model.utils.</span></span><span class="sig-name descname"><span class="pre">get_optimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="mergernet.core.hp.HyperParameterSet.html#mergernet.core.hp.HyperParameterSet" title="mergernet.core.hp.HyperParameterSet"><span class="pre">HyperParameterSet</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/utils.html#get_optimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.utils.get_optimizer" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="mergernet.model.utils.load_model">
+<span class="sig-prename descclassname"><span class="pre">mergernet.model.utils.</span></span><span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/utils.html#load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.utils.load_model" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -1287,7 +1287,7 @@
 <div class="toc-item">
   
 <div class="tocsection sourcelink">
-    <a href="../_sources/api/mergernet.model.utils.get_optimizer.rst.txt">
+    <a href="../_sources/api/mergernet.model.utils.load_model.rst.txt">
         <i class="fas fa-file-alt"></i> Show Source
     </a>
 </div>

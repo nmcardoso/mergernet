@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mergernet.jobs.j001_test &#8212; MergerNet  documentation</title>
+    <title>mergernet.model.inference &#8212; MergerNet  documentation</title>
   <script>
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
@@ -33,7 +33,7 @@
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/mergernet/jobs/j001_test';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/mergernet/model/inference';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -286,91 +286,63 @@
             
             <article class="bd-article" role="main">
               
-  <h1>Source code for mergernet.jobs.j001_test</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">mergernet.core.experiment</span> <span class="kn">import</span> <span class="n">backup_model</span><span class="p">,</span> <span class="n">experiment_run</span>
-<span class="kn">from</span> <span class="nn">mergernet.core.hp</span> <span class="kn">import</span> <span class="n">HyperParameterSet</span>
+  <h1>Source code for mergernet.model.inference</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="kn">from</span> <span class="nn">mergernet.core.experiment</span> <span class="kn">import</span> <span class="n">Experiment</span>
 <span class="kn">from</span> <span class="nn">mergernet.data.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
-<span class="kn">from</span> <span class="nn">mergernet.model.automl</span> <span class="kn">import</span> <span class="n">optuna_train</span>
-<span class="kn">from</span> <span class="nn">mergernet.model.baseline</span> <span class="kn">import</span> <span class="n">finetune_train</span>
-
-<span class="n">hp</span> <span class="o">=</span> <span class="p">[</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;architecture&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;resnet50&#39;</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;pretrained_weights&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;imagenet&#39;</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;epochs&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">20</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;batch_size&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;constant&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">64</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;dense_1_units&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;low&#39;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
-    <span class="s1">&#39;high&#39;</span><span class="p">:</span> <span class="mi">1024</span><span class="p">,</span>
-    <span class="s1">&#39;step&#39;</span><span class="p">:</span> <span class="mi">64</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;dropout_1_rate&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;uniform&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;low&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
-    <span class="s1">&#39;high&#39;</span><span class="p">:</span> <span class="mf">0.5</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;dense_2_units&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;low&#39;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
-    <span class="s1">&#39;high&#39;</span><span class="p">:</span> <span class="mi">1024</span><span class="p">,</span>
-    <span class="s1">&#39;step&#39;</span><span class="p">:</span> <span class="mi">64</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;dropout_2_rate&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;uniform&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;low&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
-    <span class="s1">&#39;high&#39;</span><span class="p">:</span> <span class="mf">0.5</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;opt_lr&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;loguniform&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;low&#39;</span><span class="p">:</span> <span class="mf">1.0e-5</span><span class="p">,</span>
-    <span class="s1">&#39;high&#39;</span><span class="p">:</span> <span class="mf">1.0e-3</span>
-  <span class="p">}</span>
-<span class="p">]</span>
 
 
-<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../../api/mergernet.jobs.j001_test.run.html#mergernet.jobs.j001_test.run">[docs]</a><span class="nd">@experiment_run</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
-  <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Experiment created for test purposes. This experiments tests the</span>
-<span class="sd">  ``Artifacts API``</span>
-<span class="sd">  &quot;&quot;&quot;</span>
-  <span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">Dataset</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">BIN_LEGACY_NORTH_RGB_128</span><span class="p">)</span>
-  <span class="n">hps</span> <span class="o">=</span> <span class="n">HyperParameterSet</span><span class="p">()</span>
-  <span class="n">hps</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">hp</span><span class="p">)</span>
-  <span class="n">model</span> <span class="o">=</span> <span class="n">optuna_train</span><span class="p">(</span>
-    <span class="n">train_func</span><span class="o">=</span><span class="n">finetune_train</span><span class="p">,</span>
-    <span class="n">dataset</span><span class="o">=</span><span class="n">ds</span><span class="p">,</span>
-    <span class="n">hp</span><span class="o">=</span><span class="n">hps</span><span class="p">,</span>
-    <span class="n">n_trials</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">resume_hash</span><span class="o">=</span><span class="s1">&#39;2ee5aef1&#39;</span>
-  <span class="p">)</span>
-  <span class="n">backup_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ds</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Predictor"><a class="viewcode-back" href="../../../api/mergernet.model.inference.Predictor.html#mergernet.model.inference.Predictor">[docs]</a><span class="k">class</span> <span class="nc">Predictor</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_preds</span> <span class="o">=</span> <span class="kc">None</span>
 
 
+<div class="viewcode-block" id="Predictor.predict"><a class="viewcode-back" href="../../../api/mergernet.model.inference.Predictor.html#mergernet.model.inference.Predictor.predict">[docs]</a>  <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
+    <span class="c1"># select ds by dataset type: predictions or train</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">y_column</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_preds_dataset</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">_</span><span class="p">,</span> <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-  <span class="n">run</span><span class="p">()</span>
+    <span class="c1"># prepare dataset</span>
+    <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span><span class="n">ds_test</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;pred&#39;</span><span class="p">)</span>
+
+    <span class="c1"># make prediction and save in instance state</span>
+    <span class="n">test_preds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ds_test</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_preds</span> <span class="o">=</span> <span class="n">test_preds</span>
+
+    <span class="k">return</span> <span class="n">test_preds</span></div>
+
+
+<div class="viewcode-block" id="Predictor.upload"><a class="viewcode-back" href="../../../api/mergernet.model.inference.Predictor.html#mergernet.model.inference.Predictor.upload">[docs]</a>  <span class="k">def</span> <span class="nf">upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># get X by dataset type: predictions or train</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">y_column</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_X</span><span class="p">()</span>
+      <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="s1">&#39;predictions.csv&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_X_by_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+      <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="s1">&#39;test_preds_fold_0.csv&#39;</span>
+
+    <span class="c1"># load dataset table</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)</span>
+    <span class="n">x_col_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column</span>
+
+    <span class="c1"># filter and order the rows of dataset table with predictions</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">x_col_name</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">X</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># append preds columns</span>
+    <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">label_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">y_hat</span> <span class="o">=</span> <span class="p">[</span><span class="n">pred</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="k">for</span> <span class="n">pred</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preds</span><span class="p">[</span><span class="s1">&#39;preds&#39;</span><span class="p">]]</span>
+      <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;prob_</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_hat</span>
+
+    <span class="c1"># upload to github</span>
+    <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span></div></div>
 </pre></div>
 
             </article>
