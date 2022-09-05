@@ -4,6 +4,7 @@ from typing import Any, Dict
 
 import numpy as np
 import optuna
+import pandas as pd
 import tensorflow as tf
 
 from mergernet.core.experiment import Experiment
@@ -62,10 +63,22 @@ class SaveBestTrialCallback(tf.keras.callbacks.Callback):
 
     current_value = logs[self.objective_metric]
     if self.operator(current_value, best_value):
-      L.info(f'New best metric detected: {self.objective_metric} = {current_value}s')
-      save_path = Path(Experiment.local_run_path) / (self.name + '.h5')
+      L.info(f'New best metric detected. {self.objective_metric}: {current_value}')
+
+      # save model
+      save_path = Path(Experiment.local_run_path) / f'{self.name}.h5'
       self.model.save(save_path, overwrite=True)
-      L.info(f'Trial saved at {str(save_path)}')
+      L.info(f'Trial saved in {str(save_path)}')
+      Experiment.register_artifact(f'{self.name}.h5', 'gdrive')
+
+      # save history as csv
+      hist = self.model.history.history
+      hist['epoch'] = range(len(hist['loss']))
+      hist_df = pd.DataFrame(hist)
+      save_path = Path(Experiment.local_run_path) / f'history_{self.name}.json'
+      hist_df.to_csv(save_path, index=False)
+      L.info(f'History saved in {str(save_path)}')
+      Experiment.register_artifact(f'history_{self.name}.json', 'github')
 
 
 

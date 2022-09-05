@@ -67,17 +67,20 @@ def experiment_run(exp_id: int):
       end_time = int(time())
 
       # post-execution oprations:
-      # 1. experiment metadata upload
+      # 1. upload all registered artifacts
+      Experiment.upload_registered_artifacts()
+
+      # 2. experiment metadata upload
       exp_metadata = {
         'exp_id': Experiment.exp_id,
         'exp_desc': Experiment.exp_desc
       }
       Experiment.upload_file_gh('exp_metadata.json', exp_metadata, scope='exp')
 
-      # 2. logs upload
+      # 3. logs upload
       Experiment.upload_file_gh(str(log_path))
 
-      # 3. run metadata upload
+      # 4. run metadata upload
       run_metadata = {
         'start_time': start_time,
         'end_time': end_time,
@@ -129,8 +132,9 @@ def backup_model(
     return
 
   if save_history:
-    history = model.history.history
-    Experiment.upload_file_gh('history.json', history)
+    if model.history is not None:
+      history = model.history.history
+      Experiment.upload_file_gh('history.json', history)
 
   if save_test_preds:
     _, ds_test = dataset.get_fold(0)
@@ -190,6 +194,7 @@ class Experiment(metaclass=SingletonMeta):
     Notes for current run of this experiment
   """
   _exp_created = False
+  _registered_artifacts = []
   exp_id = None
   run_id = None
   local_shared_path = None
@@ -382,6 +387,38 @@ class Experiment(metaclass=SingletonMeta):
     path = gd.get(from_path, to_path)
     print(path)
     return Path(path)
+
+
+  @classmethod
+  def register_artifact(cls, fname: str, service: str):
+    """
+    Register an artifact that will be automatically uploaded to corresponding
+    service at the end of the experiment
+
+    Parameters
+    ----------
+    fname: str
+      The artifact filename
+    service: str
+      The service name, one of: ``gdrive``, ``github`` or ``both``
+    """
+    if not cls._exp_created: raise ValueError('Experiment must be created')
+    cls._registered_artifacts.append({
+      'name': fname,
+      'service': service
+    })
+
+
+  @classmethod
+  def upload_registered_artifacts(cls):
+    """
+    Uploads all registered artifacts
+    """
+    for artifact in cls._registered_artifacts:
+      if artifact['service'] in ('gdrive', 'both'):
+        cls.upload_file_gd(artifact['name'])
+      if artifact['service'] in ('github', 'both'):
+        cls.upload_file_gh(artifact['name'])
 
 
 if __name__ == '__main__':
