@@ -1,15 +1,13 @@
 import logging
-from typing import Callable, Tuple
 import os
 import random
+from typing import Callable, Tuple
 
 import numpy as np
 import tensorflow as tf
 
 from mergernet.core.constants import RANDOM_SEED
-from mergernet.core.hp import HyperParameterSet
-from mergernet.data.preprocessing import load_jpg, load_png, one_hot_factory
-
+from mergernet.core.experiment import Experiment
 
 L = logging.getLogger(__name__)
 
@@ -32,8 +30,9 @@ def set_trainable_state(
       l.trainable = trainable
 
 
-def get_optimizer(hp: HyperParameterSet):
-  pass
+def load_model(name: str, exp_id: int, run_id: str):
+  path = Experiment.download_file_gd(name, exp_id, run_id)
+  return tf.keras.models.load_model(path)
 
 
 def get_conv_arch(

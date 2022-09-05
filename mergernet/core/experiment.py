@@ -51,14 +51,16 @@ def experiment_run(exp_id: int):
   def decorator(func: FunctionType):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-      # clear previous log
+      # pre-execution operations:
+      # 1. clear previous log
       log_path = Path(tempfile.gettempdir()) / 'mergernet.log'
       open(log_path, 'w').close()
 
-      # create new experiment
+      # 2. create new experiment
       exp_desc = getdoc(func)
       Experiment.create(exp_id=exp_id, exp_desc=exp_desc)
 
+      # function execution:
       # track times and execute function
       start_time = int(time())
       func(*args, **kwargs)
@@ -135,14 +137,12 @@ def backup_model(
     ds_test = dataset.prepare_data(ds_test, kind='pred')
     X = dataset.get_X_by_fold(0, kind='test')
     test_preds = model.predict(ds_test)
-    test_preds = {'X': X.tolist(), 'preds': test_preds.tolist()}
-    Experiment.upload_file_gh('test_preds.json', test_preds)
 
     df = pd.read_csv(dataset.config.table_path)
     x_col_name = dataset.config.X_column
     df = df.set_index(x_col_name).loc[X].reset_index(inplace=False)
     for label, index in dataset.config.label_map.items():
-      y_hat = [pred[index] for pred in test_preds['preds']]
+      y_hat = [pred[index] for pred in test_preds]
       df[f'prob_{label}'] = y_hat
     Experiment.upload_file_gh('test_preds_fold_0.csv', df)
 
@@ -354,6 +354,34 @@ class Experiment(metaclass=SingletonMeta):
       with open(to_path, 'w') as fp:
         fp.write(serialize(data))
 
+
+  @classmethod
+  def download_file_gd(cls, fname: str, exp_id: int = None, run_id: str = None):
+    """
+    Downloads a file from google drive inside `gd_artifact_path`
+
+    Parameters
+    ----------
+    fname: str
+      The file name
+
+    exp_id: int, optional
+      The experiement identifier
+
+    run_id: int, optional
+      The run identifier
+    """
+    if not cls._exp_created: raise ValueError('Experiment must be created')
+    exp_id = exp_id or cls.exp_id
+    run_id = run_id or cls.run_id
+
+    to_path = Path(cls.local_run_path) / fname
+    from_path = GD_RUN_PATTERN.format(exp_id=exp_id, run_id=run_id)
+
+    gd = GDrive()
+    path = gd.get(from_path, to_path)
+    print(path)
+    return Path(path)
 
 
 if __name__ == '__main__':

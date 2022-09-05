@@ -71,14 +71,25 @@ def optuna_train(
     Experiment.download_file_gh('optuna.sqlite', exp_id, resume_hash)
 
   t = Timming()
-  study = optuna.create_study(
-    storage=optuna_uri,
-    study_name=name,
-    pruner=pruner_instance,
-    sampler=optuna.samplers.TPESampler(seed=RANDOM_SEED),
-    direction=objective_direction,
-    load_if_exists=True
-  )
+
+  if resume_hash is None:
+    study = optuna.create_study(
+      storage=optuna_uri,
+      study_name=name,
+      pruner=pruner_instance,
+      sampler=optuna.samplers.TPESampler(seed=RANDOM_SEED),
+      direction=objective_direction,
+      load_if_exists=True
+    )
+  else:
+    study = optuna.load_study(
+      storage=optuna_uri,
+      study_name=name,
+      pruner=pruner_instance,
+      sampler=optuna.samplers.TPESampler(seed=RANDOM_SEED),
+      direction=objective_direction,
+      load_if_exists=True
+    )
 
   callbacks = []
   if save_model:
