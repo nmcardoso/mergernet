@@ -142,7 +142,7 @@ def backup_model(
     x_col_name = dataset.config.X_column
     df = df.set_index(x_col_name).loc[X].reset_index(inplace=False)
     for label, index in dataset.config.label_map.items():
-      y_hat = [pred[index] for pred in test_preds]
+      y_hat = [pred[index] for pred in test_preds['preds']]
       df[f'prob_{label}'] = y_hat
     Experiment.upload_file_gh('test_preds_fold_0.csv', df)
 
