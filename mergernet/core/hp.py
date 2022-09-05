@@ -141,7 +141,8 @@ class HyperParameterSet:
 
     for hp in args:
       if isinstance(hp, HyperParameter):
-        self.hps[hp.name] = hp
+        name = hp.attrs['name']
+        self.hps[name] = hp
 
 
   def add(self, hyperparameters: Sequence[Union[dict, HyperParameter]]):
@@ -154,13 +155,13 @@ class HyperParameterSet:
       The list of hyperparameters that will be added to this
       hyperparameters set
     """
-    for item in hyperparameters:
-      if type(item) == dict:
-        name = item['name']
-        self.hps.update({ name: HyperParameter.from_dict(item) })
+    for hp in hyperparameters:
+      if type(hp) == dict:
+        name = hp['name']
+        self.hps.update({ name: HyperParameter.from_dict(hp) })
       else:
-        name = getattr(item, name)
-        self.hps.update({ name: item })
+        name = hp.attrs['name']
+        self.hps.update({ name: hp })
 
 
   def get(self, hp: str, trial: optuna.trial.FrozenTrial = None) -> Any:
