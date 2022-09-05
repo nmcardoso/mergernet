@@ -70,7 +70,7 @@ def run():
   model = optuna_train(
     train_func=finetune_train,
     dataset=ds,
-    hp=HyperParameterSet(hp),
+    hp=HyperParameterSet.add(hp),
     n_trials=1,
     resume_hash='2ee5aef1'
   )

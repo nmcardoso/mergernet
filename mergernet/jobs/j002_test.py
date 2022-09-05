@@ -1,62 +1,27 @@
 from mergernet.core.experiment import backup_model, experiment_run
-from mergernet.core.hp import HyperParameterSet
+from mergernet.core.hp import HP, HyperParameterSet
 from mergernet.data.dataset import Dataset
 from mergernet.model.baseline import finetune_train
 
-hps = [
-  {
-    'name': 'architecture',
-    'type': 'constant',
-    'value': 'resnet50'
-  },
-  {
-    'name': 'pretrained_weights',
-    'type': 'constant',
-    'value': 'imagenet'
-  },
-  {
-    'name': 'epochs',
-    'type': 'constant',
-    'value': 1
-  },
-  {
-    'name': 'batch_size',
-    'type': 'constant',
-    'value': 64
-  },
-  {
-    'name': 'dense_1_units',
-    'type': 'constant',
-    'value': 128
-  },
-  {
-    'name': 'dropout_1_rate',
-    'type': 'constant',
-    'value': 0.4
-  },
-  {
-    'name': 'dense_2_units',
-    'type': 'constant',
-    'value': 64
-  },
-  {
-    'name': 'dropout_2_rate',
-    'type': 'constant',
-    'value': 0.4
-  },
-  {
-    'name': 'opt_lr',
-    'type': 'constant',
-    'value': 1e-4
-  }
-]
+hps = HyperParameterSet(
+  HP.const('architecture', 'resnet50'),
+  HP.const('pretrained_weights', 'imagenet'),
+  HP.const('epochs', 1),
+  HP.const('batch_size', 64),
+  HP.const('dense_1_units', 128),
+  HP.const('dropout_1_rate', 0.4),
+  HP.const('dense_2_units', 64),
+  HP.const('dropout_2_rate', 0.4),
+  HP.const('opt_lr', 1e-4)
+)
 
 
 @experiment_run(2)
 def run():
   """
   Test the finetune train with constant hyperparameters of binary
-  classification (merger/non-merger) on Legacy North with RGB images
+  classification (merger/non-merger) on Legacy North with RGB images.
+  This experiment uses the new hyperparameter API
 
   Dataset
   -------

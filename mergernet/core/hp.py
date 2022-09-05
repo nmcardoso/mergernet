@@ -1,6 +1,6 @@
 from typing import Any, Sequence, Union
-import optuna
 
+import optuna
 
 
 class HyperParameter:
@@ -15,16 +15,10 @@ class HyperParameter:
     _trial = trial or self._trial
     if isinstance(self, CategoricalHyperParameter):
       fn = _trial.suggest_categorical
-    elif isinstance(self, DiscreteUniformHyperParameter):
-      fn = _trial.suggest_discrete_uniform
     elif isinstance(self, FloatHyperParameter):
       fn = _trial.suggest_float
     elif isinstance(self, IntHyperParameter):
       fn = _trial.suggest_int
-    elif isinstance(self, LogUniformHyperParameter):
-      fn = _trial.suggest_loguniform
-    elif isinstance(self, UniformHyperParameter):
-      fn = _trial.suggest_uniform
 
     filtered_args = {
       k: v for k, v in self.__dict__.items()
@@ -39,16 +33,10 @@ class HyperParameter:
     t = params.pop('type')
     if t == 'categorical':
       E = CategoricalHyperParameter
-    elif t == 'discrete_uniform':
-      E = DiscreteUniformHyperParameter
     elif t == 'float':
       E = FloatHyperParameter
     elif t == 'int':
       E = IntHyperParameter
-    elif t == 'loguniform':
-      E = LogUniformHyperParameter
-    elif t == 'uniform':
-      E = UniformHyperParameter
     elif t == 'constant':
       E = ConstantHyperParameter
     return E(**params)
@@ -62,17 +50,15 @@ class CategoricalHyperParameter(HyperParameter):
 
 
 
-class DiscreteUniformHyperParameter(HyperParameter):
-  def __init__(self, name: str, low: float, high: float, q: float):
-    self.name = name
-    self.low = low
-    self.high = high
-    self.q = q
-
-
-
 class FloatHyperParameter(HyperParameter):
-  def __init__(self, name: str, low: float, high: float, step: float = None, log: bool = False):
+  def __init__(
+    self,
+    name: str,
+    low: float,
+    high: float,
+    step: float = None,
+    log: bool = False
+  ):
     self.name = name
     self.low = low
     self.high = high
@@ -82,28 +68,19 @@ class FloatHyperParameter(HyperParameter):
 
 
 class IntHyperParameter(HyperParameter):
-  def __init__(self, name: str, low: int, high: int, step: int = 1, log: bool = False):
+  def __init__(
+    self,
+    name: str,
+    low: int,
+    high: int,
+    step: int = 1,
+    log: bool = False
+  ):
     self.name = name
     self.low = low
     self.high = high
     self.step = step
     self.log = log
-
-
-
-class LogUniformHyperParameter(HyperParameter):
-  def __init__(self, name: str, low: float, high: float):
-    self.name = name
-    self.low = low
-    self.high = high
-
-
-
-class UniformHyperParameter(HyperParameter):
-  def __init__(self, name: str, low: float, high: float):
-    self.name = name
-    self.low = low
-    self.high = high
 
 
 
@@ -114,10 +91,61 @@ class ConstantHyperParameter(HyperParameter):
 
 
 
+class HP:
+  @staticmethod
+  def cat(name: str, choices: Sequence) -> CategoricalHyperParameter:
+    return CategoricalHyperParameter(name, choices)
+
+
+  @staticmethod
+  def const(name: str, value: Any) -> ConstantHyperParameter:
+    return CategoricalHyperParameter(name, value)
+
+
+  @staticmethod
+  def num(
+    name: str,
+    low: Union[float, int],
+    high: Union[float, int],
+    step: Union[float, int] = None,
+    log: bool = False,
+    dtype: Union[float, int] = float
+  ) -> Union[FloatHyperParameter, IntHyperParameter]:
+    if dtype == float:
+      return FloatHyperParameter(name, low, high, step, log)
+    else:
+      return IntHyperParameter(name, low, high, step, log)
+
+
+
 class HyperParameterSet:
-  def __init__(self, hyperparameters: Sequence[Union[dict, HyperParameter]]):
+  """
+  Represents a set of hyperparameters and handles the hyperparameters
+  register and access.
+
+  Parameters
+  ----------
+  *args: HyperParameter
+    Any sequence of HyperParameter subclass
+  """
+  def __init__(self, *args: HyperParameter):
     self.hps = {}
 
+    for hp in args:
+      if isinstance(hp, HyperParameter):
+        self.hps[hp.name] = hp
+
+
+  def add(self, hyperparameters: Sequence[Union[dict, HyperParameter]]):
+    """
+    Parses a sequence of dictionaries that represents the hyperparameters
+
+    Parameters
+    ----------
+    hyperparameters: array-like of dictionaries or arrar-like of HyperParameter
+      The list of hyperparameters that will be added to this
+      hyperparameters set
+    """
     for item in hyperparameters:
       if type(item) == dict:
         name = item['name']
@@ -127,7 +155,28 @@ class HyperParameterSet:
         self.hps.update({ name: item })
 
 
-  def get(self, hp: str, trial: optuna.trial.FrozenTrial = None):
+  def get(self, hp: str, trial: optuna.trial.FrozenTrial = None) -> Any:
+    """
+    Get the value of a hyperparameter identified by its name.
+    For hyperparameters different than ConstantHyperParameter, this method
+    will use optuna's seggest api
+
+    Parameters
+    ----------
+    hp: str
+      The hyperparamer name
+    trial: optuna.trial.FrozenTrial
+      The optuan trial instance
+
+    Returns
+    -------
+    Any
+      The hyperparameter value
+
+    See Also
+    --------
+    mergernet.core.hp.HyperParameter.suggest
+    """
     if trial is None:
       return self.hps[hp].suggest()
     else:
@@ -135,5 +184,13 @@ class HyperParameterSet:
 
 
   def set_trial(self, trial: optuna.trial.FrozenTrial):
+    """
+    Sets the optuna's trial for all hyperparameter in this set
+
+    Parameters
+    ----------
+    trial: optuna.trial.FrozenTrial
+      The trial that will be added
+    """
     for hp in self.hps.values():
       hp.set_trial(trial)
