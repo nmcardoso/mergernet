@@ -26,7 +26,7 @@ def run():
   Dataset
   -------
     - BIN_LEGACY_NORTH_RGB_128: binary dataset merger/non-merger with
-    128x128 RGB stamps of Legacy Survey with 0.55 pixscale
+      128x128 RGB stamps of Legacy Survey with 0.55 pixscale
 
   Train
   -----
