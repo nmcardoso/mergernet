@@ -176,10 +176,10 @@ BLIND_SPLUS_TRILOGY_150 = DatasetConfig(
 BIN_LEGACY_NORTH_RGB_128 = DatasetConfig(
   name='bin_legacy_north_rgb_128',
   archive_url={
-    'sciserver': SciServer.get_url('f0332ec2-a3c8-4d62-9a19-5d1e4063a7ed'),
-    'gdrive': GDrive.get_url('1eyumx1QCfXVTzPtdaKT67REl3XEo03eS')
+    'sciserver': SciServer.get_url('9e1fd5f9-64b6-4130-a409-b7dde8f65c0e'),
+    'gdrive': GDrive.get_url('1lblw2-Bvqs6q4T6fjVmc1kKm54Ps6rMs')
   },
-  table_url=GDrive.get_url('1oybZ9zcRX8670bDtpRmI3j_VzYY30ldI'),
+  table_url=GDrive.get_url('1-kvD6eEuqybNwu-Cds_p5FnnrqAsBL_1'),
   archive_path=Path('bin_legacy_north_rgb_128.tar.xz'),
   images_path=Path('bin_legacy_north_rgb_128'),
   table_path=Path('bin_legacy_north.csv'),
@@ -187,7 +187,7 @@ BIN_LEGACY_NORTH_RGB_128 = DatasetConfig(
   X_column_suffix='.jpg',
   y_column='class',
   fold_column='fold',
-  label_map={'non-merger': 0, 'merger': 1},
+  label_map={'non_merger': 0, 'merger': 1},
   image_shape=(128, 128, 3),
   n_classes=2
 )
