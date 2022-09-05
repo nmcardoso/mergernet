@@ -6,7 +6,7 @@ from mergernet.model.baseline import finetune_train
 hps = HyperParameterSet(
   HP.const('architecture', 'resnet50'),
   HP.const('pretrained_weights', 'imagenet'),
-  HP.const('epochs', 1),
+  HP.const('epochs', 12),
   HP.const('batch_size', 64),
   HP.const('dense_1_units', 128),
   HP.const('dropout_1_rate', 0.4),
