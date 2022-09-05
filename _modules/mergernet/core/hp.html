@@ -430,7 +430,8 @@
 
     <span class="k">for</span> <span class="n">hp</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
       <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="p">[</span><span class="n">hp</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">hp</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">hp</span>
 
 
 <div class="viewcode-block" id="HyperParameterSet.add"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HyperParameterSet.html#mergernet.core.hp.HyperParameterSet.add">[docs]</a>  <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hyperparameters</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">HyperParameter</span><span class="p">]]):</span>
@@ -443,13 +444,13 @@
 <span class="sd">      The list of hyperparameters that will be added to this</span>
 <span class="sd">      hyperparameters set</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">hyperparameters</span><span class="p">:</span>
-      <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">name</span><span class="p">:</span> <span class="n">HyperParameter</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="p">})</span>
+    <span class="k">for</span> <span class="n">hp</span> <span class="ow">in</span> <span class="n">hyperparameters</span><span class="p">:</span>
+      <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">hp</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">hp</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">name</span><span class="p">:</span> <span class="n">HyperParameter</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">hp</span><span class="p">)</span> <span class="p">})</span>
       <span class="k">else</span><span class="p">:</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">name</span><span class="p">:</span> <span class="n">item</span> <span class="p">})</span></div>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">name</span><span class="p">:</span> <span class="n">hp</span> <span class="p">})</span></div>
 
 
 <div class="viewcode-block" id="HyperParameterSet.get"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HyperParameterSet.html#mergernet.core.hp.HyperParameterSet.get">[docs]</a>  <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
