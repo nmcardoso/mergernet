@@ -16,6 +16,11 @@ hp = [
     'value': 'imagenet'
   },
   {
+    'name': 'epochs',
+    'type': 'constant',
+    'value': 40
+  },
+  {
     'name': 'batch_size',
     'type': 'constant',
     'value': 64
@@ -61,12 +66,12 @@ def run():
   Experiment created for test purposes. This experiments tests the
   ``Artifacts API``
   """
-  ds = Dataset(config=Dataset.registry.BIN_SDSS_128)
+  ds = Dataset(config=Dataset.registry.BIN_LEGACY_NORTH_RGB_128)
   optuna_train(
     train_func=finetune_train,
     dataset=ds,
     hp=HyperParameterSet(hp),
-    n_trials=30
+    n_trials=2
   )
 
 
