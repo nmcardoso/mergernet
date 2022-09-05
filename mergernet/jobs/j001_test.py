@@ -1,4 +1,4 @@
-from mergernet.core.experiment import Experiment, experiment_run
+from mergernet.core.experiment import backup_model, experiment_run
 from mergernet.core.hp import HyperParameterSet
 from mergernet.data.dataset import Dataset
 from mergernet.model.automl import optuna_train
@@ -18,7 +18,7 @@ hp = [
   {
     'name': 'epochs',
     'type': 'constant',
-    'value': 40
+    'value': 20
   },
   {
     'name': 'batch_size',
@@ -67,12 +67,14 @@ def run():
   ``Artifacts API``
   """
   ds = Dataset(config=Dataset.registry.BIN_LEGACY_NORTH_RGB_128)
-  optuna_train(
+  model = optuna_train(
     train_func=finetune_train,
     dataset=ds,
     hp=HyperParameterSet(hp),
-    n_trials=2
+    n_trials=1,
+    resume_hash='2ee5aef1'
   )
+  backup_model(model, ds)
 
 
 
