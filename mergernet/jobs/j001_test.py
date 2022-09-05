@@ -1,63 +1,20 @@
 from mergernet.core.experiment import backup_model, experiment_run
-from mergernet.core.hp import HyperParameterSet
+from mergernet.core.hp import HP, HyperParameterSet
 from mergernet.data.dataset import Dataset
 from mergernet.model.automl import optuna_train
 from mergernet.model.baseline import finetune_train
 
-hp = [
-  {
-    'name': 'architecture',
-    'type': 'constant',
-    'value': 'resnet50'
-  },
-  {
-    'name': 'pretrained_weights',
-    'type': 'constant',
-    'value': 'imagenet'
-  },
-  {
-    'name': 'epochs',
-    'type': 'constant',
-    'value': 20
-  },
-  {
-    'name': 'batch_size',
-    'type': 'constant',
-    'value': 64
-  },
-  {
-    'name': 'dense_1_units',
-    'type': 'int',
-    'low': 64,
-    'high': 1024,
-    'step': 64
-  },
-  {
-    'name': 'dropout_1_rate',
-    'type': 'uniform',
-    'low': 0.2,
-    'high': 0.5
-  },
-  {
-    'name': 'dense_2_units',
-    'type': 'int',
-    'low': 64,
-    'high': 1024,
-    'step': 64
-  },
-  {
-    'name': 'dropout_2_rate',
-    'type': 'uniform',
-    'low': 0.2,
-    'high': 0.5
-  },
-  {
-    'name': 'opt_lr',
-    'type': 'loguniform',
-    'low': 1.0e-5,
-    'high': 1.0e-3
-  }
-]
+hps = HyperParameterSet(
+  HP.const('architecture', 'resnet50'),
+  HP.const('pretrained_weights', 'imagenet'),
+  HP.const('epochs', 20),
+  HP.const('batch_size', 64),
+  HP.num('dense_1_units', low=64, high=1024, step=64, dtype=int),
+  HP.num('dropout_1_rate', low=0.2, hight=0.5),
+  HP.num('dense_2_units', low=64, high=1024, step=64, dtype=int),
+  HP.num('dropout_1_rate', low=0.2, hight=0.5),
+  HP.num('opt_lr', low=1e-5, high=1e-3, log=True)
+)
 
 
 @experiment_run(1)
@@ -67,14 +24,11 @@ def run():
   ``Artifacts API``
   """
   ds = Dataset(config=Dataset.registry.BIN_LEGACY_NORTH_RGB_128)
-  hps = HyperParameterSet()
-  hps.add(hp)
   model = optuna_train(
     train_func=finetune_train,
     dataset=ds,
     hp=hps,
-    n_trials=1,
-    resume_hash='2ee5aef1'
+    n_trials=1
   )
   backup_model(model, ds)
 
