@@ -286,17 +286,21 @@ class Experiment(metaclass=SingletonMeta):
 
     gh = GithubService()
 
-    if data is None:
-      with open(from_path, 'rb') as fp:
-        gh.commit(to_path, data=fp.read(), from_bytes=True)
-    elif type(data) == str:
-      gh.commit(to_path, data=data, from_bytes=False)
-    elif isinstance(data, pd.DataFrame):
-      buffer = BytesIO()
-      data.to_csv(buffer, index=False)
-      gh.commit(to_path, data=buffer.getbuffer(), from_bytes=True)
-    else:
-      gh.commit(to_path, data=serialize(data), from_bytes=False)
+    try:
+      if data is None:
+        with open(from_path, 'rb') as fp:
+          gh.commit(to_path, data=fp.read(), from_bytes=True)
+      elif type(data) == str:
+        gh.commit(to_path, data=data, from_bytes=False)
+      elif isinstance(data, pd.DataFrame):
+        buffer = BytesIO()
+        data.to_csv(buffer, index=False)
+        gh.commit(to_path, data=buffer.getbuffer(), from_bytes=True)
+      else:
+        gh.commit(to_path, data=serialize(data), from_bytes=False)
+      L.info(f'Artifact {fname} was successfully uploaded to github')
+    except:
+      L.error(f'Error during artifact {fname} upload to github')
 
 
   @classmethod
@@ -348,14 +352,18 @@ class Experiment(metaclass=SingletonMeta):
     base_to_path = cls.gd_run_path if scope == 'run' else cls.gd_exp_path
     to_path = Path(base_to_path) / fname
 
-    if data is None:
-      copy2(from_path, to_path)
-    elif type(data) == str:
-      with open(to_path, 'w') as fp:
-        fp.write(data)
-    else:
-      with open(to_path, 'w') as fp:
-        fp.write(serialize(data))
+    try:
+      if data is None:
+        copy2(from_path, to_path)
+      elif type(data) == str:
+        with open(to_path, 'w') as fp:
+          fp.write(data)
+      else:
+        with open(to_path, 'w') as fp:
+          fp.write(serialize(data))
+      L.info(f'Artifact {fname} was successfully uploaded to google drive')
+    except:
+      L.error(f'Error during artifact {fname} upload to google drive')
 
 
   @classmethod
