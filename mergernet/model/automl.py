@@ -25,10 +25,18 @@ def _objective_factory(
   study: optuna.study.Study
 ) -> FunctionType:
   def objective(trial: optuna.trial.FrozenTrial) -> float:
+    L.info(f'Starting trial {trial.number}')
+
     # generate callback
     model_path = Path(Experiment.local_run_path) / (
       f'model_trial_{trial.number}' + '_epoch_{epoch}.h5'
     )
+
+    try:
+      initial_value = study.best_value
+    except:
+      initial_value = None
+
     ckpt_callback = tf.keras.callbacks.ModelCheckpoint(
       str(model_path),
       monitor='val_loss',
@@ -39,6 +47,7 @@ def _objective_factory(
       save_freq='epoch',
       initial_value_threshold=study.best_value
     )
+    L.info(f'Initial threshold for CheckpointCallback: {initial_value}')
 
     # run train function
     hp.set_trial(trial)
