@@ -80,13 +80,3 @@ class SaveBestTrialCallback(tf.keras.callbacks.Callback):
         hist_df.to_csv(save_path, index=False)
         L.info(f'History saved in {str(save_path)}')
         Experiment.register_artifact(f'history_{self.name}.csv', 'github')
-
-
-
-class TelemetryCallback(tf.keras.callbacks.Callback):
-  def __init__(self, trial: optuna.trial.FrozenTrial):
-    super(TelemetryCallback, self).__init__()
-    self.trial = trial
-
-  def on_train_end(self, logs: Dict[str, Any]):
-    pass
