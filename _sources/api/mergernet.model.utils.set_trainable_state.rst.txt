@@ -1,0 +1,6 @@
+mergernet.model.utils.set\_trainable\_state
+===========================================
+
+.. currentmodule:: mergernet.model.utils
+
+.. autofunction:: set_trainable_state

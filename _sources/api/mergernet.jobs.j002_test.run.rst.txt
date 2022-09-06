@@ -1,0 +1,6 @@
+mergernet.jobs.j002\_test.run
+=============================
+
+.. currentmodule:: mergernet.jobs.j002_test
+
+.. autofunction:: run

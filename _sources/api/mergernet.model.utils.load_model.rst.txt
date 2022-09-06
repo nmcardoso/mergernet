@@ -1,0 +1,6 @@
+mergernet.model.utils.load\_model
+=================================
+
+.. currentmodule:: mergernet.model.utils
+
+.. autofunction:: load_model
