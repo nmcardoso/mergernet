@@ -45,7 +45,7 @@ def _objective_factory(
       save_weights_only=False,
       mode='min',
       save_freq='epoch',
-      initial_value_threshold=study.best_value
+      initial_value_threshold=initial_value
     )
     L.info(f'Initial threshold for CheckpointCallback: {initial_value}')
 
