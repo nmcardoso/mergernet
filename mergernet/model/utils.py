@@ -1,9 +1,12 @@
 import logging
 import os
 import random
-from typing import Callable, Tuple
+from pathlib import Path
+from types import NoneType
+from typing import Callable, Tuple, Union
 
 import numpy as np
+import pandas as pd
 import tensorflow as tf
 
 from mergernet.core.constants import RANDOM_SEED
@@ -20,6 +23,7 @@ def setup_seeds():
   os.environ['PYTHONHASHSEED'] = str(RANDOM_SEED)
 
 
+
 def set_trainable_state(
   model: tf.keras.Model,
   layer: str,
@@ -30,9 +34,20 @@ def set_trainable_state(
       l.trainable = trainable
 
 
+
 def load_model(name: str, exp_id: int, run_id: str):
   path = Experiment.download_file_gd(name, exp_id, run_id)
   return tf.keras.models.load_model(path)
+
+
+
+def history_to_dataframe(history: Union[dict, NoneType]):
+  if history:
+    hist = {'epoch': range(len(history['loss'])), **history}
+    hist_df = pd.DataFrame(hist)
+    return hist_df
+  return None
+
 
 
 def get_conv_arch(
