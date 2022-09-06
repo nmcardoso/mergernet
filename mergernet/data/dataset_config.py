@@ -15,8 +15,8 @@ class DatasetConfig:
     archive_path: Path = None,
     images_path: Path = None,
     table_path: Path = None,
-    X_column: str = 'ID',
-    y_column: str = 'class',
+    X_column: str = None,
+    y_column: str = None,
     fold_column: str = 'fold',
     X_column_suffix: str = '', # filename extension
     detect_img_extension: bool = False,
