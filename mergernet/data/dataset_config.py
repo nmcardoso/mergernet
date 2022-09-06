@@ -206,7 +206,7 @@ class DatasetRegistry:
       SciServer.get_url('e457df57-7380-412a-8871-929dfd2b4ef8'),
       GDrive.get_url('1oV4VX7RJwjtBLdRHO069lO56tL1Eh6xa')
     ],
-    table_url=[GDrive.get_url('1oV4VX7RJwjtBLdRHO069lO56tL1Eh6xa')],
+    table_url=[SciServer.get_url('c66e8d23-b224-47a5-953a-b8811cefbc85')],
     archive_path=Path('blind_splus_gal80_r13.5-17_ls10_rgb_128.tar.xz'),
     images_path=Path('blind_splus_gal80_r13.5-17_ls10_rgb_128'),
     table_path=Path('blind_splus_gal80_r13.5-17_sanitized.csv'),
