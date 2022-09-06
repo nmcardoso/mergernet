@@ -1,6 +1,0 @@
-mergernet.data.dataset\_config.BLIND\_SPLUS\_GAL80\_LS10\_RGB\_128
-==================================================================
-
-.. currentmodule:: mergernet.data.dataset_config
-
-.. autodata:: BLIND_SPLUS_GAL80_LS10_RGB_128

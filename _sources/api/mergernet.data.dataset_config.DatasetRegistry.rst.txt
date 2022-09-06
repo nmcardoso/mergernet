@@ -20,6 +20,7 @@ mergernet.data.dataset\_config.DatasetRegistry
    
       ~DatasetRegistry.BIN_LEGACY_NORTH_RGB_128
       ~DatasetRegistry.BIN_SDSS_128
+      ~DatasetRegistry.BLIND_SPLUS_GAL80_LS10_RGB_128
       ~DatasetRegistry.BLIND_SPLUS_LUPTON_128
       ~DatasetRegistry.BLIND_SPLUS_LUPTON_150
       ~DatasetRegistry.BLIND_SPLUS_TRILOGY_128

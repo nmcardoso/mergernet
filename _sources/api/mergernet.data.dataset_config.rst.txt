@@ -5,22 +5,6 @@ mergernet.data.dataset\_config
 
    
    
-   .. rubric:: Module Attributes
-
-   .. autosummary::
-      :toctree:
-   
-      DARG_NO_INSPECTION
-      MESD_SDSS_128
-      MESD_LEGACY_128
-      BIN_SDSS_128
-      BLIND_SPLUS_LUPTON_128
-      BLIND_SPLUS_LUPTON_150
-      BLIND_SPLUS_TRILOGY_128
-      BLIND_SPLUS_TRILOGY_150
-      BIN_LEGACY_NORTH_RGB_128
-      BLIND_SPLUS_GAL80_LS10_RGB_128
-   
    
 
    
