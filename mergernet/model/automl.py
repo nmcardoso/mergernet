@@ -28,15 +28,11 @@ def _objective_factory(
     L.info(f'Starting trial {trial.number}')
 
     # generate callback
-    model_path = Path(Experiment.local_run_path) / (
-      f'model_trial_{trial.number}' + '_epoch_{epoch}.h5'
-    )
-
     try:
       initial_value = study.best_value
     except:
       initial_value = None
-
+    model_path = Path(Experiment.local_run_path) / 'model.h5'
     ckpt_callback = tf.keras.callbacks.ModelCheckpoint(
       str(model_path),
       monitor='val_loss',
@@ -122,6 +118,7 @@ def optuna_train(
   t.end()
 
   # save optimization artifacts
+  Experiment.upload_file_gd('model.h5')
   Experiment.upload_file_gh('optuna.sqlite')
   Experiment.upload_file_gh('trials.csv', study.trials_dataframe(multi_index=True))
 
@@ -135,6 +132,5 @@ def optuna_train(
   L.info(f'----- end of best trial summary -----')
 
   # load model and return
-  model_path = next(Path(Experiment.local_run_path).glob('model*.h5'))
-  model = tf.keras.models.load_model(model_path)
+  model = tf.keras.models.load_model(Path(Experiment.local_run_path) / 'model.h5')
   return model
