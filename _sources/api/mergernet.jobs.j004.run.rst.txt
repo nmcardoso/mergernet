@@ -1,0 +1,6 @@
+mergernet.jobs.j004.run
+=======================
+
+.. currentmodule:: mergernet.jobs.j004
+
+.. autofunction:: run
