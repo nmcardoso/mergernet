@@ -120,7 +120,7 @@ def optuna_train(
   # save optimization artifacts
   Experiment.upload_file_gd('model.h5')
   Experiment.upload_file_gh('optuna.sqlite')
-  Experiment.upload_file_gh('trials.csv', study.trials_dataframe(multi_index=True))
+  Experiment.upload_file_gh('trials.csv', study.trials_dataframe(multi_index=False))
 
   L.info(f'optuna optimization finished in {t.duration()}')
   L.info(f'number of finished trials: {len(study.trials)}')
