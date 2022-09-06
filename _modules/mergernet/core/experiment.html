@@ -677,6 +677,7 @@
 
     <span class="n">to_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">local_run_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
     <span class="n">from_path</span> <span class="o">=</span> <span class="n">GD_RUN_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exp_id</span><span class="o">=</span><span class="n">exp_id</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">)</span>
+    <span class="n">from_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">from_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">fname</span>
 
     <span class="n">path</span> <span class="o">=</span> <span class="n">copy2</span><span class="p">(</span><span class="n">from_path</span><span class="p">,</span> <span class="n">to_path</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
