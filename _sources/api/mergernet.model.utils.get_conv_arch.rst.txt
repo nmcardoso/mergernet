@@ -1,6 +1,0 @@
-mergernet.model.utils.get\_conv\_arch
-=====================================
-
-.. currentmodule:: mergernet.model.utils
-
-.. autofunction:: get_conv_arch
