@@ -19,6 +19,7 @@ class GithubService:
     self.token = token or GH_TOKEN
     self.repo = repo or GH_REPO
     self.branch = GH_BRANCH
+    self._http_client = requests.Session()
 
 
   def _get_url(self, route: str) -> str:
@@ -50,7 +51,7 @@ class GithubService:
       }
     }
 
-    response = requests.get(
+    response = self._http_client.get(
       url=url,
       headers=HEADERS,
       auth=(self.user, self.token)
@@ -60,7 +61,7 @@ class GithubService:
     if 'sha' in response_data:
       commit_data['sha'] = response_data['sha']
 
-    response = requests.put(
+    response = self._http_client.put(
       url=url,
       headers=HEADERS,
       json=commit_data,
@@ -72,7 +73,7 @@ class GithubService:
 
   def download(self, remote_path: str, dest_path: Union[str, Path]):
     url = f'https://raw.githubusercontent.com/{self.user}/{self.repo}/main/{remote_path}'
-    resp = requests.get(
+    resp = self._http_client.get(
       url=url,
       headers=HEADERS,
       auth=(self.user, self.token)
@@ -85,7 +86,7 @@ class GithubService:
   def list_dir(self, path: int) -> dict:
     url = self._get_url(f'repos/{self.user}/{self.repo}/contents/{path}')
 
-    response = requests.get(
+    response = self._http_client.get(
       url=url,
       headers=HEADERS,
       auth=(self.user, self.token)
