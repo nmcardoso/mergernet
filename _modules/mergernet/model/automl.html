@@ -317,15 +317,11 @@
     <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Starting trial </span><span class="si">{</span><span class="n">trial</span><span class="o">.</span><span class="n">number</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
     <span class="c1"># generate callback</span>
-    <span class="n">model_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">Experiment</span><span class="o">.</span><span class="n">local_run_path</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
-      <span class="sa">f</span><span class="s1">&#39;model_trial_</span><span class="si">{</span><span class="n">trial</span><span class="o">.</span><span class="n">number</span><span class="si">}</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;_epoch_</span><span class="si">{epoch}</span><span class="s1">.h5&#39;</span>
-    <span class="p">)</span>
-
     <span class="k">try</span><span class="p">:</span>
       <span class="n">initial_value</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">best_value</span>
     <span class="k">except</span><span class="p">:</span>
       <span class="n">initial_value</span> <span class="o">=</span> <span class="kc">None</span>
-
+    <span class="n">model_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">Experiment</span><span class="o">.</span><span class="n">local_run_path</span><span class="p">)</span> <span class="o">/</span> <span class="s1">&#39;model.h5&#39;</span>
     <span class="n">ckpt_callback</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">ModelCheckpoint</span><span class="p">(</span>
       <span class="nb">str</span><span class="p">(</span><span class="n">model_path</span><span class="p">),</span>
       <span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span>
@@ -411,6 +407,7 @@
   <span class="n">t</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
 
   <span class="c1"># save optimization artifacts</span>
+  <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span><span class="s1">&#39;model.h5&#39;</span><span class="p">)</span>
   <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;optuna.sqlite&#39;</span><span class="p">)</span>
   <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gh</span><span class="p">(</span><span class="s1">&#39;trials.csv&#39;</span><span class="p">,</span> <span class="n">study</span><span class="o">.</span><span class="n">trials_dataframe</span><span class="p">(</span><span class="n">multi_index</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 
@@ -424,8 +421,7 @@
   <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;----- end of best trial summary -----&#39;</span><span class="p">)</span>
 
   <span class="c1"># load model and return</span>
-  <span class="n">model_path</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">Experiment</span><span class="o">.</span><span class="n">local_run_path</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;model*.h5&#39;</span><span class="p">))</span>
-  <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+  <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">Experiment</span><span class="o">.</span><span class="n">local_run_path</span><span class="p">)</span> <span class="o">/</span> <span class="s1">&#39;model.h5&#39;</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">model</span></div>
 </pre></div>
 
