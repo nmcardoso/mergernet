@@ -10,7 +10,7 @@ from mergernet.core.experiment import Experiment
 from mergernet.core.hp import HyperParameterSet
 from mergernet.core.utils import Timming
 from mergernet.data.dataset import Dataset
-from mergernet.model.callbacks import SaveBestTrialCallback
+from mergernet.model.utils import history_to_dataframe
 
 L = logging.getLogger(__name__)
 optuna.logging.disable_default_handler()
@@ -22,16 +22,35 @@ def _objective_factory(
   train_func: FunctionType,
   dataset: Dataset,
   hp: HyperParameterSet,
-  callbacks: list = []
+  study: optuna.study.Study
 ) -> FunctionType:
   def objective(trial: optuna.trial.FrozenTrial) -> float:
+    # generate callback
+    model_path = Path(Experiment.local_run_path) / (
+      f'model_trial_{trial.number}' + '_epoch_{epoch}.h5'
+    )
+    ckpt_callback = tf.keras.callbacks.ModelCheckpoint(
+      str(model_path),
+      monitor='val_loss',
+      verbose=1,
+      save_best_only=True,
+      save_weights_only=False,
+      mode='min',
+      save_freq='epoch',
+      initial_value_threshold=study.best_value
+    )
+
     # run train function
     hp.set_trial(trial)
-    model = train_func(dataset=dataset, hp=hp, callbacks=callbacks)
+    model = train_func(dataset=dataset, hp=hp, callbacks=[ckpt_callback])
+    hist = model.history.history
+
+    # saving the history of current trial
+    hist_df = history_to_dataframe(hist)
+    Experiment.upload_file_gh(f'history_trial_{trial.number}.csv', hist_df)
 
     # generating optuna value to optimize (val_accuracy)
-    h = model.history.history
-    objective_value = h['val_loss'][-1]
+    objective_value = hist['val_loss'][-1]
 
     return objective_value
   return objective
@@ -46,7 +65,6 @@ def optuna_train(
   pruner: str = 'hyperband',
   objective_metric: str = 'val_loss',
   objective_direction: str = 'minimize',
-  save_model: bool = True,
   name: str = None,
   resume_hash: str = None
 ):
@@ -91,20 +109,15 @@ def optuna_train(
       load_if_exists=True
     )
 
-  callbacks = []
-  if save_model:
-    callbacks.append(
-      SaveBestTrialCallback(study, objective_metric, objective_direction, name)
-    )
-
   study.optimize(
-    func=_objective_factory(train_func, dataset, hp, callbacks=callbacks),
+    func=_objective_factory(train_func, dataset, hp, study),
     n_trials=n_trials
   )
 
   t.end()
 
   Experiment.upload_file_gh('optuna.sqlite')
+  Experiment.upload_file_gh('trials.csv', study.trials_dataframe(multi_index=True))
 
   L.info(f'optuna optimization finished in {t.duration()}')
   L.info(f'number of finished trials: {len(study.trials)}')
