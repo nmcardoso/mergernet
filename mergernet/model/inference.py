@@ -45,12 +45,18 @@ class Predictor:
     df = pd.read_csv(self.dataset.config.table_path)
     x_col_name = self.dataset.config.X_column
 
+    print('preds_len:', len(self._preds[0]))
+    print('df_len:', len(df))
+
     # filter and order the rows of dataset table with predictions
     df = df.set_index(x_col_name).loc[X].reset_index(inplace=False)
+
+    print('df_reindex_len:', len(df))
 
     # append preds columns
     for label, index in label_map.items():
       y_hat = [pred[index] for pred in self._preds]
+      print('y_hat_len', len(y_hat))
       df[f'prob_{label}'] = y_hat
 
     # upload to github
