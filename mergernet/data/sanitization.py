@@ -42,25 +42,29 @@ class DatasetSanitization:
     self.images_folder = Path(images_folder)
 
 
-  def get_iauname_by_filesize(self, threshold: float) -> np.ndarray:
+  def get_iauname_by_filesize(self, lower: float = None, upper: float = None) -> np.ndarray:
     """
     Filter files with file size lower than ``threshold`` and returns its
     iaunaemes
 
     Parameters
     ----------
-    threshold: float
-      The cutoff value
+    lower: float
+      The lower cutoff value
+    upper: float
+      The upper cutoff value
 
     Returns
     -------
     array
       Array of iaunames
     """
+    if lower is None: lower = -np.inf
+    if upper is None: upper = np.inf
     folder = self.images_folder
     return np.array([
       p.stem for p in folder.glob('*')
-      if p.stat().st_size < threshold * 1024
+      if p.stat().st_size > lower * 1024 and p.stat().st_size < upper * 1024
     ])
 
 
@@ -89,10 +93,10 @@ class DatasetSanitization:
       of the objects **with** the corresponding image, and (2) an array
       containing iaunames of the objects **without** the corresponding image.
     """
-    all_iaunames = self.table['iauname'].to_numpy()
-    img_iaunames = np.array([p.stem for p in self.images_folder.glob('*')])
-    mask = np.isin(all_iaunames, img_iaunames)
-    return all_iaunames[mask], all_iaunames[~mask]
+    table_iaunames = self.table['iauname'].to_numpy()
+    folder_iaunames = np.array([p.stem for p in self.images_folder.glob('*')])
+    mask = np.isin(table_iaunames, folder_iaunames)
+    return table_iaunames[mask], table_iaunames[~mask]
 
 
   def filesize_histogram(self, bins: int = 10, **kwargs):
@@ -149,7 +153,7 @@ class DatasetSanitization:
     threshold: float
       The cutoff value
     """
-    iaunames = self.get_iauname_by_filesize(threshold)
+    iaunames = self.get_iauname_by_filesize(upper=threshold)
     self.drop_images_by_iauname(iaunames)
 
 
@@ -182,7 +186,7 @@ class DatasetSanitization:
     DataFrame or None
       The sanitized table if not in dry-run mode
     """
-    low_size_iaunames = self.get_iauname_by_filesize(threshold)
+    low_size_iaunames = self.get_iauname_by_filesize(upper=threshold)
     _, no_img_iaunames = self.check_images()
     iaunames_to_exclude = np.concatenate((low_size_iaunames, no_img_iaunames))
 
