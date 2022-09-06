@@ -175,11 +175,11 @@ BLIND_SPLUS_TRILOGY_150 = DatasetConfig(
 
 BIN_LEGACY_NORTH_RGB_128 = DatasetConfig(
   name='bin_legacy_north_rgb_128',
-  archive_url={
-    'sciserver': SciServer.get_url('9e1fd5f9-64b6-4130-a409-b7dde8f65c0e'),
-    'gdrive': GDrive.get_url('1lblw2-Bvqs6q4T6fjVmc1kKm54Ps6rMs')
-  },
-  table_url=GDrive.get_url('1-kvD6eEuqybNwu-Cds_p5FnnrqAsBL_1'),
+  archive_url=[
+    SciServer.get_url('9e1fd5f9-64b6-4130-a409-b7dde8f65c0e'),
+    GDrive.get_url('1lblw2-Bvqs6q4T6fjVmc1kKm54Ps6rMs')
+  ],
+  table_url=[GDrive.get_url('1-kvD6eEuqybNwu-Cds_p5FnnrqAsBL_1')],
   archive_path=Path('bin_legacy_north_rgb_128.tar.xz'),
   images_path=Path('bin_legacy_north_rgb_128'),
   table_path=Path('bin_legacy_north_sanitized.csv'),
@@ -194,6 +194,25 @@ BIN_LEGACY_NORTH_RGB_128 = DatasetConfig(
 """
 Binary dataset (merger and non-merger) with Legacy 128x128 RGB images
 on north sky with of pixscale 0.55 arcsec/pixel.
+"""
+
+BLIND_SPLUS_GAL80_LS10_RGB_128 = DatasetConfig(
+  name='BLIND_SPLUS_GAL80_LS10_RGB_128',
+  archive_url=[
+    SciServer.get_url('e457df57-7380-412a-8871-929dfd2b4ef8'),
+    GDrive.get_url('1oV4VX7RJwjtBLdRHO069lO56tL1Eh6xa')
+  ],
+  table_url=[GDrive.get_url('1oV4VX7RJwjtBLdRHO069lO56tL1Eh6xa')],
+  archive_path=Path('blind_splus_gal80_r13.5-17_ls10_rgb_128.tar.xz'),
+  images_path=Path('blind_splus_gal80_r13.5-17_ls10_rgb_128'),
+  table_path=Path('blind_splus_gal80_r13.5-17_sanitized.csv'),
+  X_column='iauname',
+  X_column_suffix='.jpg',
+  image_shape=(128, 128, 3)
+)
+"""
+S-PLUS blind sample with 13.5 < r_auto < 17 with ls-10-early-grz RGB images
+128x128 pixscale of with 0.55 arcsec/pixel
 """
 
 
