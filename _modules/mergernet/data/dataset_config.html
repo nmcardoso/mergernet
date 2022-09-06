@@ -288,7 +288,7 @@
               
   <h1>Source code for mergernet.data.dataset_config</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
 <span class="kn">from</span> <span class="nn">mergernet.services.google</span> <span class="kn">import</span> <span class="n">GDrive</span>
 <span class="kn">from</span> <span class="nn">mergernet.services.sciserver</span> <span class="kn">import</span> <span class="n">SciServer</span>
@@ -299,8 +299,8 @@
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">archive_url</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">table_url</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">archive_url</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">table_url</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">archive_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">images_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">table_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -333,8 +333,8 @@
 <span class="n">DARG_NO_INSPECTION</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
   <span class="c1"># table_url=GDrive.get_url(&#39;1yHnyOdXS-HKzIsbenSi646jyf2AWU9vo&#39;),</span>
   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;darg_no_inspection&#39;</span><span class="p">,</span>
-  <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1ltKXhZgA4Ab60FGKCqybhebSiAL2LMgG&#39;</span><span class="p">),</span>
-  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1QgUYkzcjaCmo-kcgM8s2U8PYlx0C58oD&#39;</span><span class="p">),</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">[</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1ltKXhZgA4Ab60FGKCqybhebSiAL2LMgG&#39;</span><span class="p">)],</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="p">[</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1QgUYkzcjaCmo-kcgM8s2U8PYlx0C58oD&#39;</span><span class="p">)],</span>
   <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sdss_lupton_jpg_128.tar.xz&#39;</span><span class="p">),</span>
   <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sdss_lupton_jpg_128&#39;</span><span class="p">),</span>
   <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;reference_darg.csv&#39;</span><span class="p">),</span>
@@ -349,8 +349,8 @@
 
 <span class="n">MESD_SDSS_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mesd_sdss_128&#39;</span><span class="p">,</span>
-  <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1YZ7A9rVglf5NJp27rW8-6aJXBfBNPfYv&#39;</span><span class="p">),</span>
-  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H&#39;</span><span class="p">),</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">[</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1YZ7A9rVglf5NJp27rW8-6aJXBfBNPfYv&#39;</span><span class="p">)],</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="p">[</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H&#39;</span><span class="p">)],</span>
   <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_sdss_128.tar.xz&#39;</span><span class="p">),</span>
   <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_sdss_128&#39;</span><span class="p">),</span>
   <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd.csv&#39;</span><span class="p">),</span>
@@ -366,8 +366,8 @@
 
 <span class="n">MESD_LEGACY_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;mesd_legacy_128&#39;</span><span class="p">,</span>
-  <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1cTU0SVEv3qVeVxF7pzhtOP7S-bx5cPOP&#39;</span><span class="p">),</span>
-  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H&#39;</span><span class="p">),</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">[</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1cTU0SVEv3qVeVxF7pzhtOP7S-bx5cPOP&#39;</span><span class="p">)],</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="p">[</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H&#39;</span><span class="p">)],</span>
   <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_legacy_128.tar.xz&#39;</span><span class="p">),</span>
   <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_legacy_128&#39;</span><span class="p">),</span>
   <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd.csv&#39;</span><span class="p">),</span>
@@ -383,8 +383,8 @@
 
 <span class="n">BIN_SDSS_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;bin_sdss_128&#39;</span><span class="p">,</span>
-  <span class="n">archive_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1pZqGs6xG12Od-g3rnXEOyJ40LPAPu0J2&#39;</span><span class="p">),</span>
-  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1N-o1N3dYjJRaU4Nu9ZC0j2OHXzhbwYgl&#39;</span><span class="p">),</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">[</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1pZqGs6xG12Od-g3rnXEOyJ40LPAPu0J2&#39;</span><span class="p">)],</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="p">[</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1N-o1N3dYjJRaU4Nu9ZC0j2OHXzhbwYgl&#39;</span><span class="p">)],</span>
   <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_sdss_128.tar.xz&#39;</span><span class="p">),</span>
   <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_sdss_128&#39;</span><span class="p">),</span>
   <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_sdss.csv&#39;</span><span class="p">),</span>
@@ -400,11 +400,11 @@
 
 <span class="n">BLIND_SPLUS_LUPTON_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;blind_splus_lupton_128&#39;</span><span class="p">,</span>
-  <span class="n">archive_url</span><span class="o">=</span><span class="p">{</span>
-    <span class="s1">&#39;gdrive&#39;</span><span class="p">:</span> <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1TktT_u_NTqyBPKq5KG8hW0TVYhZe6Q3r&#39;</span><span class="p">),</span>
-    <span class="s1">&#39;sciserver&#39;</span><span class="p">:</span> <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;28d96731-35d9-4eac-bdee-7ccb81c5456d&#39;</span><span class="p">)</span>
-  <span class="p">},</span>
-  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1qd0lxMf2WzPF8bW0NciX1wwfa_mrS0Om&#39;</span><span class="p">),</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;28d96731-35d9-4eac-bdee-7ccb81c5456d&#39;</span><span class="p">),</span>
+    <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1TktT_u_NTqyBPKq5KG8hW0TVYhZe6Q3r&#39;</span><span class="p">)</span>
+  <span class="p">],</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="p">[</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1qd0lxMf2WzPF8bW0NciX1wwfa_mrS0Om&#39;</span><span class="p">)],</span>
   <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_128.tar.xz&#39;</span><span class="p">),</span>
   <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_128&#39;</span><span class="p">),</span>
   <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_lupton.csv&#39;</span><span class="p">),</span>
@@ -416,10 +416,10 @@
 
 <span class="n">BLIND_SPLUS_LUPTON_150</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;blind_splus_lupton_150&#39;</span><span class="p">,</span>
-  <span class="n">archive_url</span><span class="o">=</span><span class="p">{</span>
-    <span class="s1">&#39;gdrive&#39;</span><span class="p">:</span> <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1qERSsv9W4d2ICyKlvhhPaR7a2j6W5HrD&#39;</span><span class="p">),</span>
-    <span class="s1">&#39;sciserver&#39;</span><span class="p">:</span> <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;946b0d5c-741e-463a-bdbc-4a04313c00c7&#39;</span><span class="p">)</span>
-  <span class="p">},</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;946b0d5c-741e-463a-bdbc-4a04313c00c7&#39;</span><span class="p">),</span>
+    <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1qERSsv9W4d2ICyKlvhhPaR7a2j6W5HrD&#39;</span><span class="p">)</span>
+  <span class="p">],</span>
   <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1qd0lxMf2WzPF8bW0NciX1wwfa_mrS0Om&#39;</span><span class="p">),</span>
   <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_150.tar.xz&#39;</span><span class="p">),</span>
   <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_150&#39;</span><span class="p">),</span>
@@ -432,11 +432,11 @@
 
 <span class="n">BLIND_SPLUS_TRILOGY_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;blind_splus_trilogy_128&#39;</span><span class="p">,</span>
-  <span class="n">archive_url</span><span class="o">=</span><span class="p">{</span>
-    <span class="s1">&#39;gdrive&#39;</span><span class="p">:</span> <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1lPvOtE6HCJ7Xi5hAGfjgvrfwGiLRT7uH&#39;</span><span class="p">),</span>
-    <span class="s1">&#39;sciserver&#39;</span><span class="p">:</span> <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;4fe38e2a-c1db-4cd3-92ec-1c2c5b2c5284&#39;</span><span class="p">)</span>
-  <span class="p">},</span>
-  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG&#39;</span><span class="p">),</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;4fe38e2a-c1db-4cd3-92ec-1c2c5b2c5284&#39;</span><span class="p">),</span>
+    <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1lPvOtE6HCJ7Xi5hAGfjgvrfwGiLRT7uH&#39;</span><span class="p">)</span>
+  <span class="p">],</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="p">[</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG&#39;</span><span class="p">)],</span>
   <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_128.tar.xz&#39;</span><span class="p">),</span>
   <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_128&#39;</span><span class="p">),</span>
   <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_trilogy.csv&#39;</span><span class="p">),</span>
@@ -448,11 +448,11 @@
 
 <span class="n">BLIND_SPLUS_TRILOGY_150</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;blind_splus_trilogy_150&#39;</span><span class="p">,</span>
-  <span class="n">archive_url</span><span class="o">=</span><span class="p">{</span>
-    <span class="s1">&#39;gdrive&#39;</span><span class="p">:</span> <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1aiLtmbrJSRQTmSB3XP1AqXi0tfUi3S-H&#39;</span><span class="p">),</span>
-    <span class="s1">&#39;sciserver&#39;</span><span class="p">:</span> <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;74ca0cba-6c9e-4022-95b8-9d7964d70947&#39;</span><span class="p">),</span>
-  <span class="p">},</span>
-  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG&#39;</span><span class="p">),</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;74ca0cba-6c9e-4022-95b8-9d7964d70947&#39;</span><span class="p">),</span>
+    <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1aiLtmbrJSRQTmSB3XP1AqXi0tfUi3S-H&#39;</span><span class="p">)</span>
+  <span class="p">],</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="p">[</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG&#39;</span><span class="p">)],</span>
   <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_150.tar.xz&#39;</span><span class="p">),</span>
   <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_150&#39;</span><span class="p">),</span>
   <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_trilogy.csv&#39;</span><span class="p">),</span>
@@ -464,11 +464,11 @@
 
 <span class="n">BIN_LEGACY_NORTH_RGB_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;bin_legacy_north_rgb_128&#39;</span><span class="p">,</span>
-  <span class="n">archive_url</span><span class="o">=</span><span class="p">{</span>
-    <span class="s1">&#39;sciserver&#39;</span><span class="p">:</span> <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;9e1fd5f9-64b6-4130-a409-b7dde8f65c0e&#39;</span><span class="p">),</span>
-    <span class="s1">&#39;gdrive&#39;</span><span class="p">:</span> <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1lblw2-Bvqs6q4T6fjVmc1kKm54Ps6rMs&#39;</span><span class="p">)</span>
-  <span class="p">},</span>
-  <span class="n">table_url</span><span class="o">=</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1-kvD6eEuqybNwu-Cds_p5FnnrqAsBL_1&#39;</span><span class="p">),</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;9e1fd5f9-64b6-4130-a409-b7dde8f65c0e&#39;</span><span class="p">),</span>
+    <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1lblw2-Bvqs6q4T6fjVmc1kKm54Ps6rMs&#39;</span><span class="p">)</span>
+  <span class="p">],</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="p">[</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1-kvD6eEuqybNwu-Cds_p5FnnrqAsBL_1&#39;</span><span class="p">)],</span>
   <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_legacy_north_rgb_128.tar.xz&#39;</span><span class="p">),</span>
   <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_legacy_north_rgb_128&#39;</span><span class="p">),</span>
   <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_legacy_north_sanitized.csv&#39;</span><span class="p">),</span>
@@ -483,6 +483,25 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Binary dataset (merger and non-merger) with Legacy 128x128 RGB images</span>
 <span class="sd">on north sky with of pixscale 0.55 arcsec/pixel.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">BLIND_SPLUS_GAL80_LS10_RGB_128</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;BLIND_SPLUS_GAL80_LS10_RGB_128&#39;</span><span class="p">,</span>
+  <span class="n">archive_url</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">SciServer</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;e457df57-7380-412a-8871-929dfd2b4ef8&#39;</span><span class="p">),</span>
+    <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1oV4VX7RJwjtBLdRHO069lO56tL1Eh6xa&#39;</span><span class="p">)</span>
+  <span class="p">],</span>
+  <span class="n">table_url</span><span class="o">=</span><span class="p">[</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1oV4VX7RJwjtBLdRHO069lO56tL1Eh6xa&#39;</span><span class="p">)],</span>
+  <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r13.5-17_ls10_rgb_128.tar.xz&#39;</span><span class="p">),</span>
+  <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r13.5-17_ls10_rgb_128&#39;</span><span class="p">),</span>
+  <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r13.5-17_sanitized.csv&#39;</span><span class="p">),</span>
+  <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
+  <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
+  <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">S-PLUS blind sample with 13.5 &lt; r_auto &lt; 17 with ls-10-early-grz RGB images</span>
+<span class="sd">128x128 pixscale of with 0.55 arcsec/pixel</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 

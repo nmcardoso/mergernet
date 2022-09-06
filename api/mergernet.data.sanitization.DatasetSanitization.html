@@ -553,6 +553,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="mergernet.data.dataset_config.BLIND_SPLUS_GAL80_LS10_RGB_128.html">
+       mergernet.data.dataset_config.BLIND_SPLUS_GAL80_LS10_RGB_128
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="mergernet.data.dataset_config.DatasetConfig.html">
        mergernet.data.dataset_config.DatasetConfig
       </a>
@@ -1323,7 +1328,7 @@ IAU2000 name of the object using <code class="docutils literal notranslate"><spa
 <tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.sanitization.DatasetSanitization.get_filesize_distribution" title="mergernet.data.sanitization.DatasetSanitization.get_filesize_distribution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_filesize_distribution</span></code></a>()</p></td>
 <td><p>Computes the distribution of filesizes in the images folder</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.sanitization.DatasetSanitization.get_iauname_by_filesize" title="mergernet.data.sanitization.DatasetSanitization.get_iauname_by_filesize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_iauname_by_filesize</span></code></a>(threshold)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.sanitization.DatasetSanitization.get_iauname_by_filesize" title="mergernet.data.sanitization.DatasetSanitization.get_iauname_by_filesize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_iauname_by_filesize</span></code></a>([lower, upper])</p></td>
 <td><p>Filter files with file size lower than <code class="docutils literal notranslate"><span class="pre">threshold</span></code> and returns its iaunaemes</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.sanitization.DatasetSanitization.sample" title="mergernet.data.sanitization.DatasetSanitization.sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample</span></code></a>(iaunames)</p></td>
@@ -1417,13 +1422,15 @@ containing iaunames of the objects <strong>without</strong> the corresponding im
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mergernet.data.sanitization.DatasetSanitization.get_iauname_by_filesize">
-<span class="sig-name descname"><span class="pre">get_iauname_by_filesize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/mergernet/data/sanitization.html#DatasetSanitization.get_iauname_by_filesize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.sanitization.DatasetSanitization.get_iauname_by_filesize" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_iauname_by_filesize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lower</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="../_modules/mergernet/data/sanitization.html#DatasetSanitization.get_iauname_by_filesize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.sanitization.DatasetSanitization.get_iauname_by_filesize" title="Permalink to this definition">#</a></dt>
 <dd><p>Filter files with file size lower than <code class="docutils literal notranslate"><span class="pre">threshold</span></code> and returns its
 iaunaemes</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>threshold: float</strong></dt><dd><p>The cutoff value</p>
+<dt><strong>lower: float</strong></dt><dd><p>The lower cutoff value</p>
+</dd>
+<dt><strong>upper: float</strong></dt><dd><p>The upper cutoff value</p>
 </dd>
 </dl>
 </dd>

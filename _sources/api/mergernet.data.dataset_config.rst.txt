@@ -19,6 +19,7 @@ mergernet.data.dataset\_config
       BLIND_SPLUS_TRILOGY_128
       BLIND_SPLUS_TRILOGY_150
       BIN_LEGACY_NORTH_RGB_128
+      BLIND_SPLUS_GAL80_LS10_RGB_128
    
    
 
