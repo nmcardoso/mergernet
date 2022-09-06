@@ -40,7 +40,7 @@ def run():
     train_func=finetune_train,
     dataset=ds,
     hp=hps,
-    n_trials=10
+    n_trials=2
   )
   backup_model(model, ds, save_model=False, save_history=False)
 
