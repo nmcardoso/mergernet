@@ -388,6 +388,7 @@ class Experiment(metaclass=SingletonMeta):
 
     to_path = Path(cls.local_run_path) / fname
     from_path = GD_RUN_PATTERN.format(exp_id=exp_id, run_id=run_id)
+    from_path = Path(from_path) / fname
 
     path = copy2(from_path, to_path)
     return Path(path)
