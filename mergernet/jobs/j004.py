@@ -19,7 +19,7 @@ def run():
   model = load_model('model.h5', 3, '6bc82d80')
   p = Predictor(model, ds)
   p.predict()
-  p.upload()
+  p.upload(label_map=Dataset.registry.BIN_LEGACY_NORTH_RGB_128.label_map)
 
 
 

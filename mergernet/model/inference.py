@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict, List
 
 import pandas as pd
 import tensorflow as tf
@@ -31,7 +31,7 @@ class Predictor:
     return test_preds
 
 
-  def upload(self, name: str = None):
+  def upload(self, name: str = None, label_map: Dict = None):
     # get X by dataset type: predictions or train
     if self.dataset.config.y_column is None:
       X = self.dataset.get_X()
@@ -39,6 +39,7 @@ class Predictor:
     else:
       X = self.dataset.get_X_by_fold(0, kind='test')
       name = name or 'test_preds_fold_0.csv'
+      label_map = label_map or self.dataset.config.label_map
 
     # load dataset table
     df = pd.read_csv(self.dataset.config.table_path)
@@ -48,7 +49,7 @@ class Predictor:
     df = df.set_index(x_col_name).loc[X].reset_index(inplace=False)
 
     # append preds columns
-    for label, index in self.dataset.config.label_map.items():
+    for label, index in label_map.items():
       y_hat = [pred[index] for pred in self._preds['preds']]
       df[f'prob_{label}'] = y_hat
 
