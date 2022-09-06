@@ -339,7 +339,7 @@
 
     <span class="c1"># append preds columns</span>
     <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">label_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-      <span class="n">y_hat</span> <span class="o">=</span> <span class="p">[</span><span class="n">pred</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="k">for</span> <span class="n">pred</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preds</span><span class="p">[</span><span class="s1">&#39;preds&#39;</span><span class="p">]]</span>
+      <span class="n">y_hat</span> <span class="o">=</span> <span class="p">[</span><span class="n">pred</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="k">for</span> <span class="n">pred</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preds</span><span class="p">]</span>
       <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;prob_</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_hat</span>
 
     <span class="c1"># upload to github</span>
