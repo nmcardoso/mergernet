@@ -2,7 +2,6 @@ import logging
 import os
 import random
 from pathlib import Path
-from types import NoneType
 from typing import Callable, Tuple, Union
 
 import numpy as np
@@ -35,13 +34,13 @@ def set_trainable_state(
 
 
 
-def load_model(name: str, exp_id: int, run_id: str):
+def load_model(name: str, exp_id: int, run_id: str) -> tf.keras.Model:
   path = Experiment.download_file_gd(name, exp_id, run_id)
   return tf.keras.models.load_model(path)
 
 
 
-def history_to_dataframe(history: Union[dict, NoneType]):
+def history_to_dataframe(history: Union[dict, None]) -> Union[pd.DataFrame, None]:
   if history:
     hist = {'epoch': range(len(history['loss'])), **history}
     hist_df = pd.DataFrame(hist)
