@@ -80,6 +80,7 @@ def optuna_train(
   exp_id = Experiment.exp_id
   name = name or f'exp_{exp_id}'
 
+  # get prunner
   if pruner == 'median':
     pruner_instance = optuna.pruners.MedianPruner(
       n_startup_trials=10,
@@ -88,8 +89,7 @@ def optuna_train(
   elif pruner == 'hyperband':
     pruner_instance = optuna.pruners.HyperbandPruner(min_resource=7)
 
-  L.info(f'start of optuna optimization')
-
+  # set db uri
   optuna_path = Path(Experiment.local_run_path) / 'optuna.sqlite'
   optuna_uri = f'sqlite:///{str(optuna_path.resolve())}' # absolute path
 
@@ -97,34 +97,31 @@ def optuna_train(
     L.info(f'Downloading optuna study of exp {exp_id} run {resume_hash}')
     Experiment.download_file_gh('optuna.sqlite', exp_id, resume_hash)
 
-  t = Timming()
-
+  # creating a new study instance
   if resume_hash is None:
-    study = optuna.create_study(
-      storage=optuna_uri,
-      study_name=name,
-      pruner=pruner_instance,
-      sampler=optuna.samplers.TPESampler(seed=RANDOM_SEED),
-      direction=objective_direction,
-      load_if_exists=True
-    )
+    study_factory = optuna.create_study
   else:
-    study = optuna.load_study(
-      storage=optuna_uri,
-      study_name=name,
-      pruner=pruner_instance,
-      sampler=optuna.samplers.TPESampler(seed=RANDOM_SEED),
-      direction=objective_direction,
-      load_if_exists=True
-    )
+    study_factory = optuna.load_study
 
+  study = study_factory(
+    storage=optuna_uri,
+    study_name=name,
+    pruner=pruner_instance,
+    sampler=optuna.samplers.TPESampler(seed=RANDOM_SEED),
+    direction=objective_direction,
+    load_if_exists=True
+  )
+
+  # start optimization (train loop)
+  L.info(f'start of optuna optimization')
+  t = Timming()
   study.optimize(
     func=_objective_factory(train_func, dataset, hp, study),
     n_trials=n_trials
   )
-
   t.end()
 
+  # save optimization artifacts
   Experiment.upload_file_gh('optuna.sqlite')
   Experiment.upload_file_gh('trials.csv', study.trials_dataframe(multi_index=True))
 
@@ -137,7 +134,7 @@ def optuna_train(
     L.info(f'{k}: {str(v)}')
   L.info(f'----- end of best trial summary -----')
 
-  model = tf.keras.models.load_model(
-    Path(Experiment.local_run_path) / f'{name}.h5'
-  )
+  # load model and return
+  model_path = next(Path(Experiment.local_run_path).glob('model*.h5'))
+  model = tf.keras.models.load_model(model_path)
   return model
