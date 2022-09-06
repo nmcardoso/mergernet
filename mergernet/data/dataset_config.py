@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Dict, Union
+from typing import List
 
 from mergernet.services.google import GDrive
 from mergernet.services.sciserver import SciServer
@@ -10,8 +10,8 @@ class DatasetConfig:
   def __init__(
     self,
     name: str = None,
-    archive_url: Union[str, Dict[str, str]] = None,
-    table_url: Union[str, Dict[str, str]] = None,
+    archive_url: List[str] = None,
+    table_url: List[str] = None,
     archive_path: Path = None,
     images_path: Path = None,
     table_path: Path = None,
@@ -44,8 +44,8 @@ class DatasetConfig:
 DARG_NO_INSPECTION = DatasetConfig(
   # table_url=GDrive.get_url('1yHnyOdXS-HKzIsbenSi646jyf2AWU9vo'),
   name='darg_no_inspection',
-  archive_url=GDrive.get_url('1ltKXhZgA4Ab60FGKCqybhebSiAL2LMgG'),
-  table_url=GDrive.get_url('1QgUYkzcjaCmo-kcgM8s2U8PYlx0C58oD'),
+  archive_url=[GDrive.get_url('1ltKXhZgA4Ab60FGKCqybhebSiAL2LMgG')],
+  table_url=[GDrive.get_url('1QgUYkzcjaCmo-kcgM8s2U8PYlx0C58oD')],
   archive_path=Path('sdss_lupton_jpg_128.tar.xz'),
   images_path=Path('sdss_lupton_jpg_128'),
   table_path=Path('reference_darg.csv'),
@@ -60,8 +60,8 @@ DARG_NO_INSPECTION = DatasetConfig(
 
 MESD_SDSS_128 = DatasetConfig(
   name='mesd_sdss_128',
-  archive_url=GDrive.get_url('1YZ7A9rVglf5NJp27rW8-6aJXBfBNPfYv'),
-  table_url=GDrive.get_url('1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H'),
+  archive_url=[GDrive.get_url('1YZ7A9rVglf5NJp27rW8-6aJXBfBNPfYv')],
+  table_url=[GDrive.get_url('1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H')],
   archive_path=Path('mesd_sdss_128.tar.xz'),
   images_path=Path('mesd_sdss_128'),
   table_path=Path('mesd.csv'),
@@ -77,8 +77,8 @@ MESD_SDSS_128 = DatasetConfig(
 
 MESD_LEGACY_128 = DatasetConfig(
   name='mesd_legacy_128',
-  archive_url=GDrive.get_url('1cTU0SVEv3qVeVxF7pzhtOP7S-bx5cPOP'),
-  table_url=GDrive.get_url('1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H'),
+  archive_url=[GDrive.get_url('1cTU0SVEv3qVeVxF7pzhtOP7S-bx5cPOP')],
+  table_url=[GDrive.get_url('1uaRXWUskBrLHi-IGLhZ5T6yIa8w5hi4H')],
   archive_path=Path('mesd_legacy_128.tar.xz'),
   images_path=Path('mesd_legacy_128'),
   table_path=Path('mesd.csv'),
@@ -94,8 +94,8 @@ MESD_LEGACY_128 = DatasetConfig(
 
 BIN_SDSS_128 = DatasetConfig(
   name='bin_sdss_128',
-  archive_url=GDrive.get_url('1pZqGs6xG12Od-g3rnXEOyJ40LPAPu0J2'),
-  table_url=GDrive.get_url('1N-o1N3dYjJRaU4Nu9ZC0j2OHXzhbwYgl'),
+  archive_url=[GDrive.get_url('1pZqGs6xG12Od-g3rnXEOyJ40LPAPu0J2')],
+  table_url=[GDrive.get_url('1N-o1N3dYjJRaU4Nu9ZC0j2OHXzhbwYgl')],
   archive_path=Path('bin_sdss_128.tar.xz'),
   images_path=Path('bin_sdss_128'),
   table_path=Path('bin_sdss.csv'),
@@ -111,11 +111,11 @@ BIN_SDSS_128 = DatasetConfig(
 
 BLIND_SPLUS_LUPTON_128 = DatasetConfig(
   name='blind_splus_lupton_128',
-  archive_url={
-    'gdrive': GDrive.get_url('1TktT_u_NTqyBPKq5KG8hW0TVYhZe6Q3r'),
-    'sciserver': SciServer.get_url('28d96731-35d9-4eac-bdee-7ccb81c5456d')
-  },
-  table_url=GDrive.get_url('1qd0lxMf2WzPF8bW0NciX1wwfa_mrS0Om'),
+  archive_url=[
+    SciServer.get_url('28d96731-35d9-4eac-bdee-7ccb81c5456d'),
+    GDrive.get_url('1TktT_u_NTqyBPKq5KG8hW0TVYhZe6Q3r')
+  ],
+  table_url=[GDrive.get_url('1qd0lxMf2WzPF8bW0NciX1wwfa_mrS0Om')],
   archive_path=Path('blind_splus_lupton_128.tar.xz'),
   images_path=Path('blind_splus_lupton_128'),
   table_path=Path('blind_splus_gal80_r17_lupton.csv'),
@@ -127,10 +127,10 @@ BLIND_SPLUS_LUPTON_128 = DatasetConfig(
 
 BLIND_SPLUS_LUPTON_150 = DatasetConfig(
   name='blind_splus_lupton_150',
-  archive_url={
-    'gdrive': GDrive.get_url('1qERSsv9W4d2ICyKlvhhPaR7a2j6W5HrD'),
-    'sciserver': SciServer.get_url('946b0d5c-741e-463a-bdbc-4a04313c00c7')
-  },
+  archive_url=[
+    SciServer.get_url('946b0d5c-741e-463a-bdbc-4a04313c00c7'),
+    GDrive.get_url('1qERSsv9W4d2ICyKlvhhPaR7a2j6W5HrD')
+  ],
   table_url=GDrive.get_url('1qd0lxMf2WzPF8bW0NciX1wwfa_mrS0Om'),
   archive_path=Path('blind_splus_lupton_150.tar.xz'),
   images_path=Path('blind_splus_lupton_150'),
@@ -143,11 +143,11 @@ BLIND_SPLUS_LUPTON_150 = DatasetConfig(
 
 BLIND_SPLUS_TRILOGY_128 = DatasetConfig(
   name='blind_splus_trilogy_128',
-  archive_url={
-    'gdrive': GDrive.get_url('1lPvOtE6HCJ7Xi5hAGfjgvrfwGiLRT7uH'),
-    'sciserver': SciServer.get_url('4fe38e2a-c1db-4cd3-92ec-1c2c5b2c5284')
-  },
-  table_url=GDrive.get_url('1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG'),
+  archive_url=[
+    SciServer.get_url('4fe38e2a-c1db-4cd3-92ec-1c2c5b2c5284'),
+    GDrive.get_url('1lPvOtE6HCJ7Xi5hAGfjgvrfwGiLRT7uH')
+  ],
+  table_url=[GDrive.get_url('1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG')],
   archive_path=Path('blind_splus_trilogy_128.tar.xz'),
   images_path=Path('blind_splus_trilogy_128'),
   table_path=Path('blind_splus_gal80_r17_trilogy.csv'),
@@ -159,11 +159,11 @@ BLIND_SPLUS_TRILOGY_128 = DatasetConfig(
 
 BLIND_SPLUS_TRILOGY_150 = DatasetConfig(
   name='blind_splus_trilogy_150',
-  archive_url={
-    'gdrive': GDrive.get_url('1aiLtmbrJSRQTmSB3XP1AqXi0tfUi3S-H'),
-    'sciserver': SciServer.get_url('74ca0cba-6c9e-4022-95b8-9d7964d70947'),
-  },
-  table_url=GDrive.get_url('1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG'),
+  archive_url=[
+    SciServer.get_url('74ca0cba-6c9e-4022-95b8-9d7964d70947'),
+    GDrive.get_url('1aiLtmbrJSRQTmSB3XP1AqXi0tfUi3S-H')
+  ],
+  table_url=[GDrive.get_url('1JEjQleflgQf_L0Qkun15PHUn-OnOG0rG')],
   archive_path=Path('blind_splus_trilogy_150.tar.xz'),
   images_path=Path('blind_splus_trilogy_150'),
   table_path=Path('blind_splus_gal80_r17_trilogy.csv'),

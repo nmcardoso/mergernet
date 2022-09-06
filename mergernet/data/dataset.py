@@ -110,40 +110,32 @@ class Dataset:
     the dataset files from web resource for a specified dataset type.
     """
     # Download images
-    if not self.config.archive_path.parent.exists():
-      self.config.archive_path.parent.mkdir(parents=True, exist_ok=True)
-
-    if type(self.config.archive_url) == dict:
-      archive_url = self.config.archive_url.get(
-        'sciserver', self.config.archive_url.get('gdrive')
-      )
-    else:
-      archive_url = self.config.archive_url
-
-    tf.keras.utils.get_file(
-      fname=self.config.archive_path.resolve(),
-      origin=archive_url,
-      cache_subdir=self.config.archive_path.parent.resolve(),
-      archive_format='tar',
-      extract=True
-    )
+    for i, archive_url in enumerate(self.config.archive_url):
+      try:
+        tf.keras.utils.get_file(
+          fname=self.config.archive_path.resolve(),
+          origin=archive_url,
+          cache_subdir=self.config.archive_path.parent.resolve(),
+          archive_format='tar',
+          extract=True
+        )
+        break
+      except:
+        if i == len(self.config.archive_url) - 1:
+          raise RuntimeError("Can't download images archive")
 
     # Download table
-    if not self.config.table_path.parent.exists():
-      self.config.table_path.parent.mkdir(parents=True, exist_ok=True)
-
-    if type(self.config.table_url) == dict:
-      table_url = self.config.table_url.get(
-        'sciserver', self.config.table_url.get('gdrive')
-      )
-    else:
-      table_url = self.config.table_url
-
-    tf.keras.utils.get_file(
-      fname=self.config.table_path.resolve(),
-      origin=table_url,
-      cache_subdir=self.config.table_path.parent.resolve()
-    )
+    for i, table_url in enumerate(self.config.table_url):
+      try:
+        tf.keras.utils.get_file(
+          fname=self.config.table_path.resolve(),
+          origin=table_url,
+          cache_subdir=self.config.table_path.parent.resolve()
+        )
+        break
+      except:
+        if i == len(self.config.table_url) - 1:
+          raise RuntimeError("Can't download table")
 
 
   def get_fold(self, fold: int) -> Tuple[tf.data.Dataset, tf.data.Dataset]:
