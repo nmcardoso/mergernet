@@ -24,4 +24,5 @@ def run():
 
 
 if __name__ == '__main__':
-  run()
+  # run()
+  print(Dataset.registry.BIN_LEGACY_NORTH_RGB_128.label_map.items())

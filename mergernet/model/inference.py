@@ -50,7 +50,7 @@ class Predictor:
 
     # append preds columns
     for label, index in label_map.items():
-      y_hat = [pred[index] for pred in self._preds['preds']]
+      y_hat = [pred[index] for pred in self._preds]
       df[f'prob_{label}'] = y_hat
 
     # upload to github
