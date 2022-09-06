@@ -45,8 +45,9 @@ class Predictor:
     df = pd.read_csv(self.dataset.config.table_path)
     x_col_name = self.dataset.config.X_column
 
-    print('preds_len:', len(self._preds[0]))
+    print('preds_len:', len(self._preds))
     print('df_len:', len(df))
+    print('X_len:', len(X))
 
     # filter and order the rows of dataset table with predictions
     df = df.set_index(x_col_name).loc[X].reset_index(inplace=False)
