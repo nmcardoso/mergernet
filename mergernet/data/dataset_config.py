@@ -203,10 +203,9 @@ class DatasetRegistry:
   BLIND_SPLUS_GAL80_LS10_RGB_128 = DatasetConfig(
     name='BLIND_SPLUS_GAL80_LS10_RGB_128',
     archive_url=[
-      SciServer.get_url('e457df57-7380-412a-8871-929dfd2b4ef8'),
-      GDrive.get_url('1oV4VX7RJwjtBLdRHO069lO56tL1Eh6xa')
+      SciServer.get_url('bd9c6c3c-88ae-4b60-a255-6e47b77d8c2d')
     ],
-    table_url=[SciServer.get_url('c66e8d23-b224-47a5-953a-b8811cefbc85')],
+    table_url=[SciServer.get_url('b255ba16-5f3c-4d8a-8ade-e268c65692d4')],
     archive_path=Path('blind_splus_gal80_r13.5-17_ls10_rgb_128.tar.xz'),
     images_path=Path('blind_splus_gal80_r13.5-17_ls10_rgb_128'),
     table_path=Path('blind_splus_gal80_r13.5-17_sanitized.csv'),
