@@ -297,12 +297,13 @@
 <div class="viewcode-block" id="run"><a class="viewcode-back" href="../../../api/mergernet.jobs.j004.run.html#mergernet.jobs.j004.run">[docs]</a><span class="nd">@experiment_run</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
   <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Evaluatge the best model of experiment 3 in BLIND_SPLUS_GAL80_LS10_RGB_128</span>
+<span class="sd">  Evaluate the best model of experiment 3 in BLIND_SPLUS_GAL80_LS10_RGB_128</span>
 <span class="sd">  dataset</span>
 
 <span class="sd">  Dataset</span>
 <span class="sd">  -------</span>
-<span class="sd">    - BLIND_SPLUS_GAL80_LS10_RGB_128</span>
+<span class="sd">    - Train: BIN_LEGACY_NORTH_RGB_128</span>
+<span class="sd">    - Predictions: BLIND_SPLUS_GAL80_LS10_RGB_128</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">Dataset</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">BLIND_SPLUS_GAL80_LS10_RGB_128</span><span class="p">)</span>
   <span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;model.h5&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;6bc82d80&#39;</span><span class="p">)</span>
