@@ -14,6 +14,7 @@
 #
 import os
 import sys
+
 sys.path.insert(0, os.path.abspath('..'))
 
 
@@ -44,7 +45,12 @@ extensions = [
   'sphinx.ext.mathjax',
   'sphinx.ext.viewcode',
   'sphinx.ext.githubpages',
-  'numpydoc'
+  'numpydoc',
+  'sphinx.ext.doctest',
+  'sphinx.ext.intersphinx',
+  # "sphinx.ext.todo",
+  # "sphinx.ext.ifconfig",
+  # "sphinx.ext.imgmath",
 ]
 
 autosummary_generate = True
