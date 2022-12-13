@@ -211,3 +211,22 @@ epub_exclude_files = ['search.html']
 
 
 # -- Extension configuration -------------------------------------------------
+autodoc_class_signature = 'separated'
+
+
+intersphinx_mapping = {
+  'python': ('https://docs.python.org/3/', None),
+  'numpy': ('https://numpy.org/devdocs/', None),
+  'sklearn': ('https://scikit-learn.org/stable/', None),
+}
+
+
+# https://numpydoc.readthedocs.io/en/latest/install.html
+numpydoc_xref_param_type = True
+numpydoc_xref_ignore = {'optional'}
+numpydoc_validation_checks = {}
+numpydoc_use_plots = True
+numpydoc_show_class_members = True
+numpydoc_show_inherited_class_members = True
+numpydoc_class_members_toctree = True
+numpydoc_attributes_as_param_list = False
