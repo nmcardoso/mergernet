@@ -30,10 +30,6 @@ numpydoc = "*"
 pydata-sphinx-theme = "*"
 ipykernel = "*"
 tensorboard-plugin-profile = "*"
-google-api-python-client = "*"
-google-auth-httplib2 = "*"
-google-auth-oauthlib = "*"
-aiohttp = "*"
 
 [requires]
 python_version = "3.7.12"
