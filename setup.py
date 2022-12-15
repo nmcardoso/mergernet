@@ -2,19 +2,14 @@ from setuptools import find_packages, setup
 
 setup(
   name='mergernet',
-  version='0.1.0',
+  version='0.2.0',
   description='deep learning model',
   author='Natanael',
   author_email='nauxmac@gmail.com',
   packages=find_packages(),
   include_package_data=True,
   package_data={
-    'mergernet': [
-      'jobs/*.yaml',
-      'report/templates/*.j2',
-      'report/templates/*.css',
-      'report/templates/*.js',
-    ]
+    'mergernet': []
   },
   install_requires=[
     'wheel',
@@ -27,12 +22,10 @@ setup(
     'tensorflow_addons',
     'tensorboard',
     'optuna',
-    'plotly'
+    'plotly',
+    'wandb',
   ],
   extras_require={
-    'docs': [
-      'jinja2',
-      'docutils'
-    ]
+    'docs': []
   }
 )
