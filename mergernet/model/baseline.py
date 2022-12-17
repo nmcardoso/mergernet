@@ -60,17 +60,17 @@ def finetune_train(
     restore_best_weights=True
   )
 
-  wandb_cb = wandb.keras.WandbCallback(
-    monitor='val_loss',
-    mode='min',
-    save_graph=True,
-    save_model=False,
-    log_weights=False,
-    log_gradients=False,
-    compute_flops=True,
-  )
-
   with Experiment.Tracer(hp.to_values_dict(), name=run_name, job_type='train'):
+    wandb_cb = wandb.keras.WandbCallback(
+      monitor='val_loss',
+      mode='min',
+      save_graph=True,
+      save_model=False,
+      log_weights=False,
+      log_gradients=False,
+      compute_flops=True,
+    )
+
     t = Timming()
     L.info('Start of training loop with frozen CNN')
     h1 = model.fit(
