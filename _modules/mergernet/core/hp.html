@@ -491,7 +491,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">name</span><span class="p">:</span> <span class="n">hp</span> <span class="p">})</span></div>
 
 
-<div class="viewcode-block" id="HyperParameterSet.get"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HyperParameterSet.html#mergernet.core.hp.HyperParameterSet.get">[docs]</a>  <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hp</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<div class="viewcode-block" id="HyperParameterSet.get"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HyperParameterSet.html#mergernet.core.hp.HyperParameterSet.get">[docs]</a>  <span class="k">def</span> <span class="nf">get</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get the value of a hyperparameter identified by its name.</span>
 <span class="sd">    For hyperparameters different than ConstantHyperParameter, this method</span>
@@ -499,10 +504,12 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    hp: str</span>
+<span class="sd">    name: str</span>
 <span class="sd">      The hyperparamer name</span>
 <span class="sd">    trial: optuna.trial.FrozenTrial</span>
 <span class="sd">      The optuan trial instance</span>
+<span class="sd">    default: Any</span>
+<span class="sd">      Default value returned if the specified hyperparameter name wasn&#39;t found</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -513,10 +520,13 @@
 <span class="sd">    --------</span>
 <span class="sd">    mergernet.core.hp.HyperParameter.suggest</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">default</span>
+
     <span class="k">if</span> <span class="n">trial</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="p">[</span><span class="n">hp</span><span class="p">]</span><span class="o">.</span><span class="n">suggest</span><span class="p">()</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">suggest</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
-      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="p">[</span><span class="n">hp</span><span class="p">]</span><span class="o">.</span><span class="n">suggest</span><span class="p">(</span><span class="n">trial</span><span class="p">)</span></div>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">suggest</span><span class="p">(</span><span class="n">trial</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="HyperParameterSet.set_trial"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HyperParameterSet.html#mergernet.core.hp.HyperParameterSet.set_trial">[docs]</a>  <span class="k">def</span> <span class="nf">set_trial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">FrozenTrial</span><span class="p">):</span>
