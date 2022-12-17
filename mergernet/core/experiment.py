@@ -5,7 +5,7 @@ import tempfile
 from inspect import getdoc
 from io import BytesIO, StringIO
 from pathlib import Path
-from shutil import copy2
+from shutil import copy2, rmtree
 from time import time
 from types import FunctionType
 from typing import Any
@@ -139,6 +139,10 @@ class Experiment:
   notes = None
 
 
+  def __init__(self):
+    self.restart = False
+
+
   def _pre_run(self):
     """
     Pre-run tasks automatically performed when `run` is called, that includes:
@@ -211,9 +215,19 @@ class Experiment:
       Experiment.gd_exp_path = GD_EXP_PATTERN.format(**exp_params)
 
     # prepare local experiment environment creating directory structure
-    Path(Experiment.local_shared_path).mkdir(parents=True, exist_ok=True)
-    Path(Experiment.local_exp_path).mkdir(parents=True, exist_ok=True)
-    Path(Experiment.gd_exp_path).mkdir(parents=True, exist_ok=True)
+    local_exp_path = Path(Experiment.local_exp_path)
+    local_shared_path = Path(Experiment.local_shared_path)
+    gd_exp_path = Path(Experiment.gd_exp_path)
+
+    if self.restart and local_exp_path.exists():
+      rmtree(local_exp_path)
+
+    if self.restart and gd_exp_path.exists():
+      rmtree(gd_exp_path)
+
+    local_shared_path.mkdir(parents=True, exist_ok=True)
+    local_exp_path.mkdir(parents=True, exist_ok=True)
+    gd_exp_path.mkdir(parents=True, exist_ok=True)
 
     # signaling that this method was called
     Experiment._exp_created = True
