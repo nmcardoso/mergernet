@@ -101,6 +101,8 @@ class Dataset:
     bool
       True if the images dir and the table are found, False otherwise
     """
+    print(self.config.images_path, self.config.images_path.is_dir())
+    print(self.config.table_path, self.config.table_path.is_file())
     return self.config.images_path.is_dir() and self.config.table_path.is_file()
 
 
