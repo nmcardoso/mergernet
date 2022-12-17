@@ -16,7 +16,7 @@ class Job(Experiment):
     hps = HyperParameterSet(
       HP.const('architecture', 'resnet50v2'),
       HP.const('pretrained_weights', 'imagenet'),
-      HP.const('epochs', 4),
+      HP.const('epochs', 6),
       HP.const('batch_size', 64),
       HP.num('dense_1_units', low=64, high=1024, step=64, dtype=int),
       HP.num('dropout_1_rate', low=0.2, high=0.5),

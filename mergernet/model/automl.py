@@ -56,13 +56,12 @@ def _objective_factory(
     )
 
     hist = model.history.history
-    if hist:
-      # saving the history of current trial
-      hist_df = history_to_dataframe(hist)
-      Experiment.upload_file_gd(f'history_trial_{trial.number}.csv', hist_df)
+    # saving the history of current trial
+    hist_df = history_to_dataframe(hist)
+    Experiment.upload_file_gd(f'history_trial_{trial.number}.csv', hist_df)
 
-      # generating optuna value to optimize (val_accuracy)
-      objective_value = hist['val_loss'][-1]
+    # generating optuna value to optimize (val_accuracy)
+    objective_value = hist['val_loss'][-1]
 
     return objective_value
   return objective
