@@ -41,6 +41,15 @@ class DatasetSanitization:
     self.table = pd.read_csv(table)
     self.images_folder = Path(images_folder)
 
+    suffix = next(self.images_folder.glob('*')).suffix
+    self.iaunames_in_folder = np.array([
+      p.stem for p in self.table_path.glob('*')
+    ])
+    self.file_sizes = np.array([
+      (self.images_folder / f'{iauname}{suffix}').stat().st_size
+      for iauname in self.iaunames_in_folder
+    ])
+
 
   def get_iauname_by_filesize(self, lower: float = None, upper: float = None) -> np.ndarray:
     """
@@ -59,13 +68,12 @@ class DatasetSanitization:
     array
       Array of iaunames
     """
-    if lower is None: lower = -np.inf
-    if upper is None: upper = np.inf
-    folder = self.images_folder
-    return np.array([
-      p.stem for p in folder.glob('*')
-      if p.stat().st_size > lower * 1024 and p.stat().st_size < upper * 1024
-    ])
+    if lower is None: lower = 0
+    if upper is None: upper = 1024
+    lower *= 1024
+    upper *= 1024
+    mask = (self.file_sizes > lower) & (self.file_sizes < upper)
+    return self.iaunames_in_folder[mask]
 
 
   def get_filesize_distribution(self) -> np.ndarray:
@@ -94,8 +102,7 @@ class DatasetSanitization:
       containing iaunames of the objects **without** the corresponding image.
     """
     table_iaunames = self.table['iauname'].to_numpy()
-    folder_iaunames = np.array([p.stem for p in self.images_folder.glob('*')])
-    mask = np.isin(table_iaunames, folder_iaunames)
+    mask = np.isin(table_iaunames, self.iaunames_in_folder)
     return table_iaunames[mask], table_iaunames[~mask]
 
 
