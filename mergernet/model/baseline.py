@@ -84,6 +84,8 @@ def finetune_train(
     )
     L.info(f'End of training loop, duration: {t.end()}')
 
+    print(h1.history)
+
     set_trainable_state(model, 'conv_block', True)
     _compile_model(model, tf.keras.optimizers.Adam(hp.get('opt_lr')))
 
