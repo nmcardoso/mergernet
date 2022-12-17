@@ -77,7 +77,7 @@ def finetune_train(
     h1 = model.fit(
       ds_train,
       batch_size=hp.get('batch_size'),
-      epochs=2,
+      epochs=hp.get('tl_epochs', default=10),
       validation_data=ds_test,
       class_weight=class_weights,
       callbacks=[early_stop_cb, wandb_cb]
@@ -92,7 +92,7 @@ def finetune_train(
     model.fit(
       ds_train,
       batch_size=hp.get('batch_size'),
-      epochs=hp.get('epochs'),
+      epochs=hp.get('tl_epochs', default=10) + hp.get('epochs'),
       validation_data=ds_test,
       class_weight=class_weights,
       initial_epoch=len(h1.history['loss']),
