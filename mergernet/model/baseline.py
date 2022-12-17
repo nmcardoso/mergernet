@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import List, Tuple
 
 import tensorflow as tf
+import wandb
 
 from mergernet.core.constants import RANDOM_SEED
 from mergernet.core.experiment import Experiment
@@ -22,7 +23,8 @@ L = logging.getLogger(__name__)
 def finetune_train(
   dataset: Dataset,
   hp: HyperParameterSet,
-  callbacks: List[tf.keras.callbacks.Callback] = None
+  callbacks: List[tf.keras.callbacks.Callback] = None,
+  run_name: str = 'run'
 ) -> tf.keras.Model:
   tf.keras.backend.clear_session()
 
@@ -58,33 +60,34 @@ def finetune_train(
     restore_best_weights=True
   )
 
-  t = Timming()
-  L.info('Start of training loop')
-  h1 = model.fit(
-    ds_train,
-    batch_size=hp.get('batch_size'),
-    epochs=10,
-    validation_data=ds_test,
-    class_weight=class_weights,
-    callbacks=[early_stop_cb]
-  )
-  L.info(f'End of training loop, duration: {t.end()}.')
+  with Experiment.Tracer(hp.to_values_dict(), name=run_name, job_type='train'):
+    t = Timming()
+    L.info('Start of training loop with frozen CNN')
+    h1 = model.fit(
+      ds_train,
+      batch_size=hp.get('batch_size'),
+      epochs=10,
+      validation_data=ds_test,
+      class_weight=class_weights,
+      callbacks=[early_stop_cb]
+    )
+    L.info(f'End of training loop, duration: {t.end()}')
 
-  set_trainable_state(model, 'conv_block', True)
-  _compile_model(model, tf.keras.optimizers.Adam(hp.get('opt_lr')))
+    set_trainable_state(model, 'conv_block', True)
+    _compile_model(model, tf.keras.optimizers.Adam(hp.get('opt_lr')))
 
-  t = Timming()
-  L.info('Start of training loop')
-  model.fit(
-    ds_train,
-    batch_size=hp.get('batch_size'),
-    epochs=hp.get('epochs'),
-    validation_data=ds_test,
-    class_weight=class_weights,
-    initial_epoch=len(h1.history),
-    callbacks=callbacks
-  )
-  L.info(f'End of training loop, duration: {t.end()}.')
+    t = Timming()
+    L.info('Start of training loop')
+    model.fit(
+      ds_train,
+      batch_size=hp.get('batch_size'),
+      epochs=hp.get('epochs'),
+      validation_data=ds_test,
+      class_weight=class_weights,
+      initial_epoch=len(h1.history),
+      callbacks=callbacks
+    )
+    L.info(f'End of training loop, duration: {t.end()}')
 
   return model
 
