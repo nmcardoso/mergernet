@@ -3,12 +3,12 @@ This module performs requests with `splus.cloud` server over https
 
 Features
 --------
-  * Download a single rgb image colored using Lupton or Trilogy method
-  * Donwload a single fits image of single band
-  * Fast batch download of rgb images using multiprocessing
-  * Fast batch download of fits images using multiprocessing
-  * Single async database query
-  * Fast batch database queries using multiprocessing
+* Download a single rgb image colored using Lupton or Trilogy method
+* Donwload a single fits image of single band
+* Fast batch download of rgb images using multiprocessing
+* Fast batch download of fits images using multiprocessing
+* Single async database query
+* Fast batch database queries using multiprocessing
 
 Authors
 -------
@@ -16,23 +16,21 @@ Natanael Magalhães Cardoso <natanael.net>
 """
 
 
+import concurrent.futures
 from datetime import datetime, timedelta
 from enum import Enum
 from multiprocessing import Lock
+from pathlib import Path
 from time import sleep
 from types import FunctionType
 from typing import Callable, List, Union
-from pathlib import Path
-from urllib.parse import urljoin, quote, urlparse
-import concurrent.futures
+from urllib.parse import quote, urljoin, urlparse
 
 import requests
 import tqdm
 
 from mergernet.core.constants import SPLUS_PASS, SPLUS_USER
 from mergernet.services.utils import download_file
-
-
 
 BASE_URL = 'https://splus.cloud/api/'
 LOGIN_ROUTE = 'auth/login'
