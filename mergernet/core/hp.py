@@ -182,7 +182,12 @@ class HyperParameterSet:
         self.hps.update({ name: hp })
 
 
-  def get(self, hp: str, trial: optuna.trial.FrozenTrial = None) -> Any:
+  def get(
+    self,
+    name: str,
+    trial: optuna.trial.FrozenTrial = None,
+    default: Any = None
+  ) -> Any:
     """
     Get the value of a hyperparameter identified by its name.
     For hyperparameters different than ConstantHyperParameter, this method
@@ -190,10 +195,12 @@ class HyperParameterSet:
 
     Parameters
     ----------
-    hp: str
+    name: str
       The hyperparamer name
     trial: optuna.trial.FrozenTrial
       The optuan trial instance
+    default: Any
+      Default value returned if the specified hyperparameter name wasn't found
 
     Returns
     -------
@@ -204,10 +211,13 @@ class HyperParameterSet:
     --------
     mergernet.core.hp.HyperParameter.suggest
     """
+    if not name in self.hps:
+      return default
+
     if trial is None:
-      return self.hps[hp].suggest()
+      return self.hps[name].suggest()
     else:
-      return self.hps[hp].suggest(trial)
+      return self.hps[name].suggest(trial)
 
 
   def set_trial(self, trial: optuna.trial.FrozenTrial):
