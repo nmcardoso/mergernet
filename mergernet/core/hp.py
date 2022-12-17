@@ -6,6 +6,7 @@ import optuna
 class HyperParameter:
   def __init__(self):
     self._trial = None
+    self.last_value = None
     self.attrs = {}
 
   def set_attr(self, key, value):
@@ -16,6 +17,14 @@ class HyperParameter:
 
   def suggest(self, trial: optuna.trial.FrozenTrial = None):
     pass
+
+  def to_dict(self, show_name: bool = False):
+    if show_name:
+      return self.attrs
+    else:
+      copy = self.attrs.copy()
+      copy.pop('name')
+      return copy
 
   @staticmethod
   def from_dict(params: dict):
@@ -40,7 +49,8 @@ class CategoricalHyperParameter(HyperParameter):
 
   def suggest(self, trial: optuna.trial.FrozenTrial = None) -> Any:
     _trial = trial or self._trial
-    return _trial.suggest_categorical(**self.attrs)
+    self.last_value = _trial.suggest_categorical(**self.attrs)
+    return self.last_value
 
 
 
@@ -62,7 +72,8 @@ class FloatHyperParameter(HyperParameter):
 
   def suggest(self, trial: optuna.trial.FrozenTrial = None) -> float:
     _trial = trial or self._trial
-    return _trial.suggest_float(**self.attrs)
+    self.last_value = _trial.suggest_float(**self.attrs)
+    return self.last_value
 
 
 
@@ -84,7 +95,8 @@ class IntHyperParameter(HyperParameter):
 
   def suggest(self, trial: optuna.trial.FrozenTrial = None) -> int:
     _trial = trial or self._trial
-    return _trial.suggest_int(**self.attrs)
+    self.last_value = _trial.suggest_int(**self.attrs)
+    return self.last_value
 
 
 
@@ -93,10 +105,10 @@ class ConstantHyperParameter(HyperParameter):
     super(ConstantHyperParameter, self).__init__()
     self.set_attr('name', name)
     self.set_attr('value', value)
+    self.last_value = value
 
   def suggest(self, trial: optuna.trial.FrozenTrial = None) -> Any:
     return self.attrs['value']
-
 
 
 class HP:
@@ -134,7 +146,11 @@ class HyperParameterSet:
   Parameters
   ----------
   *args: HyperParameter
-    Any sequence of HyperParameter subclass
+    Any HyperParameter instance created by `HP` factory
+
+  See Also
+  --------
+  mergernet.core.hp.HP
   """
   def __init__(self, *args: HyperParameter):
     self.hps = {}
@@ -143,6 +159,8 @@ class HyperParameterSet:
       if isinstance(hp, HyperParameter):
         name = hp.attrs['name']
         self.hps[name] = hp
+      elif isinstance(hp, dict):
+        pass
 
 
   def add(self, hyperparameters: Sequence[Union[dict, HyperParameter]]):
@@ -203,3 +221,11 @@ class HyperParameterSet:
     """
     for hp in self.hps.values():
       hp.set_trial(trial)
+
+
+  def to_values_dict(self):
+    """
+    Returns a dict representation of this hyperparameters set with hp name
+    as dict key and last optuna's suggested value as dict value
+    """
+    return { name: hp.last_value for name, hp in self.hps.items() }
