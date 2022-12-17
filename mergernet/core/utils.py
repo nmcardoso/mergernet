@@ -1,20 +1,19 @@
 import collections.abc
 import json
-from pathlib import Path
-from typing import Any, Iterable, List, Sequence, Union
 from datetime import datetime, timedelta
+from pathlib import Path
 from threading import Lock
+from typing import Any, List, Union
 
-from mergernet.core.constants import DATA_ROOT, ENV
-
+import numpy as np
+import pandas as pd
+from astropy import units as u
+from astropy.coordinates import SkyCoord
 from astropy.io import fits
 from astropy.table import Table
-from astropy.coordinates import ICRS, SkyCoord
-from astropy import units as u
 from PIL import Image
-import pandas as pd
-import numpy as np
 
+from mergernet.core.constants import DATA_ROOT, ENV
 
 
 def load_image(path: Union[str, Path]) -> np.ndarray:
@@ -166,8 +165,8 @@ def iauname(
     The formated IAU name of the object(s)
   """
   coord = SkyCoord(ra=ra*u.degree, dec=dec*u.degree, frame='icrs')
-  ra_str = coord.ra.to_string(unit=u.hourangle, sep='', precision=2, pad=True)
-  dec_str = coord.dec.to_string(sep='', precision=1, alwayssign=True, pad=True)
+  ra_str = coord.ra.to_string(unit=u.hourangle, sep='', precision=5, pad=True)
+  dec_str = coord.dec.to_string(sep='', precision=5, alwayssign=True, pad=True)
   if isinstance(ra_str, np.ndarray):
     r = [f'J{_ra_str}{_dec_str}' for _ra_str, _dec_str in zip(ra_str, dec_str)]
   else:
@@ -176,15 +175,70 @@ def iauname(
 
 
 
-def skip_dev(func):
+
+def serialize(obj: Any) -> str:
   """
-  Decorator used to skip high complexity functions/methods in development
-  environment with pythonic syntax suggar
+  Serializes an object performing type cast depending of the object type
+
+  Parameters
+  ----------
+  obj: Any
+    The object to be serialized
+
+  Returns
+  -------
+  str
+    The serialized object
   """
-  if ENV == 'dev':
-    return lambda *args, **kwargs: 0 # null func
-  else:
-    return func
+  def to_primitive(v):
+    if isinstance(v, np.ndarray):
+      return v.tolist()
+    elif isinstance(v, Path):
+      return str(v)
+    else:
+      return v
+
+  prepared_obj = {
+    k: to_primitive(v) for k, v in obj.items()
+  }
+
+  return json.dumps(prepared_obj)
+
+
+
+def heading(msg: str, sep: str = '-'):
+  """
+  Prints a message with a rule bellow with same width of the message
+
+  Parameters
+  ----------
+  msg: str
+    The message string
+  sep: str
+    The rule character
+  """
+  print(msg)
+  print(sep*len(msg))
+
+
+
+def not_in(ref: list, comp: list):
+  """
+  Computes elements in ``ref`` that are not in ``comp``
+
+  Parameters
+  ----------
+  ref: list
+    The reference list
+  comp: list
+    The comparison list
+
+  Returns
+  -------
+  list
+    A list containing all elements in ``ref`` that are not in ``comp``
+  """
+  return list(set(ref) - set(comp))
 
 
 
@@ -290,66 +344,15 @@ class CachedDataFrame:
 
 
 
-def serialize(obj: Any) -> str:
-  """
-  Serializes an object performing type cast depending of the object type
-
-  Parameters
-  ----------
-  obj: Any
-    The object to be serialized
-
-  Returns
-  -------
-  str
-    The serialized object
-  """
-  def to_primitive(v):
-    if isinstance(v, np.ndarray):
-      return v.tolist()
-    elif isinstance(v, Path):
-      return str(v)
-    else:
-      return v
-
-  prepared_obj = {
-    k: to_primitive(v) for k, v in obj.items()
-  }
-
-  return json.dumps(prepared_obj)
+class classproperty(property):
+  def __get__(self, owner_self, owner_cls):
+    return self.fget(owner_cls)
 
 
-
-def heading(msg: str, sep: str = '-'):
-  """
-  Prints a message with a rule bellow with same width of the message
-
-  Parameters
-  ----------
-  msg: str
-    The message string
-  sep: str
-    The rule character
-  """
-  print(msg)
-  print(sep*len(msg))
-
-
-
-def not_in(ref: list, comp: list):
-  """
-  Computes elements in ``ref`` that are not in ``comp``
-
-  Parameters
-  ----------
-  ref: list
-    The reference list
-  comp: list
-    The comparison list
-
-  Returns
-  -------
-  list
-    A list containing all elements in ``ref`` that are not in ``comp``
-  """
-  return list(set(ref) - set(comp))
+# class classproperty(property):
+#   def __get__(self, obj, objtype=None):
+#     return super(classproperty, self).__get__(objtype)
+#   def __set__(self, obj, value):
+#     super(classproperty, self).__set__(type(obj), value)
+#   def __delete__(self, obj):
+#     super(classproperty, self).__delete__(type(obj))
