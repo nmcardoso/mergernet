@@ -61,4 +61,4 @@ class Predictor:
       df[f'prob_{label}'] = y_hat
 
     # upload to github
-    Experiment.upload_file_gh(name, df)
+    Experiment.upload_file_gd(name, df)

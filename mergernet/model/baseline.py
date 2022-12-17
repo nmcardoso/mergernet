@@ -87,7 +87,7 @@ def finetune_train(
     _compile_model(model, tf.keras.optimizers.Adam(hp.get('opt_lr')))
 
     t = Timming()
-    L.info('Start of training loop')
+    L.info('Start of main training loop')
     model.fit(
       ds_train,
       batch_size=hp.get('batch_size'),

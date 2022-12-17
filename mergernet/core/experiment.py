@@ -262,6 +262,8 @@ class Experiment:
       elif type(data) == str:
         with open(to_path, 'w') as fp:
           fp.write(data)
+      elif isinstance(data, pd.DataFrame):
+        data.to_csv(to_path, index=False)
       elif isinstance(data, tf.keras.Model):
         data.save(to_path)
       else:
