@@ -404,5 +404,5 @@ class Experiment:
         tags=self.tags
       )
 
-    def __exit__(self):
+    def __exit__(self, *args, **kwargs):
       Experiment.finish_wandb()
