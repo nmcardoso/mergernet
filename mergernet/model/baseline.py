@@ -60,6 +60,16 @@ def finetune_train(
     restore_best_weights=True
   )
 
+  wandb_cb = wandb.keras.WandbCallback(
+    monitor='val_loss',
+    mode='min',
+    save_graph=True,
+    save_model=False,
+    log_weights=False,
+    log_gradients=False,
+    compute_flops=True,
+  )
+
   with Experiment.Tracer(hp.to_values_dict(), name=run_name, job_type='train'):
     t = Timming()
     L.info('Start of training loop with frozen CNN')
@@ -69,7 +79,7 @@ def finetune_train(
       epochs=10,
       validation_data=ds_test,
       class_weight=class_weights,
-      callbacks=[early_stop_cb]
+      callbacks=[early_stop_cb, wandb_cb]
     )
     L.info(f'End of training loop, duration: {t.end()}')
 
@@ -85,7 +95,7 @@ def finetune_train(
       validation_data=ds_test,
       class_weight=class_weights,
       initial_epoch=len(h1.history),
-      callbacks=callbacks
+      callbacks=[wandb_cb, *callbacks],
     )
     L.info(f'End of training loop, duration: {t.end()}')
 
