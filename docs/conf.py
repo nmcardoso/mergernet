@@ -122,7 +122,7 @@ html_context = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-html_logo = 'galaxy_256.png'
+html_logo = '_static/galaxy_256.png'
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -218,13 +218,14 @@ intersphinx_mapping = {
   'python': ('https://docs.python.org/3/', None),
   'numpy': ('https://numpy.org/devdocs/', None),
   'sklearn': ('https://scikit-learn.org/stable/', None),
+  'pandas': ('https://pandas.pydata.org/docs/', None),
 }
 
 
 # https://numpydoc.readthedocs.io/en/latest/install.html
 numpydoc_xref_param_type = True
 numpydoc_xref_ignore = {'optional'}
-numpydoc_validation_checks = {}
+# numpydoc_validation_checks = {}
 numpydoc_use_plots = True
 numpydoc_show_class_members = True
 numpydoc_show_inherited_class_members = True
