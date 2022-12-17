@@ -76,7 +76,7 @@ def finetune_train(
     h1 = model.fit(
       ds_train,
       batch_size=hp.get('batch_size'),
-      epochs=10,
+      epochs=2,
       validation_data=ds_test,
       class_weight=class_weights,
       callbacks=[early_stop_cb, wandb_cb]

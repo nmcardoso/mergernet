@@ -61,6 +61,7 @@ def _objective_factory(
     Experiment.upload_file_gd(f'history_trial_{trial.number}.csv', hist_df)
 
     # generating optuna value to optimize (val_accuracy)
+    print(hist)
     objective_value = hist['val_loss'][-1]
 
     return objective_value
