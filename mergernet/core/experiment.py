@@ -350,7 +350,8 @@ class Experiment:
     job_type=job_type,
     tags=tags,
     name=name,
-    notes=cls.notes
+    notes=cls.notes,
+    reinit=True,
   )
 
 
