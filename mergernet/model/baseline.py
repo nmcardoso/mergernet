@@ -84,9 +84,6 @@ def finetune_train(
     )
     L.info(f'End of training loop, duration: {t.end()}')
 
-    print(h1.history)
-    print(type(h1.history))
-
     set_trainable_state(model, 'conv_block', True)
     _compile_model(model, tf.keras.optimizers.Adam(hp.get('opt_lr')))
 
@@ -98,7 +95,7 @@ def finetune_train(
       epochs=hp.get('epochs'),
       validation_data=ds_test,
       class_weight=class_weights,
-      initial_epoch=len(h1.history),
+      initial_epoch=len(h1.history['loss']),
       callbacks=[wandb_cb, *callbacks],
     )
     L.info(f'End of training loop, duration: {t.end()}')
