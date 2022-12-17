@@ -35,6 +35,7 @@
    mergernet.services.sciserver
    mergernet.services.sdss
    mergernet.services.splus
+   mergernet.services.tap
    mergernet.services.tensorboard
    mergernet.services.utils
 

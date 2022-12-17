@@ -1,6 +1,0 @@
-mergernet.core.experiment.backup\_model
-=======================================
-
-.. currentmodule:: mergernet.core.experiment
-
-.. autofunction:: backup_model

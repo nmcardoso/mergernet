@@ -1,0 +1,17 @@
+mergernet.services.tap.TapService
+=================================
+
+.. currentmodule:: mergernet.services.tap
+
+.. autoclass:: TapService
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

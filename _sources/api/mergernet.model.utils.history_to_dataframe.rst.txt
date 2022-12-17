@@ -1,6 +1,0 @@
-mergernet.model.utils.history\_to\_dataframe
-============================================
-
-.. currentmodule:: mergernet.model.utils
-
-.. autofunction:: history_to_dataframe

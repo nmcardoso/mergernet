@@ -1,6 +1,0 @@
-mergernet.model.baseline.finetune\_train
-========================================
-
-.. currentmodule:: mergernet.model.baseline
-
-.. autofunction:: finetune_train

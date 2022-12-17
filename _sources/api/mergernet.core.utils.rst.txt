@@ -24,7 +24,6 @@ mergernet.core.utils
       not_in
       save_table
       serialize
-      skip_dev
       unique_path
    
    
@@ -40,6 +39,7 @@ mergernet.core.utils
       CachedDataFrame
       SingletonMeta
       Timming
+      classproperty
    
    
 

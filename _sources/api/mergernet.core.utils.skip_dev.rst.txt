@@ -1,6 +1,0 @@
-mergernet.core.utils.skip\_dev
-==============================
-
-.. currentmodule:: mergernet.core.utils
-
-.. autofunction:: skip_dev

@@ -1,7 +1,7 @@
-mergernet.data.dataset
+mergernet.services.tap
 ======================
 
-.. automodule:: mergernet.data.dataset
+.. automodule:: mergernet.services.tap
 
    
    
@@ -19,7 +19,7 @@ mergernet.data.dataset
       :toctree:
       :template: class-template.rst
    
-      Dataset
+      TapService
    
    
 
