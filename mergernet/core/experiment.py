@@ -212,8 +212,8 @@ class Experiment:
 
     # prepare local experiment environment creating directory structure
     Path(Experiment.local_shared_path).mkdir(parents=True, exist_ok=True)
-    Path(Experiment.local_run_path).mkdir(parents=True, exist_ok=True)
-    Path(Experiment.gd_run_path).mkdir(parents=True, exist_ok=True)
+    Path(Experiment.local_exp_path).mkdir(parents=True, exist_ok=True)
+    Path(Experiment.gd_exp_path).mkdir(parents=True, exist_ok=True)
 
     # signaling that this method was called
     Experiment._exp_created = True
@@ -239,7 +239,7 @@ class Experiment:
     """
     if not cls._exp_created: raise ValueError('Experiment must be created')
 
-    from_path = Path(cls.local_run_path) / fname
+    from_path = Path(cls.local_exp_path) / fname
     to_path = Path(cls.gd_exp_path) / fname
 
     try:
