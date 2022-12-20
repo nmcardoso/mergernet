@@ -11,7 +11,7 @@ This module defines others classes and functions as well, who perform complement
 
 import logging
 from pathlib import Path
-from typing import Tuple
+from typing import List, Tuple
 
 import numpy as np
 import pandas as pd
@@ -202,6 +202,14 @@ class Dataset:
   def get_X(self) -> np.ndarray:
     df = pd.read_csv(self.config.table_path)
     return df[self.config.X_column].to_numpy()
+
+
+  def get_images_path(self) -> List[Path]:
+    X = self.get_X()
+    return [
+      self.config.images_path / (_X + self.config.X_column_suffix)
+      for _X in X
+    ]
 
 
   def get_preds_dataset(self) -> tf.data.Dataset:
