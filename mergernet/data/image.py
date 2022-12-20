@@ -1,6 +1,10 @@
-from typing import Tuple
+from pathlib import Path
+from typing import Dict, List, Tuple, Union
 
 import numpy as np
+from PIL import Image, ImageOps
+
+from mergernet.core.utils import load_image
 
 DEFAULT_BANDS_SCALES = {
   'urz': {
@@ -55,14 +59,19 @@ class ColorImage:
 
   @staticmethod
   def legacy_style(
-    imgs,
-    bands,
-    arcsinh,
-    scales,
-    desaturate,
+    img: Union[str, Path, np.ndarray],
+    bands: str = 'grz',
+    brightness: float = None,
+    scales: Dict[str, Tuple[int, float]] = None,
+    desaturate: bool = False,
     minmax: Tuple[float, float] = (-3, 10), # cutoff range
     nl_func = None,
+    normalize: bool = True,
+    save_path: Union[str, Path] = None,
   ) -> np.ndarray:
+    if not isinstance(img, np.ndarray):
+      img = load_image(img)
+
     if nl_func is None:
       nl_func = ColorImage.asinh_map
 
@@ -82,11 +91,11 @@ class ColorImage:
       plane, scale = scales[band]
       rgb[:, :, plane] = (img[:, :, i] / scale).astype(np.float32)
 
-    if arcsinh is not None:
+    if brightness is not None:
       # image rescaled by single-pixel not image-pixel,
       # which means colours depend on brightness
-      rgb = nl_func(rgb, arcsinh=arcsinh)
-      nl_minmax = nl_func(np.array(minmax), arcsinh=arcsinh)
+      rgb = nl_func(rgb, arcsinh=brightness)
+      nl_minmax = nl_func(np.array(minmax), arcsinh=brightness)
 
     # lastly, rescale image to be between min and max
     rgb = (rgb - nl_minmax[0]) / (nl_minmax[1] - nl_minmax[0])
@@ -136,9 +145,20 @@ class ColorImage:
       rgb = desatured_rgb
 
     # set min/max to 0 and 1
-    clipped = np.clip(rgb, 0., 1.)
+    rgb = np.clip(rgb, 0., 1.)
 
-    return clipped
+    # set image to RGB levels (0 - 255)
+    if not normalize or save_path is not None:
+      rgb = (rgb * 255).astype(np.uint8)
+
+    # save image
+    if save_path is not None:
+      ImageOps.flip(Image.fromarray(rgb, 'RGB')).save(save_path)
+
+    return rgb
+
+
+
 
   @staticmethod
   def lupton_rgb(
@@ -224,11 +244,6 @@ class ColorImage:
 
 
 if __name__ == '__main__':
-  import matplotlib.pyplot as plt
-  from PIL import Image, ImageOps
-
-  from mergernet.core.utils import load_image
-
   fits_path = '/home/natan/repos/mergernet/data/images/J000030.87-011246.8.fits'
   rgb_path = '/home/natan/repos/mergernet/data/images/J000/J000030.87-011246.8.png'
   output_path = '/home/natan/repos/mergernet/data/images/out.png'
@@ -237,8 +252,8 @@ if __name__ == '__main__':
   fits_img = load_image(fits_path)
   rgb_img = load_image(rgb_path)
 
-  print(fits_img.shape)
-  print(rgb_img.shape)
+  print('fits shape', fits_img.shape)
+  print('rgb shape', rgb_img.shape)
 
 
   kwargs = {
@@ -249,19 +264,19 @@ if __name__ == '__main__':
     },
     'bands': 'grz',
     'minmax': (-0.5, 300),
-    'arcsinh': 0.35,
+    'brightness': 1.3,
     'desaturate': True,
     'nl_func': ColorImage.asinh_map2
   }
 
-  kwargs = {
-    'arcsinh': .3,
-    'mn': 0,
-    'mx': .4,
-  }
-  fits_color = ColorImage.lupton_rgb(fits_img, **kwargs)
+  # kwargs = {
+  #   'arcsinh': .3,
+  #   'mn': 0,
+  #   'mx': .4,
+  # }
+  fits_color = ColorImage.legacy_style(fits_img, **kwargs)
 
-  print(fits_color.shape)
+  print('fits_color shape', fits_color.shape)
 
   fits_color_int = (fits_color * 255).astype(np.uint8)
   im = Image.fromarray(fits_color_int, 'RGB')
@@ -271,4 +286,4 @@ if __name__ == '__main__':
   # plt.savefig()
 
 
-  print(fits_color.shape)
+  print('final fits shape', fits_color.shape)
