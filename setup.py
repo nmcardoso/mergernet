@@ -27,6 +27,12 @@ setup(
     'zoobot',
   ],
   extras_require={
-    'docs': []
+    'docs': [
+      'Jinja2>=3.1',
+      'numpydoc',
+      'sphinx',
+      'pydata-sphinx-theme',
+      'ipykernel',
+    ]
   }
 )
