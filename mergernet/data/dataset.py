@@ -64,6 +64,8 @@ class Dataset:
     if self.config.detect_img_extension:
       self._detect_img_extension()
 
+    self._create_table_for_preds_dataset()
+
     self._weight_map = None
 
 
@@ -83,12 +85,29 @@ class Dataset:
     ----------
     y: np.ndarray
     """
-    y_int = np.empty(y.shape, dtype=np.int64)
+    y_int = np.empty(y.shape, dtype=np.int8)
 
     for k, v in self.config.label_map.items():
       y_int[y == k] = v
 
     return y_int
+
+
+  def _create_table_for_preds_dataset(self):
+    """
+    Scan the images table and create a csv table with filenames if the
+    dataset config has no table.
+    """
+    if self.config.table_url is None:
+      self.config.table_path = Path(Experiment.local_shared_path) / (self.config.name + '.csv')
+      self.config.X_column = 'iauname'
+
+      iaunames = [
+        p.stem for p in
+        self.config.images_path.glob(f'**/*{self.config.X_column_suffix}')
+      ]
+
+      pd.DataFrame({'iauname': iaunames}).to_csv(self.config.table_path, index=False)
 
 
   def is_dataset_downloaded(self) -> bool:
