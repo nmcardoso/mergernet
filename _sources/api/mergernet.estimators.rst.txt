@@ -29,7 +29,7 @@
    :recursive:
 
    mergernet.estimators.base
+   mergernet.estimators.decals
    mergernet.estimators.optuna
    mergernet.estimators.parametric
-   mergernet.estimators.zoobot
 
