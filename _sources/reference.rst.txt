@@ -8,6 +8,7 @@ API Reference
 
    mergernet.core
    mergernet.data
+   mergernet.estimators
    mergernet.jobs
    mergernet.model
    mergernet.report

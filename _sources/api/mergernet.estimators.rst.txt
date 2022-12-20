@@ -1,0 +1,35 @@
+﻿mergernet.estimators
+====================
+
+.. automodule:: mergernet.estimators
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :template: module-template.rst
+   :recursive:
+
+   mergernet.estimators.base
+   mergernet.estimators.optuna
+   mergernet.estimators.parametric
+   mergernet.estimators.zoobot
+
