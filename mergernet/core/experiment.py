@@ -358,17 +358,18 @@ class Experiment:
     mergernet.core.experiment.finish_wandb,
     mergernet.core.experiment.Tracer
     """
-    wandb.init(
-    project=cls.exp_name,
-    entity='nmcardoso',
-    config=config,
-    save_code=False,
-    job_type=job_type,
-    tags=tags,
-    name=name,
-    notes=cls.notes,
-    reinit=True,
-  )
+    if cls.log_wandb:
+      wandb.init(
+        project=cls.exp_name,
+        entity='nmcardoso',
+        config=config,
+        save_code=False,
+        job_type=job_type,
+        tags=tags,
+        name=name,
+        notes=cls.notes,
+        reinit=True,
+      )
 
 
   @classmethod
@@ -376,7 +377,8 @@ class Experiment:
     """
     Closes the connection with current wandb project
     """
-    wandb.finish()
+    if cls.log_wandb:
+      wandb.finish()
 
 
   class Tracer:
