@@ -24,10 +24,14 @@ class ZoobotEstimator(Estimator):
     dataset: Dataset,
     config: EstimatorConfig,
     predict_only: bool = True,
+    crop_size: int = None,
+    resize_size: int = None,
   ):
     super().__init__(hp, dataset)
     self.config = config
     self.predict_only = predict_only
+    self.crop_size = crop_size
+    self.resize_size = resize_size
     self.zoobot_dataset = None
 
 
@@ -51,15 +55,15 @@ class ZoobotEstimator(Estimator):
     )
 
 
-  def build(self, crop_size: int, resize_size: int) -> tf.keras.Model:
+  def build(self) -> tf.keras.Model:
     self.download(self.config)
 
     self._tf_model = define_model.get_model(
       checkpoint_loc=Path(Experiment.local_exp_path) / self.config.model_path,
       include_top=True,
       input_size=self.dataset.config.image_shape[1],
-      crop_size=crop_size,
-      resize_size=resize_size,
+      crop_size=self.crop_size,
+      resize_size=self.resize_size,
       expect_partial=self.predict_only
     )
 
@@ -74,12 +78,12 @@ class ZoobotEstimator(Estimator):
     if self.zoobot_dataset is None:
       self._prepare_dataset()
 
-    label_cols = label_metadata.decals_label_cols
+    self.build()
 
     predict_on_dataset.predict(
       self.zoobot_dataset,
       self.tf_model,
       n_samples,
-      label_cols,
+      label_metadata.decals_label_cols,
       output_path
     )
