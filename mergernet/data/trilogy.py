@@ -1,25 +1,19 @@
 """
 Trilogy Program
 
-Credits
--------
-Original author: Dan Coe (https://www.stsci.edu/~dcoe/trilogy/Intro.html)
-
-Changes
--------
-- Gustavo B. O. Schwarz (https://github.com/schwarzam/)
-  - Rewrote the code in Python 3 with way less code
-  - Adapted for S-PLUS usage
+All credits to original author Dan Coe (https://www.stsci.edu/~dcoe/trilogy/Intro.html)
+with modifications by Gustavo B. O. Schwarz (https://github.com/schwarzam/)
 """
 
 
-import astropy.io.fits
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.optimize import golden
-from PIL import Image
 from os import listdir
 from os.path import isfile, join
+
+import astropy.io.fits
+import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
+from scipy.optimize import golden
 
 rw, gw, bw = 0.299,  0.587,  0.114  # NTSC (also used by PIL in "convert")
 rw, gw, bw = 0.3086, 0.6094, 0.0820  # linear
