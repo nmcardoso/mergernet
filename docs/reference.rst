@@ -11,6 +11,5 @@ API Reference
    mergernet.estimators
    mergernet.jobs
    mergernet.model
-   mergernet.report
    mergernet.services
    mergernet.visualization
