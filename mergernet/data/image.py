@@ -158,6 +158,19 @@ class ColorImage:
     return rgb
 
 
+  @staticmethod
+  def batch_legacy_style(
+    images: List[Path],
+    save_paths: List[Path],
+    **kwargs
+  ):
+    for image_path, save_path in zip(images, save_paths):
+      ColorImage.legacy_style(
+        image_path,
+        save_path=save_path,
+        normalize=False,
+        **kwargs
+      )
 
 
   @staticmethod
