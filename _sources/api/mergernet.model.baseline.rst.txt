@@ -1,0 +1,30 @@
+mergernet.model.baseline
+========================
+
+.. automodule:: mergernet.model.baseline
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      finetune_train
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

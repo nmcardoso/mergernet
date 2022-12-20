@@ -1,0 +1,6 @@
+mergernet.data.trilogy.satK2m
+=============================
+
+.. currentmodule:: mergernet.data.trilogy
+
+.. autofunction:: satK2m

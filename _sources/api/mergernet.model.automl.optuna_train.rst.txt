@@ -1,0 +1,6 @@
+mergernet.model.automl.optuna\_train
+====================================
+
+.. currentmodule:: mergernet.model.automl
+
+.. autofunction:: optuna_train

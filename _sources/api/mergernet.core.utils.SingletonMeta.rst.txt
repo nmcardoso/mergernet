@@ -1,0 +1,17 @@
+mergernet.core.utils.SingletonMeta
+==================================
+
+.. currentmodule:: mergernet.core.utils
+
+.. autoclass:: SingletonMeta
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

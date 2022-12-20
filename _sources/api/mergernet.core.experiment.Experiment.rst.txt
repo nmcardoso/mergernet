@@ -1,0 +1,28 @@
+mergernet.core.experiment.Experiment
+====================================
+
+.. currentmodule:: mergernet.core.experiment
+
+.. autoclass:: Experiment
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Experiment.exp_id
+      ~Experiment.exp_name
+      ~Experiment.gd_exp_path
+      ~Experiment.local_exp_path
+      ~Experiment.local_shared_path
+      ~Experiment.notes
+   
+   

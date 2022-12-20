@@ -1,0 +1,17 @@
+mergernet.core.utils.CachedDataFrame
+====================================
+
+.. currentmodule:: mergernet.core.utils
+
+.. autoclass:: CachedDataFrame
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

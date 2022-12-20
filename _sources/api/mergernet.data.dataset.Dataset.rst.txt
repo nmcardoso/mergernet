@@ -1,0 +1,23 @@
+mergernet.data.dataset.Dataset
+==============================
+
+.. currentmodule:: mergernet.data.dataset
+
+.. autoclass:: Dataset
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Dataset.registry
+   
+   

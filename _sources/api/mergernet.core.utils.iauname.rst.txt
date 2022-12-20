@@ -1,0 +1,6 @@
+mergernet.core.utils.iauname
+============================
+
+.. currentmodule:: mergernet.core.utils
+
+.. autofunction:: iauname

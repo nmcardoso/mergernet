@@ -1,0 +1,38 @@
+mergernet.core.experiment
+=========================
+
+.. automodule:: mergernet.core.experiment
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+   
+      backup_model
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class-template.rst
+   
+      Experiment
+   
+   
+
+   
+   
+   
+
+
+
