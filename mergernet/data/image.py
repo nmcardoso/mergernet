@@ -46,7 +46,7 @@ class ColorImage:
     Apenas uma coisinha:
 
     ```{math}
-    :label: Broca
+    :label: coisas
 
       Y = \frac{arcsinh(\alpha X)}{\sqrt{\alpha}}
     ```{math}
@@ -73,14 +73,14 @@ class ColorImage:
       scales = DEFAULT_BANDS_SCALES[bands]
 
     #  create blank matrix to work with
-    h, w = imgs[0].shape
+    h, w, _ = img.shape
     rgb = np.zeros((h, w, 3), np.float32)
 
     # Copy each band matrix into the rgb image, dividing by band
     # scale divisor to increase pixel values
-    for im, band in zip(imgs, bands):
+    for i, band in enumerate(bands):
       plane, scale = scales[band]
-      rgb[:, :, plane] = (im / scale).astype(np.float32)
+      rgb[:, :, plane] = (img[:, :, i] / scale).astype(np.float32)
 
     if arcsinh is not None:
       # image rescaled by single-pixel not image-pixel,

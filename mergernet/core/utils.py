@@ -40,8 +40,9 @@ def load_image(path: Union[str, Path]) -> np.ndarray:
     return np.load(path)
   elif path.suffix in ('.fits', '.fit', '.fz'):
     im = fits.getdata(path)
-    # if im.shape[0] == im.shape[1] and im.shape[2] != im.shape[0]:
-    #   im = np.moveaxis(im, -1 , 0)
+    if np.argmin(im.shape) == 0:
+      # convert from (c, h, w) to (h, w, c)
+      im = np.moveaxis(im, 0 , -1)
     return im
 
 
