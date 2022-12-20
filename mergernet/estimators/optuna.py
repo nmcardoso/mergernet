@@ -99,7 +99,7 @@ class OptunaEstimator(Estimator):
     return objective_value
 
 
-  def train(self, *args, **kwargs) -> Tuple[tf.keras.Model, tf.keras.History]:
+  def train(self, *args, **kwargs) -> Tuple[tf.keras.Model, tf.keras.callbacks.History]:
     """
     Starts the optuna optimization and returns the best model trained
 

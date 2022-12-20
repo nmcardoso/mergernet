@@ -63,7 +63,7 @@ class Estimator(ABC):
 
 
   @abstractmethod
-  def train(self, run_name: str = '') -> Tuple[tf.keras.Model, tf.keras.History]:
+  def train(self, run_name: str = '') -> Tuple[tf.keras.Model, tf.keras.callbacks.History]:
     raise NotImplementedError('Concret class must implement train method')
 
 

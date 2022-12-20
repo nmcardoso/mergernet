@@ -34,7 +34,7 @@ class TrainStrategy(ABC):
     self.callbacks = callbacks
 
   @abstractmethod
-  def train(self, run_name: str = '') -> Tuple[tf.keras.Model, tf.keras.History]:
+  def train(self, run_name: str = '') -> Tuple[tf.keras.Model, tf.keras.callbacks.History]:
     pass
 
   def set_trainable(self, tf_model: tf.keras.Model, layer: str, trainable: bool):
@@ -68,7 +68,7 @@ class ParametricStrategy(TrainStrategy):
   ):
     super().__init__(model, dataset, hp, callbacks)
 
-  def train(self, run_name: str = 'run-0') -> Tuple[tf.keras.Model, tf.keras.History]:
+  def train(self, run_name: str = 'run-0') -> Tuple[tf.keras.Model, tf.keras.callbacks.History]:
     tf.keras.backend.clear_session()
 
     ds_train, ds_test = self.dataset.get_fold(0)
@@ -208,7 +208,7 @@ class OptunaStrategy(TrainStrategy):
     return objective_value
 
 
-  def train(self, run_name: str = 'run-0') -> Tuple[tf.keras.Model, tf.keras.History]:
+  def train(self, run_name: str = 'run-0') -> Tuple[tf.keras.Model, tf.keras.callbacks.History]:
     exp_id = Experiment.exp_id
 
     # get prunner
@@ -280,7 +280,7 @@ class ZoobotStrategy(TrainStrategy):
   ):
     super().__init__(model, dataset, hp, callbacks)
 
-  def train(self, run_name: str = 'run-0') -> Tuple[tf.keras.Model, tf.keras.History]:
+  def train(self, run_name: str = 'run-0') -> Tuple[tf.keras.Model, tf.keras.callbacks.History]:
     from zoobot.tensorflow.estimators import define_model
     tf_model = define_model.get_model()
 

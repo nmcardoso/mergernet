@@ -56,7 +56,7 @@ class ParametricEstimator(Estimator):
     return self._tf_model
 
 
-  def train(self, run_name: str = 'run-0') -> Tuple[tf.keras.Model, tf.keras.History]:
+  def train(self, run_name: str = 'run-0') -> Tuple[tf.keras.Model, tf.keras.callbacks.History]:
     tf.keras.backend.clear_session()
 
     ds_train, ds_test = self.dataset.get_fold(0)
