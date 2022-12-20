@@ -28,8 +28,8 @@
    :template: module-template.rst
    :recursive:
 
-   mergernet.jobs.j001_test
-   mergernet.jobs.j002_test
+   mergernet.jobs.j001
+   mergernet.jobs.j002
    mergernet.jobs.j003
    mergernet.jobs.j004
    mergernet.jobs.j005

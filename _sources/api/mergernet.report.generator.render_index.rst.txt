@@ -1,6 +1,0 @@
-mergernet.report.generator.render\_index
-========================================
-
-.. currentmodule:: mergernet.report.generator
-
-.. autofunction:: render_index
