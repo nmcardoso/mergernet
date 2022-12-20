@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mergernet.data.trilogy &#8212; Mergernet  documentation</title>
+    <title>mergernet.data.trilogy &#8212; Mergernet 0 documentation</title>
   
   
   
@@ -310,25 +310,19 @@
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Trilogy Program</span>
 
-<span class="sd">Credits</span>
-<span class="sd">-------</span>
-<span class="sd">Original author: Dan Coe (https://www.stsci.edu/~dcoe/trilogy/Intro.html)</span>
-
-<span class="sd">Changes</span>
-<span class="sd">-------</span>
-<span class="sd">- Gustavo B. O. Schwarz (https://github.com/schwarzam/)</span>
-<span class="sd">  - Rewrote the code in Python 3 with way less code</span>
-<span class="sd">  - Adapted for S-PLUS usage</span>
+<span class="sd">All credits to original author Dan Coe (https://www.stsci.edu/~dcoe/trilogy/Intro.html)</span>
+<span class="sd">with modifications by Gustavo B. O. Schwarz (https://github.com/schwarzam/)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<span class="kn">import</span> <span class="nn">astropy.io.fits</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">golden</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">isfile</span><span class="p">,</span> <span class="n">join</span>
+
+<span class="kn">import</span> <span class="nn">astropy.io.fits</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">golden</span>
 
 <span class="n">rw</span><span class="p">,</span> <span class="n">gw</span><span class="p">,</span> <span class="n">bw</span> <span class="o">=</span> <span class="mf">0.299</span><span class="p">,</span>  <span class="mf">0.587</span><span class="p">,</span>  <span class="mf">0.114</span>  <span class="c1"># NTSC (also used by PIL in &quot;convert&quot;)</span>
 <span class="n">rw</span><span class="p">,</span> <span class="n">gw</span><span class="p">,</span> <span class="n">bw</span> <span class="o">=</span> <span class="mf">0.3086</span><span class="p">,</span> <span class="mf">0.6094</span><span class="p">,</span> <span class="mf">0.0820</span>  <span class="c1"># linear</span>

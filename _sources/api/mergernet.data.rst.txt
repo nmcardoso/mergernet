@@ -30,6 +30,7 @@
 
    mergernet.data.dataset
    mergernet.data.dataset_config
+   mergernet.data.image
    mergernet.data.kfold
    mergernet.data.match
    mergernet.data.preprocessing

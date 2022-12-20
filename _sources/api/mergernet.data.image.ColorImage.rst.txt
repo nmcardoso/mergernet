@@ -1,0 +1,17 @@
+mergernet.data.image.ColorImage
+===============================
+
+.. currentmodule:: mergernet.data.image
+
+.. autoclass:: ColorImage
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mergernet.core.hp &#8212; Mergernet  documentation</title>
+    <title>mergernet.core.hp &#8212; Mergernet 0 documentation</title>
   
   
   
@@ -335,6 +335,9 @@
       <span class="n">copy</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
       <span class="k">return</span> <span class="n">copy</span></div>
 
+<div class="viewcode-block" id="HyperParameter.clear_last_value"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HyperParameter.html#mergernet.core.hp.HyperParameter.clear_last_value">[docs]</a>  <span class="k">def</span> <span class="nf">clear_last_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_value</span> <span class="o">=</span> <span class="kc">None</span></div>
+
 <div class="viewcode-block" id="HyperParameter.from_dict"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HyperParameter.html#mergernet.core.hp.HyperParameter.from_dict">[docs]</a>  <span class="nd">@staticmethod</span>
   <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
@@ -547,7 +550,16 @@
 <span class="sd">    Returns a dict representation of this hyperparameters set with hp name</span>
 <span class="sd">    as dict key and last optuna&#39;s suggested value as dict value</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">{</span> <span class="n">name</span><span class="p">:</span> <span class="n">hp</span><span class="o">.</span><span class="n">last_value</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">hp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="p">}</span></div></div>
+    <span class="k">return</span> <span class="p">{</span> <span class="n">name</span><span class="p">:</span> <span class="n">hp</span><span class="o">.</span><span class="n">last_value</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">hp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="HyperParameterSet.clear_values_dict"><a class="viewcode-back" href="../../../api/mergernet.core.hp.HyperParameterSet.html#mergernet.core.hp.HyperParameterSet.clear_values_dict">[docs]</a>  <span class="k">def</span> <span class="nf">clear_values_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Clear ``last_value`` property of the hyperparameter, relevant when training</span>
+<span class="sd">    with conditional hyperparameters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">hp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hps</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+      <span class="n">hp</span><span class="o">.</span><span class="n">clear_last_value</span><span class="p">()</span></div></div>
 </pre></div>
 
             </article>
