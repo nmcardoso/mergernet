@@ -1,0 +1,33 @@
+mergernet.estimators.base
+=========================
+
+.. automodule:: mergernet.estimators.base
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class-template.rst
+   
+      Estimator
+      EstimatorConfig
+      EstimatorRegistry
+   
+   
+
+   
+   
+   
+
+
+

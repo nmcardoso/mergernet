@@ -1,0 +1,24 @@
+mergernet.estimators.base.EstimatorRegistry
+===========================================
+
+.. currentmodule:: mergernet.estimators.base
+
+.. autoclass:: EstimatorRegistry
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~EstimatorRegistry.ZOOBOT_GREY
+      ~EstimatorRegistry.ZOOBOT_RGB
+   
+   

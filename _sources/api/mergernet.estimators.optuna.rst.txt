@@ -1,0 +1,31 @@
+mergernet.estimators.optuna
+===========================
+
+.. automodule:: mergernet.estimators.optuna
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: class-template.rst
+   
+      OptunaEstimator
+   
+   
+
+   
+   
+   
+
+
+

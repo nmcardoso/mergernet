@@ -1,0 +1,24 @@
+mergernet.estimators.base.Estimator
+===================================
+
+.. currentmodule:: mergernet.estimators.base
+
+.. autoclass:: Estimator
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Estimator.registry
+      ~Estimator.tf_model
+   
+   

@@ -1,0 +1,24 @@
+mergernet.estimators.optuna.OptunaEstimator
+===========================================
+
+.. currentmodule:: mergernet.estimators.optuna
+
+.. autoclass:: OptunaEstimator
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~OptunaEstimator.registry
+      ~OptunaEstimator.tf_model
+   
+   
