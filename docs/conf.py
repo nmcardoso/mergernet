@@ -24,10 +24,8 @@ project = 'Mergernet'
 copyright = '2022, Natanael M. Cardoso'
 author = 'Natanael Magalhães Cardoso'
 
-# The short X.Y version
-version = ''
-# The full version, including alpha/beta/rc tags
-release = ''
+version = '0.1'
+release = '0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -48,6 +46,7 @@ extensions = [
   'numpydoc',
   'sphinx.ext.doctest',
   'sphinx.ext.intersphinx',
+  # 'sphinx_copybutton'
   # "sphinx.ext.todo",
   # "sphinx.ext.ifconfig",
   # "sphinx.ext.imgmath",
@@ -217,8 +216,10 @@ autodoc_class_signature = 'separated'
 intersphinx_mapping = {
   'python': ('https://docs.python.org/3/', None),
   'numpy': ('https://numpy.org/devdocs/', None),
+  'scipy': ('https://docs.scipy.org/doc/scipy', None),
   'sklearn': ('https://scikit-learn.org/stable/', None),
-  'pandas': ('https://pandas.pydata.org/docs/', None),
+  'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
+  'matplotlib': ('https://matplotlib.org/stable/', None),
 }
 
 
