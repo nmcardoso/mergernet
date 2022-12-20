@@ -33,13 +33,16 @@ def load_image(path: Union[str, Path]) -> np.ndarray:
     Image converted (if needed) to a numpy array.
   """
   path = Path(path)
-  if path.suffix in ['.jpg', '.png']:
+  if path.suffix in ('.jpg', '.png'):
     img = Image.open(path)
     return np.asarray(img)
-  elif path.suffix in ['.npy', '.npz']:
+  elif path.suffix in ('.npy', '.npz'):
     return np.load(path)
-  elif path.suffix in ['.fits', '.fit', '.fz']:
-    return fits.getdata(path)
+  elif path.suffix in ('.fits', '.fit', '.fz'):
+    im = fits.getdata(path)
+    # if im.shape[0] == im.shape[1] and im.shape[2] != im.shape[0]:
+    #   im = np.moveaxis(im, -1 , 0)
+    return im
 
 
 
