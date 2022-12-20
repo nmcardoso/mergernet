@@ -19,6 +19,7 @@ setup(
     'tqdm>=4.62.3',
     'requests>=2.23',
     'Pillow>=7.1.2',
+    'astropy>=4.3.1'
     'tensorflow_addons',
     'tensorboard',
     'optuna',
