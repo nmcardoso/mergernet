@@ -667,17 +667,18 @@
 <span class="sd">    mergernet.core.experiment.finish_wandb,</span>
 <span class="sd">    mergernet.core.experiment.Tracer</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">wandb</span><span class="o">.</span><span class="n">init</span><span class="p">(</span>
-    <span class="n">project</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">exp_name</span><span class="p">,</span>
-    <span class="n">entity</span><span class="o">=</span><span class="s1">&#39;nmcardoso&#39;</span><span class="p">,</span>
-    <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
-    <span class="n">save_code</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">job_type</span><span class="o">=</span><span class="n">job_type</span><span class="p">,</span>
-    <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
-    <span class="n">notes</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
-    <span class="n">reinit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-  <span class="p">)</span></div>
+    <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">log_wandb</span><span class="p">:</span>
+      <span class="n">wandb</span><span class="o">.</span><span class="n">init</span><span class="p">(</span>
+        <span class="n">project</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">exp_name</span><span class="p">,</span>
+        <span class="n">entity</span><span class="o">=</span><span class="s1">&#39;nmcardoso&#39;</span><span class="p">,</span>
+        <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+        <span class="n">save_code</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">job_type</span><span class="o">=</span><span class="n">job_type</span><span class="p">,</span>
+        <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">notes</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
+        <span class="n">reinit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+      <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Experiment.finish_wandb"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.finish_wandb">[docs]</a>  <span class="nd">@classmethod</span>
@@ -685,7 +686,8 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Closes the connection with current wandb project</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">wandb</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span></div>
+    <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">log_wandb</span><span class="p">:</span>
+      <span class="n">wandb</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Experiment.Tracer"><a class="viewcode-back" href="../../../api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment.Tracer">[docs]</a>  <span class="k">class</span> <span class="nc">Tracer</span><span class="p">:</span>

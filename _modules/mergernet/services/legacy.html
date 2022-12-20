@@ -317,7 +317,8 @@
 
 <span class="n">LEGACY_RGB_URL</span> <span class="o">=</span> <span class="s1">&#39;https://www.legacysurvey.org/viewer/jpeg-cutout&#39;</span>
 <span class="n">LEGACY_RGB_URL_DEV</span> <span class="o">=</span> <span class="s1">&#39;https://www.legacysurvey.org/viewer-dev/jpeg-cutout&#39;</span>
-<span class="n">LEGACY_FITS_URL</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">LEGACY_FITS_URL</span> <span class="o">=</span> <span class="s1">&#39;https://www.legacysurvey.org/viewer/fits-cutout&#39;</span>
+<span class="n">LEGACY_FITS_URL_DEV</span> <span class="o">=</span> <span class="s1">&#39;https://www.legacysurvey.org/viewer-dev/fits-cutout&#39;</span>
 
 
 
@@ -326,7 +327,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">http_client</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="LegacyService.download_rgb"><a class="viewcode-back" href="../../../api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService.download_rgb">[docs]</a>  <span class="k">def</span> <span class="nf">download_rgb</span><span class="p">(</span>
+<div class="viewcode-block" id="LegacyService.cutout"><a class="viewcode-back" href="../../../api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService.cutout">[docs]</a>  <span class="k">def</span> <span class="nf">cutout</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">ra</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">dec</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -337,7 +338,8 @@
     <span class="n">pixscale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.27</span><span class="p">,</span>
     <span class="n">bands</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;grz&#39;</span><span class="p">,</span>
     <span class="n">layer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ls-dr9&#39;</span><span class="p">,</span>
-    <span class="n">use_dev</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">use_dev</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;jpg&#39;</span><span class="p">,</span>
   <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Downloads a single Legacy Survey object RGB stamp defined by RA and DEC.</span>
@@ -348,24 +350,29 @@
 <span class="sd">      Right ascension of the object.</span>
 <span class="sd">    dec: float</span>
 <span class="sd">      Declination of the object.</span>
-<span class="sd">    save_path: pathlib.Path</span>
+<span class="sd">    save_path: Path</span>
 <span class="sd">      Path where downloaded file will be stored.</span>
-<span class="sd">    replace: bool (optional)</span>
+<span class="sd">    replace: bool, optional</span>
 <span class="sd">      Replace file if exists in ``save_path`` location</span>
-<span class="sd">    width: float (optional)</span>
+<span class="sd">    width: float, optional</span>
 <span class="sd">      Stamp width.</span>
-<span class="sd">    height: float (optional)</span>
+<span class="sd">    height: float, optional</span>
 <span class="sd">      Stamp height.</span>
-<span class="sd">    pixscale: float (optional)</span>
+<span class="sd">    pixscale: float, optional</span>
 <span class="sd">      Pixel scale of the sky.</span>
-<span class="sd">    bands: str (optional)</span>
+<span class="sd">    bands: str, optional</span>
 <span class="sd">      Image bands</span>
-<span class="sd">    layer: str (optional)</span>
+<span class="sd">    layer: str, optional</span>
 <span class="sd">      Legacy Survey image layer.</span>
-<span class="sd">    use_dev: bool (optional)</span>
+<span class="sd">    use_dev: bool, optional</span>
 <span class="sd">      Use the dev env of Legacy Cutout API</span>
+<span class="sd">    fmt: str, optional</span>
+<span class="sd">      File format. One of: ``jpg`` or ``fits``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="n">LEGACY_RGB_URL_DEV</span> <span class="k">if</span> <span class="n">use_dev</span> <span class="k">else</span> <span class="n">LEGACY_RGB_URL</span>
+    <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s1">&#39;jpg&#39;</span><span class="p">:</span>
+      <span class="n">url</span> <span class="o">=</span> <span class="n">LEGACY_RGB_URL_DEV</span> <span class="k">if</span> <span class="n">use_dev</span> <span class="k">else</span> <span class="n">LEGACY_RGB_URL</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">url</span> <span class="o">=</span> <span class="n">LEGACY_FITS_URL_DEV</span> <span class="k">if</span> <span class="n">use_dev</span> <span class="k">else</span> <span class="n">LEGACY_FITS_URL</span>
 
     <span class="n">image_url</span> <span class="o">=</span> <span class="n">append_query_params</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="p">{</span>
       <span class="s1">&#39;ra&#39;</span><span class="p">:</span> <span class="n">ra</span><span class="p">,</span>
@@ -386,7 +393,7 @@
 
 
 
-<div class="viewcode-block" id="LegacyService.batch_download_rgb"><a class="viewcode-back" href="../../../api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService.batch_download_rgb">[docs]</a>  <span class="k">def</span> <span class="nf">batch_download_rgb</span><span class="p">(</span>
+<div class="viewcode-block" id="LegacyService.batch_cutout"><a class="viewcode-back" href="../../../api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService.batch_cutout">[docs]</a>  <span class="k">def</span> <span class="nf">batch_cutout</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">ra</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
     <span class="n">dec</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
@@ -426,7 +433,7 @@
     <span class="p">]</span>
 
     <span class="n">parallel_function_executor</span><span class="p">(</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">download_rgb</span><span class="p">,</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">cutout</span><span class="p">,</span>
       <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
       <span class="n">workers</span><span class="o">=</span><span class="n">workers</span><span class="p">,</span>
       <span class="n">unit</span><span class="o">=</span><span class="s1">&#39; files&#39;</span>
@@ -443,7 +450,7 @@
   <span class="n">ls</span><span class="o">.</span><span class="n">batch_download_legacy_rgb</span><span class="p">(</span>
     <span class="n">ra</span><span class="o">=</span><span class="p">[</span><span class="mf">185.1458</span> <span class="o">+</span> <span class="n">dx</span><span class="o">/</span><span class="mi">2</span> <span class="k">for</span> <span class="n">dx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)],</span>
     <span class="n">dec</span><span class="o">=</span><span class="p">[</span><span class="mf">12.8624</span> <span class="o">+</span> <span class="n">dy</span><span class="o">/</span><span class="mi">2</span> <span class="k">for</span> <span class="n">dy</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)],</span>
-    <span class="n">save_path</span><span class="o">=</span><span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;broca/</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.jpg&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)],</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;test/</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.jpg&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)],</span>
     <span class="n">workers</span><span class="o">=</span><span class="mi">6</span>
   <span class="p">)</span>
 </pre></div>

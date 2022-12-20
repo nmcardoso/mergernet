@@ -307,9 +307,13 @@
             <article class="bd-article" role="main">
               
   <h1>Source code for mergernet.data.image</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">ImageOps</span>
+
+<span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">load_image</span>
 
 <span class="n">DEFAULT_BANDS_SCALES</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s1">&#39;urz&#39;</span><span class="p">:</span> <span class="p">{</span>
@@ -355,23 +359,28 @@
 <span class="sd">    Apenas uma coisinha:</span>
 
 <span class="sd">    ```{math}</span>
-<span class="sd">    :label: Broca</span>
+<span class="sd">    :label: coisas</span>
 
 <span class="sd">      Y = \frac{arcsinh(\alpha X)}{\sqrt{\alpha}}</span>
 <span class="sd">    ```{math}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsinh</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">arcsinh</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">arcsinh</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ColorImage.legacy_style"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.legacy_style">[docs]</a>  <span class="nd">@staticmethod</span>
-  <span class="k">def</span> <span class="nf">legacy_style</span><span class="p">(</span>
-    <span class="n">imgs</span><span class="p">,</span>
-    <span class="n">bands</span><span class="p">,</span>
-    <span class="n">arcsinh</span><span class="p">,</span>
-    <span class="n">scales</span><span class="p">,</span>
-    <span class="n">desaturate</span><span class="p">,</span>
+<div class="viewcode-block" id="ColorImage.legacy_rgb"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.legacy_rgb">[docs]</a>  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">legacy_rgb</span><span class="p">(</span>
+    <span class="n">img</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">bands</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;grz&#39;</span><span class="p">,</span>
+    <span class="n">brightness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">scales</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">desaturate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">minmax</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="c1"># cutoff range</span>
     <span class="n">nl_func</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">normalize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+      <span class="n">img</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">nl_func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="n">nl_func</span> <span class="o">=</span> <span class="n">ColorImage</span><span class="o">.</span><span class="n">asinh_map</span>
 
@@ -382,20 +391,20 @@
       <span class="n">scales</span> <span class="o">=</span> <span class="n">DEFAULT_BANDS_SCALES</span><span class="p">[</span><span class="n">bands</span><span class="p">]</span>
 
     <span class="c1">#  create blank matrix to work with</span>
-    <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">imgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
     <span class="c1"># Copy each band matrix into the rgb image, dividing by band</span>
     <span class="c1"># scale divisor to increase pixel values</span>
-    <span class="k">for</span> <span class="n">im</span><span class="p">,</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="n">bands</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bands</span><span class="p">):</span>
       <span class="n">plane</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">scales</span><span class="p">[</span><span class="n">band</span><span class="p">]</span>
-      <span class="n">rgb</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">plane</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">im</span> <span class="o">/</span> <span class="n">scale</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+      <span class="n">rgb</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">plane</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">img</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">scale</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">arcsinh</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">brightness</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
       <span class="c1"># image rescaled by single-pixel not image-pixel,</span>
       <span class="c1"># which means colours depend on brightness</span>
-      <span class="n">rgb</span> <span class="o">=</span> <span class="n">nl_func</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="n">arcsinh</span><span class="o">=</span><span class="n">arcsinh</span><span class="p">)</span>
-      <span class="n">nl_minmax</span> <span class="o">=</span> <span class="n">nl_func</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">minmax</span><span class="p">),</span> <span class="n">arcsinh</span><span class="o">=</span><span class="n">arcsinh</span><span class="p">)</span>
+      <span class="n">rgb</span> <span class="o">=</span> <span class="n">nl_func</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="n">arcsinh</span><span class="o">=</span><span class="n">brightness</span><span class="p">)</span>
+      <span class="n">nl_minmax</span> <span class="o">=</span> <span class="n">nl_func</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">minmax</span><span class="p">),</span> <span class="n">arcsinh</span><span class="o">=</span><span class="n">brightness</span><span class="p">)</span>
 
     <span class="c1"># lastly, rescale image to be between min and max</span>
     <span class="n">rgb</span> <span class="o">=</span> <span class="p">(</span><span class="n">rgb</span> <span class="o">-</span> <span class="n">nl_minmax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">nl_minmax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">nl_minmax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -445,9 +454,33 @@
       <span class="n">rgb</span> <span class="o">=</span> <span class="n">desatured_rgb</span>
 
     <span class="c1"># set min/max to 0 and 1</span>
-    <span class="n">clipped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
+    <span class="n">rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">clipped</span></div>
+    <span class="c1"># set image to RGB levels (0 - 255)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">normalize</span> <span class="ow">or</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">rgb</span> <span class="o">=</span> <span class="p">(</span><span class="n">rgb</span> <span class="o">*</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+
+    <span class="c1"># save image</span>
+    <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">ImageOps</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="s1">&#39;RGB&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">rgb</span></div>
+
+
+<div class="viewcode-block" id="ColorImage.batch_legacy_rgb"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.batch_legacy_rgb">[docs]</a>  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">batch_legacy_rgb</span><span class="p">(</span>
+    <span class="n">images</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span>
+    <span class="n">save_paths</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+  <span class="p">):</span>
+    <span class="k">for</span> <span class="n">image_path</span><span class="p">,</span> <span class="n">save_path</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">save_paths</span><span class="p">):</span>
+      <span class="n">ColorImage</span><span class="o">.</span><span class="n">legacy_rgb</span><span class="p">(</span>
+        <span class="n">image_path</span><span class="p">,</span>
+        <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
+        <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+      <span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="ColorImage.lupton_rgb"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.lupton_rgb">[docs]</a>  <span class="nd">@staticmethod</span>
   <span class="k">def</span> <span class="nf">lupton_rgb</span><span class="p">(</span>
@@ -533,11 +566,6 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-  <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-  <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">ImageOps</span>
-
-  <span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">load_image</span>
-
   <span class="n">fits_path</span> <span class="o">=</span> <span class="s1">&#39;/home/natan/repos/mergernet/data/images/J000030.87-011246.8.fits&#39;</span>
   <span class="n">rgb_path</span> <span class="o">=</span> <span class="s1">&#39;/home/natan/repos/mergernet/data/images/J000/J000030.87-011246.8.png&#39;</span>
   <span class="n">output_path</span> <span class="o">=</span> <span class="s1">&#39;/home/natan/repos/mergernet/data/images/out.png&#39;</span>
@@ -546,8 +574,8 @@
   <span class="n">fits_img</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="n">fits_path</span><span class="p">)</span>
   <span class="n">rgb_img</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="n">rgb_path</span><span class="p">)</span>
 
-  <span class="nb">print</span><span class="p">(</span><span class="n">fits_img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="n">rgb_img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;fits shape&#39;</span><span class="p">,</span> <span class="n">fits_img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;rgb shape&#39;</span><span class="p">,</span> <span class="n">rgb_img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
 
   <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
@@ -558,19 +586,19 @@
     <span class="p">},</span>
     <span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="s1">&#39;grz&#39;</span><span class="p">,</span>
     <span class="s1">&#39;minmax&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span>
-    <span class="s1">&#39;arcsinh&#39;</span><span class="p">:</span> <span class="mf">0.35</span><span class="p">,</span>
+    <span class="s1">&#39;brightness&#39;</span><span class="p">:</span> <span class="mf">1.3</span><span class="p">,</span>
     <span class="s1">&#39;desaturate&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
     <span class="s1">&#39;nl_func&#39;</span><span class="p">:</span> <span class="n">ColorImage</span><span class="o">.</span><span class="n">asinh_map2</span>
   <span class="p">}</span>
 
-  <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;arcsinh&#39;</span><span class="p">:</span> <span class="mf">.3</span><span class="p">,</span>
-    <span class="s1">&#39;mn&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="s1">&#39;mx&#39;</span><span class="p">:</span> <span class="mf">.4</span><span class="p">,</span>
-  <span class="p">}</span>
-  <span class="n">fits_color</span> <span class="o">=</span> <span class="n">ColorImage</span><span class="o">.</span><span class="n">lupton_rgb</span><span class="p">(</span><span class="n">fits_img</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="c1"># kwargs = {</span>
+  <span class="c1">#   &#39;arcsinh&#39;: .3,</span>
+  <span class="c1">#   &#39;mn&#39;: 0,</span>
+  <span class="c1">#   &#39;mx&#39;: .4,</span>
+  <span class="c1"># }</span>
+  <span class="n">fits_color</span> <span class="o">=</span> <span class="n">ColorImage</span><span class="o">.</span><span class="n">legacy_rgb</span><span class="p">(</span><span class="n">fits_img</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-  <span class="nb">print</span><span class="p">(</span><span class="n">fits_color</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;fits_color shape&#39;</span><span class="p">,</span> <span class="n">fits_color</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
   <span class="n">fits_color_int</span> <span class="o">=</span> <span class="p">(</span><span class="n">fits_color</span> <span class="o">*</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
   <span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">fits_color_int</span><span class="p">,</span> <span class="s1">&#39;RGB&#39;</span><span class="p">)</span>
@@ -580,7 +608,7 @@
   <span class="c1"># plt.savefig()</span>
 
 
-  <span class="nb">print</span><span class="p">(</span><span class="n">fits_color</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;final fits shape&#39;</span><span class="p">,</span> <span class="n">fits_color</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
             </article>

@@ -349,8 +349,9 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
   <span class="k">elif</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;.fit&#39;</span><span class="p">,</span> <span class="s1">&#39;.fz&#39;</span><span class="p">):</span>
     <span class="n">im</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="c1"># if im.shape[0] == im.shape[1] and im.shape[2] != im.shape[0]:</span>
-    <span class="c1">#   im = np.moveaxis(im, -1 , 0)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="c1"># convert from (c, h, w) to (h, w, c)</span>
+      <span class="n">im</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="mi">0</span> <span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">im</span></div>
 
 
