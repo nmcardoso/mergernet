@@ -26,6 +26,9 @@ class HyperParameter:
       copy.pop('name')
       return copy
 
+  def clear_last_value(self):
+    self.last_value = None
+
   @staticmethod
   def from_dict(params: dict):
     t = params.pop('type')
@@ -239,3 +242,12 @@ class HyperParameterSet:
     as dict key and last optuna's suggested value as dict value
     """
     return { name: hp.last_value for name, hp in self.hps.items() }
+
+
+  def clear_values_dict(self):
+    """
+    Clear ``last_value`` property of the hyperparameter, relevant when training
+    with conditional hyperparameters
+    """
+    for hp in self.hps.values():
+      hp.clear_last_value()
