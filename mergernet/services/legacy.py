@@ -8,7 +8,8 @@ from mergernet.services.utils import (append_query_params, download_file,
 
 LEGACY_RGB_URL = 'https://www.legacysurvey.org/viewer/jpeg-cutout'
 LEGACY_RGB_URL_DEV = 'https://www.legacysurvey.org/viewer-dev/jpeg-cutout'
-LEGACY_FITS_URL = ''
+LEGACY_FITS_URL = 'https://www.legacysurvey.org/viewer/fits-cutout'
+LEGACY_FITS_URL_DEV = 'https://www.legacysurvey.org/viewer-dev/fits-cutout'
 
 
 
@@ -17,7 +18,7 @@ class LegacyService:
     self.http_client = requests.Session()
 
 
-  def download_rgb(
+  def cutout(
     self,
     ra: float,
     dec: float,
@@ -28,7 +29,8 @@ class LegacyService:
     pixscale: float = 0.27,
     bands: str = 'grz',
     layer: str = 'ls-dr9',
-    use_dev: bool = False
+    use_dev: bool = False,
+    fmt: str = 'jpg',
   ) -> None:
     """
     Downloads a single Legacy Survey object RGB stamp defined by RA and DEC.
@@ -39,24 +41,29 @@ class LegacyService:
       Right ascension of the object.
     dec: float
       Declination of the object.
-    save_path: pathlib.Path
+    save_path: Path
       Path where downloaded file will be stored.
-    replace: bool (optional)
+    replace: bool, optional
       Replace file if exists in ``save_path`` location
-    width: float (optional)
+    width: float, optional
       Stamp width.
-    height: float (optional)
+    height: float, optional
       Stamp height.
-    pixscale: float (optional)
+    pixscale: float, optional
       Pixel scale of the sky.
-    bands: str (optional)
+    bands: str, optional
       Image bands
-    layer: str (optional)
+    layer: str, optional
       Legacy Survey image layer.
-    use_dev: bool (optional)
+    use_dev: bool, optional
       Use the dev env of Legacy Cutout API
+    fmt: str, optional
+      File format. One of: ``jpg`` or ``fits``
     """
-    url = LEGACY_RGB_URL_DEV if use_dev else LEGACY_RGB_URL
+    if fmt == 'jpg':
+      url = LEGACY_RGB_URL_DEV if use_dev else LEGACY_RGB_URL
+    else:
+      url = LEGACY_FITS_URL_DEV if use_dev else LEGACY_FITS_URL
 
     image_url = append_query_params(url, {
       'ra': ra,
@@ -77,7 +84,7 @@ class LegacyService:
 
 
 
-  def batch_download_rgb(
+  def batch_cutout(
     self,
     ra: List[float],
     dec: List[float],
@@ -117,7 +124,7 @@ class LegacyService:
     ]
 
     parallel_function_executor(
-      self.download_rgb,
+      self.cutout,
       params=params,
       workers=workers,
       unit=' files'
@@ -134,6 +141,6 @@ if __name__ == '__main__':
   ls.batch_download_legacy_rgb(
     ra=[185.1458 + dx/2 for dx in range(20)],
     dec=[12.8624 + dy/2 for dy in range(20)],
-    save_path=[Path(f'broca/{i}.jpg') for i in range(20)],
+    save_path=[Path(f'test/{i}.jpg') for i in range(20)],
     workers=6
   )
