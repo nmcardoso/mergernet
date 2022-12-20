@@ -1,6 +1,0 @@
-mergernet.core.utils.array\_fallback
-====================================
-
-.. currentmodule:: mergernet.core.utils
-
-.. autofunction:: array_fallback

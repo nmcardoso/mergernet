@@ -1,6 +1,0 @@
-mergernet.core.utils.load\_image
-================================
-
-.. currentmodule:: mergernet.core.utils
-
-.. autofunction:: load_image

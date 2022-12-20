@@ -1,6 +1,0 @@
-mergernet.core.utils.unique\_path
-=================================
-
-.. currentmodule:: mergernet.core.utils
-
-.. autofunction:: unique_path

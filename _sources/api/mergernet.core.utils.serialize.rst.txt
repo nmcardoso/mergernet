@@ -1,6 +1,0 @@
-mergernet.core.utils.serialize
-==============================
-
-.. currentmodule:: mergernet.core.utils
-
-.. autofunction:: serialize

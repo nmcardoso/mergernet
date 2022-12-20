@@ -1,6 +1,0 @@
-mergernet.core.utils.not\_in
-============================
-
-.. currentmodule:: mergernet.core.utils
-
-.. autofunction:: not_in

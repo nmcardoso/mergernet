@@ -1,6 +1,0 @@
-mergernet.core.utils.deep\_update
-=================================
-
-.. currentmodule:: mergernet.core.utils
-
-.. autofunction:: deep_update

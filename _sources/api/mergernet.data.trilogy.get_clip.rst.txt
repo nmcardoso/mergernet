@@ -1,6 +1,0 @@
-mergernet.data.trilogy.get\_clip
-================================
-
-.. currentmodule:: mergernet.data.trilogy
-
-.. autofunction:: get_clip
