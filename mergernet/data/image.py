@@ -58,7 +58,7 @@ class ColorImage:
     return np.arcsinh(x * arcsinh) / np.sqrt(arcsinh)
 
   @staticmethod
-  def legacy_style(
+  def legacy_rgb(
     img: Union[str, Path, np.ndarray],
     bands: str = 'grz',
     brightness: float = None,
@@ -159,13 +159,13 @@ class ColorImage:
 
 
   @staticmethod
-  def batch_legacy_style(
+  def batch_legacy_rgb(
     images: List[Path],
     save_paths: List[Path],
     **kwargs
   ):
     for image_path, save_path in zip(images, save_paths):
-      ColorImage.legacy_style(
+      ColorImage.legacy_rgb(
         image_path,
         save_path=save_path,
         normalize=False,
@@ -287,7 +287,7 @@ if __name__ == '__main__':
   #   'mn': 0,
   #   'mx': .4,
   # }
-  fits_color = ColorImage.legacy_style(fits_img, **kwargs)
+  fits_color = ColorImage.legacy_rgb(fits_img, **kwargs)
 
   print('fits_color shape', fits_color.shape)
 
