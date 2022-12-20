@@ -24,6 +24,7 @@ setup(
     'optuna',
     'plotly',
     'wandb',
+    'zoobot',
   ],
   extras_require={
     'docs': []
