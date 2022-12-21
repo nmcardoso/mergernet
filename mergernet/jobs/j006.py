@@ -67,6 +67,7 @@ class Job(Experiment):
       height=224,
       pixscale=0.364,
       workers=3,
+      fmt='fits',
     )
 
     ColorImage.batch_legacy_rgb(
