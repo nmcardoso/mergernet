@@ -36,6 +36,7 @@ setup(
       'sphinx',
       'furo',
       'ipykernel',
+      'sphinx_copybutton',
     ]
   }
 )
