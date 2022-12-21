@@ -348,8 +348,6 @@
       <span class="p">(</span><span class="mf">51.9916</span><span class="p">,</span> <span class="o">-</span><span class="mf">37.1494</span><span class="p">),</span>
     <span class="p">])</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">objects_positions</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
-
     <span class="n">ra</span> <span class="o">=</span> <span class="n">objects_positions</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
     <span class="n">dec</span> <span class="o">=</span> <span class="n">objects_positions</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
 
@@ -378,6 +376,9 @@
       <span class="n">workers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
       <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;fits&#39;</span><span class="p">,</span>
     <span class="p">)</span>
+
+    <span class="n">input_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">input_paths</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">exists</span><span class="p">()]</span>
+    <span class="n">output_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">input_paths</span><span class="p">,</span> <span class="n">output_paths</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">exists</span><span class="p">()]</span>
 
     <span class="n">ColorImage</span><span class="o">.</span><span class="n">batch_legacy_rgb</span><span class="p">(</span>
       <span class="n">images</span><span class="o">=</span><span class="n">input_paths</span><span class="p">,</span>
