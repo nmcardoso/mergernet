@@ -39,8 +39,6 @@ class Job(Experiment):
       (51.9916, -37.1494),
     ])
 
-    print(objects_positions[:, 0])
-
     ra = objects_positions[:, 0]
     dec = objects_positions[:, 1]
 
@@ -69,6 +67,9 @@ class Job(Experiment):
       workers=3,
       fmt='fits',
     )
+
+    input_paths = [i for i in input_paths if i.exists()]
+    output_paths = [o for i, o in zip(input_paths, output_paths) if i.exists()]
 
     ColorImage.batch_legacy_rgb(
       images=input_paths,
