@@ -25,6 +25,8 @@ setup(
     'optuna',
     'plotly',
     'wandb',
+    'keras_applications', # zoobot
+    'tensorflow_probability>=0.11', # zoobot
     'zoobot',
   ],
   extras_require={
