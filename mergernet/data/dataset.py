@@ -54,9 +54,12 @@ class Dataset:
 
     data_path = Path(Experiment.local_shared_path)
     self.config = config
-    self.config.archive_path = data_path / self.config.archive_path
-    self.config.images_path = data_path / self.config.images_path
-    self.config.table_path = data_path / self.config.table_path
+    if config.archive_path:
+      self.config.archive_path = data_path / self.config.archive_path
+    if config.images_path:
+      self.config.images_path = data_path / self.config.images_path
+    if config.table_path:
+      self.config.table_path = data_path / self.config.table_path
 
     if not self.is_dataset_downloaded():
       self.download()
