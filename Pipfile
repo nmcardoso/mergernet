@@ -26,6 +26,9 @@ sciserver = {subdirectory = "py3", git = "https://github.com/sciserver/SciScript
 docutils = "*"
 wandb = "*"
 zoobot = "*"
+keras-applications = "*"
+tensorflow-probability = "*"
+furo = "*"
 
 [dev-packages]
 sphinx-copybutton = "*"

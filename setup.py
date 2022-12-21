@@ -34,7 +34,7 @@ setup(
       'Jinja2>=3.1',
       'numpydoc',
       'sphinx',
-      'pydata-sphinx-theme',
+      'furo',
       'ipykernel',
     ]
   }
