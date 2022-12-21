@@ -1,0 +1,24 @@
+mergernet.estimators.decals.ZoobotEstimator
+===========================================
+
+.. currentmodule:: mergernet.estimators.decals
+
+.. autoclass:: ZoobotEstimator
+   :members:
+   :private-members:
+   :undoc-members:
+   :show-inheritance:
+   :inherited-members:
+
+
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ZoobotEstimator.registry
+      ~ZoobotEstimator.tf_model
+   
+   
