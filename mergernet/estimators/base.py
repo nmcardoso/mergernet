@@ -31,10 +31,10 @@ class EstimatorConfig:
 
 
 class EstimatorRegistry:
-  ZOOBOT_GREY = EstimatorConfig(
-    name='zoobot_grey',
+  ZOOBOT_GREYSCALE = EstimatorConfig(
+    name='zoobot_greyscale',
     url=[GDrive.get_url('1jAGWjuyOOyBBwYHwj07m2jr-gGFTlmdn')],
-    model_path='zoobot_grey',
+    model_path='zoobot_greyscale',
     archive_path='zoobot_grey.tar.xz',
     fmt='savedmodel',
   )
