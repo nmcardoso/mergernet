@@ -228,7 +228,7 @@ class Dataset:
     return df[self.config.X_column].to_numpy()
 
 
-  def get_images_path(self) -> List[Path]:
+  def get_images_paths(self) -> List[Path]:
     X = self.get_X()
     return [
       self.config.images_path / (_X + self.config.X_column_suffix)
