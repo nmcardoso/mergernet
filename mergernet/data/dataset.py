@@ -132,32 +132,34 @@ class Dataset:
     the dataset files from web resource for a specified dataset type.
     """
     # Download images
-    for i, archive_url in enumerate(self.config.archive_url):
-      try:
-        tf.keras.utils.get_file(
-          fname=self.config.archive_path.resolve(),
-          origin=archive_url,
-          cache_subdir=self.config.archive_path.parent.resolve(),
-          archive_format='tar',
-          extract=True
-        )
-        break
-      except:
-        if i == len(self.config.archive_url) - 1:
-          raise RuntimeError("Can't download images archive")
+    if self.config.archive_url:
+      for i, archive_url in enumerate(self.config.archive_url):
+        try:
+          tf.keras.utils.get_file(
+            fname=self.config.archive_path.resolve(),
+            origin=archive_url,
+            cache_subdir=self.config.archive_path.parent.resolve(),
+            archive_format='tar',
+            extract=True
+          )
+          break
+        except:
+          if i == len(self.config.archive_url) - 1:
+            raise RuntimeError("Can't download images archive")
 
     # Download table
-    for i, table_url in enumerate(self.config.table_url):
-      try:
-        tf.keras.utils.get_file(
-          fname=self.config.table_path.resolve(),
-          origin=table_url,
-          cache_subdir=self.config.table_path.parent.resolve()
-        )
-        break
-      except:
-        if i == len(self.config.table_url) - 1:
-          raise RuntimeError("Can't download table")
+    if self.config.table_url:
+      for i, table_url in enumerate(self.config.table_url):
+        try:
+          tf.keras.utils.get_file(
+            fname=self.config.table_path.resolve(),
+            origin=table_url,
+            cache_subdir=self.config.table_path.parent.resolve()
+          )
+          break
+        except:
+          if i == len(self.config.table_url) - 1:
+            raise RuntimeError("Can't download table")
 
 
   def get_fold(self, fold: int) -> Tuple[tf.data.Dataset, tf.data.Dataset]:
