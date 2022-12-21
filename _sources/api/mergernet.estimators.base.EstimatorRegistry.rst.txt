@@ -18,7 +18,7 @@ mergernet.estimators.base.EstimatorRegistry
 
    .. autosummary::
    
-      ~EstimatorRegistry.ZOOBOT_GREY
+      ~EstimatorRegistry.ZOOBOT_GREYSCALE
       ~EstimatorRegistry.ZOOBOT_RGB
    
    
