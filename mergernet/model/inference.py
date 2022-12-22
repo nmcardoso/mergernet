@@ -39,7 +39,7 @@ class Predictor:
     else:
       X = self.dataset.get_X_by_fold(0, kind='test')
       name = name or 'test_preds_fold_0.csv'
-      label_map = label_map or self.dataset.config.label_map
+      label_map = label_map or self.dataset.config.labels
 
     # load dataset table
     df = pd.read_csv(self.dataset.config.table_path)

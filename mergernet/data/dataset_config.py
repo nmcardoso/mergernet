@@ -20,7 +20,7 @@ class DatasetConfig:
     fold_column: str = 'fold',
     X_column_suffix: str = '', # filename extension
     detect_img_extension: bool = False,
-    label_map: dict = None,
+    labels: dict = None,
     image_shape: tuple = None,
     n_classes: int = None
   ):
@@ -35,7 +35,7 @@ class DatasetConfig:
     self.fold_column = fold_column
     self.X_column_suffix = X_column_suffix
     self.detect_img_extension = detect_img_extension
-    self.label_map = label_map
+    self.labels = labels
     self.image_shape = image_shape
     self.n_classes = n_classes
 
@@ -56,7 +56,7 @@ class DatasetRegistry:
     X_column='filename',
     y_column='class',
     fold_column='fold',
-    label_map={ 'E': 0, 'M': 1, 'S': 2 },
+    labels=['E', 'M', 'S'],
     image_shape=(128, 128, 3),
     n_classes=3
   )
@@ -73,7 +73,7 @@ class DatasetRegistry:
     X_column_suffix='.jpg',
     y_column='class',
     fold_column='fold',
-    label_map={'merger': 0, 'elliptical': 1, 'spiral': 2, 'disturbed': 3},
+    labels=['merger', 'elliptical', 'spiral', 'disturbed'],
     image_shape=(128, 128, 3),
     n_classes=4
   )
@@ -90,7 +90,7 @@ class DatasetRegistry:
     X_column_suffix='.jpg',
     y_column='class',
     fold_column='fold',
-    label_map={'merger': 0, 'elliptical': 1, 'spiral': 2, 'disturbed': 3},
+    labels=['merger', 'elliptical', 'spiral', 'disturbed'],
     image_shape=(128, 128, 3),
     n_classes=4
   )
@@ -107,7 +107,7 @@ class DatasetRegistry:
     X_column_suffix='.jpg',
     y_column='class',
     fold_column='fold',
-    label_map={'non_merger': 0, 'merger': 1},
+    labels=['non_merger', 'merger'],
     image_shape=(128, 128, 3),
     n_classes=2
   )
@@ -191,7 +191,7 @@ class DatasetRegistry:
     X_column_suffix='.jpg',
     y_column='class',
     fold_column='fold',
-    label_map={'non_merger': 0, 'merger': 1},
+    labels=['non_merger', 'merger'],
     image_shape=(128, 128, 3),
     n_classes=2
   )

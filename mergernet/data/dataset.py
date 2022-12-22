@@ -90,8 +90,8 @@ class Dataset:
     """
     y_int = np.empty(y.shape, dtype=np.int8)
 
-    for k, v in self.config.label_map.items():
-      y_int[y == k] = v
+    for class_index, class_name in enumerate(self.config.labels):
+      y_int[y == class_name] = class_index
 
     return y_int
 
@@ -202,7 +202,7 @@ class Dataset:
       X_train = [load_image(path) for path in X_train]
       X_test = [load_image(path) for path in X_test]
 
-    if self.config.label_map:
+    if self.config.labels:
       y_train = self._discretize_label(y_train)
       y_test = self._discretize_label(y_test)
 
@@ -252,7 +252,7 @@ class Dataset:
       return self._weight_map
 
     y = pd.read_csv(self.config.table_path)[self.config.y_column].to_numpy()
-    if self.config.label_map:
+    if self.config.labels:
       y = self._discretize_label(y)
 
     classes, cardinalities = np.unique(y, return_counts=True)
