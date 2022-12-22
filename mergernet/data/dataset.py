@@ -123,7 +123,8 @@ class Dataset:
     bool
       True if the images dir and the table are found, False otherwise
     """
-    return self.config.images_path.is_dir() and self.config.table_path.is_file()
+    return self.config.images_path and self.config.images_path.is_dir() and \
+           self.config.table_path and self.config.table_path.is_file()
 
 
   def download(self):
