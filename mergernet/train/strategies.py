@@ -179,7 +179,7 @@ class OptunaStrategy(TrainStrategy):
     except:
       initial_value = None
 
-    model_path = Path(Experiment.local_exp_path) / 'model.h5'
+    model_path = Experiment.local_exp_path / 'model.h5'
     ckpt_callback = tf.keras.callbacks.ModelCheckpoint(
       str(model_path),
       monitor='val_loss',
@@ -221,7 +221,7 @@ class OptunaStrategy(TrainStrategy):
       pruner_instance = optuna.pruners.HyperbandPruner(min_resource=7)
 
     # set db uri
-    optuna_path = Path(Experiment.local_exp_path) / 'optuna.sqlite'
+    optuna_path = Experiment.local_exp_path / 'optuna.sqlite'
     optuna_uri = f'sqlite:///{str(optuna_path.resolve())}' # absolute path
 
     if self.resume_hash is not None:
@@ -266,7 +266,7 @@ class OptunaStrategy(TrainStrategy):
     L.info(f'----- end of best trial summary -----')
 
     # load model and return
-    model = tf.keras.models.load_model(Path(Experiment.local_exp_path) / 'model.h5')
+    model = tf.keras.models.load_model(Experiment.local_exp_path / 'model.h5')
     return model
 
 

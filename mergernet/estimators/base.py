@@ -82,7 +82,7 @@ class Estimator(ABC):
   def plot(self, filename: str = 'model.png'):
     tf.keras.utils.plot_model(
       self.tf_model,
-      to_file=Path(Experiment.local_exp_path) / filename,
+      to_file=Experiment.local_exp_path / filename,
       expand_nested=True
     )
 
@@ -111,7 +111,7 @@ class Estimator(ABC):
 
   def download(self, config: EstimatorConfig, replace: bool = False):
     if config is None: return
-    destination_path = Path(Experiment.local_exp_path) / config.model_path
+    destination_path = Experiment.local_exp_path / config.model_path
 
     if not destination_path.exists() or replace:
       for i, url in enumerate(config.url):

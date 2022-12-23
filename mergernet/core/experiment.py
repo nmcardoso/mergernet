@@ -91,7 +91,7 @@ def backup_model(
     Experiment.upload_file_gh('test_preds_fold_0.csv', df)
 
   if save_model:
-    model.save(Path(Experiment.gd_run_path) / 'model.h5')
+    model.save(Experiment.gd_exp_path / 'model.h5')
 
 
 
@@ -136,6 +136,7 @@ class Experiment:
   exp_name = None
   local_shared_path = None
   local_exp_path = None
+  gd_shared_path = None
   gd_exp_path = None
   notes = None
 
@@ -207,32 +208,27 @@ class Experiment:
     # setup paths
     exp_params = dict(exp_id=Experiment.exp_id)
     if ENV == 'dev':
-      Experiment.local_shared_path = DEV_LOCAL_SHARED_PATTERN
-      Experiment.local_exp_path = DEV_LOCAL_EXP_PATTERN.format(**exp_params)
-      Experiment.gd_shared_path = DEV_GD_SHARED_PATTERN
-      Experiment.gd_exp_path = DEV_GD_EXP_PATTERN.format(**exp_params)
+      Experiment.local_shared_path = Path(DEV_LOCAL_SHARED_PATTERN)
+      Experiment.local_exp_path = Path(DEV_LOCAL_EXP_PATTERN.format(**exp_params))
+      Experiment.gd_shared_path = Path(DEV_GD_SHARED_PATTERN)
+      Experiment.gd_exp_path = Path(DEV_GD_EXP_PATTERN.format(**exp_params))
     else:
-      Experiment.local_shared_path = LOCAL_SHARED_PATTERN
-      Experiment.local_exp_path = LOCAL_EXP_PATTERN.format(**exp_params)
-      Experiment.gd_shared_path = GD_SHARED_PATTERN
-      Experiment.gd_exp_path = GD_EXP_PATTERN.format(**exp_params)
+      Experiment.local_shared_path = Path(LOCAL_SHARED_PATTERN)
+      Experiment.local_exp_path = Path(LOCAL_EXP_PATTERN.format(**exp_params))
+      Experiment.gd_shared_path = Path(GD_SHARED_PATTERN)
+      Experiment.gd_exp_path = Path(GD_EXP_PATTERN.format(**exp_params))
 
     # prepare local experiment environment creating directory structure
-    local_exp_path = Path(Experiment.local_exp_path)
-    local_shared_path = Path(Experiment.local_shared_path)
-    gd_shared_path = Path(Experiment.gd_shared_path)
-    gd_exp_path = Path(Experiment.gd_exp_path)
+    if self.restart and Experiment.local_exp_path.exists():
+      rmtree(Experiment.local_exp_path)
 
-    if self.restart and local_exp_path.exists():
-      rmtree(local_exp_path)
+    if self.restart and Experiment.gd_exp_path.exists():
+      rmtree(Experiment.gd_exp_path)
 
-    if self.restart and gd_exp_path.exists():
-      rmtree(gd_exp_path)
-
-    local_shared_path.mkdir(parents=True, exist_ok=True)
-    local_exp_path.mkdir(parents=True, exist_ok=True)
-    gd_shared_path.mkdir(parents=True, exist_ok=True)
-    gd_exp_path.mkdir(parents=True, exist_ok=True)
+    Experiment.local_shared_path.mkdir(parents=True, exist_ok=True)
+    Experiment.local_exp_path.mkdir(parents=True, exist_ok=True)
+    Experiment.gd_shared_path.mkdir(parents=True, exist_ok=True)
+    Experiment.gd_exp_path.mkdir(parents=True, exist_ok=True)
 
     # signaling that this method was called
     Experiment._exp_created = True
@@ -258,12 +254,12 @@ class Experiment:
     """
     if not cls._exp_created: raise ValueError('Experiment must be created')
 
-    if not Path(Experiment.gd_exp_path).is_dir():
+    if not Experiment.gd_exp_path.is_dir():
       L.warning(f'Google Drive is not mounted, skiping upload of file {fname}')
       return
 
-    from_path = Path(cls.local_exp_path) / fname
-    to_path = Path(cls.gd_exp_path) / fname
+    from_path = cls.local_exp_path / fname
+    to_path = cls.gd_exp_path / fname
 
     try:
       if data is None:
@@ -302,17 +298,17 @@ class Experiment:
     """
     if not cls._exp_created: raise ValueError('Experiment must be created')
 
-    if not Path(Experiment.gd_exp_path).is_dir():
+    if not Experiment.gd_exp_path.is_dir():
       L.warning(f'Google Drive is not mounted, skiping download of file {fname}')
       return
 
     exp_id = exp_id or cls.exp_id
 
     if shared:
-      from_path = Path(cls.gd_shared_path) / fname
+      from_path = cls.gd_shared_path / fname
     else:
       from_path = Path(GD_EXP_PATTERN.format(exp_id=exp_id)) / fname
-    to_path = Path(cls.local_exp_path) / fname
+    to_path = cls.local_exp_path / fname
 
     if not from_path.exists():
       L.warning(f'File {fname} not found in Google Drive, skiping download')

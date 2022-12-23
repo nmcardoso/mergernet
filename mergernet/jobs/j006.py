@@ -48,7 +48,7 @@ class Job(Experiment):
     dec = objects_positions[:, 1]
     iaunames = iauname(ra, dec)
 
-    dataset_path = Path(Experiment.local_shared_path) / 'exp_6_ds'
+    dataset_path = Experiment.local_shared_path / 'exp_6_ds'
 
     fits_paths = [
       dataset_path / (iauname + '.fits')
@@ -121,13 +121,13 @@ class Job(Experiment):
     Experiment.upload_file_gd('model.png')
 
 
-    repr_df = pd.read_csv(Path(Experiment.local_exp_path) / 'representations.csv')
+    repr_df = pd.read_csv(Experiment.local_exp_path / 'representations.csv')
     repr_df = pd.merge(df[['ra', 'dec', 'iauname']], repr_df, 'inner', 'iauname')
     feat_cols = [col for col in repr_df.columns.values if col.startswith('feat_')]
     repr_feat = repr_df[feat_cols].to_numpy()
 
     Experiment.download_file_gd('cnn_features_decals.parquet', shared=True)
-    decals_feat_df = pd.read_parquet(Path(Experiment.local_exp_path) / 'cnn_features_decals.parquet')
+    decals_feat_df = pd.read_parquet(Experiment.local_exp_path / 'cnn_features_decals.parquet')
     feat_cols = [col for col in decals_feat_df.columns.values if col.startswith('feat_')]
     decals_feat = decals_feat_df[feat_cols].to_numpy()
 

@@ -52,7 +52,7 @@ class Dataset:
   ):
     self.in_memory = in_memory
 
-    data_path = Path(Experiment.local_shared_path)
+    data_path = Experiment.local_shared_path
     self.config = config
     if config.archive_path:
       self.config.archive_path = data_path / self.config.archive_path
@@ -102,7 +102,7 @@ class Dataset:
     dataset config has no table.
     """
     if self.config.table_url is None:
-      self.config.table_path = Path(Experiment.local_shared_path) / (self.config.name + '.csv')
+      self.config.table_path = Experiment.local_shared_path / f'{self.config.name}.csv'
       self.config.X_column = 'iauname'
 
       iaunames = [

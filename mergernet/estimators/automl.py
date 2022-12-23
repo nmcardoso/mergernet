@@ -65,7 +65,7 @@ class OptunaEstimator(Estimator):
     except:
       initial_value = None
 
-    model_path = Path(Experiment.local_exp_path) / MODEL_FILENAME
+    model_path = Experiment.local_exp_path / MODEL_FILENAME
     ckpt_callback = tf.keras.callbacks.ModelCheckpoint(
       str(model_path),
       monitor='val_loss',
@@ -120,7 +120,7 @@ class OptunaEstimator(Estimator):
       pruner_instance = optuna.pruners.HyperbandPruner(min_resource=7)
 
     # setup db uri
-    optuna_path = Path(Experiment.local_exp_path) / OPTUNA_DB_FILENAME
+    optuna_path = Experiment.local_exp_path / OPTUNA_DB_FILENAME
     optuna_uri = f'sqlite:///{str(optuna_path.resolve())}' # absolute path
 
     if self.resume_hash is not None:
@@ -166,6 +166,6 @@ class OptunaEstimator(Estimator):
 
     # load and return the best saved model
     self._tf_model = tf.keras.models.load_model(
-      Path(Experiment.local_exp_path) / MODEL_FILENAME
+      Experiment.local_exp_path / MODEL_FILENAME
     )
     return self._tf_model

@@ -272,7 +272,7 @@ class SaveBestTrialCallback(tf.keras.callbacks.Callback):
       L.info(f'New best metric detected. {self.objective_metric}: {current_value}')
 
       # save model
-      save_path = Path(Experiment.local_exp_path) / f'{self.name}.h5'
+      save_path = Experiment.local_exp_path / f'{self.name}.h5'
       self.model.save(save_path, overwrite=True)
       L.info(f'Trial saved in {str(save_path)}')
       Experiment.register_artifact(f'{self.name}.h5', 'gdrive')
@@ -282,7 +282,7 @@ class SaveBestTrialCallback(tf.keras.callbacks.Callback):
       if h:
         hist = {'epoch': range(len(h['loss'])), **h}
         hist_df = pd.DataFrame(hist)
-        save_path = Path(Experiment.local_exp_path) / f'history_{self.name}.csv'
+        save_path = Experiment.local_exp_path / f'history_{self.name}.csv'
         hist_df.to_csv(save_path, index=False)
         L.info(f'History saved in {str(save_path)}')
         Experiment.register_artifact(f'history_{self.name}.csv', 'github')

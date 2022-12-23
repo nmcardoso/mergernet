@@ -62,7 +62,7 @@ class ZoobotEstimator(Estimator):
 
     self._tf_model = define_model.get_model(
       output_dim=len(label_metadata.decals_label_cols),
-      weights_loc=Path(Experiment.local_exp_path) / self.config.model_path / 'checkpoint',
+      weights_loc=Experiment.local_exp_path / self.config.model_path / 'checkpoint',
       include_top=include_top,
       input_size=self.dataset.config.image_shape[1],
       crop_size=self.crop_size,
@@ -97,7 +97,7 @@ class ZoobotEstimator(Estimator):
       self.tf_model,
       n_samples,
       label_metadata.decals_label_cols,
-      str((Path(Experiment.local_exp_path) / filename).resolve())
+      str((Experiment.local_exp_path / filename).resolve())
     )
 
 
@@ -117,13 +117,13 @@ class ZoobotEstimator(Estimator):
     df = pd.DataFrame(preds, columns=columns)
     df.insert(0, 'iauname', self.dataset.get_X())
 
-    df.to_csv(Path(Experiment.local_exp_path) / filename, index=False)
+    df.to_csv(Experiment.local_exp_path / filename, index=False)
 
 
   def pca(self, features: np.ndarray, n_components: int, filename: str = None):
     df = compress_representations.create_pca_embedding(features, n_components)
 
     if filename is not None:
-      df.to_csv(Path(Experiment.local_exp_path) / filename, index=False)
+      df.to_csv(Experiment.local_exp_path / filename, index=False)
 
     return df
