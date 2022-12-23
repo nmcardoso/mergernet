@@ -16,6 +16,7 @@ setup(
     'numpy>=1.19.5',
     'pandas>=1.1.5',
     'tensorflow>=2.7',
+    'scikit-learn>=1.0.1',
     'tqdm>=4.62.3',
     'requests>=2.23',
     'Pillow>=7.1.2',
@@ -27,7 +28,9 @@ setup(
     'wandb',
     'keras_applications', # zoobot
     'tensorflow_probability>=0.11', # zoobot
+    'seaborn' , # zoobot
     'zoobot',
+    'pydot', # tf.keras.utils.plot_model
   ],
   extras_require={
     'docs': [

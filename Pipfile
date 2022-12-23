@@ -20,21 +20,22 @@ optuna = "*"
 plotly = "*"
 mw-plot = "*"
 python-magic = "*"
-jinja2 = "*"
 splusdata = "*"
 sciserver = {subdirectory = "py3", git = "https://github.com/sciserver/SciScript-Python.git/"}
-docutils = "*"
 wandb = "*"
 zoobot = "*"
 keras-applications = "*"
 tensorflow-probability = "*"
-furo = "*"
+pydot = "*"
+seaborn = "*"
 
 [dev-packages]
-sphinx-copybutton = "*"
+jinja2 = "*"
+docutils = "*"
+furo = "*"
 numpydoc = "*"
-pydata-sphinx-theme = "*"
 ipykernel = "*"
+sphinx-copybutton = "*"
 tensorboard-plugin-profile = "*"
 
 [requires]
