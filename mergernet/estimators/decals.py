@@ -5,7 +5,7 @@ from typing import Union
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from zoobot.shared import label_metadata
+from zoobot.shared import compress_representations, label_metadata
 from zoobot.tensorflow.data_utils import image_datasets
 from zoobot.tensorflow.estimators import define_model, preprocess
 from zoobot.tensorflow.predictions import predict_on_dataset
@@ -113,8 +113,17 @@ class ZoobotEstimator(Estimator):
 
     preds = self.tf_model.predict(self.zoobot_dataset)
 
-    columns = [f'c_{i}' for i in range(len(preds[0]))]
+    columns = [f'feat_{i}' for i in range(len(preds[0]))]
     df = pd.DataFrame(preds, columns=columns)
     df.insert(0, 'iauname', self.dataset.get_X())
 
     df.to_csv(Path(Experiment.local_exp_path) / filename, index=False)
+
+
+  def pca(self, features: np.ndarray, n_components: int, filename: str = None):
+    df = compress_representations.create_pca_embedding(features, n_components)
+
+    if filename is not None:
+      df.to_csv(Path(Experiment.local_exp_path) / filename, index=False)
+
+    return df
