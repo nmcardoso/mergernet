@@ -2,6 +2,8 @@ import logging
 from pathlib import Path
 from typing import Union
 
+import numpy as np
+import pandas as pd
 import tensorflow as tf
 from zoobot.shared import label_metadata
 from zoobot.tensorflow.data_utils import image_datasets
@@ -55,17 +57,21 @@ class ZoobotEstimator(Estimator):
     )
 
 
-  def build(self) -> tf.keras.Model:
+  def build(self, include_top: bool = True) -> tf.keras.Model:
     self.download(self.config)
 
     self._tf_model = define_model.get_model(
-      checkpoint_loc=Path(Experiment.local_exp_path) / self.config.model_path,
-      include_top=True,
+      output_dim=len(label_metadata.decals_label_cols),
+      weights_loc=Path(Experiment.local_exp_path) / self.config.model_path / 'checkpoint',
+      include_top=include_top,
       input_size=self.dataset.config.image_shape[1],
       crop_size=self.crop_size,
       resize_size=self.resize_size,
       expect_partial=self.predict_only
     )
+
+    if not include_top:
+      self._tf_model.add(tf.keras.layers.GlobalAveragePooling2D())
 
     return self._tf_model
 
@@ -74,16 +80,41 @@ class ZoobotEstimator(Estimator):
     pass
 
 
-  def predict(self, n_samples: int = 5, output_path: Union[str, Path] = None):
+  def predict(
+    self,
+    n_samples: int = 5,
+    filename: Union[str, Path] = None,
+    rebuild: bool = False,
+  ):
     if self.zoobot_dataset is None:
       self._prepare_dataset()
 
-    self.build()
+    if self._tf_model is None or rebuild:
+      self.build()
 
     predict_on_dataset.predict(
       self.zoobot_dataset,
       self.tf_model,
       n_samples,
       label_metadata.decals_label_cols,
-      output_path
+      str((Path(Experiment.local_exp_path) / filename).resolve())
     )
+
+
+  def cnn_representations(
+    self,
+    filename: Union[str, Path] = None,
+    rebuild: bool = False
+  ):
+    if self.zoobot_dataset is None:
+      self._prepare_dataset()
+
+    self.build(include_top=False)
+
+    preds = self.tf_model.predict(self.zoobot_dataset)
+
+    columns = [f'c_{i}' for i in range(len(preds[0]))]
+    df = pd.DataFrame(preds, columns=columns)
+    df.insert(0, 'iauname', self.dataset.get_X())
+
+    df.to_csv(Path(Experiment.local_exp_path) / filename, index=False)
