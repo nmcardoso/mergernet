@@ -207,7 +207,7 @@ class MyWandbCallback(wandb.keras.WandbCallback):
     super().on_train_end(logs)
 
     probs = self.model.predict(self.validation_data)
-    y_true = [y for _, y in self.validation_data]
+    y_true = np.concatenate([y for _, y in self.validation_data], axis=0)
     preds = np.argmax(probs, axis=-1)
     class_names = self.dataset.config.labels
 
