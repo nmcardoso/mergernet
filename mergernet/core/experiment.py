@@ -253,6 +253,10 @@ class Experiment:
     """
     if not cls._exp_created: raise ValueError('Experiment must be created')
 
+    if not Path(Experiment.gd_exp_path).is_dir():
+      L.warning(f'Google Drive is not mounted, skiping upload of file {fname}')
+      return
+
     from_path = Path(cls.local_exp_path) / fname
     to_path = Path(cls.gd_exp_path) / fname
 
@@ -288,6 +292,11 @@ class Experiment:
       The experiement identifier
     """
     if not cls._exp_created: raise ValueError('Experiment must be created')
+
+    if not Path(Experiment.gd_exp_path).is_dir():
+      L.warning(f'Google Drive is not mounted, skiping download of file {fname}')
+      return
+
     exp_id = exp_id or cls.exp_id
 
     from_path = Path(cls.gd_exp_path) / fname
