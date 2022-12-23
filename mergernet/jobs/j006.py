@@ -1,6 +1,9 @@
+import logging
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
+import tensorflow as tf
 
 from mergernet.core.experiment import Experiment, backup_model
 from mergernet.core.hp import HP, HyperParameterSet
@@ -12,13 +15,15 @@ from mergernet.model.automl import optuna_train
 from mergernet.model.baseline import finetune_train
 from mergernet.services.legacy import LegacyService
 
+L = logging.getLogger(__name__)
+
 
 class Job(Experiment):
   def __init__(self):
     super().__init__()
     self.exp_id = 6
     self.log_wandb = False
-    self.restart = True
+    self.restart = False
 
   def call(self):
     objects_positions = np.array([
@@ -41,18 +46,17 @@ class Job(Experiment):
 
     ra = objects_positions[:, 0]
     dec = objects_positions[:, 1]
-
     iaunames = iauname(ra, dec)
 
-    DATASET_PATH = Path(Experiment.local_exp_path) / 'exp_6_ds'
+    dataset_path = Path(Experiment.local_shared_path) / 'exp_6_ds'
 
-    input_paths = [
-      DATASET_PATH / (iauname + '.fits')
+    fits_paths = [
+      dataset_path / (iauname + '.fits')
       for iauname in iaunames
     ]
 
-    output_paths = [
-      DATASET_PATH / (iauname + '.png')
+    png_paths = [
+      dataset_path / (iauname + '.png')
       for iauname in iaunames
     ]
 
@@ -60,7 +64,7 @@ class Job(Experiment):
     ls.batch_cutout(
       ra=ra,
       dec=dec,
-      save_path=output_paths,
+      save_path=fits_paths,
       width=224,
       height=224,
       pixscale=0.364,
@@ -68,12 +72,20 @@ class Job(Experiment):
       fmt='fits',
     )
 
-    input_paths = [i for i in input_paths if i.exists()]
-    output_paths = [o for i, o in zip(input_paths, output_paths) if i.exists()]
+    df = pd.DataFrame({
+      'ra': ra,
+      'dec': dec,
+      'iauname': iaunames,
+      'fits_paths': fits_paths,
+      'png_paths': png_paths
+    })
+    not_downloaded_iaunames = [i.stem for i in fits_paths if not i.exists()]
+    df = df[~df.iauname.isin(not_downloaded_iaunames)]
+    L.info(f'Not dowloaded files: {len(not_downloaded_iaunames)}')
 
     ColorImage.batch_legacy_rgb(
-      images=input_paths,
-      save_paths=output_paths,
+      images=df.fits_paths.to_numpy(),
+      save_paths=df.png_paths.to_numpy(),
       bands='grz',
       scales={
         'g': (2, 0.008),
@@ -97,14 +109,43 @@ class Job(Experiment):
     model = ZoobotEstimator(
       hp=None,
       dataset=ds,
-      config=ZoobotEstimator.registry.ZOOBOT_GREY,
+      config=ZoobotEstimator.registry.ZOOBOT_GREYSCALE,
       crop_size=224,
       resize_size=224,
     )
-    model.predict(output_path=Path(self.local_exp_path) / 'predictions.h5')
 
-    Experiment.upload_file_gd('predictions.h5')
+    model.cnn_representations(filename='representations.csv')
+    model.plot('model.png')
 
+    Experiment.upload_file_gd('representations.csv')
+    Experiment.upload_file_gd('model.png')
+
+
+    repr_df = pd.read_csv(Path(Experiment.local_exp_path) / 'representations.csv')
+    repr_df = pd.merge(df[['ra', 'dec', 'iauname']], repr_df, 'inner', 'iauname')
+    feat_cols = [col for col in repr_df.columns.values if col.startswith('feat_')]
+    repr_feat = repr_df[feat_cols].to_numpy()
+
+    Experiment.download_file_gd('cnn_features_decals.parquet', shared=True)
+    decals_feat_df = pd.read_parquet(Path(Experiment.local_exp_path) / 'cnn_features_decals.parquet')
+    feat_cols = [col for col in decals_feat_df.columns.values if col.startswith('feat_')]
+    decals_feat = decals_feat_df[feat_cols].to_numpy()
+
+
+    all_feat = np.concatenate((decals_feat, repr_feat))
+
+
+    pca_df = model.pca(all_feat[-1000:], 10)
+    pca_df = pca_df.iloc[-len(repr_df):]
+    pca_df = pd.concat(
+      (
+        repr_df[['ra', 'dec', 'iauname']].reset_index(drop=True),
+        pca_df.reset_index(drop=True)
+      ),
+      axis=1
+    )
+
+    Experiment.upload_file_gd('representations_pca.csv', pca_df)
 
 if __name__ == '__main__':
   j = Job()
