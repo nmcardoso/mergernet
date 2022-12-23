@@ -25,11 +25,12 @@ L = logging.getLogger(__name__)
 
 DEV_LOCAL_SHARED_PATTERN = str(DATA_ROOT) + '/dev_workspace/shared_data/'
 DEV_LOCAL_EXP_PATTERN = str(DATA_ROOT) + '/dev_workspace/experiments/{exp_id}/'
+DEV_GD_SHARED_PATTERN = str(DATA_ROOT) + '/dev_workspace/drive/MyDrive/mergernet/shared/'
 DEV_GD_EXP_PATTERN = str(DATA_ROOT) + '/dev_workspace/drive/MyDrive/mergernet/experiments/{exp_id}/'
 
 LOCAL_SHARED_PATTERN = 'shared_data/'
 LOCAL_EXP_PATTERN = 'experiments/{exp_id}/'
-GH_EXP_PATTERN = 'experiments/{exp_id}/'
+GD_SHARED_PATTERN = 'drive/MyDrive/mergernet/shared/'
 GD_EXP_PATTERN = 'drive/MyDrive/mergernet/experiments/{exp_id}/'
 
 
@@ -206,17 +207,20 @@ class Experiment:
     # setup paths
     exp_params = dict(exp_id=Experiment.exp_id)
     if ENV == 'dev':
-      Experiment.local_shared_path = DEV_LOCAL_SHARED_PATTERN.format(**exp_params)
+      Experiment.local_shared_path = DEV_LOCAL_SHARED_PATTERN
       Experiment.local_exp_path = DEV_LOCAL_EXP_PATTERN.format(**exp_params)
+      Experiment.gd_shared_path = DEV_GD_SHARED_PATTERN
       Experiment.gd_exp_path = DEV_GD_EXP_PATTERN.format(**exp_params)
     else:
-      Experiment.local_shared_path = LOCAL_SHARED_PATTERN.format(**exp_params)
+      Experiment.local_shared_path = LOCAL_SHARED_PATTERN
       Experiment.local_exp_path = LOCAL_EXP_PATTERN.format(**exp_params)
+      Experiment.gd_shared_path = GD_SHARED_PATTERN
       Experiment.gd_exp_path = GD_EXP_PATTERN.format(**exp_params)
 
     # prepare local experiment environment creating directory structure
     local_exp_path = Path(Experiment.local_exp_path)
     local_shared_path = Path(Experiment.local_shared_path)
+    gd_shared_path = Path(Experiment.gd_shared_path)
     gd_exp_path = Path(Experiment.gd_exp_path)
 
     if self.restart and local_exp_path.exists():
@@ -227,6 +231,7 @@ class Experiment:
 
     local_shared_path.mkdir(parents=True, exist_ok=True)
     local_exp_path.mkdir(parents=True, exist_ok=True)
+    gd_shared_path.mkdir(parents=True, exist_ok=True)
     gd_exp_path.mkdir(parents=True, exist_ok=True)
 
     # signaling that this method was called
@@ -279,17 +284,21 @@ class Experiment:
 
 
   @classmethod
-  def download_file_gd(cls, fname: str, exp_id: int = None):
+  def download_file_gd(cls, fname: str, exp_id: int = None, shared: bool = False):
     """
     Downloads a file from google drive inside `gd_artifact_path`
 
     Parameters
     ----------
     fname: str
-      The file name
+      The file name.
 
     exp_id: int, optional
-      The experiement identifier
+      The experiement identifier, defaults to current experiment id.
+      Only relevant if `shared` is False.
+
+    shared: bool, optional
+      When downloading from shared folder.
     """
     if not cls._exp_created: raise ValueError('Experiment must be created')
 
@@ -299,8 +308,15 @@ class Experiment:
 
     exp_id = exp_id or cls.exp_id
 
-    from_path = Path(cls.gd_exp_path) / fname
+    if shared:
+      from_path = Path(cls.gd_shared_path) / fname
+    else:
+      from_path = Path(GD_EXP_PATTERN.format(exp_id=exp_id)) / fname
     to_path = Path(cls.local_exp_path) / fname
+
+    if not from_path.exists():
+      L.warning(f'File {fname} not found in Google Drive, skiping download')
+      return
 
     path = copy2(from_path, to_path)
     return Path(path)
