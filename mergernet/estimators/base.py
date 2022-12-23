@@ -79,6 +79,14 @@ class Estimator(ABC):
     return self._tf_model
 
 
+  def plot(self, filename: str = 'model.png'):
+    tf.keras.utils.plot_model(
+      self.tf_model,
+      to_file=Path(Experiment.local_exp_path) / filename,
+      expand_nested=True
+    )
+
+
   def set_trainable(self, tf_model: tf.keras.Model, layer: str, trainable: bool):
     for l in tf_model.layers:
       if l.name == layer:
