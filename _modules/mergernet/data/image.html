@@ -465,37 +465,56 @@
 
 <div class="viewcode-block" id="ColorImage"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage">[docs]</a><span class="k">class</span> <span class="nc">ColorImage</span><span class="p">:</span>
 <div class="viewcode-block" id="ColorImage.asinh_map"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.asinh_map">[docs]</a>  <span class="nd">@staticmethod</span>
-  <span class="k">def</span> <span class="nf">asinh_map</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">arcsinh</span><span class="o">=</span><span class="mf">1.</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Apply non-linear map to input matrix. Useful to rescale telescope</span>
-<span class="sd">    pixels for viewing.</span>
+  <span class="k">def</span> <span class="nf">asinh_map</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">gain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Apply the following non-linear map to input matrix. Useful to</span>
+<span class="sd">    rescale telescope pixels for viewing.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">      Y = \textrm{arcsinh}(\alpha X)</span>
+
+<span class="sd">    where :math:`\alpha` is the gain, :math:`X` is the input image and</span>
+<span class="sd">    :math:`Y` is the transformed image.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    x: array</span>
+<span class="sd">    x: numpy.ndarray</span>
 <span class="sd">      image to have map applied</span>
-<span class="sd">    arcsinh: float</span>
-<span class="sd">      gain</span>
+<span class="sd">    gain: float, optional</span>
+<span class="sd">      gain applied to input image</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    array</span>
+<span class="sd">    numpy.ndarray</span>
 <span class="sd">      transformed image</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsinh</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">arcsinh</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsinh</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">gain</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ColorImage.asinh_map2"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.asinh_map2">[docs]</a>  <span class="nd">@staticmethod</span>
-  <span class="k">def</span> <span class="nf">asinh_map2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">arcsinh</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Apenas uma coisinha:</span>
+  <span class="k">def</span> <span class="nf">asinh_map2</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">gain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Apply the following non-linear map to input matrix. Useful to</span>
+<span class="sd">    rescale telescope pixels for viewing.</span>
 
+<span class="sd">    .. math::</span>
+<span class="sd">      Y = \frac{\textrm{arcsinh}(\alpha X)}{\sqrt{\alpha}}</span>
 
-<span class="sd">    coisas</span>
+<span class="sd">    where :math:`\alpha` is the gain, :math:`X` is the input image and</span>
+<span class="sd">    :math:`Y` is the transformed image.</span>
 
-<span class="sd">    Y = frac{arcsinh(alpha X)}{sqrt{alpha}}</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x: numpy.ndarray</span>
+<span class="sd">      image to have map applied</span>
+<span class="sd">    gain: float, optional</span>
+<span class="sd">      gain applied to input image</span>
 
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">      transformed image</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsinh</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">arcsinh</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">arcsinh</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsinh</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">gain</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gain</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ColorImage.legacy_rgb"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.legacy_rgb">[docs]</a>  <span class="nd">@staticmethod</span>
   <span class="k">def</span> <span class="nf">legacy_rgb</span><span class="p">(</span>
@@ -615,7 +634,7 @@
 
 <div class="viewcode-block" id="ColorImage.lupton_rgb"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.lupton_rgb">[docs]</a>  <span class="nd">@staticmethod</span>
   <span class="k">def</span> <span class="nf">lupton_rgb</span><span class="p">(</span>
-    <span class="n">imgs</span><span class="p">,</span>
+    <span class="n">imgs</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">bands</span><span class="o">=</span><span class="s1">&#39;grz&#39;</span><span class="p">,</span>
     <span class="n">arcsinh</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
     <span class="n">mn</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
@@ -623,7 +642,7 @@
     <span class="n">desaturate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">desaturate_factor</span><span class="o">=</span><span class="mf">.01</span><span class="p">,</span>
     <span class="n">nl_func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-  <span class="p">):</span>
+  <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create human-interpretable rgb image from multi-band pixel data</span>
 <span class="sd">    Follow the comments of Lupton (2004) to preserve colour during rescaling</span>
@@ -635,25 +654,25 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    imgs: array</span>
+<span class="sd">    imgs: numpy.ndarray</span>
 <span class="sd">      an array with shape (h, w, c) which represents the image,</span>
 <span class="sd">      each with pixel data on a band</span>
-<span class="sd">    bands: str</span>
+<span class="sd">    bands: str, optional</span>
 <span class="sd">      ordered characters of bands of the 2-dim pixel arrays in imgs</span>
-<span class="sd">    arcsinh: float</span>
+<span class="sd">    arcsinh: float, optional</span>
 <span class="sd">      softening factor for arcsinh rescaling</span>
-<span class="sd">    mn: float</span>
+<span class="sd">    mn: float, optional</span>
 <span class="sd">      min pixel value to set before (0, 1) clipping</span>
-<span class="sd">    mx: float</span>
+<span class="sd">    mx: float, optional</span>
 <span class="sd">      max pixel value to set before (0, 1) clipping</span>
-<span class="sd">    desaturate: bool</span>
+<span class="sd">    desaturate: bool, optional</span>
 <span class="sd">      If True, reduce saturation on low S/N pixels to avoid speckled sky</span>
-<span class="sd">    desaturate_factor: float</span>
+<span class="sd">    desaturate_factor: float, optional</span>
 <span class="sd">      parameter controlling desaturation. Proportional to saturation.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    np.array</span>
+<span class="sd">    numpy.ndarray</span>
 <span class="sd">      aray of shape (H, W, 3) of pixel values for colour image</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">nl_func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>

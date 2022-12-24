@@ -440,31 +440,56 @@
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mergernet.data.image.ColorImage.asinh_map">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">asinh_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arcsinh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/data/image.html#ColorImage.asinh_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.image.ColorImage.asinh_map" title="Permalink to this definition">#</a></dt>
-<dd><p>Apply non-linear map to input matrix. Useful to rescale telescope
-pixels for viewing.</p>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">asinh_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/mergernet/data/image.html#ColorImage.asinh_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.image.ColorImage.asinh_map" title="Permalink to this definition">#</a></dt>
+<dd><p>Apply the following non-linear map to input matrix. Useful to
+rescale telescope pixels for viewing.</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[Y = \textrm{arcsinh}(\alpha X)\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is the gain, <span class="math notranslate nohighlight">\(X\)</span> is the input image and
+<span class="math notranslate nohighlight">\(Y\)</span> is the transformed image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> (<em>array</em>) – image to have map applied</p></li>
-<li><p><strong>arcsinh</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – gain</p></li>
+<li><p><strong>x</strong> (<a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)"><em>numpy.ndarray</em></a>) – image to have map applied</p></li>
+<li><p><strong>gain</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – gain applied to input image</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>transformed image</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>array</p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mergernet.data.image.ColorImage.asinh_map2">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">asinh_map2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arcsinh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/data/image.html#ColorImage.asinh_map2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.image.ColorImage.asinh_map2" title="Permalink to this definition">#</a></dt>
-<dd><p>Apenas uma coisinha:</p>
-<p>coisas</p>
-<p>Y = frac{arcsinh(alpha X)}{sqrt{alpha}}</p>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">asinh_map2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/mergernet/data/image.html#ColorImage.asinh_map2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.image.ColorImage.asinh_map2" title="Permalink to this definition">#</a></dt>
+<dd><p>Apply the following non-linear map to input matrix. Useful to
+rescale telescope pixels for viewing.</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[Y = \frac{\textrm{arcsinh}(\alpha X)}{\sqrt{\alpha}}\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is the gain, <span class="math notranslate nohighlight">\(X\)</span> is the input image and
+<span class="math notranslate nohighlight">\(Y\)</span> is the transformed image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)"><em>numpy.ndarray</em></a>) – image to have map applied</p></li>
+<li><p><strong>gain</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – gain applied to input image</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>transformed image</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)">numpy.ndarray</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -479,7 +504,7 @@ pixels for viewing.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mergernet.data.image.ColorImage.lupton_rgb">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lupton_rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imgs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'grz'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arcsinh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desaturate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desaturate_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nl_func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/data/image.html#ColorImage.lupton_rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.image.ColorImage.lupton_rgb" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lupton_rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imgs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bands</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'grz'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arcsinh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desaturate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desaturate_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nl_func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/mergernet/data/image.html#ColorImage.lupton_rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.image.ColorImage.lupton_rgb" title="Permalink to this definition">#</a></dt>
 <dd><p>Create human-interpretable rgb image from multi-band pixel data
 Follow the comments of Lupton (2004) to preserve colour during rescaling
 1) linearly scale each band to have good colour spread (subjective choice)
@@ -490,21 +515,21 @@ Optionally, desaturate pixels with low signal/noise value to avoid speckled sky 
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>imgs</strong> (<em>array</em>) – an array with shape (h, w, c) which represents the image,
+<li><p><strong>imgs</strong> (<a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)"><em>numpy.ndarray</em></a>) – an array with shape (h, w, c) which represents the image,
 each with pixel data on a band</p></li>
-<li><p><strong>bands</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – ordered characters of bands of the 2-dim pixel arrays in imgs</p></li>
-<li><p><strong>arcsinh</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – softening factor for arcsinh rescaling</p></li>
-<li><p><strong>mn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – min pixel value to set before (0, 1) clipping</p></li>
-<li><p><strong>mx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – max pixel value to set before (0, 1) clipping</p></li>
-<li><p><strong>desaturate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If True, reduce saturation on low S/N pixels to avoid speckled sky</p></li>
-<li><p><strong>desaturate_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – parameter controlling desaturation. Proportional to saturation.</p></li>
+<li><p><strong>bands</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><em>optional</em>) – ordered characters of bands of the 2-dim pixel arrays in imgs</p></li>
+<li><p><strong>arcsinh</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – softening factor for arcsinh rescaling</p></li>
+<li><p><strong>mn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – min pixel value to set before (0, 1) clipping</p></li>
+<li><p><strong>mx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – max pixel value to set before (0, 1) clipping</p></li>
+<li><p><strong>desaturate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, reduce saturation on low S/N pixels to avoid speckled sky</p></li>
+<li><p><strong>desaturate_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – parameter controlling desaturation. Proportional to saturation.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>aray of shape (H, W, 3) of pixel values for colour image</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.array</p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/devdocs/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25.dev0)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -597,5 +622,6 @@ each with pixel data on a band</p></li>
     <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>
