@@ -24,8 +24,6 @@ OPTUNA_DB_FILENAME = 'optuna.sqlite'
 class OptunaEstimator(Estimator):
   def __init__(
     self,
-    hp: HyperParameterSet,
-    dataset: Dataset,
     estimator: Estimator,
     n_trials: int,
     pruner: str,
@@ -33,7 +31,7 @@ class OptunaEstimator(Estimator):
     objective_direction: str,
     resume_hash: str
   ):
-    super().__init__(hp, dataset)
+    super().__init__(estimator.hp, estimator.dataset)
     self.estimator = estimator
     self.n_trials = n_trials
     self.pruner = pruner

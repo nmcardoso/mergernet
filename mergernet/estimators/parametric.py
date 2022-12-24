@@ -10,6 +10,7 @@ from mergernet.core.hp import HyperParameterSet
 from mergernet.core.utils import Timming
 from mergernet.data.dataset import Dataset
 from mergernet.estimators.base import Estimator
+from mergernet.model.callbacks import MyWandbCallback
 
 L = logging.getLogger(__name__)
 
@@ -92,7 +93,7 @@ class ParametricEstimator(Estimator):
         restore_best_weights=True
       )
 
-      wandb_cb = wandb.keras.WandbCallback(
+      wandb_cb = MyWandbCallback(
         monitor='val_loss',
         mode='min',
         save_graph=True,
