@@ -228,7 +228,16 @@ class MyWandbCallback(wandb.keras.WandbCallback):
 
     wandb.log({
       'confusion_matrix': wandb.plot.confusion_matrix(
-        probs, y_true, preds, class_names
+        probs=probs,
+        y_true=y_true,
+        class_names=class_names,
+        title='Probs',
+      ),
+      'confusion_matrix_preds': wandb.plot.confusion_matrix(
+        preds=preds,
+        y_true=y_true,
+        class_names=class_names,
+        title='Preds',
       )
     })
 
