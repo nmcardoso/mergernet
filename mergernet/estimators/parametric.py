@@ -1,5 +1,5 @@
 import logging
-from typing import Tuple
+from typing import List, Tuple
 
 import tensorflow as tf
 import wandb
@@ -57,7 +57,11 @@ class ParametricEstimator(Estimator):
     return self._tf_model
 
 
-  def train(self, run_name: str = 'run-0') -> Tuple[tf.keras.Model, tf.keras.callbacks.History]:
+  def train(
+    self,
+    run_name: str = 'run-0',
+    callbacks: List[tf.keras.Callback] = [],
+  ) -> Tuple[tf.keras.Model, tf.keras.callbacks.History]:
     tf.keras.backend.clear_session()
 
     ds_train, ds_test = self.dataset.get_fold(0)
@@ -111,7 +115,7 @@ class ParametricEstimator(Estimator):
         epochs=self.hp.get('tl_epochs', default=10),
         validation_data=ds_test,
         class_weight=class_weights,
-        callbacks=[early_stop_cb, wandb_cb]
+        callbacks=[early_stop_cb, wandb_cb, *callbacks]
       )
       L.info(f'End of training loop, duration: {t.end()}')
 
