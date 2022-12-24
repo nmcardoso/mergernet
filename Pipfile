@@ -28,12 +28,12 @@ keras-applications = "*"
 tensorflow-probability = "*"
 pydot = "*"
 seaborn = "*"
+sphinxcontrib-napoleon = "*"
 
 [dev-packages]
 jinja2 = "*"
 docutils = "*"
 furo = "*"
-numpydoc = "*"
 ipykernel = "*"
 sphinx-copybutton = "*"
 tensorboard-plugin-profile = "*"

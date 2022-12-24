@@ -36,24 +36,31 @@ class ColorImage:
     """
     Apply non-linear map to input matrix. Useful to rescale telescope
     pixels for viewing.
-    Args:
-      x (np.array): array to have map applied
-      arcsinh (np.float):
-    Returns:
-      (np.array) array with map applied
+
+    Parameters
+    ----------
+    x: array
+      image to have map applied
+    arcsinh: float
+      gain
+
+    Returns
+    -------
+    array
+      transformed image
     """
     return np.arcsinh(x * arcsinh)
 
   @staticmethod
   def asinh_map2(x, arcsinh=1):
-    r"""
+    """
     Apenas uma coisinha:
 
-    ```{math}
-    :label: coisas
 
-      Y = \frac{arcsinh(\alpha X)}{\sqrt{\alpha}}
-    ```{math}
+    coisas
+
+    Y = frac{arcsinh(alpha X)}{sqrt{alpha}}
+
     """
     return np.arcsinh(x * arcsinh) / np.sqrt(arcsinh)
 
@@ -192,16 +199,29 @@ class ColorImage:
     3) linearly scale all pixel values to lie between mn and mx
     4) clip all pixel values to lie between 0 and 1
     Optionally, desaturate pixels with low signal/noise value to avoid speckled sky (partially implemented)
-    Args:
-        imgs (list): of 2-dim np.arrays, each with pixel data on a band # TODO refactor to one 3-dim array
-        bands (str): ordered characters of bands of the 2-dim pixel arrays in imgs
-        arcsinh (float): softening factor for arcsinh rescaling
-        mn (float): min pixel value to set before (0, 1) clipping
-        mx (float): max pixel value to set before (0, 1) clipping
-        desaturate (bool): If True, reduce saturation on low S/N pixels to avoid speckled sky
-        desaturate_factor (float): parameter controlling desaturation. Proportional to saturation.
-    Returns:
-        (np.array) of shape (H, W, 3) of pixel values for colour image
+
+    Parameters
+    ----------
+    imgs: array
+      an array with shape (h, w, c) which represents the image,
+      each with pixel data on a band
+    bands: str
+      ordered characters of bands of the 2-dim pixel arrays in imgs
+    arcsinh: float
+      softening factor for arcsinh rescaling
+    mn: float
+      min pixel value to set before (0, 1) clipping
+    mx: float
+      max pixel value to set before (0, 1) clipping
+    desaturate: bool
+      If True, reduce saturation on low S/N pixels to avoid speckled sky
+    desaturate_factor: float
+      parameter controlling desaturation. Proportional to saturation.
+
+    Returns
+    -------
+    np.array
+      aray of shape (H, W, 3) of pixel values for colour image
     """
     if nl_func is None:
       nl_func = ColorImage.asinh_map

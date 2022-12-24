@@ -18,15 +18,7 @@ L = logging.getLogger(__name__)
 class MyWandbCallback(wandb.keras.WandbCallback):
   """
   `WandbCallback` automatically integrates keras with wandb.
-    Example:
-      ```python
-      model.fit(
-        X_train,
-        y_train,
-        validation_data=(X_test, y_test),
-        callbacks=[WandbCallback()],
-      )
-      ```
+
   `WandbCallback` will automatically log history data from any metrics
   collected by keras: loss and anything passed into `keras_model.compile()`.
   `WandbCallback` will set summary metrics for the run associated with the
@@ -141,6 +133,17 @@ class MyWandbCallback(wandb.keras.WandbCallback):
   compute_flops: bool
     Compute the FLOPs of your Keras Sequential or Functional model in GigaFLOPs
     unit.
+
+  Examples
+  --------
+  ```python
+  model.fit(
+    X_train,
+    y_train,
+    validation_data=(X_test, y_test),
+    callbacks=[WandbCallback()],
+  )
+  ```
   """
   def __init__(
     self,

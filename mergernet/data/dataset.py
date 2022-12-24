@@ -32,18 +32,14 @@ class Dataset:
   High-level representation of the dataset. This class abstracts all IO
   operations of the dataset (e.g. download, prepare, split)
 
-  Attributes
-  ----------
-  registry: DatasetRegistry
-    A registry containing all datasets configurations
-
   Parameters
   ----------
   config: DatasetConfig
     The configuration object of the database get from `Dataset.registry`
     attribute
   """
-  registry = DatasetRegistry()
+  registry: DatasetRegistry = DatasetRegistry()
+  """A registry containing all datasets configurations"""
 
   def __init__(
     self,

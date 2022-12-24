@@ -35,7 +35,7 @@ setup(
   extras_require={
     'docs': [
       'Jinja2>=3.1',
-      'numpydoc',
+      'sphinxcontrib-napoleon',
       'sphinx',
       'furo',
       'ipykernel',

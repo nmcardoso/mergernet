@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "90fa5372621c7baa3379f25670e01a45d078873eb6f67c4adff88ef6c768aa7d"
+            "sha256": "1ffd1aec92e7be74ba007081b236c11fc81724e06690a0c88d8e883b7a30985f"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -26,11 +26,11 @@
         },
         "alembic": {
             "hashes": [
-                "sha256:6af6792fe699730b27480382701b16028ebbaac6bc5cd4f06daf5fa3e4690364",
-                "sha256:e8ce855f731d92cfdbf9a71d148401fcc420399927817c6e2c0b6a5f31db745d"
+                "sha256:a9781ed0979a20341c2cbb56bd22bd8db4fc1913f955e705444bd3a97c59fa32",
+                "sha256:f9f76e41061f5ebe27d4fe92600df9dd612521a7683f904dab328ba02cffa5a2"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==1.9.0"
+            "version": "==1.9.1"
         },
         "astropy": {
             "hashes": [
@@ -1044,6 +1044,13 @@
             "index": "pypi",
             "version": "==5.11.0"
         },
+        "pockets": {
+            "hashes": [
+                "sha256:68597934193c08a08eb2bf6a1d85593f627c22f9b065cc727a4f03f669d96d86",
+                "sha256:9320f1a3c6f7a9133fe3b571f283bcf3353cd70249025ae8d618e40e9f7e92b3"
+            ],
+            "version": "==0.9.1"
+        },
         "prettytable": {
             "hashes": [
                 "sha256:52f682ba4efe29dccb38ff0fe5bac8a23007d0780ff92a8b85af64bc4fc74d72",
@@ -1624,6 +1631,14 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==2.3.2.post1"
+        },
+        "sphinxcontrib-napoleon": {
+            "hashes": [
+                "sha256:407382beed396e9f2d7f3043fad6afda95719204a1e1a231ac865f40abcbfcf8",
+                "sha256:711e41a3974bdf110a484aec4c1a556799eb0b3f3b897521a018ad7e2db13fef"
+            ],
+            "index": "pypi",
+            "version": "==0.7"
         },
         "splusdata": {
             "hashes": [
@@ -2263,14 +2278,6 @@
             ],
             "markers": "python_version >= '3.5'",
             "version": "==1.5.6"
-        },
-        "numpydoc": {
-            "hashes": [
-                "sha256:b0db7b75a32367a0e25c23b397842c65e344a1206524d16c8069f0a1c91b5f4c",
-                "sha256:c997759fb6fc32662801cece76491eedbc0ec619b514932ffd2b270ae89c07f9"
-            ],
-            "index": "pypi",
-            "version": "==1.5.0"
         },
         "packaging": {
             "hashes": [

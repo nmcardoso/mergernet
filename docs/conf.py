@@ -46,7 +46,7 @@ extensions = [
   'sphinx.ext.doctest',
   'sphinx.ext.intersphinx',
   'sphinx_copybutton',
-  'numpydoc',
+  'sphinxcontrib.napoleon',
   # "sphinx.ext.todo",
   # "sphinx.ext.ifconfig",
   # "sphinx.ext.imgmath",
@@ -211,6 +211,12 @@ epub_exclude_files = ['search.html']
 
 # -- Extension configuration -------------------------------------------------
 autodoc_class_signature = 'separated'
+# autodoc_member_order = 'groupwise'
+autodoc_default_options = {
+  'member-order': 'groupwise',
+  'exclude-members': '__init__',
+  'undoc-members': True,
+}
 
 
 intersphinx_mapping = {
@@ -223,12 +229,16 @@ intersphinx_mapping = {
 }
 
 
-# https://numpydoc.readthedocs.io/en/latest/install.html
-numpydoc_xref_param_type = True
-numpydoc_xref_ignore = {'optional'}
-# numpydoc_validation_checks = {}
-numpydoc_use_plots = True
-numpydoc_show_class_members = True
-numpydoc_show_inherited_class_members = True
-numpydoc_class_members_toctree = True
-numpydoc_attributes_as_param_list = False
+napoleon_google_docstring = True
+napoleon_numpy_docstring = True
+napoleon_include_init_with_doc = False
+napoleon_include_private_with_doc = True
+napoleon_include_special_with_doc = False
+napoleon_use_admonition_for_examples = True
+napoleon_use_admonition_for_notes = True
+napoleon_use_admonition_for_references = True
+napoleon_use_ivar = True
+napoleon_use_param = True
+napoleon_use_rtype = True
+napoleon_use_keyword = True
+napoleon_custom_sections = None

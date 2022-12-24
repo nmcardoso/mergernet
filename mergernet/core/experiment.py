@@ -105,40 +105,29 @@ class Experiment:
   first value is a human-readable integer set by user and is related with
   a task specified in entrypoint file. And the second value is a auto-generated
   hex token used to track different re-runs of same experiment.
-
-  Attributes
-  ----------
-  exp_id: int
-    Identifier of the experiment set by user.
-
-  local_shared_path: str
-    The path in local environment where shared files (e.g. dataset) are stored.
-    This path is shared to any run of any experiemnt.
-
-  local_artifact_path: str
-    The path in local environment where artifacts (outputs of an experiment,
-    e.g. model predictions) are stored. This path is relative to a specific run.
-
-  gh_artifact_path: str
-    The path in Github artifacts repo where the artifacts of a experiment run
-    will be uploaded to. This path is relative to a specific run.
-
-  gd_artifact_path: str
-    The path in Google Drive where the artifacts of a experiment run will be
-    uploaded to. This path is relative to a specifict run.
-
-  notes: str
-    Notes for current run of this experiment
   """
-  _exp_created = False
-  _registered_artifacts = []
-  exp_id = None
-  exp_name = None
-  local_shared_path = None
-  local_exp_path = None
-  gd_shared_path = None
-  gd_exp_path = None
-  notes = None
+  _exp_created: bool = False
+  """Flags if the experiment was started by `Experiment._pre_run` method"""
+  _registered_artifacts: list = []
+  """Stores all registered artifacts"""
+  exp_id: int = None
+  """Identifier of the experiment set by user."""
+  exp_name: str = None
+  """The experiment name: 'exp_``exp_id``'"""
+  local_shared_path: Path = None
+  """The path in local environment where shared files (e.g. dataset) are stored.
+    This path is shared to any run of any experiemnt."""
+  local_exp_path: Path = None
+  """The path in local environment where artifacts (outputs of an experiment,
+    e.g. model predictions) are stored."""
+  gd_shared_path: Path = None
+  """The path in Google Drive where the shared artifacts for all experiments
+    are stored, e.g. external datasets."""
+  gd_exp_path: Path = None
+  """The path in Google Drive where the artifacts of a experiment run will be
+    uploaded to."""
+  notes: str = None
+  """Notes for current run of this experiment"""
 
 
   def __init__(self):
