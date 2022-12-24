@@ -1,6 +1,5 @@
 """
-Experiment created for test purposes. This experiments tests
-the ``Artifacts API``
+Experiment created for test purposes.
 """
 
 from mergernet.core.experiment import Experiment, backup_model
@@ -12,8 +11,7 @@ from mergernet.model.baseline import finetune_train
 
 class Job(Experiment):
   """
-  Experiment created for test purposes. This experiments tests the
-  ``Artifacts API``
+  Experiment created for test purposes.
   """
   def __init__(self):
     super().__init__()
