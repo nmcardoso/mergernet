@@ -112,12 +112,15 @@ class ParametricEstimator(Estimator):
         epochs=self.hp.get('tl_epochs', default=10),
         validation_data=ds_test,
         class_weight=class_weights,
-        callbacks=[early_stop_cb, wandb_cb, *callbacks]
+        callbacks=[early_stop_cb, wandb_cb]
       )
       L.info(f'End of training loop, duration: {t.end()}')
 
       self.set_trainable(model, 'conv_block', True)
       self.compile_model(model, tf.keras.optimizers.Adam(self.hp.get('opt_lr')))
+
+      print('h1.history')
+      print(h1.history)
 
       t = Timming()
       L.info('Start of main training loop')
@@ -128,7 +131,7 @@ class ParametricEstimator(Estimator):
         validation_data=ds_test,
         class_weight=class_weights,
         initial_epoch=len(h1.history['loss']),
-        callbacks=[wandb_cb, *self.callbacks],
+        callbacks=[wandb_cb, *callbacks],
       )
       L.info(f'End of training loop, duration: {t.end()}')
 
