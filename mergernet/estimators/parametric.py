@@ -60,7 +60,7 @@ class ParametricEstimator(Estimator):
   def train(
     self,
     run_name: str = 'run-0',
-    callbacks: List[tf.keras.Callback] = [],
+    callbacks: List[tf.keras.callbacks.Callback] = [],
   ) -> Tuple[tf.keras.Model, tf.keras.callbacks.History]:
     tf.keras.backend.clear_session()
 
