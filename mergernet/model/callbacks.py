@@ -214,6 +214,18 @@ class MyWandbCallback(wandb.keras.WandbCallback):
     preds = np.argmax(probs, axis=-1)
     class_names = self.dataset.config.labels
 
+    print('probs')
+    print(probs)
+
+    print('y_true')
+    print(y_true)
+
+    print('preds')
+    print(preds)
+
+    print('class_names')
+    print(class_names)
+
     wandb.log({
       'confusion_matrix': wandb.plot.confusion_matrix(
         probs, y_true, preds, class_names

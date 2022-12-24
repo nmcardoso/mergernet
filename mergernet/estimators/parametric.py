@@ -93,6 +93,7 @@ class ParametricEstimator(Estimator):
       )
 
       wandb_cb = MyWandbCallback(
+        dataset=self.dataset,
         monitor='val_loss',
         mode='min',
         save_graph=True,
