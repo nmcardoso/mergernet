@@ -513,12 +513,7 @@
 
     <span class="n">class_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">compute_class_weight</span><span class="p">()</span>
 
-    <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">build</span><span class="p">(</span>
-      <span class="n">input_shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_shape</span><span class="p">,</span>
-      <span class="n">n_classes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n_classes</span><span class="p">,</span>
-      <span class="n">freeze_conv</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-      <span class="n">hp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span>
-    <span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">freeze_conv</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">compile_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;opt_lr&#39;</span><span class="p">)))</span>
 
     <span class="k">with</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">Tracer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">to_values_dict</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="n">run_name</span><span class="p">,</span> <span class="n">job_type</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">):</span>
