@@ -116,6 +116,8 @@ class ParametricEstimator(Estimator):
       )
       L.info(f'End of training loop, duration: {t.end()}')
 
+      print(h1.history)
+
       self.set_trainable(model, 'conv_block', True)
       self.compile_model(model, tf.keras.optimizers.Adam(self.hp.get('opt_lr')))
 
