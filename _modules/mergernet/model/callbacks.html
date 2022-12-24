@@ -661,7 +661,16 @@
 
     <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span>
       <span class="s1">&#39;confusion_matrix&#39;</span><span class="p">:</span> <span class="n">wandb</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span>
-        <span class="n">probs</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">class_names</span>
+        <span class="n">probs</span><span class="o">=</span><span class="n">probs</span><span class="p">,</span>
+        <span class="n">y_true</span><span class="o">=</span><span class="n">y_true</span><span class="p">,</span>
+        <span class="n">class_names</span><span class="o">=</span><span class="n">class_names</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Probs&#39;</span><span class="p">,</span>
+      <span class="p">),</span>
+      <span class="s1">&#39;confusion_matrix_preds&#39;</span><span class="p">:</span> <span class="n">wandb</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span>
+        <span class="n">preds</span><span class="o">=</span><span class="n">preds</span><span class="p">,</span>
+        <span class="n">y_true</span><span class="o">=</span><span class="n">y_true</span><span class="p">,</span>
+        <span class="n">class_names</span><span class="o">=</span><span class="n">class_names</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Preds&#39;</span><span class="p">,</span>
       <span class="p">)</span>
     <span class="p">})</span></div></div>
 
