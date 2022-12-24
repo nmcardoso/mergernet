@@ -80,12 +80,7 @@ class ParametricEstimator(Estimator):
 
     class_weights = self.dataset.compute_class_weight()
 
-    model = self.model.build(
-      input_shape=self.dataset.config.image_shape,
-      n_classes=self.dataset.config.n_classes,
-      freeze_conv=True,
-      hp=self.hp
-    )
+    model = self.build(freeze_conv=True)
     self.compile_model(model, tf.keras.optimizers.Adam(self.hp.get('opt_lr')))
 
     with Experiment.Tracer(self.hp.to_values_dict(), name=run_name, job_type='train'):
