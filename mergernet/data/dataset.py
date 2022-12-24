@@ -84,7 +84,7 @@ class Dataset:
     ----------
     y: np.ndarray
     """
-    y_int = np.empty(y.shape, dtype=np.int8)
+    y_int = np.empty(y.shape, dtype=np.uint8)
 
     for class_index, class_name in enumerate(self.config.labels):
       y_int[y == class_name] = class_index
