@@ -106,6 +106,9 @@ class Dataset:
         self.config.images_path.glob(f'**/*{self.config.X_column_suffix}')
       ]
 
+      print(self.config.images_path)
+      print(iaunames)
+
       pd.DataFrame({'iauname': iaunames}).to_csv(self.config.table_path, index=False)
 
 
@@ -227,6 +230,7 @@ class Dataset:
 
   def get_images_paths(self) -> List[Path]:
     X = self.get_X()
+    print(X)
     return [
       self.config.images_path / (_X + self.config.X_column_suffix)
       for _X in X
