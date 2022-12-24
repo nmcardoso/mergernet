@@ -459,10 +459,10 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">estimator</span><span class="p">:</span> <span class="n">Estimator</span><span class="p">,</span>
     <span class="n">n_trials</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">pruner</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">objective_metric</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">objective_direction</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">resume_hash</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">pruner</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;hyperband&#39;</span><span class="p">,</span>
+    <span class="n">objective_metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;val_loss&#39;</span><span class="p">,</span>
+    <span class="n">objective_direction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;minimize&#39;</span><span class="p">,</span>
+    <span class="n">resume_hash</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">hp</span><span class="p">,</span> <span class="n">estimator</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span> <span class="o">=</span> <span class="n">estimator</span>
