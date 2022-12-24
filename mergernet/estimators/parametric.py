@@ -133,3 +133,7 @@ class ParametricEstimator(Estimator):
 
       self._tf_model = model
     return self._tf_model
+
+
+  def predict(self):
+    pass

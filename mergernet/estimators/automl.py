@@ -167,3 +167,11 @@ class OptunaEstimator(Estimator):
       Experiment.local_exp_path / MODEL_FILENAME
     )
     return self._tf_model
+
+
+  def build(self):
+    pass
+
+
+  def predict(self):
+    pass
