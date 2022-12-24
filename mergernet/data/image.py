@@ -32,37 +32,56 @@ DEFAULT_BANDS_SCALES = {
 
 class ColorImage:
   @staticmethod
-  def asinh_map(x, arcsinh=1.):
-    """
-    Apply non-linear map to input matrix. Useful to rescale telescope
-    pixels for viewing.
+  def asinh_map(x: np.ndarray, gain: float = 1.) -> np.ndarray:
+    r"""
+    Apply the following non-linear map to input matrix. Useful to
+    rescale telescope pixels for viewing.
+
+    .. math::
+      Y = \textrm{arcsinh}(\alpha X)
+
+    where :math:`\alpha` is the gain, :math:`X` is the input image and
+    :math:`Y` is the transformed image.
 
     Parameters
     ----------
-    x: array
+    x: numpy.ndarray
       image to have map applied
-    arcsinh: float
-      gain
+    gain: float, optional
+      gain applied to input image
 
     Returns
     -------
-    array
+    numpy.ndarray
       transformed image
     """
-    return np.arcsinh(x * arcsinh)
+    return np.arcsinh(x * gain)
 
   @staticmethod
-  def asinh_map2(x, arcsinh=1):
+  def asinh_map2(x: np.ndarray, gain: float = 1) -> np.ndarray:
+    r"""
+    Apply the following non-linear map to input matrix. Useful to
+    rescale telescope pixels for viewing.
+
+    .. math::
+      Y = \frac{\textrm{arcsinh}(\alpha X)}{\sqrt{\alpha}}
+
+    where :math:`\alpha` is the gain, :math:`X` is the input image and
+    :math:`Y` is the transformed image.
+
+    Parameters
+    ----------
+    x: numpy.ndarray
+      image to have map applied
+    gain: float, optional
+      gain applied to input image
+
+    Returns
+    -------
+    numpy.ndarray
+      transformed image
     """
-    Apenas uma coisinha:
-
-
-    coisas
-
-    Y = frac{arcsinh(alpha X)}{sqrt{alpha}}
-
-    """
-    return np.arcsinh(x * arcsinh) / np.sqrt(arcsinh)
+    return np.arcsinh(x * gain) / np.sqrt(gain)
 
   @staticmethod
   def legacy_rgb(
@@ -182,7 +201,7 @@ class ColorImage:
 
   @staticmethod
   def lupton_rgb(
-    imgs,
+    imgs: np.ndarray,
     bands='grz',
     arcsinh=1.,
     mn=0.1,
@@ -190,7 +209,7 @@ class ColorImage:
     desaturate=False,
     desaturate_factor=.01,
     nl_func=None,
-  ):
+  ) -> np.ndarray:
     """
     Create human-interpretable rgb image from multi-band pixel data
     Follow the comments of Lupton (2004) to preserve colour during rescaling
@@ -202,25 +221,25 @@ class ColorImage:
 
     Parameters
     ----------
-    imgs: array
+    imgs: numpy.ndarray
       an array with shape (h, w, c) which represents the image,
       each with pixel data on a band
-    bands: str
+    bands: str, optional
       ordered characters of bands of the 2-dim pixel arrays in imgs
-    arcsinh: float
+    arcsinh: float, optional
       softening factor for arcsinh rescaling
-    mn: float
+    mn: float, optional
       min pixel value to set before (0, 1) clipping
-    mx: float
+    mx: float, optional
       max pixel value to set before (0, 1) clipping
-    desaturate: bool
+    desaturate: bool, optional
       If True, reduce saturation on low S/N pixels to avoid speckled sky
-    desaturate_factor: float
+    desaturate_factor: float, optional
       parameter controlling desaturation. Proportional to saturation.
 
     Returns
     -------
-    np.array
+    numpy.ndarray
       aray of shape (H, W, 3) of pixel values for colour image
     """
     if nl_func is None:
