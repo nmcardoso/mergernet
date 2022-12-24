@@ -1,0 +1,24 @@
+ParametricEstimator
+===================
+
+.. currentmodule:: mergernet.estimators.parametric
+
+.. autoclass:: ParametricEstimator
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
+
+
+  
+  
+  .. rubric:: Attributes
+
+  .. autosummary::
+  
+      ~ParametricEstimator.registry
+      ~ParametricEstimator.tf_model
+  
+  
