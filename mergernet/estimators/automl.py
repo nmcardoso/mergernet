@@ -26,10 +26,10 @@ class OptunaEstimator(Estimator):
     self,
     estimator: Estimator,
     n_trials: int,
-    pruner: str,
-    objective_metric: str,
-    objective_direction: str,
-    resume_hash: str
+    pruner: str = 'hyperband',
+    objective_metric: str = 'val_loss',
+    objective_direction: str = 'minimize',
+    resume_hash: str = None,
   ):
     super().__init__(estimator.hp, estimator.dataset)
     self.estimator = estimator
