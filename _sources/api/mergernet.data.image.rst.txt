@@ -3,29 +3,29 @@ mergernet.data.image
 
 .. automodule:: mergernet.data.image
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      ColorImage
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    ColorImage
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

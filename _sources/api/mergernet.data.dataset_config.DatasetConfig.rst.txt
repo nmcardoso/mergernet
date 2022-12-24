@@ -1,17 +1,17 @@
-mergernet.data.dataset\_config.DatasetConfig
-============================================
+DatasetConfig
+=============
 
 .. currentmodule:: mergernet.data.dataset_config
 
 .. autoclass:: DatasetConfig
-   :members:
-   :private-members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
 
 
 
-   
-   
-   
+  
+  
+  

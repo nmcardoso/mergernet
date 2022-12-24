@@ -3,29 +3,29 @@ mergernet.data.rgb
 
 .. automodule:: mergernet.data.rgb
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      RGB
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    RGB
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

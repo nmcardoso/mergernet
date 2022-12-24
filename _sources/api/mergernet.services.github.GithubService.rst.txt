@@ -1,17 +1,17 @@
-mergernet.services.github.GithubService
-=======================================
+GithubService
+=============
 
 .. currentmodule:: mergernet.services.github
 
 .. autoclass:: GithubService
-   :members:
-   :private-members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
 
 
 
-   
-   
-   
+  
+  
+  

@@ -3,34 +3,34 @@
 
 .. automodule:: mergernet.core
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 
 .. rubric:: Modules
 
 .. autosummary::
-   :toctree:
-   :template: module-template.rst
-   :recursive:
+  :toctree:
+  :template: module-template.rst
+  :recursive:
 
-   mergernet.core.constants
-   mergernet.core.experiment
-   mergernet.core.hp
-   mergernet.core.logging
-   mergernet.core.utils
+  mergernet.core.constants
+  mergernet.core.experiment
+  mergernet.core.hp
+  mergernet.core.logging
+  mergernet.core.utils
 

@@ -1,17 +1,17 @@
-mergernet.model.callbacks.DeltaStopping
-=======================================
+DeltaStopping
+=============
 
 .. currentmodule:: mergernet.model.callbacks
 
 .. autoclass:: DeltaStopping
-   :members:
-   :private-members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
 
 
 
-   
-   
-   
+  
+  
+  

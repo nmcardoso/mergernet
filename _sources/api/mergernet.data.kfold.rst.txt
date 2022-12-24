@@ -3,30 +3,30 @@ mergernet.data.kfold
 
 .. automodule:: mergernet.data.kfold
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      DistributionKFold
-      StratifiedDistributionKFold
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    DistributionKFold
+    StratifiedDistributionKFold
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

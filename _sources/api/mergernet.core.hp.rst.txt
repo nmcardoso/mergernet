@@ -3,35 +3,35 @@ mergernet.core.hp
 
 .. automodule:: mergernet.core.hp
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      CategoricalHyperParameter
-      ConstantHyperParameter
-      FloatHyperParameter
-      HP
-      HyperParameter
-      HyperParameterSet
-      IntHyperParameter
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    CategoricalHyperParameter
+    ConstantHyperParameter
+    FloatHyperParameter
+    HP
+    HyperParameter
+    HyperParameterSet
+    IntHyperParameter
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

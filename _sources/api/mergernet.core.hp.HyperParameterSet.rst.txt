@@ -1,17 +1,17 @@
-mergernet.core.hp.HyperParameterSet
-===================================
+HyperParameterSet
+=================
 
 .. currentmodule:: mergernet.core.hp
 
 .. autoclass:: HyperParameterSet
-   :members:
-   :private-members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
 
 
 
-   
-   
-   
+  
+  
+  

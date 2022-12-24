@@ -3,28 +3,28 @@ mergernet.model.automl
 
 .. automodule:: mergernet.model.automl
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Functions
+  
+  
+  .. rubric:: Functions
 
-   .. autosummary::
-      :toctree:
-   
-      optuna_train
-   
-   
+  .. autosummary::
+    :toctree:
+  
+    optuna_train
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

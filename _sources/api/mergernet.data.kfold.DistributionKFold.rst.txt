@@ -1,17 +1,17 @@
-mergernet.data.kfold.DistributionKFold
-======================================
+DistributionKFold
+=================
 
 .. currentmodule:: mergernet.data.kfold
 
 .. autoclass:: DistributionKFold
-   :members:
-   :private-members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
 
 
 
-   
-   
-   
+  
+  
+  

@@ -3,31 +3,32 @@ mergernet.model.callbacks
 
 .. automodule:: mergernet.model.callbacks
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      DeltaStopping
-      PruneCallback
-      SaveBestTrialCallback
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    DeltaStopping
+    MyWandbCallback
+    PruneCallback
+    SaveBestTrialCallback
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

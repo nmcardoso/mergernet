@@ -1,26 +1,26 @@
-mergernet.data.match.CrossMatchResult
-=====================================
+CrossMatchResult
+================
 
 .. currentmodule:: mergernet.data.match
 
 .. autoclass:: CrossMatchResult
-   :members:
-   :private-members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
 
 
 
-   
-   
-   .. rubric:: Attributes
+  
+  
+  .. rubric:: Attributes
 
-   .. autosummary::
-   
+  .. autosummary::
+  
       ~CrossMatchResult.distance
       ~CrossMatchResult.primary_idx
       ~CrossMatchResult.secondary_idx
       ~CrossMatchResult.table
-   
-   
+  
+  

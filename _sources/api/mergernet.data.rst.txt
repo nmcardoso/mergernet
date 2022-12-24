@@ -3,38 +3,38 @@
 
 .. automodule:: mergernet.data
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 
 .. rubric:: Modules
 
 .. autosummary::
-   :toctree:
-   :template: module-template.rst
-   :recursive:
+  :toctree:
+  :template: module-template.rst
+  :recursive:
 
-   mergernet.data.dataset
-   mergernet.data.dataset_config
-   mergernet.data.image
-   mergernet.data.kfold
-   mergernet.data.match
-   mergernet.data.preprocessing
-   mergernet.data.rgb
-   mergernet.data.sanitization
-   mergernet.data.trilogy
+  mergernet.data.dataset
+  mergernet.data.dataset_config
+  mergernet.data.image
+  mergernet.data.kfold
+  mergernet.data.match
+  mergernet.data.preprocessing
+  mergernet.data.rgb
+  mergernet.data.sanitization
+  mergernet.data.trilogy
 

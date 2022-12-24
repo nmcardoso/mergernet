@@ -3,33 +3,33 @@
 
 .. automodule:: mergernet.estimators
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 
 .. rubric:: Modules
 
 .. autosummary::
-   :toctree:
-   :template: module-template.rst
-   :recursive:
+  :toctree:
+  :template: module-template.rst
+  :recursive:
 
-   mergernet.estimators.base
-   mergernet.estimators.decals
-   mergernet.estimators.optuna
-   mergernet.estimators.parametric
+  mergernet.estimators.automl
+  mergernet.estimators.base
+  mergernet.estimators.decals
+  mergernet.estimators.parametric
 

@@ -1,23 +1,23 @@
-mergernet.services.google.GDrive
-================================
+GDrive
+======
 
 .. currentmodule:: mergernet.services.google
 
 .. autoclass:: GDrive
-   :members:
-   :private-members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
 
 
 
-   
-   
-   .. rubric:: Attributes
+  
+  
+  .. rubric:: Attributes
 
-   .. autosummary::
-   
+  .. autosummary::
+  
       ~GDrive.base_path
-   
-   
+  
+  

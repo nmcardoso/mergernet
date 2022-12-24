@@ -1,17 +1,17 @@
-mergernet.data.trilogy.MakeImg
-==============================
+MakeImg
+=======
 
 .. currentmodule:: mergernet.data.trilogy
 
 .. autoclass:: MakeImg
-   :members:
-   :private-members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
 
 
 
-   
-   
-   
+  
+  
+  

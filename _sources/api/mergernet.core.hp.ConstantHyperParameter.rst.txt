@@ -1,17 +1,17 @@
-mergernet.core.hp.ConstantHyperParameter
-========================================
+ConstantHyperParameter
+======================
 
 .. currentmodule:: mergernet.core.hp
 
 .. autoclass:: ConstantHyperParameter
-   :members:
-   :private-members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
 
 
 
-   
-   
-   
+  
+  
+  

@@ -3,29 +3,29 @@ mergernet.services.tap
 
 .. automodule:: mergernet.services.tap
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      TapService
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    TapService
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

@@ -3,29 +3,29 @@ mergernet.jobs.j005
 
 .. automodule:: mergernet.jobs.j005
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      Job
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    Job
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

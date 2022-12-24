@@ -3,29 +3,29 @@ mergernet.services.tensorboard
 
 .. automodule:: mergernet.services.tensorboard
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      TensorboardService
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    TensorboardService
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

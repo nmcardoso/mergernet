@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="mergernet.core.logging" href="mergernet.core.logging.html" /><link rel="prev" title="mergernet.core.hp.HyperParameterSet" href="mergernet.core.hp.HyperParameterSet.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="mergernet.core.logging" href="mergernet.core.logging.html" /><link rel="prev" title="HyperParameterSet" href="mergernet.core.hp.HyperParameterSet.html" />
 
     <!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
-        <title>mergernet.core.hp.IntHyperParameter - Mergernet 0 documentation</title>
+        <title>IntHyperParameter - Mergernet 0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
@@ -165,17 +165,17 @@
 <li class="toctree-l3"><a class="reference internal" href="mergernet.core.constants.html">mergernet.core.constants</a></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.core.experiment.html">mergernet.core.experiment</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.experiment.backup_model.html">mergernet.core.experiment.backup_model</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.core.experiment.Experiment.html">mergernet.core.experiment.Experiment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.experiment.Experiment.html">Experiment</a></li>
 </ul>
 </li>
 <li class="toctree-l3 current has-children"><a class="reference internal" href="mergernet.core.hp.html">mergernet.core.hp</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.CategoricalHyperParameter.html">mergernet.core.hp.CategoricalHyperParameter</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.ConstantHyperParameter.html">mergernet.core.hp.ConstantHyperParameter</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.FloatHyperParameter.html">mergernet.core.hp.FloatHyperParameter</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.HP.html">mergernet.core.hp.HP</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.HyperParameter.html">mergernet.core.hp.HyperParameter</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.HyperParameterSet.html">mergernet.core.hp.HyperParameterSet</a></li>
-<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">mergernet.core.hp.IntHyperParameter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.CategoricalHyperParameter.html">CategoricalHyperParameter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.ConstantHyperParameter.html">ConstantHyperParameter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.FloatHyperParameter.html">FloatHyperParameter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.HP.html">HP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.HyperParameter.html">HyperParameter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.HyperParameterSet.html">HyperParameterSet</a></li>
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">IntHyperParameter</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.core.logging.html">mergernet.core.logging</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -194,37 +194,37 @@
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.save_table.html">mergernet.core.utils.save_table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.serialize.html">mergernet.core.utils.serialize</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.unique_path.html">mergernet.core.utils.unique_path</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.CachedDataFrame.html">mergernet.core.utils.CachedDataFrame</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.SingletonMeta.html">mergernet.core.utils.SingletonMeta</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.Timming.html">mergernet.core.utils.Timming</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.classproperty.html">mergernet.core.utils.classproperty</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.CachedDataFrame.html">CachedDataFrame</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.SingletonMeta.html">SingletonMeta</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.Timming.html">Timming</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.classproperty.html">classproperty</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="mergernet.data.html">mergernet.data</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.dataset.html">mergernet.data.dataset</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset.Dataset.html">mergernet.data.dataset.Dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset.Dataset.html">Dataset</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.dataset_config.html">mergernet.data.dataset_config</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset_config.DatasetConfig.html">mergernet.data.dataset_config.DatasetConfig</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset_config.DatasetRegistry.html">mergernet.data.dataset_config.DatasetRegistry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset_config.DatasetConfig.html">DatasetConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset_config.DatasetRegistry.html">DatasetRegistry</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.image.html">mergernet.data.image</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.ColorImage.html">mergernet.data.image.ColorImage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.ColorImage.html">ColorImage</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.kfold.html">mergernet.data.kfold</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.kfold.DistributionKFold.html">mergernet.data.kfold.DistributionKFold</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.kfold.StratifiedDistributionKFold.html">mergernet.data.kfold.StratifiedDistributionKFold</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.kfold.DistributionKFold.html">DistributionKFold</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.kfold.StratifiedDistributionKFold.html">StratifiedDistributionKFold</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.match.html">mergernet.data.match</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.match.CrossMatch.html">mergernet.data.match.CrossMatch</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.match.CrossMatchResult.html">mergernet.data.match.CrossMatchResult</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.match.XTable.html">mergernet.data.match.XTable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.match.CrossMatch.html">CrossMatch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.match.CrossMatchResult.html">CrossMatchResult</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.match.XTable.html">XTable</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.preprocessing.html">mergernet.data.preprocessing</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -236,11 +236,11 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.rgb.html">mergernet.data.rgb</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.rgb.RGB.html">mergernet.data.rgb.RGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.rgb.RGB.html">RGB</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.sanitization.html">mergernet.data.sanitization</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.sanitization.DatasetSanitization.html">mergernet.data.sanitization.DatasetSanitization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.sanitization.DatasetSanitization.html">DatasetSanitization</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.trilogy.html">mergernet.data.trilogy</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -254,39 +254,39 @@
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.rms.html">mergernet.data.trilogy.rms</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.satK2m.html">mergernet.data.trilogy.satK2m</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.setLevel.html">mergernet.data.trilogy.setLevel</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.MakeImg.html">mergernet.data.trilogy.MakeImg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.MakeImg.html">MakeImg</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="mergernet.estimators.html">mergernet.estimators</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.estimators.base.html">mergernet.estimators.base</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.base.Estimator.html">mergernet.estimators.base.Estimator</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.base.EstimatorConfig.html">mergernet.estimators.base.EstimatorConfig</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.base.EstimatorRegistry.html">mergernet.estimators.base.EstimatorRegistry</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.estimators.automl.html">mergernet.estimators.automl</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.automl.OptunaEstimator.html">OptunaEstimator</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.estimators.decals.html">mergernet.estimators.decals</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.decals.ZoobotEstimator.html">mergernet.estimators.decals.ZoobotEstimator</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.estimators.base.html">mergernet.estimators.base</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.base.Estimator.html">Estimator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.base.EstimatorConfig.html">EstimatorConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.base.EstimatorRegistry.html">EstimatorRegistry</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.estimators.optuna.html">mergernet.estimators.optuna</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.optuna.OptunaEstimator.html">mergernet.estimators.optuna.OptunaEstimator</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.estimators.decals.html">mergernet.estimators.decals</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.decals.ZoobotEstimator.html">ZoobotEstimator</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.estimators.parametric.html">mergernet.estimators.parametric</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.parametric.ParametricEstimator.html">mergernet.estimators.parametric.ParametricEstimator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.parametric.ParametricEstimator.html">ParametricEstimator</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="mergernet.jobs.html">mergernet.jobs</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j005.html">mergernet.jobs.j005</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j005.Job.html">mergernet.jobs.j005.Job</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j005.Job.html">Job</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j006.html">mergernet.jobs.j006</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j006.Job.html">mergernet.jobs.j006.Job</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j006.Job.html">Job</a></li>
 </ul>
 </li>
 </ul>
@@ -301,13 +301,14 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.model.callbacks.html">mergernet.model.callbacks</a><input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" role="switch" type="checkbox"/><label for="toctree-checkbox-28"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.DeltaStopping.html">mergernet.model.callbacks.DeltaStopping</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.PruneCallback.html">mergernet.model.callbacks.PruneCallback</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.SaveBestTrialCallback.html">mergernet.model.callbacks.SaveBestTrialCallback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.DeltaStopping.html">DeltaStopping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.MyWandbCallback.html">MyWandbCallback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.PruneCallback.html">PruneCallback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.SaveBestTrialCallback.html">SaveBestTrialCallback</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.model.inference.html">mergernet.model.inference</a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" role="switch" type="checkbox"/><label for="toctree-checkbox-29"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.model.inference.Predictor.html">mergernet.model.inference.Predictor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.inference.Predictor.html">Predictor</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.model.utils.html">mergernet.model.utils</a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" role="switch" type="checkbox"/><label for="toctree-checkbox-30"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -322,41 +323,41 @@
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="mergernet.services.html">mergernet.services</a><input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" role="switch" type="checkbox"/><label for="toctree-checkbox-31"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.github.html">mergernet.services.github</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" role="switch" type="checkbox"/><label for="toctree-checkbox-32"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.services.github.GithubService.html">mergernet.services.github.GithubService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.github.GithubService.html">GithubService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.google.html">mergernet.services.google</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" role="switch" type="checkbox"/><label for="toctree-checkbox-33"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.services.google.GDrive.html">mergernet.services.google.GDrive</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.google.GDrive.html">GDrive</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.imaging.html">mergernet.services.imaging</a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" role="switch" type="checkbox"/><label for="toctree-checkbox-34"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.services.imaging.BaseImagingService.html">mergernet.services.imaging.BaseImagingService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.imaging.BaseImagingService.html">BaseImagingService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.legacy.html">mergernet.services.legacy</a><input class="toctree-checkbox" id="toctree-checkbox-35" name="toctree-checkbox-35" role="switch" type="checkbox"/><label for="toctree-checkbox-35"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.services.legacy.LegacyService.html">mergernet.services.legacy.LegacyService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.legacy.LegacyService.html">LegacyService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.sciserver.html">mergernet.services.sciserver</a><input class="toctree-checkbox" id="toctree-checkbox-36" name="toctree-checkbox-36" role="switch" type="checkbox"/><label for="toctree-checkbox-36"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.services.sciserver.SciServer.html">mergernet.services.sciserver.SciServer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.sciserver.SciServer.html">SciServer</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.sdss.html">mergernet.services.sdss</a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.services.sdss.SloanService.html">mergernet.services.sdss.SloanService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.sdss.SloanService.html">SloanService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.splus.html">mergernet.services.splus</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.services.splus.update_authorization.html">mergernet.services.splus.update_authorization</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.services.splus.ImageType.html">mergernet.services.splus.ImageType</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.services.splus.SplusService.html">mergernet.services.splus.SplusService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.splus.ImageType.html">ImageType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.splus.SplusService.html">SplusService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.tap.html">mergernet.services.tap</a><input class="toctree-checkbox" id="toctree-checkbox-39" name="toctree-checkbox-39" role="switch" type="checkbox"/><label for="toctree-checkbox-39"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.services.tap.TapService.html">mergernet.services.tap.TapService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.tap.TapService.html">TapService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.tensorboard.html">mergernet.services.tensorboard</a><input class="toctree-checkbox" id="toctree-checkbox-40" name="toctree-checkbox-40" role="switch" type="checkbox"/><label for="toctree-checkbox-40"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.services.tensorboard.TensorboardService.html">mergernet.services.tensorboard.TensorboardService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.tensorboard.TensorboardService.html">TensorboardService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.utils.html">mergernet.services.utils</a><input class="toctree-checkbox" id="toctree-checkbox-41" name="toctree-checkbox-41" role="switch" type="checkbox"/><label for="toctree-checkbox-41"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -377,7 +378,7 @@
 <li class="toctree-l4"><a class="reference internal" href="mergernet.visualization.plot.object_position.html">mergernet.visualization.plot.object_position</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.visualization.plot.roc.html">mergernet.visualization.plot.roc</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.visualization.plot.train_metrics.html">mergernet.visualization.plot.train_metrics</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.visualization.plot.Serie.html">mergernet.visualization.plot.Serie</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.visualization.plot.Serie.html">Serie</a></li>
 </ul>
 </li>
 </ul>
@@ -419,42 +420,12 @@
           </label>
         </div>
         <article role="main">
-          <section id="mergernet-core-hp-inthyperparameter">
-<h1>mergernet.core.hp.IntHyperParameter<a class="headerlink" href="#mergernet-core-hp-inthyperparameter" title="Permalink to this heading">#</a></h1>
+          <section id="inthyperparameter">
+<h1>IntHyperParameter<a class="headerlink" href="#inthyperparameter" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="mergernet.core.hp.IntHyperParameter">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mergernet.core.hp.</span></span><span class="sig-name descname"><span class="pre">IntHyperParameter</span></span><a class="reference internal" href="../_modules/mergernet/core/hp.html#IntHyperParameter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.hp.IntHyperParameter" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mergernet.core.hp.HyperParameter.html#mergernet.core.hp.HyperParameter" title="mergernet.core.hp.HyperParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">HyperParameter</span></code></a></p>
-<p class="rubric">Methods</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><strong>clear_last_value</strong></p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p><strong>from_dict</strong></p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p><strong>set_attr</strong></p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p><strong>set_trial</strong></p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p><strong>suggest</strong></p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p><strong>to_dict</strong></p></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<dl class="py method">
-<dt class="sig sig-object py" id="mergernet.core.hp.IntHyperParameter.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/core/hp.html#IntHyperParameter.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.core.hp.IntHyperParameter.__init__" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="mergernet.core.hp.IntHyperParameter.clear_last_value">
 <span class="sig-name descname"><span class="pre">clear_last_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.core.hp.IntHyperParameter.clear_last_value" title="Permalink to this definition">#</a></dt>
@@ -510,7 +481,7 @@
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">mergernet.core.hp.HyperParameterSet</div>
+                <div class="title">HyperParameterSet</div>
                 
               </div>
             </a>
@@ -544,9 +515,8 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">mergernet.core.hp.IntHyperParameter</a><ul>
+<li><a class="reference internal" href="#">IntHyperParameter</a><ul>
 <li><a class="reference internal" href="#mergernet.core.hp.IntHyperParameter"><code class="docutils literal notranslate"><span class="pre">IntHyperParameter</span></code></a><ul>
-<li><a class="reference internal" href="#mergernet.core.hp.IntHyperParameter.__init__"><code class="docutils literal notranslate"><span class="pre">IntHyperParameter.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#mergernet.core.hp.IntHyperParameter.clear_last_value"><code class="docutils literal notranslate"><span class="pre">IntHyperParameter.clear_last_value()</span></code></a></li>
 <li><a class="reference internal" href="#mergernet.core.hp.IntHyperParameter.from_dict"><code class="docutils literal notranslate"><span class="pre">IntHyperParameter.from_dict()</span></code></a></li>
 <li><a class="reference internal" href="#mergernet.core.hp.IntHyperParameter.set_attr"><code class="docutils literal notranslate"><span class="pre">IntHyperParameter.set_attr()</span></code></a></li>

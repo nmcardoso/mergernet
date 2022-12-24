@@ -3,29 +3,29 @@ mergernet.data.dataset
 
 .. automodule:: mergernet.data.dataset
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      Dataset
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    Dataset
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

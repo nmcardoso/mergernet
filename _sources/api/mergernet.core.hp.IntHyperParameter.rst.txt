@@ -1,17 +1,17 @@
-mergernet.core.hp.IntHyperParameter
-===================================
+IntHyperParameter
+=================
 
 .. currentmodule:: mergernet.core.hp
 
 .. autoclass:: IntHyperParameter
-   :members:
-   :private-members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
 
 
 
-   
-   
-   
+  
+  
+  

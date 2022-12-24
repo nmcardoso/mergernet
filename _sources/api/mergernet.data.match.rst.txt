@@ -3,31 +3,31 @@ mergernet.data.match
 
 .. automodule:: mergernet.data.match
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      CrossMatch
-      CrossMatchResult
-      XTable
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    CrossMatch
+    CrossMatchResult
+    XTable
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

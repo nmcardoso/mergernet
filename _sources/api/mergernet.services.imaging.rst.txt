@@ -3,29 +3,29 @@ mergernet.services.imaging
 
 .. automodule:: mergernet.services.imaging
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      BaseImagingService
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    BaseImagingService
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

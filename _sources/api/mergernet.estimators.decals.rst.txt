@@ -3,29 +3,29 @@ mergernet.estimators.decals
 
 .. automodule:: mergernet.estimators.decals
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      ZoobotEstimator
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    ZoobotEstimator
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

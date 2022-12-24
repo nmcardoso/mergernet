@@ -3,29 +3,29 @@ mergernet.data.sanitization
 
 .. automodule:: mergernet.data.sanitization
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      DatasetSanitization
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    DatasetSanitization
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

@@ -3,34 +3,34 @@
 
 .. automodule:: mergernet.model
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 
 .. rubric:: Modules
 
 .. autosummary::
-   :toctree:
-   :template: module-template.rst
-   :recursive:
+  :toctree:
+  :template: module-template.rst
+  :recursive:
 
-   mergernet.model.automl
-   mergernet.model.baseline
-   mergernet.model.callbacks
-   mergernet.model.inference
-   mergernet.model.utils
+  mergernet.model.automl
+  mergernet.model.baseline
+  mergernet.model.callbacks
+  mergernet.model.inference
+  mergernet.model.utils
 

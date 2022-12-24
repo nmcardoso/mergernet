@@ -3,35 +3,35 @@
 
 .. automodule:: mergernet.jobs
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 
 .. rubric:: Modules
 
 .. autosummary::
-   :toctree:
-   :template: module-template.rst
-   :recursive:
+  :toctree:
+  :template: module-template.rst
+  :recursive:
 
-   mergernet.jobs.j001
-   mergernet.jobs.j002
-   mergernet.jobs.j003
-   mergernet.jobs.j004
-   mergernet.jobs.j005
-   mergernet.jobs.j006
+  mergernet.jobs.j001
+  mergernet.jobs.j002
+  mergernet.jobs.j003
+  mergernet.jobs.j004
+  mergernet.jobs.j005
+  mergernet.jobs.j006
 

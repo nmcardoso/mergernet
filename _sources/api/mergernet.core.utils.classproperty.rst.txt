@@ -1,25 +1,25 @@
-mergernet.core.utils.classproperty
-==================================
+classproperty
+=============
 
 .. currentmodule:: mergernet.core.utils
 
 .. autoclass:: classproperty
-   :members:
-   :private-members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
 
 
 
-   
-   
-   .. rubric:: Attributes
+  
+  
+  .. rubric:: Attributes
 
-   .. autosummary::
-   
+  .. autosummary::
+  
       ~classproperty.fdel
       ~classproperty.fget
       ~classproperty.fset
-   
-   
+  
+  

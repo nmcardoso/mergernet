@@ -3,29 +3,29 @@ mergernet.services.legacy
 
 .. automodule:: mergernet.services.legacy
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      LegacyService
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    LegacyService
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

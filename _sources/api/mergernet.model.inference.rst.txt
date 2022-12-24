@@ -3,29 +3,29 @@ mergernet.model.inference
 
 .. automodule:: mergernet.model.inference
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      Predictor
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    Predictor
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

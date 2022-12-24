@@ -3,29 +3,29 @@ mergernet.estimators.parametric
 
 .. automodule:: mergernet.estimators.parametric
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      ParametricEstimator
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    ParametricEstimator
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

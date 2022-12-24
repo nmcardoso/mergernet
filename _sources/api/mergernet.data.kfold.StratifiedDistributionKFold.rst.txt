@@ -1,17 +1,17 @@
-mergernet.data.kfold.StratifiedDistributionKFold
-================================================
+StratifiedDistributionKFold
+===========================
 
 .. currentmodule:: mergernet.data.kfold
 
 .. autoclass:: StratifiedDistributionKFold
-   :members:
-   :private-members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
 
 
 
-   
-   
-   
+  
+  
+  

@@ -1,17 +1,17 @@
-mergernet.services.tensorboard.TensorboardService
-=================================================
+TensorboardService
+==================
 
 .. currentmodule:: mergernet.services.tensorboard
 
 .. autoclass:: TensorboardService
-   :members:
-   :private-members:
-   :undoc-members:
-   :show-inheritance:
-   :inherited-members:
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
 
 
 
-   
-   
-   
+  
+  
+  

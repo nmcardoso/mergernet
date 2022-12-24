@@ -3,29 +3,29 @@ mergernet.services.sciserver
 
 .. automodule:: mergernet.services.sciserver
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      SciServer
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    SciServer
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

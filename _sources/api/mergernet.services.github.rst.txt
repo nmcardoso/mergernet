@@ -3,29 +3,29 @@ mergernet.services.github
 
 .. automodule:: mergernet.services.github
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      GithubService
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    GithubService
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

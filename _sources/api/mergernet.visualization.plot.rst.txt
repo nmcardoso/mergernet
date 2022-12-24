@@ -3,42 +3,42 @@ mergernet.visualization.plot
 
 .. automodule:: mergernet.visualization.plot
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Functions
+  
+  
+  .. rubric:: Functions
 
-   .. autosummary::
-      :toctree:
-   
-      color_color
-      conf_matrix
-      data_distribution
-      mag_class_distribution
-      object_position
-      roc
-      train_metrics
-   
-   
+  .. autosummary::
+    :toctree:
+  
+    color_color
+    conf_matrix
+    data_distribution
+    mag_class_distribution
+    object_position
+    roc
+    train_metrics
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      Serie
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    Serie
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

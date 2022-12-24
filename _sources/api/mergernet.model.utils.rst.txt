@@ -3,32 +3,32 @@ mergernet.model.utils
 
 .. automodule:: mergernet.model.utils
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Functions
+  
+  
+  .. rubric:: Functions
 
-   .. autosummary::
-      :toctree:
-   
-      get_conv_arch
-      history_to_dataframe
-      load_model
-      set_trainable_state
-      setup_seeds
-   
-   
+  .. autosummary::
+    :toctree:
+  
+    get_conv_arch
+    history_to_dataframe
+    load_model
+    set_trainable_state
+    setup_seeds
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

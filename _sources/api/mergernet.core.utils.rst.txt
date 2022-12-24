@@ -3,49 +3,49 @@ mergernet.core.utils
 
 .. automodule:: mergernet.core.utils
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Functions
+  
+  
+  .. rubric:: Functions
 
-   .. autosummary::
-      :toctree:
-   
-      array_fallback
-      deep_update
-      find_by_value
-      heading
-      iauname
-      load_image
-      load_table
-      not_in
-      save_table
-      serialize
-      unique_path
-   
-   
+  .. autosummary::
+    :toctree:
+  
+    array_fallback
+    deep_update
+    find_by_value
+    heading
+    iauname
+    load_image
+    load_table
+    not_in
+    save_table
+    serialize
+    unique_path
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      CachedDataFrame
-      SingletonMeta
-      Timming
-      classproperty
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    CachedDataFrame
+    SingletonMeta
+    Timming
+    classproperty
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

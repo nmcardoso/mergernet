@@ -3,29 +3,29 @@ mergernet.services.google
 
 .. automodule:: mergernet.services.google
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      GDrive
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    GDrive
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

@@ -3,37 +3,37 @@ mergernet.services.splus
 
 .. automodule:: mergernet.services.splus
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Functions
+  
+  
+  .. rubric:: Functions
 
-   .. autosummary::
-      :toctree:
-   
-      update_authorization
-   
-   
+  .. autosummary::
+    :toctree:
+  
+    update_authorization
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      ImageType
-      SplusService
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    ImageType
+    SplusService
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

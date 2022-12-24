@@ -3,28 +3,28 @@ mergernet.core.logging
 
 .. automodule:: mergernet.core.logging
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Functions
+  
+  
+  .. rubric:: Functions
 
-   .. autosummary::
-      :toctree:
-   
-      configure_root_logger
-   
-   
+  .. autosummary::
+    :toctree:
+  
+    configure_root_logger
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 

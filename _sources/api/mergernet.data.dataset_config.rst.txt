@@ -3,30 +3,30 @@ mergernet.data.dataset\_config
 
 .. automodule:: mergernet.data.dataset_config
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   
+  
+  
+  
 
-   
-   
-   .. rubric:: Classes
+  
+  
+  .. rubric:: Classes
 
-   .. autosummary::
-      :toctree:
-      :template: class-template.rst
-   
-      DatasetConfig
-      DatasetRegistry
-   
-   
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    DatasetConfig
+    DatasetRegistry
+  
+  
 
-   
-   
-   
+  
+  
+  
 
 
 
