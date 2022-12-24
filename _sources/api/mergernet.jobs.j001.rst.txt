@@ -1,7 +1,7 @@
-mergernet.jobs.j006
+mergernet.jobs.j001
 ===================
 
-.. automodule:: mergernet.jobs.j006
+.. automodule:: mergernet.jobs.j001
 
   
   

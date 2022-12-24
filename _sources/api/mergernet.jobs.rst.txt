@@ -33,5 +33,4 @@
   mergernet.jobs.j003
   mergernet.jobs.j004
   mergernet.jobs.j005
-  mergernet.jobs.j006
 
