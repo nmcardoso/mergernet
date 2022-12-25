@@ -313,6 +313,7 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.model.callbacks.html">mergernet.model.callbacks</a><input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" role="switch" type="checkbox"/><label for="toctree-checkbox-31"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.DeltaStopping.html">DeltaStopping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.MWandbCallback.html">MWandbCallback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.MyWandbCallback.html">MyWandbCallback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.PruneCallback.html">PruneCallback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.SaveBestTrialCallback.html">SaveBestTrialCallback</a></li>
@@ -443,7 +444,7 @@
 <span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">Timming</span>
 <span class="kn">from</span> <span class="nn">mergernet.data.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 <span class="kn">from</span> <span class="nn">mergernet.estimators.base</span> <span class="kn">import</span> <span class="n">Estimator</span>
-<span class="kn">from</span> <span class="nn">mergernet.model.callbacks</span> <span class="kn">import</span> <span class="n">MyWandbCallback</span>
+<span class="kn">from</span> <span class="nn">mergernet.model.callbacks</span> <span class="kn">import</span> <span class="n">MWandbCallback</span>
 
 <span class="n">L</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -525,16 +526,23 @@
         <span class="n">restore_best_weights</span><span class="o">=</span><span class="kc">True</span>
       <span class="p">)</span>
 
-      <span class="n">wandb_cb</span> <span class="o">=</span> <span class="n">MyWandbCallback</span><span class="p">(</span>
-        <span class="n">dataset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span>
+      <span class="c1"># wandb_cb = MyWandbCallback(</span>
+      <span class="c1">#   dataset=self.dataset,</span>
+      <span class="c1">#   validation_data=ds_test,</span>
+      <span class="c1">#   monitor=&#39;val_loss&#39;,</span>
+      <span class="c1">#   mode=&#39;min&#39;,</span>
+      <span class="c1">#   save_graph=True,</span>
+      <span class="c1">#   save_model=False,</span>
+      <span class="c1">#   log_weights=False,</span>
+      <span class="c1">#   log_gradients=False,</span>
+      <span class="c1">#   compute_flops=True,</span>
+      <span class="c1"># )</span>
+
+      <span class="n">wandb_cb</span> <span class="o">=</span> <span class="n">MWandbCallback</span><span class="p">(</span>
         <span class="n">validation_data</span><span class="o">=</span><span class="n">ds_test</span><span class="p">,</span>
+        <span class="n">class_names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span>
         <span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_loss&#39;</span><span class="p">,</span>
         <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span>
-        <span class="n">save_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">save_model</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">log_weights</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">log_gradients</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">compute_flops</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
       <span class="p">)</span>
 
       <span class="n">t</span> <span class="o">=</span> <span class="n">Timming</span><span class="p">()</span>

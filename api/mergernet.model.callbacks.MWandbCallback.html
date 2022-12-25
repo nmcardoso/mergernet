@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="mergernet.model.utils.set_trainable_state" href="mergernet.model.utils.set_trainable_state.html" /><link rel="prev" title="mergernet.model.utils.history_to_dataframe" href="mergernet.model.utils.history_to_dataframe.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="MyWandbCallback" href="mergernet.model.callbacks.MyWandbCallback.html" /><link rel="prev" title="DeltaStopping" href="mergernet.model.callbacks.DeltaStopping.html" />
 
     <!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
-        <title>mergernet.model.utils.load_model - Mergernet 0 documentation</title>
+        <title>MWandbCallback - Mergernet 0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
@@ -312,9 +312,9 @@
 <li class="toctree-l4"><a class="reference internal" href="mergernet.model.baseline.finetune_train.html">mergernet.model.baseline.finetune_train</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.model.callbacks.html">mergernet.model.callbacks</a><input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" role="switch" type="checkbox"/><label for="toctree-checkbox-31"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 current has-children"><a class="reference internal" href="mergernet.model.callbacks.html">mergernet.model.callbacks</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" role="switch" type="checkbox"/><label for="toctree-checkbox-31"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.DeltaStopping.html">DeltaStopping</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.MWandbCallback.html">MWandbCallback</a></li>
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">MWandbCallback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.MyWandbCallback.html">MyWandbCallback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.PruneCallback.html">PruneCallback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.SaveBestTrialCallback.html">SaveBestTrialCallback</a></li>
@@ -324,10 +324,10 @@
 <li class="toctree-l4"><a class="reference internal" href="mergernet.model.inference.Predictor.html">Predictor</a></li>
 </ul>
 </li>
-<li class="toctree-l3 current has-children"><a class="reference internal" href="mergernet.model.utils.html">mergernet.model.utils</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" role="switch" type="checkbox"/><label for="toctree-checkbox-33"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.model.utils.html">mergernet.model.utils</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" role="switch" type="checkbox"/><label for="toctree-checkbox-33"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.model.utils.get_conv_arch.html">mergernet.model.utils.get_conv_arch</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.model.utils.history_to_dataframe.html">mergernet.model.utils.history_to_dataframe</a></li>
-<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">mergernet.model.utils.load_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.utils.load_model.html">mergernet.model.utils.load_model</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.model.utils.set_trainable_state.html">mergernet.model.utils.set_trainable_state</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.model.utils.setup_seeds.html">mergernet.model.utils.setup_seeds</a></li>
 </ul>
@@ -433,12 +433,303 @@
           </label>
         </div>
         <article role="main">
-          <section id="mergernet-model-utils-load-model">
-<h1>mergernet.model.utils.load_model<a class="headerlink" href="#mergernet-model-utils-load-model" title="Permalink to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="mergernet.model.utils.load_model">
-<span class="sig-prename descclassname"><span class="pre">mergernet.model.utils.</span></span><span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Model</span></span></span><a class="reference internal" href="../_modules/mergernet/model/utils.html#load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.utils.load_model" title="Permalink to this definition">#</a></dt>
+          <section id="mwandbcallback">
+<h1>MWandbCallback<a class="headerlink" href="#mwandbcallback" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mergernet.model.callbacks.</span></span><span class="sig-name descname"><span class="pre">MWandbCallback</span></span><a class="reference internal" href="../_modules/mergernet/model/callbacks.html#MWandbCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback._implements_predict_batch_hooks">
+<span class="sig-name descname"><span class="pre">_implements_predict_batch_hooks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback._implements_predict_batch_hooks" title="Permalink to this definition">#</a></dt>
+<dd><p>Determines if this Callback should be called for each predict
+batch.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback._implements_test_batch_hooks">
+<span class="sig-name descname"><span class="pre">_implements_test_batch_hooks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback._implements_test_batch_hooks" title="Permalink to this definition">#</a></dt>
+<dd><p>Determines if this Callback should be called for each test batch.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback._implements_train_batch_hooks">
+<span class="sig-name descname"><span class="pre">_implements_train_batch_hooks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback._implements_train_batch_hooks" title="Permalink to this definition">#</a></dt>
+<dd><p>Determines if this Callback should be called for each train batch.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.get_flops">
+<span class="sig-name descname"><span class="pre">get_flops</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><a class="reference internal" href="../_modules/mergernet/model/callbacks.html#MWandbCallback.get_flops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.get_flops" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate FLOPS [GFLOPs] for a keras model in inference mode.
+It uses tf.compat.v1.profiler under the hood.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_batch_begin">
+<span class="sig-name descname"><span class="pre">on_batch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_batch_begin" title="Permalink to this definition">#</a></dt>
+<dd><p>A backwards compatibility alias for <cite>on_train_batch_begin</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_batch_end">
+<span class="sig-name descname"><span class="pre">on_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_batch_end" title="Permalink to this definition">#</a></dt>
+<dd><p>A backwards compatibility alias for <cite>on_train_batch_end</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_epoch_begin">
+<span class="sig-name descname"><span class="pre">on_epoch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_epoch_begin" title="Permalink to this definition">#</a></dt>
+<dd><p>Called at the start of an epoch.</p>
+<p>Subclasses should override for any actions to run. This function should
+only be called during TRAIN mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epoch</strong> – Integer, index of epoch.</p></li>
+<li><p><strong>logs</strong> – Dict. Currently no data is passed to this argument for this
+method but that may change in the future.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_epoch_end">
+<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/callbacks.html#MWandbCallback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_epoch_end" title="Permalink to this definition">#</a></dt>
+<dd><p>Called at the end of an epoch.</p>
+<p>Subclasses should override for any actions to run. This function should
+only be called during TRAIN mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epoch</strong> – Integer, index of epoch.</p></li>
+<li><p><strong>logs</strong> – Dict, metric results for this training epoch, and for the
+validation epoch if validation is performed. Validation result
+keys are prefixed with <cite>val_</cite>. For training epoch, the values of
+the <cite>Model</cite>’s metrics are returned. Example:
+<cite>{‘loss’: 0.2, ‘accuracy’: 0.7}</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_predict_batch_begin">
+<span class="sig-name descname"><span class="pre">on_predict_batch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_predict_batch_begin" title="Permalink to this definition">#</a></dt>
+<dd><p>Called at the beginning of a batch in <cite>predict</cite> methods.</p>
+<p>Subclasses should override for any actions to run.</p>
+<p>Note that if the <cite>steps_per_execution</cite> argument to <cite>compile</cite> in
+<cite>tf.keras.Model</cite> is set to <cite>N</cite>, this method will only be called every
+<cite>N</cite> batches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> – Integer, index of batch within the current epoch.</p></li>
+<li><p><strong>logs</strong> – Dict. Currently no data is passed to this argument for this
+method but that may change in the future.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_predict_batch_end">
+<span class="sig-name descname"><span class="pre">on_predict_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_predict_batch_end" title="Permalink to this definition">#</a></dt>
+<dd><p>Called at the end of a batch in <cite>predict</cite> methods.</p>
+<p>Subclasses should override for any actions to run.</p>
+<p>Note that if the <cite>steps_per_execution</cite> argument to <cite>compile</cite> in
+<cite>tf.keras.Model</cite> is set to <cite>N</cite>, this method will only be called every
+<cite>N</cite> batches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> – Integer, index of batch within the current epoch.</p></li>
+<li><p><strong>logs</strong> – Dict. Aggregated metric results up until this batch.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_predict_begin">
+<span class="sig-name descname"><span class="pre">on_predict_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_predict_begin" title="Permalink to this definition">#</a></dt>
+<dd><p>Called at the beginning of prediction.</p>
+<p>Subclasses should override for any actions to run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>logs</strong> – Dict. Currently no data is passed to this argument for this
+method but that may change in the future.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_predict_end">
+<span class="sig-name descname"><span class="pre">on_predict_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_predict_end" title="Permalink to this definition">#</a></dt>
+<dd><p>Called at the end of prediction.</p>
+<p>Subclasses should override for any actions to run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>logs</strong> – Dict. Currently no data is passed to this argument for this
+method but that may change in the future.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_test_batch_begin">
+<span class="sig-name descname"><span class="pre">on_test_batch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_test_batch_begin" title="Permalink to this definition">#</a></dt>
+<dd><p>Called at the beginning of a batch in <cite>evaluate</cite> methods.</p>
+<p>Also called at the beginning of a validation batch in the <cite>fit</cite>
+methods, if validation data is provided.</p>
+<p>Subclasses should override for any actions to run.</p>
+<p>Note that if the <cite>steps_per_execution</cite> argument to <cite>compile</cite> in
+<cite>tf.keras.Model</cite> is set to <cite>N</cite>, this method will only be called every
+<cite>N</cite> batches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> – Integer, index of batch within the current epoch.</p></li>
+<li><p><strong>logs</strong> – Dict. Currently no data is passed to this argument for this
+method but that may change in the future.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_test_batch_end">
+<span class="sig-name descname"><span class="pre">on_test_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_test_batch_end" title="Permalink to this definition">#</a></dt>
+<dd><p>Called at the end of a batch in <cite>evaluate</cite> methods.</p>
+<p>Also called at the end of a validation batch in the <cite>fit</cite>
+methods, if validation data is provided.</p>
+<p>Subclasses should override for any actions to run.</p>
+<p>Note that if the <cite>steps_per_execution</cite> argument to <cite>compile</cite> in
+<cite>tf.keras.Model</cite> is set to <cite>N</cite>, this method will only be called every
+<cite>N</cite> batches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> – Integer, index of batch within the current epoch.</p></li>
+<li><p><strong>logs</strong> – Dict. Aggregated metric results up until this batch.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_test_begin">
+<span class="sig-name descname"><span class="pre">on_test_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_test_begin" title="Permalink to this definition">#</a></dt>
+<dd><p>Called at the beginning of evaluation or validation.</p>
+<p>Subclasses should override for any actions to run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>logs</strong> – Dict. Currently no data is passed to this argument for this
+method but that may change in the future.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_test_end">
+<span class="sig-name descname"><span class="pre">on_test_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_test_end" title="Permalink to this definition">#</a></dt>
+<dd><p>Called at the end of evaluation or validation.</p>
+<p>Subclasses should override for any actions to run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>logs</strong> – Dict. Currently the output of the last call to
+<cite>on_test_batch_end()</cite> is passed to this argument for this method
+but that may change in the future.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_train_batch_begin">
+<span class="sig-name descname"><span class="pre">on_train_batch_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_train_batch_begin" title="Permalink to this definition">#</a></dt>
+<dd><p>Called at the beginning of a training batch in <cite>fit</cite> methods.</p>
+<p>Subclasses should override for any actions to run.</p>
+<p>Note that if the <cite>steps_per_execution</cite> argument to <cite>compile</cite> in
+<cite>tf.keras.Model</cite> is set to <cite>N</cite>, this method will only be called every
+<cite>N</cite> batches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> – Integer, index of batch within the current epoch.</p></li>
+<li><p><strong>logs</strong> – Dict. Currently no data is passed to this argument for this
+method but that may change in the future.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_train_batch_end">
+<span class="sig-name descname"><span class="pre">on_train_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/callbacks.html#MWandbCallback.on_train_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_train_batch_end" title="Permalink to this definition">#</a></dt>
+<dd><p>Called at the end of a training batch in <cite>fit</cite> methods.</p>
+<p>Subclasses should override for any actions to run.</p>
+<p>Note that if the <cite>steps_per_execution</cite> argument to <cite>compile</cite> in
+<cite>tf.keras.Model</cite> is set to <cite>N</cite>, this method will only be called every
+<cite>N</cite> batches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> – Integer, index of batch within the current epoch.</p></li>
+<li><p><strong>logs</strong> – Dict. Aggregated metric results up until this batch.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_train_begin">
+<span class="sig-name descname"><span class="pre">on_train_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/callbacks.html#MWandbCallback.on_train_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_train_begin" title="Permalink to this definition">#</a></dt>
+<dd><p>Called at the beginning of training.</p>
+<p>Subclasses should override for any actions to run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>logs</strong> – Dict. Currently no data is passed to this argument for this
+method but that may change in the future.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.on_train_end">
+<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/model/callbacks.html#MWandbCallback.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.on_train_end" title="Permalink to this definition">#</a></dt>
+<dd><p>Called at the end of training.</p>
+<p>Subclasses should override for any actions to run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>logs</strong> – Dict. Currently the output of the last call to
+<cite>on_epoch_end()</cite> is passed to this argument for this method but
+that may change in the future.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.set_model">
+<span class="sig-name descname"><span class="pre">set_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.set_model" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback.set_params">
+<span class="sig-name descname"><span class="pre">set_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback.set_params" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback._keras_api_names">
+<span class="sig-name descname"><span class="pre">_keras_api_names</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('keras.callbacks.Callback',)</span></em><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback._keras_api_names" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.model.callbacks.MWandbCallback._keras_api_names_v1">
+<span class="sig-name descname"><span class="pre">_keras_api_names_v1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('keras.callbacks.Callback',)</span></em><a class="headerlink" href="#mergernet.model.callbacks.MWandbCallback._keras_api_names_v1" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 </section>
 
@@ -447,23 +738,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="mergernet.model.utils.set_trainable_state.html">
+          <a class="next-page" href="mergernet.model.callbacks.MyWandbCallback.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">mergernet.model.utils.set_trainable_state</div>
+                <div class="title">MyWandbCallback</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="mergernet.model.utils.history_to_dataframe.html">
+          <a class="prev-page" href="mergernet.model.callbacks.DeltaStopping.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">mergernet.model.utils.history_to_dataframe</div>
+                <div class="title">DeltaStopping</div>
                 
               </div>
             </a>
@@ -497,8 +788,34 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">mergernet.model.utils.load_model</a><ul>
-<li><a class="reference internal" href="#mergernet.model.utils.load_model"><code class="docutils literal notranslate"><span class="pre">load_model()</span></code></a></li>
+<li><a class="reference internal" href="#">MWandbCallback</a><ul>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback"><code class="docutils literal notranslate"><span class="pre">MWandbCallback</span></code></a><ul>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback._implements_predict_batch_hooks"><code class="docutils literal notranslate"><span class="pre">MWandbCallback._implements_predict_batch_hooks()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback._implements_test_batch_hooks"><code class="docutils literal notranslate"><span class="pre">MWandbCallback._implements_test_batch_hooks()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback._implements_train_batch_hooks"><code class="docutils literal notranslate"><span class="pre">MWandbCallback._implements_train_batch_hooks()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.get_flops"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.get_flops()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_batch_begin"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_batch_begin()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_batch_end"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_batch_end()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_epoch_begin"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_epoch_begin()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_epoch_end"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_epoch_end()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_predict_batch_begin"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_predict_batch_begin()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_predict_batch_end"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_predict_batch_end()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_predict_begin"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_predict_begin()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_predict_end"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_predict_end()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_test_batch_begin"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_test_batch_begin()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_test_batch_end"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_test_batch_end()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_test_begin"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_test_begin()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_test_end"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_test_end()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_train_batch_begin"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_train_batch_begin()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_train_batch_end"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_train_batch_end()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_train_begin"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_train_begin()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.on_train_end"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.on_train_end()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.set_model"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.set_model()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback.set_params"><code class="docutils literal notranslate"><span class="pre">MWandbCallback.set_params()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback._keras_api_names"><code class="docutils literal notranslate"><span class="pre">MWandbCallback._keras_api_names</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.model.callbacks.MWandbCallback._keras_api_names_v1"><code class="docutils literal notranslate"><span class="pre">MWandbCallback._keras_api_names_v1</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

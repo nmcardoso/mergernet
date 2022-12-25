@@ -1,0 +1,17 @@
+MWandbCallback
+==============
+
+.. currentmodule:: mergernet.model.callbacks
+
+.. autoclass:: MWandbCallback
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
+
+
+  
+  
+  

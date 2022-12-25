@@ -313,6 +313,7 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.model.callbacks.html">mergernet.model.callbacks</a><input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" role="switch" type="checkbox"/><label for="toctree-checkbox-31"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.DeltaStopping.html">DeltaStopping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.MWandbCallback.html">MWandbCallback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.MyWandbCallback.html">MyWandbCallback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.PruneCallback.html">PruneCallback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.SaveBestTrialCallback.html">SaveBestTrialCallback</a></li>
@@ -433,7 +434,7 @@
           <h1>Source code for mergernet.model.callbacks</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">optuna</span>
@@ -674,6 +675,136 @@
         <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Preds&#39;</span><span class="p">,</span>
       <span class="p">)</span>
     <span class="p">})</span></div></div>
+
+
+
+<div class="viewcode-block" id="MWandbCallback"><a class="viewcode-back" href="../../../api/mergernet.model.callbacks.MWandbCallback.html#mergernet.model.callbacks.MWandbCallback">[docs]</a><span class="k">class</span> <span class="nc">MWandbCallback</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">Callback</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="n">validation_data</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span>
+    <span class="n">class_names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">monitor</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">validation_data</span> <span class="o">=</span> <span class="n">validation_data</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">class_names</span> <span class="o">=</span> <span class="n">class_names</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">monitor</span> <span class="o">=</span> <span class="n">monitor</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_best_metric</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="k">if</span> <span class="n">mode</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;max&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_monitor_op</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">greater</span> <span class="k">if</span> <span class="n">mode</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;max&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">less</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_graph_rendered</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># get the previous best metric for resumed runs</span>
+    <span class="n">previous_best</span> <span class="o">=</span> <span class="n">wandb</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;best_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">monitor</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">previous_best</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_best</span> <span class="o">=</span> <span class="n">previous_best</span>
+
+
+<div class="viewcode-block" id="MWandbCallback.on_train_batch_end"><a class="viewcode-back" href="../../../api/mergernet.model.callbacks.MWandbCallback.html#mergernet.model.callbacks.MWandbCallback.on_train_batch_end">[docs]</a>  <span class="k">def</span> <span class="nf">on_train_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_graph</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph_rendered</span><span class="p">:</span>
+      <span class="c1"># Couldn&#39;t do this in train_begin because keras may still not be built</span>
+      <span class="n">wandb</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;graph&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wandb</span><span class="o">.</span><span class="n">Graph</span><span class="o">.</span><span class="n">from_keras</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_graph_rendered</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="MWandbCallback.on_epoch_end"><a class="viewcode-back" href="../../../api/mergernet.model.callbacks.MWandbCallback.html#mergernet.model.callbacks.MWandbCallback.on_epoch_end">[docs]</a>  <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span><span class="s1">&#39;epoch&#39;</span><span class="p">:</span> <span class="n">epoch</span><span class="p">},</span> <span class="n">commit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">logs</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">current_metric</span> <span class="o">=</span> <span class="n">logs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monitor</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">current_metric</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_monitor_op</span><span class="p">(</span><span class="n">current_metric</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_metric</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_best_metric</span> <span class="o">=</span> <span class="n">current_metric</span>
+      <span class="n">wandb</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">summary</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;best_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">monitor</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_metric</span>
+      <span class="n">wandb</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;best_epoch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epoch</span></div>
+
+
+<div class="viewcode-block" id="MWandbCallback.on_train_begin"><a class="viewcode-back" href="../../../api/mergernet.model.callbacks.MWandbCallback.html#mergernet.model.callbacks.MWandbCallback.on_train_begin">[docs]</a>  <span class="k">def</span> <span class="nf">on_train_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">wandb</span><span class="o">.</span><span class="n">summary</span><span class="p">[</span><span class="s1">&#39;GFLOPs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_flops</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="n">wandb</span><span class="o">.</span><span class="n">termwarn</span><span class="p">(</span><span class="s1">&#39;Unable to compute FLOPs for this model.&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MWandbCallback.on_train_end"><a class="viewcode-back" href="../../../api/mergernet.model.callbacks.MWandbCallback.html#mergernet.model.callbacks.MWandbCallback.on_train_end">[docs]</a>  <span class="k">def</span> <span class="nf">on_train_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="n">probs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">validation_data</span><span class="p">)</span>
+    <span class="n">y_true_one_hot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">y</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation_data</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_true_one_hot</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;probs&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y_true&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;class_names&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_names</span><span class="p">)</span>
+
+    <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span>
+      <span class="s1">&#39;confusion_matrix&#39;</span><span class="p">:</span> <span class="n">wandb</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span>
+        <span class="n">probs</span><span class="o">=</span><span class="n">probs</span><span class="p">,</span>
+        <span class="n">y_true</span><span class="o">=</span><span class="n">y_true</span><span class="p">,</span>
+        <span class="n">class_names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">class_names</span><span class="p">,</span>
+      <span class="p">),</span>
+      <span class="s1">&#39;pr-curve&#39;</span><span class="p">:</span> <span class="n">wandb</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pr_curve</span><span class="p">(</span>
+        <span class="n">y_true</span><span class="o">=</span><span class="n">y_true</span><span class="p">,</span>
+        <span class="n">y_probas</span><span class="o">=</span><span class="n">probs</span><span class="p">,</span>
+        <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">class_names</span><span class="p">,</span>
+      <span class="p">),</span>
+      <span class="s1">&#39;roc-curve&#39;</span><span class="p">:</span> <span class="n">wandb</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">roc_curve</span><span class="p">(</span>
+        <span class="n">y_true</span><span class="o">=</span><span class="n">y_true</span><span class="p">,</span>
+        <span class="n">y_probas</span><span class="o">=</span><span class="n">probs</span><span class="p">,</span>
+        <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">class_names</span><span class="p">,</span>
+      <span class="p">)</span>
+    <span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="MWandbCallback.get_flops"><a class="viewcode-back" href="../../../api/mergernet.model.callbacks.MWandbCallback.html#mergernet.model.callbacks.MWandbCallback.get_flops">[docs]</a>  <span class="k">def</span> <span class="nf">get_flops</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate FLOPS [GFLOPs] for a keras model in inference mode.</span>
+<span class="sd">    It uses tf.compat.v1.profiler under the hood.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;model&#39;</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="n">wandb</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="s1">&#39;self.model must be set before using this method.&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">)</span>
+    <span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s1">&#39;Calculating FLOPS is only supported for &#39;</span>
+        <span class="s1">&#39;`tf.keras.Model` and `tf.keras.Sequential` instances.&#39;</span>
+      <span class="p">)</span>
+
+    <span class="kn">from</span> <span class="nn">tensorflow.python.framework.convert_to_constants</span> <span class="kn">import</span> \
+      <span class="n">convert_variables_to_constants_v2_as_graph</span>
+
+    <span class="c1"># Compute FLOPs for one sample</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">([</span><span class="n">batch_size</span><span class="p">]</span> <span class="o">+</span> <span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">inp</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">inp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">inputs</span>
+    <span class="p">]</span>
+
+    <span class="c1"># Convert tf.keras model into frozen graph to count FLOPs about operations</span>
+    <span class="c1"># used at inference</span>
+    <span class="n">real_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">get_concrete_function</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="n">frozen_func</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">convert_variables_to_constants_v2_as_graph</span><span class="p">(</span><span class="n">real_model</span><span class="p">)</span>
+
+    <span class="c1"># Calculate FLOPs with tf.profiler</span>
+    <span class="n">run_meta</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">RunMetadata</span><span class="p">()</span>
+    <span class="n">opts</span> <span class="o">=</span> <span class="p">(</span>
+      <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">ProfileOptionBuilder</span><span class="p">(</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">ProfileOptionBuilder</span><span class="p">()</span><span class="o">.</span><span class="n">float_operation</span><span class="p">()</span>
+      <span class="p">)</span>
+      <span class="o">.</span><span class="n">with_empty_output</span><span class="p">()</span>
+      <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="n">flops</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">profile</span><span class="p">(</span>
+      <span class="n">graph</span><span class="o">=</span><span class="n">frozen_func</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="n">run_meta</span><span class="o">=</span><span class="n">run_meta</span><span class="p">,</span> <span class="n">cmd</span><span class="o">=</span><span class="s1">&#39;scope&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">opts</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Convert to GFLOPs</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">flops</span><span class="o">.</span><span class="n">total_float_ops</span> <span class="o">/</span> <span class="mf">1e9</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span></div></div>
 
 
 
