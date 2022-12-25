@@ -277,6 +277,7 @@ class MWandbCallback(tf.keras.callbacks.Callback):
   def on_train_end(self, logs: dict = None):
     print('on_train_end_1')
     print(self.model.history.history)
+    history = deepcopy(self.model.history.history)
     probs = self.model.predict(self.validation_data)
     y_true_one_hot = np.concatenate([y for _, y in self.validation_data], axis=0)
     y_true = np.argmax(y_true_one_hot, axis=-1)
@@ -307,6 +308,8 @@ class MWandbCallback(tf.keras.callbacks.Callback):
         labels=self.class_names,
       )
     })
+
+    self.model.history.history = history
 
     print('on_train_end_2')
     print(self.model.history.history)
