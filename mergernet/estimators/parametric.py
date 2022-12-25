@@ -10,7 +10,7 @@ from mergernet.core.hp import HyperParameterSet
 from mergernet.core.utils import Timming
 from mergernet.data.dataset import Dataset
 from mergernet.estimators.base import Estimator
-from mergernet.model.callbacks import MyWandbCallback
+from mergernet.model.callbacks import MWandbCallback
 
 L = logging.getLogger(__name__)
 
@@ -92,16 +92,23 @@ class ParametricEstimator(Estimator):
         restore_best_weights=True
       )
 
-      wandb_cb = MyWandbCallback(
-        dataset=self.dataset,
+      # wandb_cb = MyWandbCallback(
+      #   dataset=self.dataset,
+      #   validation_data=ds_test,
+      #   monitor='val_loss',
+      #   mode='min',
+      #   save_graph=True,
+      #   save_model=False,
+      #   log_weights=False,
+      #   log_gradients=False,
+      #   compute_flops=True,
+      # )
+
+      wandb_cb = MWandbCallback(
         validation_data=ds_test,
+        class_names=self.dataset.config.labels,
         monitor='val_loss',
         mode='min',
-        save_graph=True,
-        save_model=False,
-        log_weights=False,
-        log_gradients=False,
-        compute_flops=True,
       )
 
       t = Timming()

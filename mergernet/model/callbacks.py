@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 import numpy as np
 import optuna
@@ -241,6 +241,136 @@ class MyWandbCallback(wandb.keras.WandbCallback):
         title='Preds',
       )
     })
+
+
+
+class MWandbCallback(tf.keras.callbacks.Callback):
+  def __init__(self,
+    validation_data: tf.data.Dataset,
+    class_names: List[str],
+    monitor: str,
+    mode: str
+  ):
+    super().__init__()
+    self.validation_data = validation_data
+    self.class_names = class_names
+    self.monitor = monitor
+    self.mode = mode
+    self._best_metric = -np.inf if mode.startswith('max') else np.inf
+    self._monitor_op = np.greater if mode.startswith('max') else np.less
+    self._graph_rendered = False
+
+    # get the previous best metric for resumed runs
+    previous_best = wandb.run.summary.get(f'best_{self.monitor}')
+    if previous_best is not None:
+      self._best = previous_best
+
+
+  def on_train_batch_end(self, logs: dict = None):
+    if self.save_graph and not self._graph_rendered:
+      # Couldn't do this in train_begin because keras may still not be built
+      wandb.run.summary['graph'] = wandb.Graph.from_keras(self.model)
+      self._graph_rendered = True
+
+
+  def on_epoch_end(self, epoch: int, logs: dict = None):
+    wandb.log({'epoch': epoch}, commit=False)
+    wandb.log(logs, commit=True)
+
+    current_metric = logs.get(self.monitor, None)
+    if current_metric and self._monitor_op(current_metric, self._best_metric):
+      self._best_metric = current_metric
+      wandb.run.summary[f'best_{self.monitor}'] = self._best_metric
+      wandb.run.summary['best_epoch'] = epoch
+
+
+  def on_train_begin(self, logs: dict = None):
+    try:
+      wandb.summary['GFLOPs'] = self.get_flops()
+    except Exception as e:
+      wandb.termwarn('Unable to compute FLOPs for this model.')
+
+
+  def on_train_end(self, logs: dict = None):
+    probs = self.model.predict(self.validation_data)
+    y_true_one_hot = np.concatenate([y for _, y in self.validation_data], axis=0)
+    y_true = np.argmax(y_true_one_hot, axis=-1)
+
+    print('probs')
+    print(probs)
+
+    print('y_true')
+    print(y_true)
+
+    print('class_names')
+    print(self.class_names)
+
+    wandb.log({
+      'confusion_matrix': wandb.plot.confusion_matrix(
+        probs=probs,
+        y_true=y_true,
+        class_names=self.class_names,
+      ),
+      'pr-curve': wandb.plot.pr_curve(
+        y_true=y_true,
+        y_probas=probs,
+        labels=self.class_names,
+      ),
+      'roc-curve': wandb.plot.roc_curve(
+        y_true=y_true,
+        y_probas=probs,
+        labels=self.class_names,
+      )
+    })
+
+
+  def get_flops(self) -> float:
+    """
+    Calculate FLOPS [GFLOPs] for a keras model in inference mode.
+    It uses tf.compat.v1.profiler under the hood.
+    """
+    if not hasattr(self, 'model'):
+      raise wandb.Error('self.model must be set before using this method.')
+
+    if not isinstance(
+      self.model, (tf.keras.models.Sequential, tf.keras.models.Model)
+    ):
+      raise ValueError(
+        'Calculating FLOPS is only supported for '
+        '`tf.keras.Model` and `tf.keras.Sequential` instances.'
+      )
+
+    from tensorflow.python.framework.convert_to_constants import \
+      convert_variables_to_constants_v2_as_graph
+
+    # Compute FLOPs for one sample
+    batch_size = 1
+    inputs = [
+      tf.TensorSpec([batch_size] + inp.shape[1:], inp.dtype)
+      for inp in self.model.inputs
+    ]
+
+    # Convert tf.keras model into frozen graph to count FLOPs about operations
+    # used at inference
+    real_model = tf.function(self.model).get_concrete_function(inputs)
+    frozen_func, _ = convert_variables_to_constants_v2_as_graph(real_model)
+
+    # Calculate FLOPs with tf.profiler
+    run_meta = tf.compat.v1.RunMetadata()
+    opts = (
+      tf.compat.v1.profiler.ProfileOptionBuilder(
+        tf.compat.v1.profiler.ProfileOptionBuilder().float_operation()
+      )
+      .with_empty_output()
+      .build()
+    )
+
+    flops = tf.compat.v1.profiler.profile(
+      graph=frozen_func.graph, run_meta=run_meta, cmd='scope', options=opts
+    )
+
+    # Convert to GFLOPs
+    return (flops.total_float_ops / 1e9) / 2
 
 
 
