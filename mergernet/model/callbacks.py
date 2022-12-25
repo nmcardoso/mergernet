@@ -148,73 +148,52 @@ class MyWandbCallback(wandb.keras.WandbCallback):
   """
   def __init__(
     self,
-    dataset: Dataset,
-    monitor="val_loss",
-    verbose=0,
-    mode="auto",
-    save_weights_only=False,
-    log_weights=False,
-    log_gradients=False,
-    save_model=True,
-    training_data=None,
-    validation_data=None,
-    labels=[],
-    predictions=36,
-    generator=None,
-    input_type=None,
-    output_type=None,
-    log_evaluation=False,
-    validation_steps=None,
-    class_colors=None,
-    log_batch_frequency=None,
-    log_best_prefix="best_",
-    save_graph=True,
-    validation_indexes=None,
-    validation_row_processor=None,
-    prediction_row_processor=None,
-    infer_missing_processors=True,
-    log_evaluation_frequency=0,
-    compute_flops=False,
+    monitor: str = 'val_loss',
+    mode: str = 'auto',
+    log_gradients: bool = False,
+    training_data: tf.data.Dataset = None,
+    validation_data: tf.data.Dataset = None,
+    labels: List[str] = [],
+    predictions: int = 36,
     **kwargs,
   ):
     super().__init__(
       monitor=monitor,
-      verbose=verbose,
+      verbose=0,
       mode=mode,
-      save_weights_only=save_weights_only,
-      log_weights=log_weights,
+      save_weights_only=False,
+      log_weights=False,
       log_gradients=log_gradients,
-      save_model=save_model,
+      save_model=False,
       training_data=training_data,
       validation_data=validation_data,
       labels=labels,
       predictions=predictions,
-      generator=generator,
-      input_type=input_type,
-      output_type=output_type,
-      log_evaluation=log_evaluation,
-      validation_steps=validation_steps,
-      class_colors=class_colors,
-      log_batch_frequency=log_batch_frequency,
-      log_best_prefix=log_best_prefix,
-      save_graph=save_graph,
-      validation_indexes=validation_indexes,
-      validation_row_processor=validation_row_processor,
-      prediction_row_processor=prediction_row_processor,
-      infer_missing_processors=infer_missing_processors,
-      log_evaluation_frequency=log_evaluation_frequency,
-      compute_flops=compute_flops,
+      generator=None,
+      input_type=None,
+      output_type=None,
+      log_evaluation=False,
+      validation_steps=None,
+      class_colors=None,
+      log_batch_frequency=None,
+      log_best_prefix='best_',
+      save_graph=True,
+      validation_indexes=None,
+      validation_row_processor=None,
+      prediction_row_processor=None,
+      infer_missing_processors=True,
+      log_evaluation_frequency=0,
+      compute_flops=True,
     )
-    self.dataset = dataset
 
   def on_train_end(self, logs = None):
     super().on_train_end(logs)
 
+    history = deepcopy(self.model.history.history)
+
     probs = self.model.predict(self.validation_data)
     y_true_one_hot = np.concatenate([y for _, y in self.validation_data], axis=0)
     y_true = np.argmax(y_true_one_hot, axis=-1)
-    preds = np.argmax(probs, axis=-1)
-    class_names = self.dataset.config.labels
 
     print('probs')
     print(probs)
@@ -222,26 +201,28 @@ class MyWandbCallback(wandb.keras.WandbCallback):
     print('y_true')
     print(y_true)
 
-    print('preds')
-    print(preds)
-
     print('class_names')
-    print(class_names)
+    print(self.labels)
 
     wandb.log({
       'confusion_matrix': wandb.plot.confusion_matrix(
         probs=probs,
         y_true=y_true,
-        class_names=class_names,
-        title='Probs',
+        class_names=self.labels,
       ),
-      'confusion_matrix_preds': wandb.plot.confusion_matrix(
-        preds=preds,
+      'pr-curve': wandb.plot.pr_curve(
         y_true=y_true,
-        class_names=class_names,
-        title='Preds',
+        y_probas=probs,
+        labels=self.labels,
+      ),
+      'roc-curve': wandb.plot.roc_curve(
+        y_true=y_true,
+        y_probas=probs,
+        labels=self.labels,
       )
     })
+
+    self.model.history.history = history
 
 
 
@@ -275,21 +256,11 @@ class MWandbCallback(tf.keras.callbacks.Callback):
 
 
   def on_train_end(self, logs: dict = None):
-    print('on_train_end_1')
-    print(self.model.history.history)
     history = deepcopy(self.model.history.history)
+
     probs = self.model.predict(self.validation_data)
     y_true_one_hot = np.concatenate([y for _, y in self.validation_data], axis=0)
     y_true = np.argmax(y_true_one_hot, axis=-1)
-
-    print('probs')
-    print(probs)
-
-    print('y_true')
-    print(y_true)
-
-    print('class_names')
-    print(self.class_names)
 
     wandb.log({
       'confusion_matrix': wandb.plot.confusion_matrix(
@@ -311,17 +282,10 @@ class MWandbCallback(tf.keras.callbacks.Callback):
 
     self.model.history.history = history
 
-    print('on_train_end_2')
-    print(self.model.history.history)
-
 
   def on_epoch_end(self, epoch: int, logs: dict = None):
-    print('on_epoch_end_1')
-    print(self.model.history.history)
     wandb.log({'epoch': epoch}, commit=False)
     wandb.log(deepcopy(logs), commit=True)
-    print('on_epoch_end_2')
-    print(self.model.history.history)
 
     current_metric = logs.get(self.monitor, None)
     if current_metric and self._monitor_op(current_metric, self._best_metric):
