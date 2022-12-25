@@ -582,73 +582,52 @@
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
-    <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span>
-    <span class="n">monitor</span><span class="o">=</span><span class="s2">&quot;val_loss&quot;</span><span class="p">,</span>
-    <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
-    <span class="n">save_weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">log_weights</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">log_gradients</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">save_model</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">training_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">validation_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">labels</span><span class="o">=</span><span class="p">[],</span>
-    <span class="n">predictions</span><span class="o">=</span><span class="mi">36</span><span class="p">,</span>
-    <span class="n">generator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">input_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">output_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">log_evaluation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">validation_steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">class_colors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">log_batch_frequency</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">log_best_prefix</span><span class="o">=</span><span class="s2">&quot;best_&quot;</span><span class="p">,</span>
-    <span class="n">save_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">validation_indexes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">validation_row_processor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">prediction_row_processor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">infer_missing_processors</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">log_evaluation_frequency</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="n">compute_flops</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">monitor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;val_loss&#39;</span><span class="p">,</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+    <span class="n">log_gradients</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">training_data</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">validation_data</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">predictions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">36</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
   <span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
       <span class="n">monitor</span><span class="o">=</span><span class="n">monitor</span><span class="p">,</span>
-      <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+      <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
       <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
-      <span class="n">save_weights_only</span><span class="o">=</span><span class="n">save_weights_only</span><span class="p">,</span>
-      <span class="n">log_weights</span><span class="o">=</span><span class="n">log_weights</span><span class="p">,</span>
+      <span class="n">save_weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+      <span class="n">log_weights</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
       <span class="n">log_gradients</span><span class="o">=</span><span class="n">log_gradients</span><span class="p">,</span>
-      <span class="n">save_model</span><span class="o">=</span><span class="n">save_model</span><span class="p">,</span>
+      <span class="n">save_model</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
       <span class="n">training_data</span><span class="o">=</span><span class="n">training_data</span><span class="p">,</span>
       <span class="n">validation_data</span><span class="o">=</span><span class="n">validation_data</span><span class="p">,</span>
       <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
       <span class="n">predictions</span><span class="o">=</span><span class="n">predictions</span><span class="p">,</span>
-      <span class="n">generator</span><span class="o">=</span><span class="n">generator</span><span class="p">,</span>
-      <span class="n">input_type</span><span class="o">=</span><span class="n">input_type</span><span class="p">,</span>
-      <span class="n">output_type</span><span class="o">=</span><span class="n">output_type</span><span class="p">,</span>
-      <span class="n">log_evaluation</span><span class="o">=</span><span class="n">log_evaluation</span><span class="p">,</span>
-      <span class="n">validation_steps</span><span class="o">=</span><span class="n">validation_steps</span><span class="p">,</span>
-      <span class="n">class_colors</span><span class="o">=</span><span class="n">class_colors</span><span class="p">,</span>
-      <span class="n">log_batch_frequency</span><span class="o">=</span><span class="n">log_batch_frequency</span><span class="p">,</span>
-      <span class="n">log_best_prefix</span><span class="o">=</span><span class="n">log_best_prefix</span><span class="p">,</span>
-      <span class="n">save_graph</span><span class="o">=</span><span class="n">save_graph</span><span class="p">,</span>
-      <span class="n">validation_indexes</span><span class="o">=</span><span class="n">validation_indexes</span><span class="p">,</span>
-      <span class="n">validation_row_processor</span><span class="o">=</span><span class="n">validation_row_processor</span><span class="p">,</span>
-      <span class="n">prediction_row_processor</span><span class="o">=</span><span class="n">prediction_row_processor</span><span class="p">,</span>
-      <span class="n">infer_missing_processors</span><span class="o">=</span><span class="n">infer_missing_processors</span><span class="p">,</span>
-      <span class="n">log_evaluation_frequency</span><span class="o">=</span><span class="n">log_evaluation_frequency</span><span class="p">,</span>
-      <span class="n">compute_flops</span><span class="o">=</span><span class="n">compute_flops</span><span class="p">,</span>
+      <span class="n">generator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+      <span class="n">input_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+      <span class="n">output_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+      <span class="n">log_evaluation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+      <span class="n">validation_steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+      <span class="n">class_colors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+      <span class="n">log_batch_frequency</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+      <span class="n">log_best_prefix</span><span class="o">=</span><span class="s1">&#39;best_&#39;</span><span class="p">,</span>
+      <span class="n">save_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+      <span class="n">validation_indexes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+      <span class="n">validation_row_processor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+      <span class="n">prediction_row_processor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+      <span class="n">infer_missing_processors</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+      <span class="n">log_evaluation_frequency</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+      <span class="n">compute_flops</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
 
 <div class="viewcode-block" id="MyWandbCallback.on_train_end"><a class="viewcode-back" href="../../../api/mergernet.model.callbacks.MyWandbCallback.html#mergernet.model.callbacks.MyWandbCallback.on_train_end">[docs]</a>  <span class="k">def</span> <span class="nf">on_train_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_train_end</span><span class="p">(</span><span class="n">logs</span><span class="p">)</span>
 
+    <span class="n">history</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
+
     <span class="n">probs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">validation_data</span><span class="p">)</span>
     <span class="n">y_true_one_hot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">y</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation_data</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_true_one_hot</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">probs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">class_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">labels</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;probs&#39;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
@@ -656,26 +635,28 @@
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y_true&#39;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;preds&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span>
-
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;class_names&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">class_names</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
 
     <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span>
       <span class="s1">&#39;confusion_matrix&#39;</span><span class="p">:</span> <span class="n">wandb</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span>
         <span class="n">probs</span><span class="o">=</span><span class="n">probs</span><span class="p">,</span>
         <span class="n">y_true</span><span class="o">=</span><span class="n">y_true</span><span class="p">,</span>
-        <span class="n">class_names</span><span class="o">=</span><span class="n">class_names</span><span class="p">,</span>
-        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Probs&#39;</span><span class="p">,</span>
+        <span class="n">class_names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span>
       <span class="p">),</span>
-      <span class="s1">&#39;confusion_matrix_preds&#39;</span><span class="p">:</span> <span class="n">wandb</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span>
-        <span class="n">preds</span><span class="o">=</span><span class="n">preds</span><span class="p">,</span>
+      <span class="s1">&#39;pr-curve&#39;</span><span class="p">:</span> <span class="n">wandb</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pr_curve</span><span class="p">(</span>
         <span class="n">y_true</span><span class="o">=</span><span class="n">y_true</span><span class="p">,</span>
-        <span class="n">class_names</span><span class="o">=</span><span class="n">class_names</span><span class="p">,</span>
-        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Preds&#39;</span><span class="p">,</span>
+        <span class="n">y_probas</span><span class="o">=</span><span class="n">probs</span><span class="p">,</span>
+        <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span>
+      <span class="p">),</span>
+      <span class="s1">&#39;roc-curve&#39;</span><span class="p">:</span> <span class="n">wandb</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">roc_curve</span><span class="p">(</span>
+        <span class="n">y_true</span><span class="o">=</span><span class="n">y_true</span><span class="p">,</span>
+        <span class="n">y_probas</span><span class="o">=</span><span class="n">probs</span><span class="p">,</span>
+        <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span>
       <span class="p">)</span>
-    <span class="p">})</span></div></div>
+    <span class="p">})</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="n">history</span></div></div>
 
 
 
@@ -709,21 +690,11 @@
 
 
 <div class="viewcode-block" id="MWandbCallback.on_train_end"><a class="viewcode-back" href="../../../api/mergernet.model.callbacks.MWandbCallback.html#mergernet.model.callbacks.MWandbCallback.on_train_end">[docs]</a>  <span class="k">def</span> <span class="nf">on_train_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;on_train_end_1&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
     <span class="n">history</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
+
     <span class="n">probs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">validation_data</span><span class="p">)</span>
     <span class="n">y_true_one_hot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">y</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation_data</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_true_one_hot</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;probs&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y_true&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;class_names&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_names</span><span class="p">)</span>
 
     <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span>
       <span class="s1">&#39;confusion_matrix&#39;</span><span class="p">:</span> <span class="n">wandb</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span>
@@ -743,19 +714,12 @@
       <span class="p">)</span>
     <span class="p">})</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="n">history</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;on_train_end_2&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">)</span></div>
+    <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="n">history</span></div>
 
 
 <div class="viewcode-block" id="MWandbCallback.on_epoch_end"><a class="viewcode-back" href="../../../api/mergernet.model.callbacks.MWandbCallback.html#mergernet.model.callbacks.MWandbCallback.on_epoch_end">[docs]</a>  <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;on_epoch_end_1&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
     <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span><span class="s1">&#39;epoch&#39;</span><span class="p">:</span> <span class="n">epoch</span><span class="p">},</span> <span class="n">commit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">logs</span><span class="p">),</span> <span class="n">commit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;on_epoch_end_2&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
 
     <span class="n">current_metric</span> <span class="o">=</span> <span class="n">logs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monitor</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">current_metric</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_monitor_op</span><span class="p">(</span><span class="n">current_metric</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_metric</span><span class="p">):</span>
