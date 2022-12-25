@@ -433,6 +433,7 @@
         <article role="main">
           <h1>Source code for mergernet.model.callbacks</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
 
@@ -742,7 +743,7 @@
 
 <div class="viewcode-block" id="MWandbCallback.on_epoch_end"><a class="viewcode-back" href="../../../api/mergernet.model.callbacks.MWandbCallback.html#mergernet.model.callbacks.MWandbCallback.on_epoch_end">[docs]</a>  <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">logs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span><span class="s1">&#39;epoch&#39;</span><span class="p">:</span> <span class="n">epoch</span><span class="p">},</span> <span class="n">commit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">logs</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">logs</span><span class="p">),</span> <span class="n">commit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="n">current_metric</span> <span class="o">=</span> <span class="n">logs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monitor</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">current_metric</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_monitor_op</span><span class="p">(</span><span class="n">current_metric</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_best_metric</span><span class="p">):</span>
