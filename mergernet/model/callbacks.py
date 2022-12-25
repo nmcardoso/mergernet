@@ -266,24 +266,6 @@ class MWandbCallback(tf.keras.callbacks.Callback):
       self._best = previous_best
 
 
-  def on_train_batch_end(self, logs: dict = None):
-    if self.save_graph and not self._graph_rendered:
-      # Couldn't do this in train_begin because keras may still not be built
-      wandb.run.summary['graph'] = wandb.Graph.from_keras(self.model)
-      self._graph_rendered = True
-
-
-  def on_epoch_end(self, epoch: int, logs: dict = None):
-    wandb.log({'epoch': epoch}, commit=False)
-    wandb.log(logs, commit=True)
-
-    current_metric = logs.get(self.monitor, None)
-    if current_metric and self._monitor_op(current_metric, self._best_metric):
-      self._best_metric = current_metric
-      wandb.run.summary[f'best_{self.monitor}'] = self._best_metric
-      wandb.run.summary['best_epoch'] = epoch
-
-
   def on_train_begin(self, logs: dict = None):
     try:
       wandb.summary['GFLOPs'] = self.get_flops()
@@ -322,6 +304,24 @@ class MWandbCallback(tf.keras.callbacks.Callback):
         labels=self.class_names,
       )
     })
+
+
+  def on_epoch_end(self, epoch: int, logs: dict = None):
+    wandb.log({'epoch': epoch}, commit=False)
+    wandb.log(logs, commit=True)
+
+    current_metric = logs.get(self.monitor, None)
+    if current_metric and self._monitor_op(current_metric, self._best_metric):
+      self._best_metric = current_metric
+      wandb.run.summary[f'best_{self.monitor}'] = self._best_metric
+      wandb.run.summary['best_epoch'] = epoch
+
+
+  def on_train_batch_end(self, batch, logs: dict = None):
+    if self.save_graph and not self._graph_rendered:
+      # Couldn't do this in train_begin because keras may still not be built
+      wandb.run.summary['graph'] = wandb.Graph.from_keras(self.model)
+      self._graph_rendered = True
 
 
   def get_flops(self) -> float:
