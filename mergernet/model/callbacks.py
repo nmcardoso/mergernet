@@ -276,7 +276,7 @@ class MWandbCallback(tf.keras.callbacks.Callback):
 
   def on_train_end(self, logs: dict = None):
     print('on_train_end_1')
-    print(self.model.history)
+    print(self.model.history.history)
     probs = self.model.predict(self.validation_data)
     y_true_one_hot = np.concatenate([y for _, y in self.validation_data], axis=0)
     y_true = np.argmax(y_true_one_hot, axis=-1)
@@ -309,16 +309,16 @@ class MWandbCallback(tf.keras.callbacks.Callback):
     })
 
     print('on_train_end_2')
-    print(self.model.history)
+    print(self.model.history.history)
 
 
   def on_epoch_end(self, epoch: int, logs: dict = None):
     print('on_epoch_end_1')
-    print(self.model.history)
+    print(self.model.history.history)
     wandb.log({'epoch': epoch}, commit=False)
     wandb.log(deepcopy(logs), commit=True)
     print('on_epoch_end_2')
-    print(self.model.history)
+    print(self.model.history.history)
 
     current_metric = logs.get(self.monitor, None)
     if current_metric and self._monitor_op(current_metric, self._best_metric):
