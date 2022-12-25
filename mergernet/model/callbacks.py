@@ -1,4 +1,5 @@
 import logging
+from copy import deepcopy
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -308,7 +309,7 @@ class MWandbCallback(tf.keras.callbacks.Callback):
 
   def on_epoch_end(self, epoch: int, logs: dict = None):
     wandb.log({'epoch': epoch}, commit=False)
-    wandb.log(logs, commit=True)
+    wandb.log(deepcopy(logs), commit=True)
 
     current_metric = logs.get(self.monitor, None)
     if current_metric and self._monitor_op(current_metric, self._best_metric):
