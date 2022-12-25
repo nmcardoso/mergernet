@@ -92,18 +92,6 @@ class ParametricEstimator(Estimator):
         restore_best_weights=True
       )
 
-      # wandb_cb = MyWandbCallback(
-      #   dataset=self.dataset,
-      #   validation_data=ds_test,
-      #   monitor='val_loss',
-      #   mode='min',
-      #   save_graph=True,
-      #   save_model=False,
-      #   log_weights=False,
-      #   log_gradients=False,
-      #   compute_flops=True,
-      # )
-
       wandb_cb = MyWandbCallback(
         validation_data=ds_test,
         labels=self.dataset.config.labels,
@@ -113,7 +101,7 @@ class ParametricEstimator(Estimator):
 
       t = Timming()
       L.info('Start of training loop with frozen CNN')
-      h1 = model.fit(
+      h = model.fit(
         ds_train,
         batch_size=self.hp.get('batch_size'),
         epochs=self.hp.get('tl_epochs', default=10),
@@ -122,18 +110,11 @@ class ParametricEstimator(Estimator):
         callbacks=[early_stop_cb, wandb_cb]
       )
       L.info(f'End of training loop, duration: {t.end()}')
-
-      print('model.history')
-      print(model.history)
-
-      print('h1.history')
-      print(h1.history)
+      L.info(f'History keys: {", ".join(h.history.keys())}')
+      L.info(f'History length: {len(h.history["loss"])}')
 
       self.set_trainable(model, 'conv_block', True)
       self.compile_model(model, tf.keras.optimizers.Adam(self.hp.get('opt_lr')))
-
-      print('h1.history')
-      print(h1.history)
 
       t = Timming()
       L.info('Start of main training loop')
@@ -143,7 +124,7 @@ class ParametricEstimator(Estimator):
         epochs=self.hp.get('tl_epochs', default=10) + self.hp.get('epochs'),
         validation_data=ds_test,
         class_weight=class_weights,
-        initial_epoch=len(h1.history['loss']),
+        initial_epoch=len(h.history['loss'] - 1),
         callbacks=[wandb_cb, *callbacks],
       )
       L.info(f'End of training loop, duration: {t.end()}')
