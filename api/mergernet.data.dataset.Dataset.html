@@ -519,14 +519,15 @@ the dataset files from web resource for a specified dataset type.</p>
 <dd><p>Generates the train and test dataset based on selected fold</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The fold which will be used as test, the all other folds will be used as
-train</p></li>
-<li><p><strong>Retruns</strong> – </p></li>
-<li><p><strong>-------</strong> – </p></li>
-<li><p><strong>tf.data.Dataset</strong> (<em>tuple of</em>) – A tuple containing two datasets, the first is the train dataset and the
-secound is the test dataset</p></li>
-</ul>
+<dd class="field-odd"><p><strong>fold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The fold which will be used as test, the all other folds will be used as
+train</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing two datasets, the first is the train dataset and the
+secound is the test dataset</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)">tuple</a>, tf.data.Dataset</p>
 </dd>
 </dl>
 </dd></dl>
