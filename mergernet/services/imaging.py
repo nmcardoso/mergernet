@@ -1,21 +1,29 @@
-from abc import abstractmethod, ABC
+import concurrent.futures
+from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import List
-import concurrent.futures
 
 import tqdm
 
 from mergernet.services.utils import append_query_params, download_file
 
 
+class ImagingService(ABC):
+  def __init__(self, image_format):
+    self.image_format = image_format
 
-class BaseImagingService(ABC):
+
   @abstractmethod
-  def __init__(self):
-    self.imaging_url = ''
+  def cutout(self, ra: float, dec: float, save_path: Path):
+    pass
 
 
-  def download_rgb(
+  @abstractmethod
+  def batch_cutout(self, ra: List[float], dec: List[float], save_path: List[Path]):
+    pass
+
+
+  def _download_rgb(
     self,
     ra: float,
     dec: float,
@@ -36,7 +44,7 @@ class BaseImagingService(ABC):
     download_file(image_url, save_path)
 
 
-  def batch_download_rgb(
+  def _batch_download_rgb(
     self,
     ra: List[float],
     dec: List[float],

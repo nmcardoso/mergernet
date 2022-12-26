@@ -3,6 +3,7 @@ from typing import List, Tuple, Union
 
 import requests
 
+from mergernet.services.imaging import ImagingService
 from mergernet.services.utils import (append_query_params, download_file,
                                       parallel_function_executor)
 
@@ -13,16 +14,9 @@ LEGACY_FITS_URL_DEV = 'https://www.legacysurvey.org/viewer-dev/fits-cutout'
 
 
 
-class LegacyService:
-  def __init__(self):
-    self.http_client = requests.Session()
-
-
-  def cutout(
+class LegacyService(ImagingService):
+  def __init__(
     self,
-    ra: float,
-    dec: float,
-    save_path: Path,
     replace: bool = False,
     width: float = 256,
     height: float = 256,
@@ -31,18 +25,11 @@ class LegacyService:
     layer: str = 'ls-dr9',
     use_dev: bool = False,
     fmt: str = 'jpg',
-  ) -> None:
+    workers: int = 3,
+  ):
     """
-    Downloads a single Legacy Survey object RGB stamp defined by RA and DEC.
-
     Parameters
     ----------
-    ra: float
-      Right ascension of the object.
-    dec: float
-      Declination of the object.
-    save_path: Path
-      Path where downloaded file will be stored.
     replace: bool, optional
       Replace file if exists in ``save_path`` location
     width: float, optional
@@ -59,27 +46,59 @@ class LegacyService:
       Use the dev env of Legacy Cutout API
     fmt: str, optional
       File format. One of: ``jpg`` or ``fits``
+    workers: int, optional
+      Maximum spawned threads when `batch_cutout` is called
     """
-    if fmt == 'jpg':
-      url = LEGACY_RGB_URL_DEV if use_dev else LEGACY_RGB_URL
+    super().__init__(fmt)
+    self.replace = replace
+    self.width = width
+    self.height = height
+    self.pixscale = pixscale
+    self.bands = bands
+    self.layer = layer
+    self.use_dev = use_dev
+    self.workers = workers
+    self.http_client = requests.Session()
+
+
+  def cutout(
+    self,
+    ra: float,
+    dec: float,
+    save_path: Path,
+  ) -> None:
+    """
+    Downloads a single Legacy Survey object RGB stamp defined by RA and DEC.
+
+    Parameters
+    ----------
+    ra: float
+      Right ascension of the object.
+    dec: float
+      Declination of the object.
+    save_path: Path
+      Path where downloaded file will be stored.
+    """
+    if self.image_format == 'jpg':
+      url = LEGACY_RGB_URL_DEV if self.use_dev else LEGACY_RGB_URL
     else:
-      url = LEGACY_FITS_URL_DEV if use_dev else LEGACY_FITS_URL
+      url = LEGACY_FITS_URL_DEV if self.use_dev else LEGACY_FITS_URL
 
     image_url = append_query_params(url, {
       'ra': ra,
       'dec': dec,
-      'width': width,
-      'height': height,
-      'pixscale': pixscale,
-      'bands': bands,
-      'layer': layer
+      'width': self.width,
+      'height': self.height,
+      'pixscale': self.pixscale,
+      'bands': self.bands,
+      'layer': self.layer
     })
 
     download_file(
       url=image_url,
       save_path=save_path,
       http_client=self.http_client,
-      replace=replace
+      replace=self.replace
     )
 
 
@@ -89,9 +108,6 @@ class LegacyService:
     ra: List[float],
     dec: List[float],
     save_path: List[Path],
-    workers: Union[int, None] = None,
-    replace: bool = False,
-    **kwargs
   ) -> Tuple[List[Path], List[Path]]:
     """
     Downloads a list of objects defined by RA and DEC coordinates.
@@ -107,18 +123,12 @@ class LegacyService:
       The list of DEC coordinates of the desired objects.
     save_path: list of Path
       The list of path where files should be saved.
-    workers: int, optional
-      Maximum spawned threads.
-    kwargs: optional
-      Same args as ``download_legacy_rgb`` function.
     """
     params = [
       {
         'ra': _ra,
         'dec': _dec,
         'save_path': _save_path,
-        'replace': replace,
-        **kwargs
       }
       for _ra, _dec, _save_path in zip(ra, dec, save_path)
     ]
@@ -126,7 +136,7 @@ class LegacyService:
     parallel_function_executor(
       self.cutout,
       params=params,
-      workers=workers,
+      workers=self.workers,
       unit=' files'
     )
 
@@ -137,10 +147,9 @@ class LegacyService:
 
 
 if __name__ == '__main__':
-  ls = LegacyService()
+  ls = LegacyService(workers=6)
   ls.batch_download_legacy_rgb(
     ra=[185.1458 + dx/2 for dx in range(20)],
     dec=[12.8624 + dy/2 for dy in range(20)],
-    save_path=[Path(f'test/{i}.jpg') for i in range(20)],
-    workers=6
+    save_path=[Path(f'test/{i}.jpg') for i in range(20)]
   )

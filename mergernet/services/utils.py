@@ -1,12 +1,10 @@
-from pathlib import Path
-from types import FunctionType
-from typing import Any, Callable, Dict, List, Sequence, Union
-import concurrent.futures
 import bz2
+import concurrent.futures
+from pathlib import Path
+from typing import Any, Callable, Dict, List, Sequence, Union
 
-import tqdm
 import requests
-
+import tqdm
 
 
 def parallel_function_executor(
@@ -31,7 +29,7 @@ def parallel_function_executor(
     ):
       try:
         future.result()
-      except:
+      except Exception as e:
         pass
 
 
