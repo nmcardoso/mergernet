@@ -9,7 +9,7 @@ from mergernet.core.experiment import Experiment, backup_model
 from mergernet.core.hp import HP, HyperParameterSet
 from mergernet.core.utils import iauname
 from mergernet.data.dataset import Dataset, DatasetConfig
-from mergernet.data.image import ColorImage
+from mergernet.data.image import LegacyRGB
 from mergernet.estimators.decals import ZoobotEstimator
 from mergernet.model.automl import optuna_train
 from mergernet.model.baseline import finetune_train
@@ -21,7 +21,7 @@ L = logging.getLogger(__name__)
 class Job(Experiment):
   def __init__(self):
     super().__init__()
-    self.exp_id = 6
+    self.exp_id = 2
     self.log_wandb = False
     self.restart = False
 
@@ -44,27 +44,7 @@ class Job(Experiment):
       (51.9916, -37.1494),
     ])
 
-    ra = objects_positions[:, 0]
-    dec = objects_positions[:, 1]
-    iaunames = iauname(ra, dec)
-
-    dataset_path = Experiment.local_shared_path / 'exp_6_ds'
-
-    fits_paths = [
-      dataset_path / (iauname + '.fits')
-      for iauname in iaunames
-    ]
-
-    png_paths = [
-      dataset_path / (iauname + '.png')
-      for iauname in iaunames
-    ]
-
-    ls = LegacyService()
-    ls.batch_cutout(
-      ra=ra,
-      dec=dec,
-      save_path=fits_paths,
+    leg_service = LegacyService(
       width=224,
       height=224,
       pixscale=0.364,
@@ -72,20 +52,7 @@ class Job(Experiment):
       fmt='fits',
     )
 
-    df = pd.DataFrame({
-      'ra': ra,
-      'dec': dec,
-      'iauname': iaunames,
-      'fits_paths': fits_paths,
-      'png_paths': png_paths
-    })
-    not_downloaded_iaunames = [i.stem for i in fits_paths if not i.exists()]
-    df = df[~df.iauname.isin(not_downloaded_iaunames)]
-    L.info(f'Not dowloaded files: {len(not_downloaded_iaunames)}')
-
-    ColorImage.batch_legacy_rgb(
-      images=df.fits_paths.to_numpy(),
-      save_paths=df.png_paths.to_numpy(),
+    leg_rgb = LegacyRGB(
       bands='grz',
       scales={
         'g': (2, 0.008),
@@ -95,14 +62,17 @@ class Job(Experiment):
       minmax=(-0.5, 300),
       brightness=1.3,
       desaturate=True,
-      nl_func=ColorImage.asinh_map2
+      nl_func='asinh2',
     )
 
     config = DatasetConfig(
-      name='exp_6_dataset',
-      images_path='exp_6_ds',
-      X_column_suffix='.png',
+      name='exp_2_dataset',
+      images_path='exp_2_ds',
+      image_extension='png',
       image_shape=(224, 224, 3),
+      positions=objects_positions,
+      image_transform=leg_rgb,
+      image_service=leg_service,
     )
     ds = Dataset(config=config)
 
@@ -120,9 +90,16 @@ class Job(Experiment):
     Experiment.upload_file_gd('representations.csv')
     Experiment.upload_file_gd('model.png')
 
+    df = ds.get_table()
+
+    df = pd.DataFrame({
+      'ra': df['ra'].to_numpy(),
+      'dec': df['dec'].to_numpy(),
+      'iauname': df['iauname'].to_numpy(),
+    })
 
     repr_df = pd.read_csv(Experiment.local_exp_path / 'representations.csv')
-    repr_df = pd.merge(df[['ra', 'dec', 'iauname']], repr_df, 'inner', 'iauname')
+    repr_df = pd.merge(df, repr_df, 'inner', 'iauname')
     feat_cols = [col for col in repr_df.columns.values if col.startswith('feat_')]
     repr_feat = repr_df[feat_cols].to_numpy()
 
@@ -131,9 +108,7 @@ class Job(Experiment):
     feat_cols = [col for col in decals_feat_df.columns.values if col.startswith('feat_')]
     decals_feat = decals_feat_df[feat_cols].to_numpy()
 
-
     all_feat = np.concatenate((decals_feat, repr_feat))
-
 
     pca_df = model.pca(all_feat[-1000:], 10)
     pca_df = pca_df.iloc[-len(repr_df):]
