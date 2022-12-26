@@ -391,7 +391,7 @@ class Experiment:
       wandb.finish()
 
 
-  class Tracer:
+  class Tracker:
     """
     Context manager that creates an wandb project
 

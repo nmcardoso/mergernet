@@ -95,7 +95,7 @@ class ParametricStrategy(TrainStrategy):
     )
     self.compile_model(model, tf.keras.optimizers.Adam(self.hp.get('opt_lr')))
 
-    with Experiment.Tracer(self.hp.to_values_dict(), name=run_name, job_type='train'):
+    with Experiment.Tracker(self.hp.to_values_dict(), name=run_name, job_type='train'):
       early_stop_cb = tf.keras.callbacks.EarlyStopping(
         monitor='val_loss',
         min_delta=0,

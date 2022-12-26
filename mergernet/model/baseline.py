@@ -53,7 +53,7 @@ def finetune_train(
   _compile_model(model, tf.keras.optimizers.Adam(hp.get('opt_lr')))
 
 
-  with Experiment.Tracer(hp.to_values_dict(), name=run_name, job_type='train'):
+  with Experiment.Tracker(hp.to_values_dict(), name=run_name, job_type='train'):
     early_stop_cb = tf.keras.callbacks.EarlyStopping(
       monitor='val_loss',
       min_delta=0,
