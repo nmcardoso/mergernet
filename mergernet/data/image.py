@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Dict, List, Tuple, Union
 
@@ -6,6 +7,9 @@ from PIL import Image, ImageOps
 
 from mergernet.core.utils import load_image
 
+# first number is index of that band
+# second number is scale divisor - divide pixel values by
+# scale divisor for rgb pixel value
 DEFAULT_BANDS_SCALES = {
   'urz': {
     'u': (2, 0.0066),
@@ -30,82 +34,110 @@ DEFAULT_BANDS_SCALES = {
 }
 
 
-class ColorImage:
-  @staticmethod
-  def asinh_map(x: np.ndarray, gain: float = 1.) -> np.ndarray:
-    r"""
-    Apply the following non-linear map to input matrix. Useful to
-    rescale telescope pixels for viewing.
+def asinh_map(x: np.ndarray, gain: float = 1.) -> np.ndarray:
+  r"""
+  Apply the following non-linear map to input matrix. Useful to
+  rescale telescope pixels for viewing.
 
-    .. math::
-      Y = \textrm{arcsinh}(\alpha X)
+  .. math::
+    Y = \textrm{arcsinh}(\alpha X)
 
-    where :math:`\alpha` is the gain, :math:`X` is the input image and
-    :math:`Y` is the transformed image.
+  where :math:`\alpha` is the gain, :math:`X` is the input image and
+  :math:`Y` is the transformed image.
 
-    Parameters
-    ----------
-    x: numpy.ndarray
-      image to have map applied
-    gain: float, optional
-      gain applied to input image
+  Parameters
+  ----------
+  x: numpy.ndarray
+    image to have map applied
+  gain: float, optional
+    gain applied to input image
 
-    Returns
-    -------
-    numpy.ndarray
-      transformed image
-    """
-    return np.arcsinh(x * gain)
+  Returns
+  -------
+  numpy.ndarray
+    transformed image
+  """
+  return np.arcsinh(x * gain)
 
-  @staticmethod
-  def asinh_map2(x: np.ndarray, gain: float = 1) -> np.ndarray:
-    r"""
-    Apply the following non-linear map to input matrix. Useful to
-    rescale telescope pixels for viewing.
 
-    .. math::
-      Y = \frac{\textrm{arcsinh}(\alpha X)}{\sqrt{\alpha}}
 
-    where :math:`\alpha` is the gain, :math:`X` is the input image and
-    :math:`Y` is the transformed image.
+def asinh_map2(x: np.ndarray, gain: float = 1) -> np.ndarray:
+  r"""
+  Apply the following non-linear map to input matrix. Useful to
+  rescale telescope pixels for viewing.
 
-    Parameters
-    ----------
-    x: numpy.ndarray
-      image to have map applied
-    gain: float, optional
-      gain applied to input image
+  .. math::
+    Y = \frac{\textrm{arcsinh}(\alpha X)}{\sqrt{\alpha}}
 
-    Returns
-    -------
-    numpy.ndarray
-      transformed image
-    """
-    return np.arcsinh(x * gain) / np.sqrt(gain)
+  where :math:`\alpha` is the gain, :math:`X` is the input image and
+  :math:`Y` is the transformed image.
 
-  @staticmethod
-  def legacy_rgb(
-    img: Union[str, Path, np.ndarray],
+  Parameters
+  ----------
+  x: numpy.ndarray
+    image to have map applied
+  gain: float, optional
+    gain applied to input image
+
+  Returns
+  -------
+  numpy.ndarray
+    transformed image
+  """
+  return np.arcsinh(x * gain) / np.sqrt(gain)
+
+
+
+class ImageTransform(ABC):
+  @abstractmethod
+  def transform(
+    self,
+    image: Union[str, Path, np.ndarray],
+    save_path: Union[str, Path]
+  ) -> np.ndarray:
+    pass
+
+
+  def batch_transform(
+    self,
+    images: List[Path],
+    save_paths: List[Path],
+  ):
+    for image_path, save_path in zip(images, save_paths):
+      self.transform(
+        image_path,
+        save_path=save_path,
+      )
+
+
+
+class LegacyRGB(ImageTransform):
+  def __init__(
+    self,
     bands: str = 'grz',
     brightness: float = None,
     scales: Dict[str, Tuple[int, float]] = None,
     desaturate: bool = False,
     minmax: Tuple[float, float] = (-3, 10), # cutoff range
-    nl_func = None,
+    nl_func: str = 'asinh',
     normalize: bool = True,
-    save_path: Union[str, Path] = None,
+  ):
+    self.bands = bands
+    self.brightness = brightness
+    self.scales = scales or DEFAULT_BANDS_SCALES[self.bands]
+    self.desaturate = desaturate
+    self.minmax = minmax
+    self.nl_func = asinh_map if nl_func == 'asinh' else asinh_map2
+    self.normalize = normalize
+
+
+  def transform(
+    self,
+    img: Union[str, Path, np.ndarray],
+    save_path: Union[str, Path]
   ) -> np.ndarray:
     if not isinstance(img, np.ndarray):
       img = load_image(img)
-
-    if nl_func is None:
-      nl_func = ColorImage.asinh_map
-
-    # first number is index of that band
-    # second number is scale divisor - divide pixel values by
-    # scale divisor for rgb pixel value
-    if scales is None:
-      scales = DEFAULT_BANDS_SCALES[bands]
 
     #  create blank matrix to work with
     h, w, _ = img.shape
@@ -113,22 +145,22 @@ class ColorImage:
 
     # Copy each band matrix into the rgb image, dividing by band
     # scale divisor to increase pixel values
-    for i, band in enumerate(bands):
-      plane, scale = scales[band]
+    for i, band in enumerate(self.bands):
+      plane, scale = self.scales[band]
       rgb[:, :, plane] = (img[:, :, i] / scale).astype(np.float32)
 
-    if brightness is not None:
+    if self.brightness is not None:
       # image rescaled by single-pixel not image-pixel,
       # which means colours depend on brightness
-      rgb = nl_func(rgb, arcsinh=brightness)
-      nl_minmax = nl_func(np.array(minmax), arcsinh=brightness)
+      rgb = self.nl_func(rgb, gain=self.brightness)
+      nl_minmax = self.nl_func(np.array(self.minmax), gain=self.brightness)
 
     # lastly, rescale image to be between min and max
     rgb = (rgb - nl_minmax[0]) / (nl_minmax[1] - nl_minmax[0])
 
     # optionally desaturate pixels that are dominated by a single
     # colour to avoid colourful speckled sky
-    if desaturate:
+    if self.desaturate:
       # reshape rgb from (h, w, 3) to (3, h, w)
       # rgb = np.array([rgb[:, :, 0], rgb[:, :, 1], rgb[:, :, 2]])
       rgb = np.moveaxis(rgb, -1 , 0)
@@ -174,7 +206,7 @@ class ColorImage:
     rgb = np.clip(rgb, 0., 1.)
 
     # set image to RGB levels (0 - 255)
-    if not normalize or save_path is not None:
+    if not self.normalize or save_path is not None:
       rgb = (rgb * 255).astype(np.uint8)
 
     # save image
@@ -184,31 +216,31 @@ class ColorImage:
     return rgb
 
 
-  @staticmethod
-  def batch_legacy_rgb(
-    images: List[Path],
-    save_paths: List[Path],
-    **kwargs
-  ):
-    for image_path, save_path in zip(images, save_paths):
-      ColorImage.legacy_rgb(
-        image_path,
-        save_path=save_path,
-        normalize=False,
-        **kwargs
-      )
 
-
-  @staticmethod
-  def lupton_rgb(
-    imgs: np.ndarray,
+class LuptonRGB(ImageTransform):
+  def __init__(
+    self,
     bands='grz',
     arcsinh=1.,
     mn=0.1,
     mx=100.,
     desaturate=False,
     desaturate_factor=.01,
-    nl_func=None,
+    nl_func: str = 'asinh',
+  ):
+    self.bands = bands
+    self.arcsinh = arcsinh
+    self.mn = mn
+    self.mx = mx
+    self.desaturate = desaturate
+    self.desaturate_factor = desaturate_factor
+    self.nl_func = asinh_map if nl_func == 'asinh' else asinh_map2
+
+
+  def transform(
+    self,
+    imgs:  Union[str, Path, np.ndarray],
+    save_path: Union[str, Path],
   ) -> np.ndarray:
     """
     Create human-interpretable rgb image from multi-band pixel data
@@ -242,8 +274,8 @@ class ColorImage:
     numpy.ndarray
       aray of shape (H, W, 3) of pixel values for colour image
     """
-    if nl_func is None:
-      nl_func = ColorImage.asinh_map
+    if not isinstance(img, np.ndarray):
+      img = load_image(img)
 
     size = imgs[0].shape[1]
     grzscales = dict(
@@ -254,20 +286,23 @@ class ColorImage:
 
     # set the relative intensities of each band to be approximately equal
     img = np.zeros((size, size, 3), np.float32)
-    for im, band in zip(imgs, bands):
+    for im, band in zip(imgs, self.bands):
       plane, scale = grzscales.get(band, (0, 1.))
       img[:, :, plane] = (im / scale).astype(np.float32)
 
     I = img.mean(axis=2, keepdims=True)
 
-    if desaturate:
+    if self.desaturate:
       img_nanomaggies = np.zeros((size, size, 3), np.float32)
-      for im, band in zip(imgs, bands):
+
+      for im, band in zip(imgs, self.bands):
         plane, scale = grzscales.get(band, (0, 1.))
         img_nanomaggies[:, :, plane] = im.astype(np.float32)
+
       img_nanomaggies_nonzero = np.clip(img_nanomaggies, 1e-9, None)
       img_ab_mag = 22.5 - 2.5 * np.log10(img_nanomaggies_nonzero)
       img_flux = np.power(10, img_ab_mag / -2.5) * 3631
+
       # DR1 release paper quotes 90s exposure time per band, 900s on completion
       # TODO assume 3 exposures per band per image. exptime is per ccd, nexp per tile, will be awful to add
       exposure_time_seconds = 90. * 3.
@@ -278,20 +313,19 @@ class ColorImage:
       mean_all_bands = img.mean(axis=2, keepdims=True)
       deviation_from_mean = img - mean_all_bands
       signal_to_noise = np.sqrt(img_photons_per_pixel)
-      saturation_factor = signal_to_noise * desaturate_factor
+      saturation_factor = signal_to_noise * self.desaturate_factor
+
       # if that would imply INCREASING the deviation, do nothing
       saturation_factor[saturation_factor > 1] = 1.
       img = mean_all_bands + (deviation_from_mean * saturation_factor)
 
-    rescaling = nl_func(I, arcsinh=arcsinh)/I
+    rescaling = self.nl_func(I, gain=self.arcsinh) / I
     rescaled_img = img * rescaling
 
-    rescaled_img = (rescaled_img - mn) * (mx - mn)
-    rescaled_img = (rescaled_img - mn) * (mx - mn)
+    rescaled_img = (rescaled_img - self.mn) * (self.mx - self.mn)
+    rescaled_img = (rescaled_img - self.mn) * (self.mx - self.mn)
 
     return np.clip(rescaled_img, 0., 1.)
-
-
 
 
 
@@ -318,7 +352,7 @@ if __name__ == '__main__':
     'minmax': (-0.5, 300),
     'brightness': 1.3,
     'desaturate': True,
-    'nl_func': ColorImage.asinh_map2
+    'nl_func': 'asinh'
   }
 
   # kwargs = {
@@ -326,7 +360,8 @@ if __name__ == '__main__':
   #   'mn': 0,
   #   'mx': .4,
   # }
-  fits_color = ColorImage.legacy_rgb(fits_img, **kwargs)
+  lrgb = LegacyRGB(**kwargs)
+  fits_color = lrgb.transform(fits_img)
 
   print('fits_color shape', fits_color.shape)
 
