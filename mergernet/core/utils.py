@@ -179,6 +179,42 @@ def iauname(
 
 
 
+def iauname_relative_path(
+  iaunames: Union[str, List[str]],
+  prefix: Union[str, Path] = '',
+  suffix: str = '',
+) -> Union[Path, List[Path]]:
+  """
+  Calculates the nested path for a given iauname
+
+  Parameters
+  ----------
+  iaunames: str, List[str]
+    Object iaunames
+  prefix: str, Path
+    Path that will be prepended at the begin of all paths
+  suffix: str
+    Suffix that will be appended at the end of all paths
+
+  Example
+  -------
+  iaunames_relative_path('J123049.42+122328.03', '.png')
+  Path('J123/J123049.42+122328.03.png')
+
+  Returns
+  -------
+  Path, List[Path]
+    The relative iauname path
+  """
+  prefix_path = Path(prefix)
+  mapping = lambda x: prefix_path / x[:4] / (x + suffix)
+
+  if isinstance(iaunames, str):
+    return mapping(iaunames)
+  else:
+    return [mapping(x) for x in iaunames]
+
+
 
 def serialize(obj: Any) -> str:
   """
