@@ -216,9 +216,9 @@ class Dataset:
       The fold which will be used as test, the all other folds will be used as
       train
 
-    Retruns
+    Returns
     -------
-    tuple of tf.data.Dataset
+    tuple, tf.data.Dataset
       A tuple containing two datasets, the first is the train dataset and the
       secound is the test dataset
     """
