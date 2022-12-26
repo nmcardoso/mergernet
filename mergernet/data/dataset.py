@@ -18,7 +18,7 @@ import pandas as pd
 import tensorflow as tf
 
 from mergernet.core.experiment import Experiment
-from mergernet.core.utils import load_image
+from mergernet.core.utils import iauname, iauname_relative_path, load_image
 from mergernet.data.dataset_config import DatasetConfig, DatasetRegistry
 from mergernet.data.kfold import StratifiedDistributionKFold
 from mergernet.data.preprocessing import load_jpg, load_png, one_hot_factory
@@ -47,9 +47,11 @@ class Dataset:
     in_memory: bool = False
   ):
     self.in_memory = in_memory
-
-    data_path = Experiment.local_shared_path
     self.config = config
+    self._weight_map = None
+
+    # setup paths
+    data_path = Experiment.local_shared_path
     if config.archive_path:
       self.config.archive_path = data_path / self.config.archive_path
     if config.images_path:
@@ -57,22 +59,19 @@ class Dataset:
     if config.table_path:
       self.config.table_path = data_path / self.config.table_path
 
-    if not self.is_dataset_downloaded():
-      self.download()
+    # cast positions to numpy array
+    if config.positions is not None:
+      self.config.positions = np.array(self.config.positions)
 
-    if self.config.detect_img_extension:
-      self._detect_img_extension()
+    # create table for unregistered datasets
+    self._create_dataset_table()
 
-    self._create_table_for_preds_dataset()
+    # download dataset data
+    # if not self.is_dataset_downloaded():
+    self.download()
 
-    self._weight_map = None
-
-
-  def _detect_img_extension(self):
-    """
-    Set X_column_suffix attribute of DatasetConfig to detected image extension
-    """
-    self.config.X_column_suffix = next(self.config.images_path.iterdir()).suffix
+    if self.config.image_transform is not None:
+      self._transform_images()
 
 
   def _discretize_label(self, y: np.ndarray) -> np.ndarray:
@@ -92,24 +91,50 @@ class Dataset:
     return y_int
 
 
-  def _create_table_for_preds_dataset(self):
+  def _create_dataset_table(self):
     """
     Scan the images table and create a csv table with filenames if the
     dataset config has no table.
     """
     if self.config.table_url is None:
       self.config.table_path = Experiment.local_shared_path / f'{self.config.name}.csv'
-      self.config.X_column = 'iauname'
+      self.config.image_column = 'iauname'
 
-      iaunames = [
-        p.stem for p in
-        self.config.images_path.glob(f'**/*{self.config.X_column_suffix}')
-      ]
+      if not self.config.table_path.exists():
+        images = list(self.config.images_path.glob(f'**/*.{self.config.image_extension}'))
 
-      print(self.config.images_path)
-      print(iaunames)
+        if self.config.positions is not None and len(images) == 0:
+          ra = self.config.positions[:, 0]
+          dec = self.config.positions[:, 1]
+          iaunames = iauname(ra, dec)
+          df_data = {
+            'ra': ra,
+            'dec': dec,
+            'iauname': iaunames
+          }
+        else:
+          iaunames = [p.stem for p in images]
+          df_data = {'iauname': iaunames}
 
-      pd.DataFrame({'iauname': iaunames}).to_csv(self.config.table_path, index=False)
+        pd.DataFrame(df_data).to_csv(self.config.table_path, index=False)
+
+
+  def _transform_images(self):
+    iaunames = self.get_X()
+
+    if self.config.image_service is not None:
+      suffix = self.config.image_service.image_format
+    else:
+      suffix = self.config.image_extension
+
+    images = iauname_relative_path(
+      iaunames=iaunames,
+      prefix=self.config.images_path,
+      suffix=f'.{suffix}'
+    )
+    save_paths = self.get_images_paths(iaunames)
+
+    self.config.image_transform.batch_transform(images, save_paths)
 
 
   def is_dataset_downloaded(self) -> bool:
@@ -161,6 +186,25 @@ class Dataset:
           if i == len(self.config.table_url) - 1:
             raise RuntimeError("Can't download table")
 
+    # Download image from positions
+    if self.config.positions is not None and self.config.image_service is not None:
+      svc = self.config.image_service
+      pos = self.config.positions
+      save_paths = iauname_relative_path(
+        iaunames=self.get_X(),
+        prefix=self.config.images_path,
+        suffix=f'.{svc.image_format}'
+      )
+      _, error = svc.batch_cutout(ra=pos[:, 0], dec=pos[:, 1], save_path=save_paths)
+      self.config.image_nested = True
+
+      if len(error) > 0:
+        err_iauname = [p.stem for p in error]
+        df = self.get_table()
+        df = df[~df.iauname.isin(err_iauname)]
+        df = df.drop_duplicates(subset=['iauname'])
+        df.to_csv(self.config.table_path, index=False)
+
 
   def get_fold(self, fold: int) -> Tuple[tf.data.Dataset, tf.data.Dataset]:
     """
@@ -183,19 +227,19 @@ class Dataset:
     df_test = df[df[self.config.fold_column] == fold]
     df_train = df[df[self.config.fold_column] != fold]
 
-    X_train = df_train[self.config.X_column].to_numpy()
-    y_train = df_train[self.config.y_column].to_numpy()
-    X_test = df_test[self.config.X_column].to_numpy()
-    y_test = df_test[self.config.y_column].to_numpy()
+    X_train = df_train[self.config.image_column].to_numpy()
+    y_train = df_train[self.config.label_column].to_numpy()
+    X_test = df_test[self.config.image_column].to_numpy()
+    y_test = df_test[self.config.label_column].to_numpy()
 
     X_train = np.array([
-      str((self.config.images_path / (X + self.config.X_column_suffix)).resolve())
-      for X in X_train
+      str(path.resolve())
+      for path in self.get_images_paths(X_train)
     ])
 
     X_test = np.array([
-      str((self.config.images_path / (X + self.config.X_column_suffix)).resolve())
-      for X in X_test
+      str(path.resolve())
+      for path in self.get_images_paths(X_test)
     ])
 
     if self.in_memory:
@@ -220,30 +264,37 @@ class Dataset:
     else:
       df = df[df[self.config.fold_column] != fold]
 
-    return df[self.config.X_column].to_numpy()
+    return df[self.config.image_column].to_numpy()
 
 
   def get_X(self) -> np.ndarray:
     df = pd.read_csv(self.config.table_path)
-    return df[self.config.X_column].to_numpy()
+    return df[self.config.image_column].to_numpy()
 
 
-  def get_images_paths(self) -> List[Path]:
-    X = self.get_X()
-    print(X)
-    return [
-      self.config.images_path / (_X + self.config.X_column_suffix)
-      for _X in X
-    ]
+  def get_table(self) -> pd.DataFrame:
+    return pd.read_csv(self.config.table_path)
+
+
+  def get_images_paths(self, iaunames: List[str]) -> List[Path]:
+    if self.config.image_nested:
+      return iauname_relative_path(
+        iaunames=iaunames,
+        prefix=self.config.images_path,
+        suffix=f'.{self.config.image_extension}'
+      )
+    else:
+      return [
+        self.config.images_path / f'{x}.{self.config.image_extension}'
+        for x in iaunames
+      ]
 
 
   def get_preds_dataset(self) -> tf.data.Dataset:
-    df = pd.read_csv(self.config.table_path)
+    iaunames = self.get_X()
+    paths = self.get_images_paths(iaunames)
 
-    X = np.array([
-      str((self.config.images_path / (_X + self.config.X_column_suffix)).resolve())
-      for _X in df[self.config.X_column].to_numpy()
-    ])
+    X = np.array([str(path.resolve()) for path in paths])
 
     return tf.data.Dataset.from_tensor_slices(X)
 
@@ -252,7 +303,7 @@ class Dataset:
     if self._weight_map is not None:
       return self._weight_map
 
-    y = pd.read_csv(self.config.table_path)[self.config.y_column].to_numpy()
+    y = pd.read_csv(self.config.table_path)[self.config.label_column].to_numpy()
     if self.config.labels:
       y = self._discretize_label(y)
 
@@ -276,10 +327,10 @@ class Dataset:
     buffer_size: int = 1000,
     kind='train'
   ):
-    if self.config.X_column_suffix == '.jpg':
+    if self.config.image_extension == 'jpg':
       ds = ds.map(load_jpg)
       L.info('Apply: load_jpg')
-    elif self.config.X_column_suffix == '.png':
+    elif self.config.image_extension == 'png':
       ds = ds.map(load_png)
       L.info('Apply: load_png')
 

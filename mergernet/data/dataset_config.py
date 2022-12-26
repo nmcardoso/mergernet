@@ -1,7 +1,9 @@
 from pathlib import Path
-from typing import List
+from typing import List, Tuple
 
+from mergernet.data.image import ImageTransform
 from mergernet.services.google import GDrive
+from mergernet.services.imaging import ImagingService
 from mergernet.services.sciserver import SciServer
 
 
@@ -15,14 +17,16 @@ class DatasetConfig:
     archive_path: Path = None,
     images_path: Path = None,
     table_path: Path = None,
-    X_column: str = None,
-    y_column: str = None,
+    image_column: str = None,
+    label_column: str = None,
     fold_column: str = 'fold',
-    X_column_suffix: str = '', # filename extension
-    detect_img_extension: bool = False,
-    labels: dict = None,
+    image_extension: str = '',
     image_shape: tuple = None,
-    n_classes: int = None
+    labels: dict = [],
+    positions: List[Tuple[float, float]] = None,
+    image_service: ImagingService = None,
+    image_transform: ImageTransform = None,
+    image_nested: bool = False,
   ):
     self.name = name
     self.archive_url = archive_url
@@ -30,14 +34,17 @@ class DatasetConfig:
     self.archive_path = archive_path
     self.images_path = images_path
     self.table_path = table_path
-    self.X_column = X_column
-    self.y_column = y_column
+    self.image_column = image_column
+    self.label_column = label_column
     self.fold_column = fold_column
-    self.X_column_suffix = X_column_suffix
-    self.detect_img_extension = detect_img_extension
-    self.labels = labels
+    self.image_extension = image_extension
     self.image_shape = image_shape
-    self.n_classes = n_classes
+    self.labels = labels
+    self.positions = positions
+    self.image_service = image_service
+    self.image_transform = image_transform
+    self.image_nested = image_nested
+    self.n_classes = len(labels)
 
 
 
@@ -53,12 +60,11 @@ class DatasetRegistry:
     archive_path=Path('sdss_lupton_jpg_128.tar.xz'),
     images_path=Path('sdss_lupton_jpg_128'),
     table_path=Path('reference_darg.csv'),
-    X_column='filename',
-    y_column='class',
+    image_column='filename',
+    label_column='class',
     fold_column='fold',
     labels=['E', 'M', 'S'],
     image_shape=(128, 128, 3),
-    n_classes=3
   )
   """Default configuration object for RGB dataset."""
 
@@ -69,13 +75,12 @@ class DatasetRegistry:
     archive_path=Path('mesd_sdss_128.tar.xz'),
     images_path=Path('mesd_sdss_128'),
     table_path=Path('mesd.csv'),
-    X_column='iauname',
-    X_column_suffix='.jpg',
-    y_column='class',
+    image_column='iauname',
+    image_extension='jpg',
+    label_column='class',
     fold_column='fold',
     labels=['merger', 'elliptical', 'spiral', 'disturbed'],
     image_shape=(128, 128, 3),
-    n_classes=4
   )
   """MESD dataset with SDSS 128x128 images."""
 
@@ -86,13 +91,12 @@ class DatasetRegistry:
     archive_path=Path('mesd_legacy_128.tar.xz'),
     images_path=Path('mesd_legacy_128'),
     table_path=Path('mesd.csv'),
-    X_column='iauname',
-    X_column_suffix='.jpg',
-    y_column='class',
+    image_column='iauname',
+    image_extension='jpg',
+    label_column='class',
     fold_column='fold',
     labels=['merger', 'elliptical', 'spiral', 'disturbed'],
     image_shape=(128, 128, 3),
-    n_classes=4
   )
   """MESD dataset with Legacy Survey 128x128 images."""
 
@@ -103,13 +107,12 @@ class DatasetRegistry:
     archive_path=Path('bin_sdss_128.tar.xz'),
     images_path=Path('bin_sdss_128'),
     table_path=Path('bin_sdss.csv'),
-    X_column='iauname',
-    X_column_suffix='.jpg',
-    y_column='class',
+    image_column='iauname',
+    image_extension='jpg',
+    label_column='class',
     fold_column='fold',
     labels=['non_merger', 'merger'],
     image_shape=(128, 128, 3),
-    n_classes=2
   )
   """Binary dataset (merger and non-merger) with SDSS 128x128 images."""
 
@@ -123,8 +126,8 @@ class DatasetRegistry:
     archive_path=Path('blind_splus_lupton_128.tar.xz'),
     images_path=Path('blind_splus_lupton_128'),
     table_path=Path('blind_splus_gal80_r17_lupton.csv'),
-    X_column='ID',
-    X_column_suffix='.png',
+    image_column='ID',
+    image_extension='png',
     image_shape=(128, 128, 3)
   )
   """Blind dataset with S-PLUS 128x128 Lupton images."""
@@ -139,8 +142,8 @@ class DatasetRegistry:
     archive_path=Path('blind_splus_lupton_150.tar.xz'),
     images_path=Path('blind_splus_lupton_150'),
     table_path=Path('blind_splus_gal80_r17_lupton.csv'),
-    X_column='ID',
-    X_column_suffix='.png',
+    image_column='ID',
+    image_extension='png',
     image_shape=(150, 150, 3)
   )
   """Blind dataset with S-PLUS 150x150 Lupton images."""
@@ -155,8 +158,8 @@ class DatasetRegistry:
     archive_path=Path('blind_splus_trilogy_128.tar.xz'),
     images_path=Path('blind_splus_trilogy_128'),
     table_path=Path('blind_splus_gal80_r17_trilogy.csv'),
-    X_column='ID',
-    X_column_suffix='.png',
+    image_column='ID',
+    image_extension='png',
     image_shape=(128, 128, 3)
   )
   """Blind dataset with S-PLUS 128x128 Trilogy images."""
@@ -171,8 +174,8 @@ class DatasetRegistry:
     archive_path=Path('blind_splus_trilogy_150.tar.xz'),
     images_path=Path('blind_splus_trilogy_150'),
     table_path=Path('blind_splus_gal80_r17_trilogy.csv'),
-    X_column='ID',
-    X_column_suffix='.png',
+    image_column='ID',
+    image_extension='png',
     image_shape=(150, 150, 3)
   )
   """Blind dataset with S-PLUS 150x150 Trilogy images."""
@@ -187,13 +190,12 @@ class DatasetRegistry:
     archive_path=Path('bin_legacy_north_rgb_128.tar.xz'),
     images_path=Path('bin_legacy_north_rgb_128'),
     table_path=Path('bin_legacy_north_sanitized.csv'),
-    X_column='iauname',
-    X_column_suffix='.jpg',
-    y_column='class',
+    image_column='iauname',
+    image_extension='jpg',
+    label_column='class',
     fold_column='fold',
     labels=['non_merger', 'merger'],
     image_shape=(128, 128, 3),
-    n_classes=2
   )
   """
   Binary dataset (merger and non-merger) with Legacy 128x128 RGB images
@@ -209,8 +211,8 @@ class DatasetRegistry:
     archive_path=Path('blind_splus_gal80_r13.5-17_ls10_rgb_128.tar.xz'),
     images_path=Path('blind_splus_gal80_r13.5-17_ls10_rgb_128'),
     table_path=Path('blind_splus_gal80_r13.5-17_sanitized.csv'),
-    X_column='iauname',
-    X_column_suffix='.jpg',
+    image_column='iauname',
+    image_extension='jpg',
     image_shape=(128, 128, 3)
   )
   """

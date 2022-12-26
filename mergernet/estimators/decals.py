@@ -38,10 +38,11 @@ class ZoobotEstimator(Estimator):
 
 
   def _prepare_dataset(self):
-    paths = self.dataset.get_images_paths()
+    iaunames = self.dataset.get_X()
+    paths = self.dataset.get_images_paths(iaunames)
     raw_image_ds = image_datasets.get_image_dataset(
       image_paths=[str(p.resolve()) for p in paths],
-      file_format=self.dataset.config.X_column_suffix[1:],
+      file_format=self.dataset.config.image_extension,
       requested_img_size=self.dataset.config.image_shape[1],
       batch_size=128,
     )

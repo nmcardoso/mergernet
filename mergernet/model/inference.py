@@ -16,7 +16,7 @@ class Predictor:
 
   def predict(self) -> List:
     # select ds by dataset type: predictions or train
-    if self.dataset.config.y_column is None:
+    if self.dataset.config.label_column is None:
       ds_test = self.dataset.get_preds_dataset()
     else:
       _, ds_test = self.dataset.get_fold(0)
@@ -33,7 +33,7 @@ class Predictor:
 
   def upload(self, name: str = None, label_map: Dict = None):
     # get X by dataset type: predictions or train
-    if self.dataset.config.y_column is None:
+    if self.dataset.config.label_column is None:
       X = self.dataset.get_X()
       name = name or 'predictions.csv'
     else:
@@ -43,7 +43,7 @@ class Predictor:
 
     # load dataset table
     df = pd.read_csv(self.dataset.config.table_path)
-    x_col_name = self.dataset.config.X_column
+    x_col_name = self.dataset.config.image_column
 
     print('preds_len:', len(self._preds))
     print('df_len:', len(df))
