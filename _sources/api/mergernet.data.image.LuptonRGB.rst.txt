@@ -1,9 +1,9 @@
-ColorImage
-==========
+LuptonRGB
+=========
 
 .. currentmodule:: mergernet.data.image
 
-.. autoclass:: ColorImage
+.. autoclass:: LuptonRGB
   :members:
   :private-members:
   :undoc-members:

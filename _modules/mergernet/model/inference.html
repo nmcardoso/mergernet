@@ -187,6 +187,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.find_by_value.html">mergernet.core.utils.find_by_value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.heading.html">mergernet.core.utils.heading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.iauname.html">mergernet.core.utils.iauname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.iauname_relative_path.html">mergernet.core.utils.iauname_relative_path</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.load_image.html">mergernet.core.utils.load_image</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.load_table.html">mergernet.core.utils.load_table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.not_in.html">mergernet.core.utils.not_in</a></li>
@@ -212,7 +213,11 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.image.html">mergernet.data.image</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.ColorImage.html">ColorImage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.asinh_map.html">mergernet.data.image.asinh_map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.asinh_map2.html">mergernet.data.image.asinh_map2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.ImageTransform.html">ImageTransform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.LegacyRGB.html">LegacyRGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.LuptonRGB.html">LuptonRGB</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.kfold.html">mergernet.data.kfold</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -343,7 +348,7 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.services.imaging.html">mergernet.services.imaging</a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.services.imaging.BaseImagingService.html">BaseImagingService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.services.imaging.ImagingService.html">ImagingService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.services.legacy.html">mergernet.services.legacy</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -450,7 +455,7 @@
 
 <div class="viewcode-block" id="Predictor.predict"><a class="viewcode-back" href="../../../api/mergernet.model.inference.Predictor.html#mergernet.model.inference.Predictor.predict">[docs]</a>  <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
     <span class="c1"># select ds by dataset type: predictions or train</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">y_column</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">label_column</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_preds_dataset</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="n">_</span><span class="p">,</span> <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -467,7 +472,7 @@
 
 <div class="viewcode-block" id="Predictor.upload"><a class="viewcode-back" href="../../../api/mergernet.model.inference.Predictor.html#mergernet.model.inference.Predictor.upload">[docs]</a>  <span class="k">def</span> <span class="nf">upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">label_map</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="c1"># get X by dataset type: predictions or train</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">y_column</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">label_column</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_X</span><span class="p">()</span>
       <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="s1">&#39;predictions.csv&#39;</span>
     <span class="k">else</span><span class="p">:</span>
@@ -477,7 +482,7 @@
 
     <span class="c1"># load dataset table</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)</span>
-    <span class="n">x_col_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column</span>
+    <span class="n">x_col_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_column</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;preds_len:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_preds</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;df_len:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>

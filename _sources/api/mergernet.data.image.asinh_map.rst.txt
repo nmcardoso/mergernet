@@ -1,0 +1,6 @@
+mergernet.data.image.asinh\_map
+===============================
+
+.. currentmodule:: mergernet.data.image
+
+.. autofunction:: asinh_map

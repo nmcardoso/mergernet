@@ -188,6 +188,7 @@
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.find_by_value.html">mergernet.core.utils.find_by_value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.heading.html">mergernet.core.utils.heading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.iauname.html">mergernet.core.utils.iauname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.iauname_relative_path.html">mergernet.core.utils.iauname_relative_path</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.load_image.html">mergernet.core.utils.load_image</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.load_table.html">mergernet.core.utils.load_table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.not_in.html">mergernet.core.utils.not_in</a></li>
@@ -213,7 +214,11 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.image.html">mergernet.data.image</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.ColorImage.html">ColorImage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.asinh_map.html">mergernet.data.image.asinh_map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.asinh_map2.html">mergernet.data.image.asinh_map2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.ImageTransform.html">ImageTransform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.LegacyRGB.html">LegacyRGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.LuptonRGB.html">LuptonRGB</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.kfold.html">mergernet.data.kfold</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -344,7 +349,7 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.imaging.html">mergernet.services.imaging</a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.services.imaging.BaseImagingService.html">BaseImagingService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.imaging.ImagingService.html">ImagingService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.legacy.html">mergernet.services.legacy</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -458,16 +463,10 @@ attribute</p>
 </table>
 </div>
 <dl class="py method">
-<dt class="sig sig-object py" id="mergernet.data.dataset.Dataset._create_table_for_preds_dataset">
-<span class="sig-name descname"><span class="pre">_create_table_for_preds_dataset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/data/dataset.html#Dataset._create_table_for_preds_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.dataset.Dataset._create_table_for_preds_dataset" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="mergernet.data.dataset.Dataset._create_dataset_table">
+<span class="sig-name descname"><span class="pre">_create_dataset_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/data/dataset.html#Dataset._create_dataset_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.dataset.Dataset._create_dataset_table" title="Permalink to this definition">#</a></dt>
 <dd><p>Scan the images table and create a csv table with filenames if the
 dataset config has no table.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mergernet.data.dataset.Dataset._detect_img_extension">
-<span class="sig-name descname"><span class="pre">_detect_img_extension</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/data/dataset.html#Dataset._detect_img_extension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.dataset.Dataset._detect_img_extension" title="Permalink to this definition">#</a></dt>
-<dd><p>Set X_column_suffix attribute of DatasetConfig to detected image extension</p>
 </dd></dl>
 
 <dl class="py method">
@@ -481,6 +480,11 @@ and replaces with respective value.</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.data.dataset.Dataset._transform_images">
+<span class="sig-name descname"><span class="pre">_transform_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/data/dataset.html#Dataset._transform_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.dataset.Dataset._transform_images" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mergernet.data.dataset.Dataset.compute_class_weight">
@@ -529,12 +533,17 @@ secound is the test dataset</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mergernet.data.dataset.Dataset.get_images_paths">
-<span class="sig-name descname"><span class="pre">get_images_paths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mergernet/data/dataset.html#Dataset.get_images_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.dataset.Dataset.get_images_paths" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_images_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iaunames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mergernet/data/dataset.html#Dataset.get_images_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.dataset.Dataset.get_images_paths" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mergernet.data.dataset.Dataset.get_preds_dataset">
 <span class="sig-name descname"><span class="pre">get_preds_dataset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DatasetV2</span></span></span><a class="reference internal" href="../_modules/mergernet/data/dataset.html#Dataset.get_preds_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.dataset.Dataset.get_preds_dataset" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mergernet.data.dataset.Dataset.get_table">
+<span class="sig-name descname"><span class="pre">get_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.2)"><span class="pre">DataFrame</span></a></span></span><a class="reference internal" href="../_modules/mergernet/data/dataset.html#Dataset.get_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.dataset.Dataset.get_table" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -624,9 +633,9 @@ secound is the test dataset</p></li>
             <ul>
 <li><a class="reference internal" href="#">Dataset</a><ul>
 <li><a class="reference internal" href="#mergernet.data.dataset.Dataset"><code class="docutils literal notranslate"><span class="pre">Dataset</span></code></a><ul>
-<li><a class="reference internal" href="#mergernet.data.dataset.Dataset._create_table_for_preds_dataset"><code class="docutils literal notranslate"><span class="pre">Dataset._create_table_for_preds_dataset()</span></code></a></li>
-<li><a class="reference internal" href="#mergernet.data.dataset.Dataset._detect_img_extension"><code class="docutils literal notranslate"><span class="pre">Dataset._detect_img_extension()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.dataset.Dataset._create_dataset_table"><code class="docutils literal notranslate"><span class="pre">Dataset._create_dataset_table()</span></code></a></li>
 <li><a class="reference internal" href="#mergernet.data.dataset.Dataset._discretize_label"><code class="docutils literal notranslate"><span class="pre">Dataset._discretize_label()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.dataset.Dataset._transform_images"><code class="docutils literal notranslate"><span class="pre">Dataset._transform_images()</span></code></a></li>
 <li><a class="reference internal" href="#mergernet.data.dataset.Dataset.compute_class_weight"><code class="docutils literal notranslate"><span class="pre">Dataset.compute_class_weight()</span></code></a></li>
 <li><a class="reference internal" href="#mergernet.data.dataset.Dataset.concat_fold_column"><code class="docutils literal notranslate"><span class="pre">Dataset.concat_fold_column()</span></code></a></li>
 <li><a class="reference internal" href="#mergernet.data.dataset.Dataset.download"><code class="docutils literal notranslate"><span class="pre">Dataset.download()</span></code></a></li>
@@ -635,6 +644,7 @@ secound is the test dataset</p></li>
 <li><a class="reference internal" href="#mergernet.data.dataset.Dataset.get_fold"><code class="docutils literal notranslate"><span class="pre">Dataset.get_fold()</span></code></a></li>
 <li><a class="reference internal" href="#mergernet.data.dataset.Dataset.get_images_paths"><code class="docutils literal notranslate"><span class="pre">Dataset.get_images_paths()</span></code></a></li>
 <li><a class="reference internal" href="#mergernet.data.dataset.Dataset.get_preds_dataset"><code class="docutils literal notranslate"><span class="pre">Dataset.get_preds_dataset()</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.dataset.Dataset.get_table"><code class="docutils literal notranslate"><span class="pre">Dataset.get_table()</span></code></a></li>
 <li><a class="reference internal" href="#mergernet.data.dataset.Dataset.is_dataset_downloaded"><code class="docutils literal notranslate"><span class="pre">Dataset.is_dataset_downloaded()</span></code></a></li>
 <li><a class="reference internal" href="#mergernet.data.dataset.Dataset.prepare_data"><code class="docutils literal notranslate"><span class="pre">Dataset.prepare_data()</span></code></a></li>
 <li><a class="reference internal" href="#mergernet.data.dataset.Dataset.registry"><code class="docutils literal notranslate"><span class="pre">Dataset.registry</span></code></a></li>

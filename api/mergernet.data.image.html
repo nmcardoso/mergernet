@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="ColorImage" href="mergernet.data.image.ColorImage.html" /><link rel="prev" title="DatasetRegistry" href="mergernet.data.dataset_config.DatasetRegistry.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="mergernet.data.image.asinh_map" href="mergernet.data.image.asinh_map.html" /><link rel="prev" title="DatasetRegistry" href="mergernet.data.dataset_config.DatasetRegistry.html" />
 
     <!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
         <title>mergernet.data.image - Mergernet 0 documentation</title>
@@ -135,7 +135,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -188,6 +188,7 @@
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.find_by_value.html">mergernet.core.utils.find_by_value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.heading.html">mergernet.core.utils.heading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.iauname.html">mergernet.core.utils.iauname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.iauname_relative_path.html">mergernet.core.utils.iauname_relative_path</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.load_image.html">mergernet.core.utils.load_image</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.load_table.html">mergernet.core.utils.load_table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.not_in.html">mergernet.core.utils.not_in</a></li>
@@ -213,7 +214,11 @@
 </ul>
 </li>
 <li class="toctree-l3 current has-children current-page"><a class="current reference internal" href="#">mergernet.data.image</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.ColorImage.html">ColorImage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.asinh_map.html">mergernet.data.image.asinh_map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.asinh_map2.html">mergernet.data.image.asinh_map2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.ImageTransform.html">ImageTransform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.LegacyRGB.html">LegacyRGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.LuptonRGB.html">LuptonRGB</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.kfold.html">mergernet.data.kfold</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -344,7 +349,7 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.imaging.html">mergernet.services.imaging</a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.services.imaging.BaseImagingService.html">BaseImagingService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.imaging.ImagingService.html">ImagingService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.legacy.html">mergernet.services.legacy</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -427,7 +432,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -435,11 +440,30 @@
         <article role="main">
           <section id="module-mergernet.data.image">
 <span id="mergernet-data-image"></span><h1>mergernet.data.image<a class="headerlink" href="#module-mergernet.data.image" title="Permalink to this heading">#</a></h1>
+<p class="rubric">Functions</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="mergernet.data.image.asinh_map.html#mergernet.data.image.asinh_map" title="mergernet.data.image.asinh_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asinh_map</span></code></a>(x[, gain])</p></td>
+<td><p>Apply the following non-linear map to input matrix.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="mergernet.data.image.asinh_map2.html#mergernet.data.image.asinh_map2" title="mergernet.data.image.asinh_map2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asinh_map2</span></code></a>(x[, gain])</p></td>
+<td><p>Apply the following non-linear map to input matrix.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p class="rubric">Classes</p>
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage" title="mergernet.data.image.ColorImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorImage</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="mergernet.data.image.ImageTransform.html#mergernet.data.image.ImageTransform" title="mergernet.data.image.ImageTransform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageTransform</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="mergernet.data.image.LegacyRGB.html#mergernet.data.image.LegacyRGB" title="mergernet.data.image.LegacyRGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LegacyRGB</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="mergernet.data.image.LuptonRGB.html#mergernet.data.image.LuptonRGB" title="mergernet.data.image.LuptonRGB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LuptonRGB</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -452,12 +476,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="mergernet.data.image.ColorImage.html">
+          <a class="next-page" href="mergernet.data.image.asinh_map.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">ColorImage</div>
+                <div class="title">mergernet.data.image.asinh_map</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -490,8 +514,26 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">mergernet.data.image</a><ul>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

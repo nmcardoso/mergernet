@@ -187,6 +187,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.find_by_value.html">mergernet.core.utils.find_by_value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.heading.html">mergernet.core.utils.heading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.iauname.html">mergernet.core.utils.iauname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.iauname_relative_path.html">mergernet.core.utils.iauname_relative_path</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.load_image.html">mergernet.core.utils.load_image</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.load_table.html">mergernet.core.utils.load_table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.not_in.html">mergernet.core.utils.not_in</a></li>
@@ -212,7 +213,11 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.image.html">mergernet.data.image</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.ColorImage.html">ColorImage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.asinh_map.html">mergernet.data.image.asinh_map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.asinh_map2.html">mergernet.data.image.asinh_map2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.ImageTransform.html">ImageTransform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.LegacyRGB.html">LegacyRGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.LuptonRGB.html">LuptonRGB</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.kfold.html">mergernet.data.kfold</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -343,7 +348,7 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.services.imaging.html">mergernet.services.imaging</a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.services.imaging.BaseImagingService.html">BaseImagingService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.services.imaging.ImagingService.html">ImagingService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.services.legacy.html">mergernet.services.legacy</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -452,7 +457,7 @@
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="kn">from</span> <span class="nn">mergernet.core.experiment</span> <span class="kn">import</span> <span class="n">Experiment</span>
-<span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">load_image</span>
+<span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">iauname</span><span class="p">,</span> <span class="n">iauname_relative_path</span><span class="p">,</span> <span class="n">load_image</span>
 <span class="kn">from</span> <span class="nn">mergernet.data.dataset_config</span> <span class="kn">import</span> <span class="n">DatasetConfig</span><span class="p">,</span> <span class="n">DatasetRegistry</span>
 <span class="kn">from</span> <span class="nn">mergernet.data.kfold</span> <span class="kn">import</span> <span class="n">StratifiedDistributionKFold</span>
 <span class="kn">from</span> <span class="nn">mergernet.data.preprocessing</span> <span class="kn">import</span> <span class="n">load_jpg</span><span class="p">,</span> <span class="n">load_png</span><span class="p">,</span> <span class="n">one_hot_factory</span>
@@ -481,9 +486,11 @@
     <span class="n">in_memory</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
   <span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">in_memory</span> <span class="o">=</span> <span class="n">in_memory</span>
-
-    <span class="n">data_path</span> <span class="o">=</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">local_shared_path</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_weight_map</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># setup paths</span>
+    <span class="n">data_path</span> <span class="o">=</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">local_shared_path</span>
     <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span>
     <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">images_path</span><span class="p">:</span>
@@ -491,22 +498,19 @@
     <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_dataset_downloaded</span><span class="p">():</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
+    <span class="c1"># cast positions to numpy array</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">detect_img_extension</span><span class="p">:</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">_detect_img_extension</span><span class="p">()</span>
+    <span class="c1"># create table for unregistered datasets</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_create_dataset_table</span><span class="p">()</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">_create_table_for_preds_dataset</span><span class="p">()</span>
+    <span class="c1"># download dataset data</span>
+    <span class="c1"># if not self.is_dataset_downloaded():</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">_weight_map</span> <span class="o">=</span> <span class="kc">None</span>
-
-
-<div class="viewcode-block" id="Dataset._detect_img_extension"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset._detect_img_extension">[docs]</a>  <span class="k">def</span> <span class="nf">_detect_img_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Set X_column_suffix attribute of DatasetConfig to detected image extension</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column_suffix</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())</span><span class="o">.</span><span class="n">suffix</span></div>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_transform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_transform_images</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="Dataset._discretize_label"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset._discretize_label">[docs]</a>  <span class="k">def</span> <span class="nf">_discretize_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -526,24 +530,50 @@
     <span class="k">return</span> <span class="n">y_int</span></div>
 
 
-<div class="viewcode-block" id="Dataset._create_table_for_preds_dataset"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset._create_table_for_preds_dataset">[docs]</a>  <span class="k">def</span> <span class="nf">_create_table_for_preds_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Dataset._create_dataset_table"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset._create_dataset_table">[docs]</a>  <span class="k">def</span> <span class="nf">_create_dataset_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Scan the images table and create a csv table with filenames if the</span>
 <span class="sd">    dataset config has no table.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span> <span class="o">=</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">local_shared_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">.csv&#39;</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column</span> <span class="o">=</span> <span class="s1">&#39;iauname&#39;</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_column</span> <span class="o">=</span> <span class="s1">&#39;iauname&#39;</span>
 
-      <span class="n">iaunames</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">stem</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;**/*</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column_suffix</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-      <span class="p">]</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;**/*.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_extension</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
 
-      <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span><span class="p">)</span>
-      <span class="nb">print</span><span class="p">(</span><span class="n">iaunames</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="n">ra</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">positions</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+          <span class="n">dec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">positions</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+          <span class="n">iaunames</span> <span class="o">=</span> <span class="n">iauname</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">)</span>
+          <span class="n">df_data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;ra&#39;</span><span class="p">:</span> <span class="n">ra</span><span class="p">,</span>
+            <span class="s1">&#39;dec&#39;</span><span class="p">:</span> <span class="n">dec</span><span class="p">,</span>
+            <span class="s1">&#39;iauname&#39;</span><span class="p">:</span> <span class="n">iaunames</span>
+          <span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">iaunames</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">stem</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">images</span><span class="p">]</span>
+          <span class="n">df_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;iauname&#39;</span><span class="p">:</span> <span class="n">iaunames</span><span class="p">}</span>
 
-      <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;iauname&#39;</span><span class="p">:</span> <span class="n">iaunames</span><span class="p">})</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df_data</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset._transform_images"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset._transform_images">[docs]</a>  <span class="k">def</span> <span class="nf">_transform_images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">iaunames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_X</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_service</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">suffix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_service</span><span class="o">.</span><span class="n">image_format</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">suffix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_extension</span>
+
+    <span class="n">images</span> <span class="o">=</span> <span class="n">iauname_relative_path</span><span class="p">(</span>
+      <span class="n">iaunames</span><span class="o">=</span><span class="n">iaunames</span><span class="p">,</span>
+      <span class="n">prefix</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span><span class="p">,</span>
+      <span class="n">suffix</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;.</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="p">)</span>
+    <span class="n">save_paths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_images_paths</span><span class="p">(</span><span class="n">iaunames</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_transform</span><span class="o">.</span><span class="n">batch_transform</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">save_paths</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Dataset.is_dataset_downloaded"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset.is_dataset_downloaded">[docs]</a>  <span class="k">def</span> <span class="nf">is_dataset_downloaded</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -593,7 +623,26 @@
           <span class="k">break</span>
         <span class="k">except</span><span class="p">:</span>
           <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_url</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t download table&quot;</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t download table&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Download image from positions</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_service</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">svc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_service</span>
+      <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">positions</span>
+      <span class="n">save_paths</span> <span class="o">=</span> <span class="n">iauname_relative_path</span><span class="p">(</span>
+        <span class="n">iaunames</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_X</span><span class="p">(),</span>
+        <span class="n">prefix</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span><span class="p">,</span>
+        <span class="n">suffix</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;.</span><span class="si">{</span><span class="n">svc</span><span class="o">.</span><span class="n">image_format</span><span class="si">}</span><span class="s1">&#39;</span>
+      <span class="p">)</span>
+      <span class="n">_</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">svc</span><span class="o">.</span><span class="n">batch_cutout</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">pos</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dec</span><span class="o">=</span><span class="n">pos</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">save_path</span><span class="o">=</span><span class="n">save_paths</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_nested</span> <span class="o">=</span> <span class="kc">True</span>
+
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">err_iauname</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">stem</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">error</span><span class="p">]</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_table</span><span class="p">()</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">iauname</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">err_iauname</span><span class="p">)]</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;iauname&#39;</span><span class="p">])</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Dataset.get_fold"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset.get_fold">[docs]</a>  <span class="k">def</span> <span class="nf">get_fold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]:</span>
@@ -617,19 +666,19 @@
     <span class="n">df_test</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">fold_column</span><span class="p">]</span> <span class="o">==</span> <span class="n">fold</span><span class="p">]</span>
     <span class="n">df_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">fold_column</span><span class="p">]</span> <span class="o">!=</span> <span class="n">fold</span><span class="p">]</span>
 
-    <span class="n">X_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
-    <span class="n">y_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">y_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
-    <span class="n">X_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
-    <span class="n">y_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">y_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">label_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">label_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
 
     <span class="n">X_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-      <span class="nb">str</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span> <span class="o">/</span> <span class="p">(</span><span class="n">X</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column_suffix</span><span class="p">))</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
-      <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">X_train</span>
+      <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
+      <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_images_paths</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
     <span class="p">])</span>
 
     <span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-      <span class="nb">str</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span> <span class="o">/</span> <span class="p">(</span><span class="n">X</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column_suffix</span><span class="p">))</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
-      <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">X_test</span>
+      <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
+      <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_images_paths</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
     <span class="p">])</span>
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_memory</span><span class="p">:</span>
@@ -654,30 +703,37 @@
     <span class="k">else</span><span class="p">:</span>
       <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">fold_column</span><span class="p">]</span> <span class="o">!=</span> <span class="n">fold</span><span class="p">]</span>
 
-    <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Dataset.get_X"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset.get_X">[docs]</a>  <span class="k">def</span> <span class="nf">get_X</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="Dataset.get_images_paths"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset.get_images_paths">[docs]</a>  <span class="k">def</span> <span class="nf">get_images_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_X</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">[</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span> <span class="o">/</span> <span class="p">(</span><span class="n">_X</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column_suffix</span><span class="p">)</span>
-      <span class="k">for</span> <span class="n">_X</span> <span class="ow">in</span> <span class="n">X</span>
-    <span class="p">]</span></div>
+<div class="viewcode-block" id="Dataset.get_table"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset.get_table">[docs]</a>  <span class="k">def</span> <span class="nf">get_table</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset.get_images_paths"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset.get_images_paths">[docs]</a>  <span class="k">def</span> <span class="nf">get_images_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iaunames</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_nested</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">iauname_relative_path</span><span class="p">(</span>
+        <span class="n">iaunames</span><span class="o">=</span><span class="n">iaunames</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span><span class="p">,</span>
+        <span class="n">suffix</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_extension</span><span class="si">}</span><span class="s1">&#39;</span>
+      <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">[</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_extension</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iaunames</span>
+      <span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="Dataset.get_preds_dataset"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset.get_preds_dataset">[docs]</a>  <span class="k">def</span> <span class="nf">get_preds_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)</span>
+    <span class="n">iaunames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_X</span><span class="p">()</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_images_paths</span><span class="p">(</span><span class="n">iaunames</span><span class="p">)</span>
 
-    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-      <span class="nb">str</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span> <span class="o">/</span> <span class="p">(</span><span class="n">_X</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column_suffix</span><span class="p">))</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
-      <span class="k">for</span> <span class="n">_X</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
-    <span class="p">])</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">])</span>
 
     <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
 
@@ -686,7 +742,7 @@
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weight_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weight_map</span>
 
-    <span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">y_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">label_column</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">labels</span><span class="p">:</span>
       <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_discretize_label</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 
@@ -710,10 +766,10 @@
     <span class="n">buffer_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
     <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;train&#39;</span>
   <span class="p">):</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column_suffix</span> <span class="o">==</span> <span class="s1">&#39;.jpg&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_extension</span> <span class="o">==</span> <span class="s1">&#39;jpg&#39;</span><span class="p">:</span>
       <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">load_jpg</span><span class="p">)</span>
       <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Apply: load_jpg&#39;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">X_column_suffix</span> <span class="o">==</span> <span class="s1">&#39;.png&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_extension</span> <span class="o">==</span> <span class="s1">&#39;png&#39;</span><span class="p">:</span>
       <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">load_png</span><span class="p">)</span>
       <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Apply: load_png&#39;</span><span class="p">)</span>
 

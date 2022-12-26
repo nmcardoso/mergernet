@@ -187,6 +187,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.find_by_value.html">mergernet.core.utils.find_by_value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.heading.html">mergernet.core.utils.heading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.iauname.html">mergernet.core.utils.iauname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.iauname_relative_path.html">mergernet.core.utils.iauname_relative_path</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.load_image.html">mergernet.core.utils.load_image</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.load_table.html">mergernet.core.utils.load_table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.not_in.html">mergernet.core.utils.not_in</a></li>
@@ -212,7 +213,11 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.image.html">mergernet.data.image</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.ColorImage.html">ColorImage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.asinh_map.html">mergernet.data.image.asinh_map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.asinh_map2.html">mergernet.data.image.asinh_map2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.ImageTransform.html">ImageTransform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.LegacyRGB.html">LegacyRGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.LuptonRGB.html">LuptonRGB</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.kfold.html">mergernet.data.kfold</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -343,7 +348,7 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.services.imaging.html">mergernet.services.imaging</a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.services.imaging.BaseImagingService.html">BaseImagingService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.services.imaging.ImagingService.html">ImagingService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.services.legacy.html">mergernet.services.legacy</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -611,6 +616,42 @@
     <span class="n">r</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;J</span><span class="si">{</span><span class="n">ra_str</span><span class="si">}{</span><span class="n">dec_str</span><span class="si">}</span><span class="s1">&#39;</span>
   <span class="k">return</span> <span class="n">r</span></div>
 
+
+
+<div class="viewcode-block" id="iauname_relative_path"><a class="viewcode-back" href="../../../api/mergernet.core.utils.iauname_relative_path.html#mergernet.core.utils.iauname_relative_path">[docs]</a><span class="k">def</span> <span class="nf">iauname_relative_path</span><span class="p">(</span>
+  <span class="n">iaunames</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+  <span class="n">prefix</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+  <span class="n">suffix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]]:</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Calculates the nested path for a given iauname</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  iaunames: str, List[str]</span>
+<span class="sd">    Object iaunames</span>
+<span class="sd">  prefix: str, Path</span>
+<span class="sd">    Path that will be prepended at the begin of all paths</span>
+<span class="sd">  suffix: str</span>
+<span class="sd">    Suffix that will be appended at the end of all paths</span>
+
+<span class="sd">  Example</span>
+<span class="sd">  -------</span>
+<span class="sd">  iaunames_relative_path(&#39;J123049.42+122328.03&#39;, &#39;.png&#39;)</span>
+<span class="sd">  Path(&#39;J123/J123049.42+122328.03.png&#39;)</span>
+
+<span class="sd">  Returns</span>
+<span class="sd">  -------</span>
+<span class="sd">  Path, List[Path]</span>
+<span class="sd">    The relative iauname path</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">prefix_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+  <span class="n">mapping</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">prefix_path</span> <span class="o">/</span> <span class="n">x</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">suffix</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iaunames</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">mapping</span><span class="p">(</span><span class="n">iaunames</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">mapping</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iaunames</span><span class="p">]</span></div>
 
 
 

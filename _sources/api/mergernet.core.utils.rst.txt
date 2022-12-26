@@ -19,6 +19,7 @@ mergernet.core.utils
     find_by_value
     heading
     iauname
+    iauname_relative_path
     load_image
     load_table
     not_in

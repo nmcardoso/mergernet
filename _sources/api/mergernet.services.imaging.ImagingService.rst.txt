@@ -1,9 +1,9 @@
-BaseImagingService
-==================
+ImagingService
+==============
 
 .. currentmodule:: mergernet.services.imaging
 
-.. autoclass:: BaseImagingService
+.. autoclass:: ImagingService
   :members:
   :private-members:
   :undoc-members:

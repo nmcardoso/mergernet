@@ -187,6 +187,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.find_by_value.html">mergernet.core.utils.find_by_value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.heading.html">mergernet.core.utils.heading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.iauname.html">mergernet.core.utils.iauname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.iauname_relative_path.html">mergernet.core.utils.iauname_relative_path</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.load_image.html">mergernet.core.utils.load_image</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.load_table.html">mergernet.core.utils.load_table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.not_in.html">mergernet.core.utils.not_in</a></li>
@@ -212,7 +213,11 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.image.html">mergernet.data.image</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.ColorImage.html">ColorImage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.asinh_map.html">mergernet.data.image.asinh_map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.asinh_map2.html">mergernet.data.image.asinh_map2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.ImageTransform.html">ImageTransform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.LegacyRGB.html">LegacyRGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.LuptonRGB.html">LuptonRGB</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.kfold.html">mergernet.data.kfold</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -343,7 +348,7 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.services.imaging.html">mergernet.services.imaging</a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.services.imaging.BaseImagingService.html">BaseImagingService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.services.imaging.ImagingService.html">ImagingService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.services.legacy.html">mergernet.services.legacy</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -432,7 +437,8 @@
         </div>
         <article role="main">
           <h1>Source code for mergernet.data.image</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -440,6 +446,9 @@
 
 <span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">load_image</span>
 
+<span class="c1"># first number is index of that band</span>
+<span class="c1"># second number is scale divisor - divide pixel values by</span>
+<span class="c1"># scale divisor for rgb pixel value</span>
 <span class="n">DEFAULT_BANDS_SCALES</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s1">&#39;urz&#39;</span><span class="p">:</span> <span class="p">{</span>
     <span class="s1">&#39;u&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.0066</span><span class="p">),</span>
@@ -464,82 +473,110 @@
 <span class="p">}</span>
 
 
-<div class="viewcode-block" id="ColorImage"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage">[docs]</a><span class="k">class</span> <span class="nc">ColorImage</span><span class="p">:</span>
-<div class="viewcode-block" id="ColorImage.asinh_map"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.asinh_map">[docs]</a>  <span class="nd">@staticmethod</span>
-  <span class="k">def</span> <span class="nf">asinh_map</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">gain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Apply the following non-linear map to input matrix. Useful to</span>
-<span class="sd">    rescale telescope pixels for viewing.</span>
+<div class="viewcode-block" id="asinh_map"><a class="viewcode-back" href="../../../api/mergernet.data.image.asinh_map.html#mergernet.data.image.asinh_map">[docs]</a><span class="k">def</span> <span class="nf">asinh_map</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">gain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+  <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Apply the following non-linear map to input matrix. Useful to</span>
+<span class="sd">  rescale telescope pixels for viewing.</span>
 
-<span class="sd">    .. math::</span>
-<span class="sd">      Y = \textrm{arcsinh}(\alpha X)</span>
+<span class="sd">  .. math::</span>
+<span class="sd">    Y = \textrm{arcsinh}(\alpha X)</span>
 
-<span class="sd">    where :math:`\alpha` is the gain, :math:`X` is the input image and</span>
-<span class="sd">    :math:`Y` is the transformed image.</span>
+<span class="sd">  where :math:`\alpha` is the gain, :math:`X` is the input image and</span>
+<span class="sd">  :math:`Y` is the transformed image.</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    x: numpy.ndarray</span>
-<span class="sd">      image to have map applied</span>
-<span class="sd">    gain: float, optional</span>
-<span class="sd">      gain applied to input image</span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  x: numpy.ndarray</span>
+<span class="sd">    image to have map applied</span>
+<span class="sd">  gain: float, optional</span>
+<span class="sd">    gain applied to input image</span>
 
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    numpy.ndarray</span>
-<span class="sd">      transformed image</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsinh</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">gain</span><span class="p">)</span></div>
+<span class="sd">  Returns</span>
+<span class="sd">  -------</span>
+<span class="sd">  numpy.ndarray</span>
+<span class="sd">    transformed image</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsinh</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">gain</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ColorImage.asinh_map2"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.asinh_map2">[docs]</a>  <span class="nd">@staticmethod</span>
-  <span class="k">def</span> <span class="nf">asinh_map2</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">gain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Apply the following non-linear map to input matrix. Useful to</span>
-<span class="sd">    rescale telescope pixels for viewing.</span>
 
-<span class="sd">    .. math::</span>
-<span class="sd">      Y = \frac{\textrm{arcsinh}(\alpha X)}{\sqrt{\alpha}}</span>
 
-<span class="sd">    where :math:`\alpha` is the gain, :math:`X` is the input image and</span>
-<span class="sd">    :math:`Y` is the transformed image.</span>
+<div class="viewcode-block" id="asinh_map2"><a class="viewcode-back" href="../../../api/mergernet.data.image.asinh_map2.html#mergernet.data.image.asinh_map2">[docs]</a><span class="k">def</span> <span class="nf">asinh_map2</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">gain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+  <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Apply the following non-linear map to input matrix. Useful to</span>
+<span class="sd">  rescale telescope pixels for viewing.</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    x: numpy.ndarray</span>
-<span class="sd">      image to have map applied</span>
-<span class="sd">    gain: float, optional</span>
-<span class="sd">      gain applied to input image</span>
+<span class="sd">  .. math::</span>
+<span class="sd">    Y = \frac{\textrm{arcsinh}(\alpha X)}{\sqrt{\alpha}}</span>
 
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    numpy.ndarray</span>
-<span class="sd">      transformed image</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsinh</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">gain</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gain</span><span class="p">)</span></div>
+<span class="sd">  where :math:`\alpha` is the gain, :math:`X` is the input image and</span>
+<span class="sd">  :math:`Y` is the transformed image.</span>
 
-<div class="viewcode-block" id="ColorImage.legacy_rgb"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.legacy_rgb">[docs]</a>  <span class="nd">@staticmethod</span>
-  <span class="k">def</span> <span class="nf">legacy_rgb</span><span class="p">(</span>
-    <span class="n">img</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  x: numpy.ndarray</span>
+<span class="sd">    image to have map applied</span>
+<span class="sd">  gain: float, optional</span>
+<span class="sd">    gain applied to input image</span>
+
+<span class="sd">  Returns</span>
+<span class="sd">  -------</span>
+<span class="sd">  numpy.ndarray</span>
+<span class="sd">    transformed image</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsinh</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">gain</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gain</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ImageTransform"><a class="viewcode-back" href="../../../api/mergernet.data.image.ImageTransform.html#mergernet.data.image.ImageTransform">[docs]</a><span class="k">class</span> <span class="nc">ImageTransform</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<div class="viewcode-block" id="ImageTransform.transform"><a class="viewcode-back" href="../../../api/mergernet.data.image.ImageTransform.html#mergernet.data.image.ImageTransform.transform">[docs]</a>  <span class="nd">@abstractmethod</span>
+  <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span>
+  <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="ImageTransform.batch_transform"><a class="viewcode-back" href="../../../api/mergernet.data.image.ImageTransform.html#mergernet.data.image.ImageTransform.batch_transform">[docs]</a>  <span class="k">def</span> <span class="nf">batch_transform</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">images</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span>
+    <span class="n">save_paths</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span>
+  <span class="p">):</span>
+    <span class="k">for</span> <span class="n">image_path</span><span class="p">,</span> <span class="n">save_path</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">save_paths</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+        <span class="n">image_path</span><span class="p">,</span>
+        <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
+      <span class="p">)</span></div></div>
+
+
+
+<div class="viewcode-block" id="LegacyRGB"><a class="viewcode-back" href="../../../api/mergernet.data.image.LegacyRGB.html#mergernet.data.image.LegacyRGB">[docs]</a><span class="k">class</span> <span class="nc">LegacyRGB</span><span class="p">(</span><span class="n">ImageTransform</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
     <span class="n">bands</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;grz&#39;</span><span class="p">,</span>
     <span class="n">brightness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">scales</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">desaturate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">minmax</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="c1"># cutoff range</span>
-    <span class="n">nl_func</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">nl_func</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;asinh&#39;</span><span class="p">,</span>
     <span class="n">normalize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">bands</span> <span class="o">=</span> <span class="n">bands</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">brightness</span> <span class="o">=</span> <span class="n">brightness</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">scales</span> <span class="o">=</span> <span class="n">scales</span> <span class="ow">or</span> <span class="n">DEFAULT_BANDS_SCALES</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">bands</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">desaturate</span> <span class="o">=</span> <span class="n">desaturate</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">minmax</span> <span class="o">=</span> <span class="n">minmax</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">nl_func</span> <span class="o">=</span> <span class="n">asinh_map</span> <span class="k">if</span> <span class="n">nl_func</span> <span class="o">==</span> <span class="s1">&#39;asinh&#39;</span> <span class="k">else</span> <span class="n">asinh_map2</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span> <span class="o">=</span> <span class="n">normalize</span>
+
+
+<div class="viewcode-block" id="LegacyRGB.transform"><a class="viewcode-back" href="../../../api/mergernet.data.image.LegacyRGB.html#mergernet.data.image.LegacyRGB.transform">[docs]</a>  <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">img</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span>
   <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
       <span class="n">img</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">nl_func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-      <span class="n">nl_func</span> <span class="o">=</span> <span class="n">ColorImage</span><span class="o">.</span><span class="n">asinh_map</span>
-
-    <span class="c1"># first number is index of that band</span>
-    <span class="c1"># second number is scale divisor - divide pixel values by</span>
-    <span class="c1"># scale divisor for rgb pixel value</span>
-    <span class="k">if</span> <span class="n">scales</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-      <span class="n">scales</span> <span class="o">=</span> <span class="n">DEFAULT_BANDS_SCALES</span><span class="p">[</span><span class="n">bands</span><span class="p">]</span>
 
     <span class="c1">#  create blank matrix to work with</span>
     <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span>
@@ -547,22 +584,22 @@
 
     <span class="c1"># Copy each band matrix into the rgb image, dividing by band</span>
     <span class="c1"># scale divisor to increase pixel values</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bands</span><span class="p">):</span>
-      <span class="n">plane</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">scales</span><span class="p">[</span><span class="n">band</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bands</span><span class="p">):</span>
+      <span class="n">plane</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scales</span><span class="p">[</span><span class="n">band</span><span class="p">]</span>
       <span class="n">rgb</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">plane</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">img</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">scale</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">brightness</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">brightness</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
       <span class="c1"># image rescaled by single-pixel not image-pixel,</span>
       <span class="c1"># which means colours depend on brightness</span>
-      <span class="n">rgb</span> <span class="o">=</span> <span class="n">nl_func</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="n">arcsinh</span><span class="o">=</span><span class="n">brightness</span><span class="p">)</span>
-      <span class="n">nl_minmax</span> <span class="o">=</span> <span class="n">nl_func</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">minmax</span><span class="p">),</span> <span class="n">arcsinh</span><span class="o">=</span><span class="n">brightness</span><span class="p">)</span>
+      <span class="n">rgb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nl_func</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="n">gain</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">brightness</span><span class="p">)</span>
+      <span class="n">nl_minmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nl_func</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minmax</span><span class="p">),</span> <span class="n">gain</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">brightness</span><span class="p">)</span>
 
     <span class="c1"># lastly, rescale image to be between min and max</span>
     <span class="n">rgb</span> <span class="o">=</span> <span class="p">(</span><span class="n">rgb</span> <span class="o">-</span> <span class="n">nl_minmax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">nl_minmax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">nl_minmax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
     <span class="c1"># optionally desaturate pixels that are dominated by a single</span>
     <span class="c1"># colour to avoid colourful speckled sky</span>
-    <span class="k">if</span> <span class="n">desaturate</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">desaturate</span><span class="p">:</span>
       <span class="c1"># reshape rgb from (h, w, 3) to (3, h, w)</span>
       <span class="c1"># rgb = np.array([rgb[:, :, 0], rgb[:, :, 1], rgb[:, :, 2]])</span>
       <span class="n">rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -608,41 +645,41 @@
     <span class="n">rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
 
     <span class="c1"># set image to RGB levels (0 - 255)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">normalize</span> <span class="ow">or</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span> <span class="ow">or</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
       <span class="n">rgb</span> <span class="o">=</span> <span class="p">(</span><span class="n">rgb</span> <span class="o">*</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
 
     <span class="c1"># save image</span>
     <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
       <span class="n">ImageOps</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="s1">&#39;RGB&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">rgb</span></div>
+    <span class="k">return</span> <span class="n">rgb</span></div></div>
 
 
-<div class="viewcode-block" id="ColorImage.batch_legacy_rgb"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.batch_legacy_rgb">[docs]</a>  <span class="nd">@staticmethod</span>
-  <span class="k">def</span> <span class="nf">batch_legacy_rgb</span><span class="p">(</span>
-    <span class="n">images</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span>
-    <span class="n">save_paths</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span>
-    <span class="o">**</span><span class="n">kwargs</span>
-  <span class="p">):</span>
-    <span class="k">for</span> <span class="n">image_path</span><span class="p">,</span> <span class="n">save_path</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">save_paths</span><span class="p">):</span>
-      <span class="n">ColorImage</span><span class="o">.</span><span class="n">legacy_rgb</span><span class="p">(</span>
-        <span class="n">image_path</span><span class="p">,</span>
-        <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
-        <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span>
-      <span class="p">)</span></div>
 
-
-<div class="viewcode-block" id="ColorImage.lupton_rgb"><a class="viewcode-back" href="../../../api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.lupton_rgb">[docs]</a>  <span class="nd">@staticmethod</span>
-  <span class="k">def</span> <span class="nf">lupton_rgb</span><span class="p">(</span>
-    <span class="n">imgs</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+<div class="viewcode-block" id="LuptonRGB"><a class="viewcode-back" href="../../../api/mergernet.data.image.LuptonRGB.html#mergernet.data.image.LuptonRGB">[docs]</a><span class="k">class</span> <span class="nc">LuptonRGB</span><span class="p">(</span><span class="n">ImageTransform</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
     <span class="n">bands</span><span class="o">=</span><span class="s1">&#39;grz&#39;</span><span class="p">,</span>
     <span class="n">arcsinh</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
     <span class="n">mn</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
     <span class="n">mx</span><span class="o">=</span><span class="mf">100.</span><span class="p">,</span>
     <span class="n">desaturate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">desaturate_factor</span><span class="o">=</span><span class="mf">.01</span><span class="p">,</span>
-    <span class="n">nl_func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">nl_func</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;asinh&#39;</span><span class="p">,</span>
+  <span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">bands</span> <span class="o">=</span> <span class="n">bands</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">arcsinh</span> <span class="o">=</span> <span class="n">arcsinh</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mn</span> <span class="o">=</span> <span class="n">mn</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mx</span> <span class="o">=</span> <span class="n">mx</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">desaturate</span> <span class="o">=</span> <span class="n">desaturate</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">desaturate_factor</span> <span class="o">=</span> <span class="n">desaturate_factor</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">nl_func</span> <span class="o">=</span> <span class="n">asinh_map</span> <span class="k">if</span> <span class="n">nl_func</span> <span class="o">==</span> <span class="s1">&#39;asinh&#39;</span> <span class="k">else</span> <span class="n">asinh_map2</span>
+
+
+<div class="viewcode-block" id="LuptonRGB.transform"><a class="viewcode-back" href="../../../api/mergernet.data.image.LuptonRGB.html#mergernet.data.image.LuptonRGB.transform">[docs]</a>  <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">imgs</span><span class="p">:</span>  <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
   <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create human-interpretable rgb image from multi-band pixel data</span>
@@ -676,8 +713,8 @@
 <span class="sd">    numpy.ndarray</span>
 <span class="sd">      aray of shape (H, W, 3) of pixel values for colour image</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">nl_func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-      <span class="n">nl_func</span> <span class="o">=</span> <span class="n">ColorImage</span><span class="o">.</span><span class="n">asinh_map</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+      <span class="n">img</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 
     <span class="n">size</span> <span class="o">=</span> <span class="n">imgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">grzscales</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
@@ -688,20 +725,23 @@
 
     <span class="c1"># set the relative intensities of each band to be approximately equal</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">im</span><span class="p">,</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="n">bands</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">im</span><span class="p">,</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bands</span><span class="p">):</span>
       <span class="n">plane</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">grzscales</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">band</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.</span><span class="p">))</span>
       <span class="n">img</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">plane</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">im</span> <span class="o">/</span> <span class="n">scale</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
     <span class="n">I</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">desaturate</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">desaturate</span><span class="p">:</span>
       <span class="n">img_nanomaggies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-      <span class="k">for</span> <span class="n">im</span><span class="p">,</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="n">bands</span><span class="p">):</span>
+
+      <span class="k">for</span> <span class="n">im</span><span class="p">,</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bands</span><span class="p">):</span>
         <span class="n">plane</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">grzscales</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">band</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.</span><span class="p">))</span>
         <span class="n">img_nanomaggies</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">plane</span><span class="p">]</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
       <span class="n">img_nanomaggies_nonzero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">img_nanomaggies</span><span class="p">,</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
       <span class="n">img_ab_mag</span> <span class="o">=</span> <span class="mf">22.5</span> <span class="o">-</span> <span class="mf">2.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">img_nanomaggies_nonzero</span><span class="p">)</span>
       <span class="n">img_flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">img_ab_mag</span> <span class="o">/</span> <span class="o">-</span><span class="mf">2.5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3631</span>
+
       <span class="c1"># DR1 release paper quotes 90s exposure time per band, 900s on completion</span>
       <span class="c1"># TODO assume 3 exposures per band per image. exptime is per ccd, nexp per tile, will be awful to add</span>
       <span class="n">exposure_time_seconds</span> <span class="o">=</span> <span class="mf">90.</span> <span class="o">*</span> <span class="mf">3.</span>
@@ -712,20 +752,19 @@
       <span class="n">mean_all_bands</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
       <span class="n">deviation_from_mean</span> <span class="o">=</span> <span class="n">img</span> <span class="o">-</span> <span class="n">mean_all_bands</span>
       <span class="n">signal_to_noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">img_photons_per_pixel</span><span class="p">)</span>
-      <span class="n">saturation_factor</span> <span class="o">=</span> <span class="n">signal_to_noise</span> <span class="o">*</span> <span class="n">desaturate_factor</span>
+      <span class="n">saturation_factor</span> <span class="o">=</span> <span class="n">signal_to_noise</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">desaturate_factor</span>
+
       <span class="c1"># if that would imply INCREASING the deviation, do nothing</span>
       <span class="n">saturation_factor</span><span class="p">[</span><span class="n">saturation_factor</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span>
       <span class="n">img</span> <span class="o">=</span> <span class="n">mean_all_bands</span> <span class="o">+</span> <span class="p">(</span><span class="n">deviation_from_mean</span> <span class="o">*</span> <span class="n">saturation_factor</span><span class="p">)</span>
 
-    <span class="n">rescaling</span> <span class="o">=</span> <span class="n">nl_func</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">arcsinh</span><span class="o">=</span><span class="n">arcsinh</span><span class="p">)</span><span class="o">/</span><span class="n">I</span>
+    <span class="n">rescaling</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nl_func</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">gain</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">arcsinh</span><span class="p">)</span> <span class="o">/</span> <span class="n">I</span>
     <span class="n">rescaled_img</span> <span class="o">=</span> <span class="n">img</span> <span class="o">*</span> <span class="n">rescaling</span>
 
-    <span class="n">rescaled_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">rescaled_img</span> <span class="o">-</span> <span class="n">mn</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">mx</span> <span class="o">-</span> <span class="n">mn</span><span class="p">)</span>
-    <span class="n">rescaled_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">rescaled_img</span> <span class="o">-</span> <span class="n">mn</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">mx</span> <span class="o">-</span> <span class="n">mn</span><span class="p">)</span>
+    <span class="n">rescaled_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">rescaled_img</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mn</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mx</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mn</span><span class="p">)</span>
+    <span class="n">rescaled_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">rescaled_img</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mn</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mx</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mn</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">rescaled_img</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span></div></div>
-
-
 
 
 
@@ -752,7 +791,7 @@
     <span class="s1">&#39;minmax&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span>
     <span class="s1">&#39;brightness&#39;</span><span class="p">:</span> <span class="mf">1.3</span><span class="p">,</span>
     <span class="s1">&#39;desaturate&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="s1">&#39;nl_func&#39;</span><span class="p">:</span> <span class="n">ColorImage</span><span class="o">.</span><span class="n">asinh_map2</span>
+    <span class="s1">&#39;nl_func&#39;</span><span class="p">:</span> <span class="s1">&#39;asinh&#39;</span>
   <span class="p">}</span>
 
   <span class="c1"># kwargs = {</span>
@@ -760,7 +799,8 @@
   <span class="c1">#   &#39;mn&#39;: 0,</span>
   <span class="c1">#   &#39;mx&#39;: .4,</span>
   <span class="c1"># }</span>
-  <span class="n">fits_color</span> <span class="o">=</span> <span class="n">ColorImage</span><span class="o">.</span><span class="n">legacy_rgb</span><span class="p">(</span><span class="n">fits_img</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="n">lrgb</span> <span class="o">=</span> <span class="n">LegacyRGB</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="n">fits_color</span> <span class="o">=</span> <span class="n">lrgb</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">fits_img</span><span class="p">)</span>
 
   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;fits_color shape&#39;</span><span class="p">,</span> <span class="n">fits_color</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 

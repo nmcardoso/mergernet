@@ -186,6 +186,7 @@
 <li class="toctree-l4"><a class="reference internal" href="api/mergernet.core.utils.find_by_value.html">mergernet.core.utils.find_by_value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/mergernet.core.utils.heading.html">mergernet.core.utils.heading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/mergernet.core.utils.iauname.html">mergernet.core.utils.iauname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/mergernet.core.utils.iauname_relative_path.html">mergernet.core.utils.iauname_relative_path</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/mergernet.core.utils.load_image.html">mergernet.core.utils.load_image</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/mergernet.core.utils.load_table.html">mergernet.core.utils.load_table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/mergernet.core.utils.not_in.html">mergernet.core.utils.not_in</a></li>
@@ -211,7 +212,11 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="api/mergernet.data.image.html">mergernet.data.image</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/mergernet.data.image.ColorImage.html">ColorImage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/mergernet.data.image.asinh_map.html">mergernet.data.image.asinh_map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/mergernet.data.image.asinh_map2.html">mergernet.data.image.asinh_map2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/mergernet.data.image.ImageTransform.html">ImageTransform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/mergernet.data.image.LegacyRGB.html">LegacyRGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/mergernet.data.image.LuptonRGB.html">LuptonRGB</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="api/mergernet.data.kfold.html">mergernet.data.kfold</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -342,7 +347,7 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="api/mergernet.services.imaging.html">mergernet.services.imaging</a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="api/mergernet.services.imaging.BaseImagingService.html">BaseImagingService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/mergernet.services.imaging.ImagingService.html">ImagingService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="api/mergernet.services.legacy.html">mergernet.services.legacy</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -445,34 +450,52 @@
           <li><a href="api/mergernet.core.utils.SingletonMeta.html#mergernet.core.utils.SingletonMeta.__new__">(mergernet.core.utils.SingletonMeta method)</a>
 </li>
         </ul></li>
-        <li><a href="api/mergernet.estimators.automl.OptunaEstimator.html#mergernet.estimators.automl.OptunaEstimator._abc_impl">_abc_impl (mergernet.estimators.automl.OptunaEstimator attribute)</a>
+        <li><a href="api/mergernet.data.image.ImageTransform.html#mergernet.data.image.ImageTransform._abc_impl">_abc_impl (mergernet.data.image.ImageTransform attribute)</a>
 
         <ul>
+          <li><a href="api/mergernet.data.image.LegacyRGB.html#mergernet.data.image.LegacyRGB._abc_impl">(mergernet.data.image.LegacyRGB attribute)</a>
+</li>
+          <li><a href="api/mergernet.data.image.LuptonRGB.html#mergernet.data.image.LuptonRGB._abc_impl">(mergernet.data.image.LuptonRGB attribute)</a>
+</li>
+          <li><a href="api/mergernet.estimators.automl.OptunaEstimator.html#mergernet.estimators.automl.OptunaEstimator._abc_impl">(mergernet.estimators.automl.OptunaEstimator attribute)</a>
+</li>
           <li><a href="api/mergernet.estimators.base.Estimator.html#mergernet.estimators.base.Estimator._abc_impl">(mergernet.estimators.base.Estimator attribute)</a>
 </li>
           <li><a href="api/mergernet.estimators.decals.ZoobotEstimator.html#mergernet.estimators.decals.ZoobotEstimator._abc_impl">(mergernet.estimators.decals.ZoobotEstimator attribute)</a>
 </li>
           <li><a href="api/mergernet.estimators.parametric.ParametricEstimator.html#mergernet.estimators.parametric.ParametricEstimator._abc_impl">(mergernet.estimators.parametric.ParametricEstimator attribute)</a>
 </li>
-          <li><a href="api/mergernet.services.imaging.BaseImagingService.html#mergernet.services.imaging.BaseImagingService._abc_impl">(mergernet.services.imaging.BaseImagingService attribute)</a>
+          <li><a href="api/mergernet.services.imaging.ImagingService.html#mergernet.services.imaging.ImagingService._abc_impl">(mergernet.services.imaging.ImagingService attribute)</a>
+</li>
+          <li><a href="api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService._abc_impl">(mergernet.services.legacy.LegacyService attribute)</a>
 </li>
         </ul></li>
         <li><a href="api/mergernet.model.callbacks.MyWandbCallback.html#mergernet.model.callbacks.MyWandbCallback._attempt_evaluation_log">_attempt_evaluation_log() (mergernet.model.callbacks.MyWandbCallback method)</a>
 </li>
         <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._batch_download">_batch_download() (mergernet.services.splus.SplusService method)</a>
 </li>
+        <li><a href="api/mergernet.services.imaging.ImagingService.html#mergernet.services.imaging.ImagingService._batch_download_rgb">_batch_download_rgb() (mergernet.services.imaging.ImagingService method)</a>
+
+        <ul>
+          <li><a href="api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService._batch_download_rgb">(mergernet.services.legacy.LegacyService method)</a>
+</li>
+        </ul></li>
         <li><a href="api/mergernet.model.callbacks.MyWandbCallback.html#mergernet.model.callbacks.MyWandbCallback._build_grad_accumulator_model">_build_grad_accumulator_model() (mergernet.model.callbacks.MyWandbCallback method)</a>
 </li>
         <li><a href="api/mergernet.core.utils.CachedDataFrame.html#mergernet.core.utils.CachedDataFrame._cache">_cache (mergernet.core.utils.CachedDataFrame attribute)</a>
 </li>
-        <li><a href="api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset._create_table_for_preds_dataset">_create_table_for_preds_dataset() (mergernet.data.dataset.Dataset method)</a>
-</li>
-        <li><a href="api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset._detect_img_extension">_detect_img_extension() (mergernet.data.dataset.Dataset method)</a>
+        <li><a href="api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset._create_dataset_table">_create_dataset_table() (mergernet.data.dataset.Dataset method)</a>
 </li>
         <li><a href="api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset._discretize_label">_discretize_label() (mergernet.data.dataset.Dataset method)</a>
 </li>
         <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._download_image">_download_image() (mergernet.services.splus.SplusService method)</a>
 </li>
+        <li><a href="api/mergernet.services.imaging.ImagingService.html#mergernet.services.imaging.ImagingService._download_rgb">_download_rgb() (mergernet.services.imaging.ImagingService method)</a>
+
+        <ul>
+          <li><a href="api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService._download_rgb">(mergernet.services.legacy.LegacyService method)</a>
+</li>
+        </ul></li>
         <li><a href="api/mergernet.services.github.GithubService.html#mergernet.services.github.GithubService._encode_content">_encode_content() (mergernet.services.github.GithubService method)</a>
 </li>
         <li><a href="api/mergernet.core.experiment.Experiment.html#mergernet.core.experiment.Experiment._exp_created">_exp_created (mergernet.core.experiment.Experiment attribute)</a>
@@ -535,6 +558,8 @@
         </ul></li>
         <li><a href="api/mergernet.core.utils.SingletonMeta.html#mergernet.core.utils.SingletonMeta._instances">_instances (mergernet.core.utils.SingletonMeta attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/mergernet.model.callbacks.DeltaStopping.html#mergernet.model.callbacks.DeltaStopping._keras_api_names">_keras_api_names (mergernet.model.callbacks.DeltaStopping attribute)</a>
 
         <ul>
@@ -547,8 +572,6 @@
           <li><a href="api/mergernet.model.callbacks.SaveBestTrialCallback.html#mergernet.model.callbacks.SaveBestTrialCallback._keras_api_names">(mergernet.model.callbacks.SaveBestTrialCallback attribute)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/mergernet.model.callbacks.DeltaStopping.html#mergernet.model.callbacks.DeltaStopping._keras_api_names_v1">_keras_api_names_v1 (mergernet.model.callbacks.DeltaStopping attribute)</a>
 
         <ul>
@@ -645,6 +668,8 @@
         </ul></li>
         <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService._track_tap_job">_track_tap_job() (mergernet.services.splus.SplusService method)</a>
 </li>
+        <li><a href="api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset._transform_images">_transform_images() (mergernet.data.dataset.Dataset method)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -663,9 +688,9 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/mergernet.core.utils.array_fallback.html#mergernet.core.utils.array_fallback">array_fallback() (in module mergernet.core.utils)</a>
 </li>
-        <li><a href="api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.asinh_map">asinh_map() (mergernet.data.image.ColorImage static method)</a>
+        <li><a href="api/mergernet.data.image.asinh_map.html#mergernet.data.image.asinh_map">asinh_map() (in module mergernet.data.image)</a>
 </li>
-        <li><a href="api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.asinh_map2">asinh_map2() (mergernet.data.image.ColorImage static method)</a>
+        <li><a href="api/mergernet.data.image.asinh_map2.html#mergernet.data.image.asinh_map2">asinh_map2() (in module mergernet.data.image)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -679,30 +704,34 @@
 </li>
         <li><a href="api/mergernet.services.google.GDrive.html#mergernet.services.google.GDrive.base_path">base_path (mergernet.services.google.GDrive attribute)</a>
 </li>
-        <li><a href="api/mergernet.services.imaging.BaseImagingService.html#mergernet.services.imaging.BaseImagingService">BaseImagingService (class in mergernet.services.imaging)</a>
+        <li><a href="api/mergernet.services.imaging.ImagingService.html#mergernet.services.imaging.ImagingService.batch_cutout">batch_cutout() (mergernet.services.imaging.ImagingService method)</a>
+
+        <ul>
+          <li><a href="api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService.batch_cutout">(mergernet.services.legacy.LegacyService method)</a>
 </li>
-        <li><a href="api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService.batch_cutout">batch_cutout() (mergernet.services.legacy.LegacyService method)</a>
-</li>
+        </ul></li>
         <li><a href="api/mergernet.services.utils.batch_download_file.html#mergernet.services.utils.batch_download_file">batch_download_file() (in module mergernet.services.utils)</a>
 </li>
         <li><a href="api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.batch_download_fits">batch_download_fits() (mergernet.services.sdss.SloanService method)</a>
 </li>
-        <li><a href="api/mergernet.services.imaging.BaseImagingService.html#mergernet.services.imaging.BaseImagingService.batch_download_rgb">batch_download_rgb() (mergernet.services.imaging.BaseImagingService method)</a>
-
-        <ul>
-          <li><a href="api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.batch_download_rgb">(mergernet.services.sdss.SloanService method)</a>
+        <li><a href="api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.batch_download_rgb">batch_download_rgb() (mergernet.services.sdss.SloanService method)</a>
 </li>
-        </ul></li>
         <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.batch_image_download">batch_image_download() (mergernet.services.splus.SplusService method)</a>
-</li>
-        <li><a href="api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.batch_legacy_rgb">batch_legacy_rgb() (mergernet.data.image.ColorImage static method)</a>
 </li>
         <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.batch_query">batch_query() (mergernet.services.splus.SplusService method)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/mergernet.services.tap.TapService.html#mergernet.services.tap.TapService.batch_sync_query">batch_sync_query() (mergernet.services.tap.TapService method)</a>
 </li>
+        <li><a href="api/mergernet.data.image.ImageTransform.html#mergernet.data.image.ImageTransform.batch_transform">batch_transform() (mergernet.data.image.ImageTransform method)</a>
+
+        <ul>
+          <li><a href="api/mergernet.data.image.LegacyRGB.html#mergernet.data.image.LegacyRGB.batch_transform">(mergernet.data.image.LegacyRGB method)</a>
+</li>
+          <li><a href="api/mergernet.data.image.LuptonRGB.html#mergernet.data.image.LuptonRGB.batch_transform">(mergernet.data.image.LuptonRGB method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/mergernet.data.dataset_config.DatasetRegistry.html#mergernet.data.dataset_config.DatasetRegistry.BIN_LEGACY_NORTH_RGB_128">BIN_LEGACY_NORTH_RGB_128 (mergernet.data.dataset_config.DatasetRegistry attribute)</a>
 </li>
         <li><a href="api/mergernet.data.dataset_config.DatasetRegistry.html#mergernet.data.dataset_config.DatasetRegistry.BIN_SDSS_128">BIN_SDSS_128 (mergernet.data.dataset_config.DatasetRegistry attribute)</a>
@@ -779,8 +808,6 @@
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage">ColorImage (class in mergernet.data.image)</a>
-</li>
         <li><a href="api/mergernet.services.github.GithubService.html#mergernet.services.github.GithubService.commit">commit() (mergernet.services.github.GithubService method)</a>
 </li>
         <li><a href="api/mergernet.estimators.automl.OptunaEstimator.html#mergernet.estimators.automl.OptunaEstimator.compile_model">compile_model() (mergernet.estimators.automl.OptunaEstimator method)</a>
@@ -817,9 +844,11 @@
         </ul></li>
         <li><a href="api/mergernet.data.match.CrossMatchResult.html#mergernet.data.match.CrossMatchResult">CrossMatchResult (class in mergernet.data.match)</a>
 </li>
-        <li><a href="api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService.cutout">cutout() (mergernet.services.legacy.LegacyService method)</a>
+        <li><a href="api/mergernet.services.imaging.ImagingService.html#mergernet.services.imaging.ImagingService.cutout">cutout() (mergernet.services.imaging.ImagingService method)</a>
 
         <ul>
+          <li><a href="api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService.cutout">(mergernet.services.legacy.LegacyService method)</a>
+</li>
           <li><a href="api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.cutout">(mergernet.services.sdss.SloanService method)</a>
 </li>
         </ul></li>
@@ -895,12 +924,8 @@
         </ul></li>
         <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.download_lupton_rgb">download_lupton_rgb() (mergernet.services.splus.SplusService method)</a>
 </li>
-        <li><a href="api/mergernet.services.imaging.BaseImagingService.html#mergernet.services.imaging.BaseImagingService.download_rgb">download_rgb() (mergernet.services.imaging.BaseImagingService method)</a>
-
-        <ul>
-          <li><a href="api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.download_rgb">(mergernet.services.sdss.SloanService method)</a>
+        <li><a href="api/mergernet.services.sdss.SloanService.html#mergernet.services.sdss.SloanService.download_rgb">download_rgb() (mergernet.services.sdss.SloanService method)</a>
 </li>
-        </ul></li>
         <li><a href="api/mergernet.services.splus.SplusService.html#mergernet.services.splus.SplusService.download_trilogy_rgb">download_trilogy_rgb() (mergernet.services.splus.SplusService method)</a>
 </li>
         <li><a href="api/mergernet.data.sanitization.DatasetSanitization.html#mergernet.data.sanitization.DatasetSanitization.drop_images_by_filesize">drop_images_by_filesize() (mergernet.data.sanitization.DatasetSanitization method)</a>
@@ -1073,10 +1098,10 @@
           <li><a href="api/mergernet.estimators.parametric.ParametricEstimator.html#mergernet.estimators.parametric.ParametricEstimator.get_conv_arch">(mergernet.estimators.parametric.ParametricEstimator method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/mergernet.data.match.XTable.html#mergernet.data.match.XTable.get_coords">get_coords() (mergernet.data.match.XTable method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/mergernet.estimators.automl.OptunaEstimator.html#mergernet.estimators.automl.OptunaEstimator.get_dataaug_block">get_dataaug_block() (mergernet.estimators.automl.OptunaEstimator method)</a>
 
         <ul>
@@ -1112,6 +1137,8 @@
         <li><a href="api/mergernet.visualization.plot.Serie.html#mergernet.visualization.plot.Serie.get_serie">get_serie() (mergernet.visualization.plot.Serie method)</a>
 </li>
         <li><a href="api/mergernet.visualization.plot.Serie.html#mergernet.visualization.plot.Serie.get_std">get_std() (mergernet.visualization.plot.Serie method)</a>
+</li>
+        <li><a href="api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset.get_table">get_table() (mergernet.data.dataset.Dataset method)</a>
 </li>
         <li><a href="api/mergernet.services.google.GDrive.html#mergernet.services.google.GDrive.get_url">get_url() (mergernet.services.google.GDrive static method)</a>
 
@@ -1159,7 +1186,13 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/mergernet.core.utils.iauname.html#mergernet.core.utils.iauname">iauname() (in module mergernet.core.utils)</a>
 </li>
+        <li><a href="api/mergernet.core.utils.iauname_relative_path.html#mergernet.core.utils.iauname_relative_path">iauname_relative_path() (in module mergernet.core.utils)</a>
+</li>
+        <li><a href="api/mergernet.data.image.ImageTransform.html#mergernet.data.image.ImageTransform">ImageTransform (class in mergernet.data.image)</a>
+</li>
         <li><a href="api/mergernet.services.splus.ImageType.html#mergernet.services.splus.ImageType">ImageType (class in mergernet.services.splus)</a>
+</li>
+        <li><a href="api/mergernet.services.imaging.ImagingService.html#mergernet.services.imaging.ImagingService">ImagingService (class in mergernet.services.imaging)</a>
 </li>
         <li><a href="api/mergernet.data.trilogy.imscale.html#mergernet.data.trilogy.imscale">imscale() (in module mergernet.data.trilogy)</a>
 </li>
@@ -1227,7 +1260,7 @@
   <h2>L</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.legacy_rgb">legacy_rgb() (mergernet.data.image.ColorImage static method)</a>
+        <li><a href="api/mergernet.data.image.LegacyRGB.html#mergernet.data.image.LegacyRGB">LegacyRGB (class in mergernet.data.image)</a>
 </li>
         <li><a href="api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService">LegacyService (class in mergernet.services.legacy)</a>
 </li>
@@ -1277,7 +1310,7 @@
         </ul></li>
         <li><a href="api/mergernet.services.splus.ImageType.html#mergernet.services.splus.ImageType.lupton">lupton (mergernet.services.splus.ImageType attribute)</a>
 </li>
-        <li><a href="api/mergernet.data.image.ColorImage.html#mergernet.data.image.ColorImage.lupton_rgb">lupton_rgb() (mergernet.data.image.ColorImage static method)</a>
+        <li><a href="api/mergernet.data.image.LuptonRGB.html#mergernet.data.image.LuptonRGB">LuptonRGB (class in mergernet.data.image)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -2274,6 +2307,14 @@
         </ul></li>
         <li><a href="api/mergernet.visualization.plot.train_metrics.html#mergernet.visualization.plot.train_metrics">train_metrics() (in module mergernet.visualization.plot)</a>
 </li>
+        <li><a href="api/mergernet.data.image.ImageTransform.html#mergernet.data.image.ImageTransform.transform">transform() (mergernet.data.image.ImageTransform method)</a>
+
+        <ul>
+          <li><a href="api/mergernet.data.image.LegacyRGB.html#mergernet.data.image.LegacyRGB.transform">(mergernet.data.image.LegacyRGB method)</a>
+</li>
+          <li><a href="api/mergernet.data.image.LuptonRGB.html#mergernet.data.image.LuptonRGB.transform">(mergernet.data.image.LuptonRGB method)</a>
+</li>
+        </ul></li>
         <li><a href="api/mergernet.services.splus.ImageType.html#mergernet.services.splus.ImageType.trilogy">trilogy (mergernet.services.splus.ImageType attribute)</a>
 </li>
         <li><a href="api/mergernet.data.rgb.RGB.html#mergernet.data.rgb.RGB.trilogy_fits_to_png">trilogy_fits_to_png() (mergernet.data.rgb.RGB method)</a>

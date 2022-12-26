@@ -19,7 +19,7 @@ mergernet.services.imaging
     :toctree:
     :template: class-template.rst
   
-    BaseImagingService
+    ImagingService
   
   
 

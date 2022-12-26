@@ -1,0 +1,17 @@
+LegacyRGB
+=========
+
+.. currentmodule:: mergernet.data.image
+
+.. autoclass:: LegacyRGB
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
+
+
+  
+  
+  

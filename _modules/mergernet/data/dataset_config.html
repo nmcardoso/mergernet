@@ -187,6 +187,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.find_by_value.html">mergernet.core.utils.find_by_value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.heading.html">mergernet.core.utils.heading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.iauname.html">mergernet.core.utils.iauname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.iauname_relative_path.html">mergernet.core.utils.iauname_relative_path</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.load_image.html">mergernet.core.utils.load_image</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.load_table.html">mergernet.core.utils.load_table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.not_in.html">mergernet.core.utils.not_in</a></li>
@@ -212,7 +213,11 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.image.html">mergernet.data.image</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.ColorImage.html">ColorImage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.asinh_map.html">mergernet.data.image.asinh_map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.asinh_map2.html">mergernet.data.image.asinh_map2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.ImageTransform.html">ImageTransform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.LegacyRGB.html">LegacyRGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.LuptonRGB.html">LuptonRGB</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.kfold.html">mergernet.data.kfold</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -343,7 +348,7 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.services.imaging.html">mergernet.services.imaging</a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.services.imaging.BaseImagingService.html">BaseImagingService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.services.imaging.ImagingService.html">ImagingService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.services.legacy.html">mergernet.services.legacy</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -433,9 +438,11 @@
         <article role="main">
           <h1>Source code for mergernet.data.dataset_config</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
 
+<span class="kn">from</span> <span class="nn">mergernet.data.image</span> <span class="kn">import</span> <span class="n">ImageTransform</span>
 <span class="kn">from</span> <span class="nn">mergernet.services.google</span> <span class="kn">import</span> <span class="n">GDrive</span>
+<span class="kn">from</span> <span class="nn">mergernet.services.imaging</span> <span class="kn">import</span> <span class="n">ImagingService</span>
 <span class="kn">from</span> <span class="nn">mergernet.services.sciserver</span> <span class="kn">import</span> <span class="n">SciServer</span>
 
 
@@ -449,14 +456,16 @@
     <span class="n">archive_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">images_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">table_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">X_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">y_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">image_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">label_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">fold_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;fold&#39;</span><span class="p">,</span>
-    <span class="n">X_column_suffix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="c1"># filename extension</span>
-    <span class="n">detect_img_extension</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">labels</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">image_extension</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">n_classes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">labels</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">positions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">image_service</span><span class="p">:</span> <span class="n">ImagingService</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">image_transform</span><span class="p">:</span> <span class="n">ImageTransform</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">image_nested</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
   <span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">archive_url</span> <span class="o">=</span> <span class="n">archive_url</span>
@@ -464,14 +473,17 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">archive_path</span> <span class="o">=</span> <span class="n">archive_path</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">images_path</span> <span class="o">=</span> <span class="n">images_path</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">table_path</span> <span class="o">=</span> <span class="n">table_path</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">X_column</span> <span class="o">=</span> <span class="n">X_column</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">y_column</span> <span class="o">=</span> <span class="n">y_column</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">image_column</span> <span class="o">=</span> <span class="n">image_column</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">label_column</span> <span class="o">=</span> <span class="n">label_column</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">fold_column</span> <span class="o">=</span> <span class="n">fold_column</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">X_column_suffix</span> <span class="o">=</span> <span class="n">X_column_suffix</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">detect_img_extension</span> <span class="o">=</span> <span class="n">detect_img_extension</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">image_extension</span> <span class="o">=</span> <span class="n">image_extension</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">image_shape</span> <span class="o">=</span> <span class="n">image_shape</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span> <span class="o">=</span> <span class="n">n_classes</span></div>
+    <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="n">positions</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">image_service</span> <span class="o">=</span> <span class="n">image_service</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">image_transform</span> <span class="o">=</span> <span class="n">image_transform</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">image_nested</span> <span class="o">=</span> <span class="n">image_nested</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span></div>
 
 
 
@@ -487,12 +499,11 @@
     <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sdss_lupton_jpg_128.tar.xz&#39;</span><span class="p">),</span>
     <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sdss_lupton_jpg_128&#39;</span><span class="p">),</span>
     <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;reference_darg.csv&#39;</span><span class="p">),</span>
-    <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span>
-    <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+    <span class="n">image_column</span><span class="o">=</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span>
+    <span class="n">label_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
     <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
     <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">],</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-    <span class="n">n_classes</span><span class="o">=</span><span class="mi">3</span>
   <span class="p">)</span>
   <span class="sd">&quot;&quot;&quot;Default configuration object for RGB dataset.&quot;&quot;&quot;</span>
 
@@ -503,13 +514,12 @@
     <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_sdss_128.tar.xz&#39;</span><span class="p">),</span>
     <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_sdss_128&#39;</span><span class="p">),</span>
     <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd.csv&#39;</span><span class="p">),</span>
-    <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
-    <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
-    <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+    <span class="n">image_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
+    <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span>
+    <span class="n">label_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
     <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
     <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;merger&#39;</span><span class="p">,</span> <span class="s1">&#39;elliptical&#39;</span><span class="p">,</span> <span class="s1">&#39;spiral&#39;</span><span class="p">,</span> <span class="s1">&#39;disturbed&#39;</span><span class="p">],</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-    <span class="n">n_classes</span><span class="o">=</span><span class="mi">4</span>
   <span class="p">)</span>
   <span class="sd">&quot;&quot;&quot;MESD dataset with SDSS 128x128 images.&quot;&quot;&quot;</span>
 
@@ -520,13 +530,12 @@
     <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_legacy_128.tar.xz&#39;</span><span class="p">),</span>
     <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd_legacy_128&#39;</span><span class="p">),</span>
     <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;mesd.csv&#39;</span><span class="p">),</span>
-    <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
-    <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
-    <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+    <span class="n">image_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
+    <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span>
+    <span class="n">label_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
     <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
     <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;merger&#39;</span><span class="p">,</span> <span class="s1">&#39;elliptical&#39;</span><span class="p">,</span> <span class="s1">&#39;spiral&#39;</span><span class="p">,</span> <span class="s1">&#39;disturbed&#39;</span><span class="p">],</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-    <span class="n">n_classes</span><span class="o">=</span><span class="mi">4</span>
   <span class="p">)</span>
   <span class="sd">&quot;&quot;&quot;MESD dataset with Legacy Survey 128x128 images.&quot;&quot;&quot;</span>
 
@@ -537,13 +546,12 @@
     <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_sdss_128.tar.xz&#39;</span><span class="p">),</span>
     <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_sdss_128&#39;</span><span class="p">),</span>
     <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_sdss.csv&#39;</span><span class="p">),</span>
-    <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
-    <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
-    <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+    <span class="n">image_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
+    <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span>
+    <span class="n">label_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
     <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
     <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;non_merger&#39;</span><span class="p">,</span> <span class="s1">&#39;merger&#39;</span><span class="p">],</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-    <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span>
   <span class="p">)</span>
   <span class="sd">&quot;&quot;&quot;Binary dataset (merger and non-merger) with SDSS 128x128 images.&quot;&quot;&quot;</span>
 
@@ -557,8 +565,8 @@
     <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_128.tar.xz&#39;</span><span class="p">),</span>
     <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_128&#39;</span><span class="p">),</span>
     <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_lupton.csv&#39;</span><span class="p">),</span>
-    <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
-    <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span>
+    <span class="n">image_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
+    <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
   <span class="sd">&quot;&quot;&quot;Blind dataset with S-PLUS 128x128 Lupton images.&quot;&quot;&quot;</span>
@@ -573,8 +581,8 @@
     <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_150.tar.xz&#39;</span><span class="p">),</span>
     <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_lupton_150&#39;</span><span class="p">),</span>
     <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_lupton.csv&#39;</span><span class="p">),</span>
-    <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
-    <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span>
+    <span class="n">image_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
+    <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
   <span class="sd">&quot;&quot;&quot;Blind dataset with S-PLUS 150x150 Lupton images.&quot;&quot;&quot;</span>
@@ -589,8 +597,8 @@
     <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_128.tar.xz&#39;</span><span class="p">),</span>
     <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_128&#39;</span><span class="p">),</span>
     <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_trilogy.csv&#39;</span><span class="p">),</span>
-    <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
-    <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span>
+    <span class="n">image_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
+    <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
   <span class="sd">&quot;&quot;&quot;Blind dataset with S-PLUS 128x128 Trilogy images.&quot;&quot;&quot;</span>
@@ -605,8 +613,8 @@
     <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_150.tar.xz&#39;</span><span class="p">),</span>
     <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_trilogy_150&#39;</span><span class="p">),</span>
     <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r17_trilogy.csv&#39;</span><span class="p">),</span>
-    <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
-    <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span>
+    <span class="n">image_column</span><span class="o">=</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span>
+    <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
   <span class="sd">&quot;&quot;&quot;Blind dataset with S-PLUS 150x150 Trilogy images.&quot;&quot;&quot;</span>
@@ -621,13 +629,12 @@
     <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_legacy_north_rgb_128.tar.xz&#39;</span><span class="p">),</span>
     <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_legacy_north_rgb_128&#39;</span><span class="p">),</span>
     <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_legacy_north_sanitized.csv&#39;</span><span class="p">),</span>
-    <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
-    <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
-    <span class="n">y_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+    <span class="n">image_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
+    <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span>
+    <span class="n">label_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
     <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
     <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;non_merger&#39;</span><span class="p">,</span> <span class="s1">&#39;merger&#39;</span><span class="p">],</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-    <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span>
   <span class="p">)</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Binary dataset (merger and non-merger) with Legacy 128x128 RGB images</span>
@@ -643,8 +650,8 @@
     <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r13.5-17_ls10_rgb_128.tar.xz&#39;</span><span class="p">),</span>
     <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r13.5-17_ls10_rgb_128&#39;</span><span class="p">),</span>
     <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;blind_splus_gal80_r13.5-17_sanitized.csv&#39;</span><span class="p">),</span>
-    <span class="n">X_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
-    <span class="n">X_column_suffix</span><span class="o">=</span><span class="s1">&#39;.jpg&#39;</span><span class="p">,</span>
+    <span class="n">image_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
+    <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;jpg&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
   <span class="sd">&quot;&quot;&quot;</span>

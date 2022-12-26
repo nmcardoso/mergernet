@@ -9,6 +9,14 @@ mergernet.data.image
 
   
   
+  .. rubric:: Functions
+
+  .. autosummary::
+    :toctree:
+  
+    asinh_map
+    asinh_map2
+  
   
 
   
@@ -19,7 +27,9 @@ mergernet.data.image
     :toctree:
     :template: class-template.rst
   
-    ColorImage
+    ImageTransform
+    LegacyRGB
+    LuptonRGB
   
   
 

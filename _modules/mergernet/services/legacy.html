@@ -187,6 +187,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.find_by_value.html">mergernet.core.utils.find_by_value</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.heading.html">mergernet.core.utils.heading</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.iauname.html">mergernet.core.utils.iauname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.iauname_relative_path.html">mergernet.core.utils.iauname_relative_path</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.load_image.html">mergernet.core.utils.load_image</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.load_table.html">mergernet.core.utils.load_table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.core.utils.not_in.html">mergernet.core.utils.not_in</a></li>
@@ -212,7 +213,11 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.image.html">mergernet.data.image</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.ColorImage.html">ColorImage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.asinh_map.html">mergernet.data.image.asinh_map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.asinh_map2.html">mergernet.data.image.asinh_map2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.ImageTransform.html">ImageTransform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.LegacyRGB.html">LegacyRGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.image.LuptonRGB.html">LuptonRGB</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.kfold.html">mergernet.data.kfold</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -343,7 +348,7 @@
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.services.imaging.html">mergernet.services.imaging</a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.services.imaging.BaseImagingService.html">BaseImagingService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.services.imaging.ImagingService.html">ImagingService</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.services.legacy.html">mergernet.services.legacy</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -437,6 +442,7 @@
 
 <span class="kn">import</span> <span class="nn">requests</span>
 
+<span class="kn">from</span> <span class="nn">mergernet.services.imaging</span> <span class="kn">import</span> <span class="n">ImagingService</span>
 <span class="kn">from</span> <span class="nn">mergernet.services.utils</span> <span class="kn">import</span> <span class="p">(</span><span class="n">append_query_params</span><span class="p">,</span> <span class="n">download_file</span><span class="p">,</span>
                                       <span class="n">parallel_function_executor</span><span class="p">)</span>
 
@@ -447,16 +453,9 @@
 
 
 
-<div class="viewcode-block" id="LegacyService"><a class="viewcode-back" href="../../../api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService">[docs]</a><span class="k">class</span> <span class="nc">LegacyService</span><span class="p">:</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">http_client</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-
-
-<div class="viewcode-block" id="LegacyService.cutout"><a class="viewcode-back" href="../../../api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService.cutout">[docs]</a>  <span class="k">def</span> <span class="nf">cutout</span><span class="p">(</span>
+<div class="viewcode-block" id="LegacyService"><a class="viewcode-back" href="../../../api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService">[docs]</a><span class="k">class</span> <span class="nc">LegacyService</span><span class="p">(</span><span class="n">ImagingService</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
-    <span class="n">ra</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">dec</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">save_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
     <span class="n">replace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">256</span><span class="p">,</span>
     <span class="n">height</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">256</span><span class="p">,</span>
@@ -465,18 +464,11 @@
     <span class="n">layer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ls-dr9&#39;</span><span class="p">,</span>
     <span class="n">use_dev</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;jpg&#39;</span><span class="p">,</span>
-  <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Downloads a single Legacy Survey object RGB stamp defined by RA and DEC.</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    ra: float</span>
-<span class="sd">      Right ascension of the object.</span>
-<span class="sd">    dec: float</span>
-<span class="sd">      Declination of the object.</span>
-<span class="sd">    save_path: Path</span>
-<span class="sd">      Path where downloaded file will be stored.</span>
 <span class="sd">    replace: bool, optional</span>
 <span class="sd">      Replace file if exists in ``save_path`` location</span>
 <span class="sd">    width: float, optional</span>
@@ -493,27 +485,59 @@
 <span class="sd">      Use the dev env of Legacy Cutout API</span>
 <span class="sd">    fmt: str, optional</span>
 <span class="sd">      File format. One of: ``jpg`` or ``fits``</span>
+<span class="sd">    workers: int, optional</span>
+<span class="sd">      Maximum spawned threads when `batch_cutout` is called</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="s1">&#39;jpg&#39;</span><span class="p">:</span>
-      <span class="n">url</span> <span class="o">=</span> <span class="n">LEGACY_RGB_URL_DEV</span> <span class="k">if</span> <span class="n">use_dev</span> <span class="k">else</span> <span class="n">LEGACY_RGB_URL</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">replace</span> <span class="o">=</span> <span class="n">replace</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pixscale</span> <span class="o">=</span> <span class="n">pixscale</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">bands</span> <span class="o">=</span> <span class="n">bands</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">layer</span> <span class="o">=</span> <span class="n">layer</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">use_dev</span> <span class="o">=</span> <span class="n">use_dev</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">workers</span> <span class="o">=</span> <span class="n">workers</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">http_client</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="LegacyService.cutout"><a class="viewcode-back" href="../../../api/mergernet.services.legacy.LegacyService.html#mergernet.services.legacy.LegacyService.cutout">[docs]</a>  <span class="k">def</span> <span class="nf">cutout</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">ra</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">dec</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+  <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads a single Legacy Survey object RGB stamp defined by RA and DEC.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ra: float</span>
+<span class="sd">      Right ascension of the object.</span>
+<span class="sd">    dec: float</span>
+<span class="sd">      Declination of the object.</span>
+<span class="sd">    save_path: Path</span>
+<span class="sd">      Path where downloaded file will be stored.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_format</span> <span class="o">==</span> <span class="s1">&#39;jpg&#39;</span><span class="p">:</span>
+      <span class="n">url</span> <span class="o">=</span> <span class="n">LEGACY_RGB_URL_DEV</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_dev</span> <span class="k">else</span> <span class="n">LEGACY_RGB_URL</span>
     <span class="k">else</span><span class="p">:</span>
-      <span class="n">url</span> <span class="o">=</span> <span class="n">LEGACY_FITS_URL_DEV</span> <span class="k">if</span> <span class="n">use_dev</span> <span class="k">else</span> <span class="n">LEGACY_FITS_URL</span>
+      <span class="n">url</span> <span class="o">=</span> <span class="n">LEGACY_FITS_URL_DEV</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_dev</span> <span class="k">else</span> <span class="n">LEGACY_FITS_URL</span>
 
     <span class="n">image_url</span> <span class="o">=</span> <span class="n">append_query_params</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="p">{</span>
       <span class="s1">&#39;ra&#39;</span><span class="p">:</span> <span class="n">ra</span><span class="p">,</span>
       <span class="s1">&#39;dec&#39;</span><span class="p">:</span> <span class="n">dec</span><span class="p">,</span>
-      <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="n">width</span><span class="p">,</span>
-      <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="n">height</span><span class="p">,</span>
-      <span class="s1">&#39;pixscale&#39;</span><span class="p">:</span> <span class="n">pixscale</span><span class="p">,</span>
-      <span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="n">bands</span><span class="p">,</span>
-      <span class="s1">&#39;layer&#39;</span><span class="p">:</span> <span class="n">layer</span>
+      <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span>
+      <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span>
+      <span class="s1">&#39;pixscale&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixscale</span><span class="p">,</span>
+      <span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">bands</span><span class="p">,</span>
+      <span class="s1">&#39;layer&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer</span>
     <span class="p">})</span>
 
     <span class="n">download_file</span><span class="p">(</span>
       <span class="n">url</span><span class="o">=</span><span class="n">image_url</span><span class="p">,</span>
       <span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span>
       <span class="n">http_client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">http_client</span><span class="p">,</span>
-      <span class="n">replace</span><span class="o">=</span><span class="n">replace</span>
+      <span class="n">replace</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">replace</span>
     <span class="p">)</span></div>
 
 
@@ -523,9 +547,6 @@
     <span class="n">ra</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
     <span class="n">dec</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
     <span class="n">save_path</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span>
-    <span class="n">workers</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">replace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span>
   <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Downloads a list of objects defined by RA and DEC coordinates.</span>
@@ -541,18 +562,12 @@
 <span class="sd">      The list of DEC coordinates of the desired objects.</span>
 <span class="sd">    save_path: list of Path</span>
 <span class="sd">      The list of path where files should be saved.</span>
-<span class="sd">    workers: int, optional</span>
-<span class="sd">      Maximum spawned threads.</span>
-<span class="sd">    kwargs: optional</span>
-<span class="sd">      Same args as ``download_legacy_rgb`` function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
       <span class="p">{</span>
         <span class="s1">&#39;ra&#39;</span><span class="p">:</span> <span class="n">_ra</span><span class="p">,</span>
         <span class="s1">&#39;dec&#39;</span><span class="p">:</span> <span class="n">_dec</span><span class="p">,</span>
         <span class="s1">&#39;save_path&#39;</span><span class="p">:</span> <span class="n">_save_path</span><span class="p">,</span>
-        <span class="s1">&#39;replace&#39;</span><span class="p">:</span> <span class="n">replace</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span>
       <span class="p">}</span>
       <span class="k">for</span> <span class="n">_ra</span><span class="p">,</span> <span class="n">_dec</span><span class="p">,</span> <span class="n">_save_path</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
     <span class="p">]</span>
@@ -560,7 +575,7 @@
     <span class="n">parallel_function_executor</span><span class="p">(</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">cutout</span><span class="p">,</span>
       <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
-      <span class="n">workers</span><span class="o">=</span><span class="n">workers</span><span class="p">,</span>
+      <span class="n">workers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="p">,</span>
       <span class="n">unit</span><span class="o">=</span><span class="s1">&#39; files&#39;</span>
     <span class="p">)</span>
 
@@ -571,12 +586,11 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-  <span class="n">ls</span> <span class="o">=</span> <span class="n">LegacyService</span><span class="p">()</span>
+  <span class="n">ls</span> <span class="o">=</span> <span class="n">LegacyService</span><span class="p">(</span><span class="n">workers</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
   <span class="n">ls</span><span class="o">.</span><span class="n">batch_download_legacy_rgb</span><span class="p">(</span>
     <span class="n">ra</span><span class="o">=</span><span class="p">[</span><span class="mf">185.1458</span> <span class="o">+</span> <span class="n">dx</span><span class="o">/</span><span class="mi">2</span> <span class="k">for</span> <span class="n">dx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)],</span>
     <span class="n">dec</span><span class="o">=</span><span class="p">[</span><span class="mf">12.8624</span> <span class="o">+</span> <span class="n">dy</span><span class="o">/</span><span class="mi">2</span> <span class="k">for</span> <span class="n">dy</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)],</span>
-    <span class="n">save_path</span><span class="o">=</span><span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;test/</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.jpg&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)],</span>
-    <span class="n">workers</span><span class="o">=</span><span class="mi">6</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;test/</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.jpg&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)]</span>
   <span class="p">)</span>
 </pre></div>
         </article>
