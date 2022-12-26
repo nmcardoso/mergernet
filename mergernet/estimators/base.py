@@ -111,7 +111,7 @@ class Estimator(ABC):
 
   def download(self, config: EstimatorConfig, replace: bool = False):
     if config is None: return
-    destination_path = Experiment.local_exp_path / config.model_path
+    destination_path = Experiment.local_exp_path / config.archive_path
 
     if not destination_path.exists() or replace:
       for i, url in enumerate(config.url):
@@ -125,7 +125,7 @@ class Estimator(ABC):
           break
         except:
           if i == len(self.config.url) - 1:
-            raise RuntimeError("Can't download images archive")
+            raise RuntimeError("Can't download model")
 
 
   def get_dataaug_block(
