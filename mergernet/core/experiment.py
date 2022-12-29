@@ -257,7 +257,10 @@ class Experiment:
         with open(to_path, 'w') as fp:
           fp.write(data)
       elif isinstance(data, pd.DataFrame):
-        data.to_csv(to_path, index=False)
+        if to_path.suffix == '.parquet':
+          data.to_parquet(to_path, index=False)
+        else:
+          data.to_csv(to_path, index=False)
       elif isinstance(data, tf.keras.Model):
         data.save(to_path)
       else:
