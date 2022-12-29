@@ -299,7 +299,8 @@ class Experiment:
     if shared:
       from_path = cls.gd_shared_path / fname
     else:
-      from_path = Path(GD_EXP_PATTERN.format(exp_id=exp_id)) / fname
+      gd_pattern = DEV_GD_EXP_PATTERN if ENV == 'dev' else GD_EXP_PATTERN
+      from_path = Path(gd_pattern.format(exp_id=exp_id)) / fname
     to_path = cls.local_exp_path / fname
 
     if not from_path.exists():
