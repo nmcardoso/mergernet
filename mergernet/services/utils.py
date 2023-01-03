@@ -39,12 +39,13 @@ def download_file(
   save_path: Union[str, Path],
   replace: bool = False,
   http_client: requests.Session = None,
-  extract: bool = False
-):
+  extract: bool = False,
+  return_bytes: bool = False,
+) -> Union[bytes, None]:
   save_path = Path(save_path)
 
   if not replace and save_path.exists():
-    return
+    return None
 
   http_client = http_client or requests
 
@@ -59,8 +60,13 @@ def download_file(
     else:
       file_bytes = r.content
 
+    if return_bytes:
+      return file_bytes
+
     with open(str(save_path.resolve()), 'wb') as f:
       f.write(file_bytes)
+
+  return None
 
 
 
@@ -80,7 +86,7 @@ def batch_download_file(
     }
     for _url, _save_path in zip(urls, save_path)
   ]
-  parallel_function_executor(download_file, params, workers=workers, unit=' files')
+  parallel_function_executor(download_file, params, workers=workers, unit='file')
 
 
 
