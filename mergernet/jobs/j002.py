@@ -36,7 +36,7 @@ class Job(Experiment):
       (318.44754, 2.4765272),
       (356.1110805, 9.1151493),
       (353.7240193, 27.3522417),
-      (55.0375, -35.62444),
+      # (55.0375, -35.62444),
       (62.505, -31.2583),
       (62.752, -31.407),
       (57.1255, -39.42502),
@@ -119,6 +119,7 @@ class Job(Experiment):
       ),
       axis=1
     )
+    pca_df = pca_df.drop_duplicates('iauname')
 
     Experiment.upload_file_gd('representations_pca.csv', pca_df)
 
