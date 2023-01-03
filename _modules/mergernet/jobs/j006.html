@@ -468,7 +468,6 @@
 <span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">DATA_ROOT</span>
 <span class="kn">from</span> <span class="nn">mergernet.core.experiment</span> <span class="kn">import</span> <span class="n">Experiment</span>
 <span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">compress_fits</span><span class="p">,</span> <span class="n">iauname</span><span class="p">,</span> <span class="n">iauname_relative_path</span>
-<span class="kn">from</span> <span class="nn">mergernet.services.legacy</span> <span class="kn">import</span> <span class="n">LegacyService</span>
 
 
 <div class="viewcode-block" id="Job"><a class="viewcode-back" href="../../../api/mergernet.jobs.j006.Job.html#mergernet.jobs.j006.Job">[docs]</a><span class="k">class</span> <span class="nc">Job</span><span class="p">(</span><span class="n">Experiment</span><span class="p">):</span>
@@ -503,13 +502,14 @@
     <span class="p">)</span>
 
     <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">comp_path</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">descompressed_paths</span><span class="p">,</span> <span class="n">compressed_paths</span><span class="p">)):</span>
+      <span class="n">comp_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
       <span class="n">compress_fits</span><span class="p">(</span>
         <span class="n">file</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
         <span class="n">compress_type</span><span class="o">=</span><span class="s1">&#39;HCOMPRESS_1&#39;</span><span class="p">,</span>
         <span class="n">hcomp_scale</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
         <span class="n">quantize_level</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
         <span class="n">quantize_method</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">ext</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">ext</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="n">save_path</span><span class="o">=</span><span class="n">comp_path</span><span class="p">,</span>
         <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
       <span class="p">)</span></div></div>
