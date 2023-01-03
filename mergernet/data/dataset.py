@@ -257,6 +257,21 @@ class Dataset:
 
 
   def get_X_by_fold(self, fold: int, kind='test') -> np.ndarray:
+    """
+    Get X by fold
+
+    Parameters
+    ----------
+    fold : int
+      Fold number
+    kind : str, optional
+      one of: 'train' or 'test', by default 'test'
+
+    Returns
+    -------
+    numpy.ndarray
+      X values
+    """
     df = pd.read_csv(self.config.table_path)
 
     if kind == 'test':

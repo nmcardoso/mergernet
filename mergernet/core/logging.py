@@ -1,9 +1,8 @@
-from pathlib import Path
-from typing import Union
-from tempfile import gettempdir
-import shutil
 import logging
-
+import shutil
+from pathlib import Path
+from tempfile import gettempdir
+from typing import Union
 
 LOG_PATH = Path(gettempdir()) / 'mergernet.log'
 
