@@ -180,7 +180,9 @@ def iauname(
 
 
 def iauname_relative_path(
-  iaunames: Union[str, List[str]],
+  iaunames: Union[str, List[str]] = None,
+  ra: Union[float, List[float]] = None,
+  dec: Union[float, List[float]] = None,
   prefix: Union[str, Path] = '',
   suffix: str = '',
 ) -> Union[Path, List[Path]]:
@@ -189,11 +191,17 @@ def iauname_relative_path(
 
   Parameters
   ----------
-  iaunames: str, List[str]
-    Object iaunames
-  prefix: str, Path
+  iaunames: str, List[str], optional
+    Object iauname. The iauname or RA and DEC must be passed, if ``iaunames`` is
+    ``None``, this function computes the iauname using the ``ra`` and ``dec``
+    parameters
+  ra: float, List[float], optional
+    Object RA, used only if ``iaunames`` is ``None``
+  dec: float, List[float], optional
+    Object DEC, used only if ``iaunames`` is ``None``
+  prefix: str, Path, optional
     Path that will be prepended at the begin of all paths
-  suffix: str
+  suffix: str, optional
     Suffix that will be appended at the end of all paths
 
   Example
@@ -208,6 +216,9 @@ def iauname_relative_path(
   """
   prefix_path = Path(prefix)
   mapping = lambda x: prefix_path / x[:4] / (x + suffix)
+
+  if iaunames is None:
+    iaunames = iauname(ra, dec)
 
   if isinstance(iaunames, str):
     return mapping(iaunames)
