@@ -15,6 +15,7 @@ mergernet.core.utils
     :toctree:
   
     array_fallback
+    compress_fits
     deep_update
     find_by_value
     heading

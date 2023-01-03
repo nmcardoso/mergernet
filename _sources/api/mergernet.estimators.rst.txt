@@ -32,4 +32,5 @@
   mergernet.estimators.base
   mergernet.estimators.decals
   mergernet.estimators.parametric
+  mergernet.estimators.similarity
 
