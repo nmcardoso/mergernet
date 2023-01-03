@@ -169,8 +169,8 @@ def iauname(
     The formated IAU name of the object(s)
   """
   coord = SkyCoord(ra=ra*u.degree, dec=dec*u.degree, frame='icrs')
-  ra_str = coord.ra.to_string(unit=u.hourangle, sep='', precision=5, pad=True)
-  dec_str = coord.dec.to_string(sep='', precision=5, alwayssign=True, pad=True)
+  ra_str = coord.ra.to_string(unit=u.hourangle, sep='', precision=2, pad=True)
+  dec_str = coord.dec.to_string(sep='', precision=1, alwayssign=True, pad=True)
   if isinstance(ra_str, np.ndarray):
     r = [f'J{_ra_str}{_dec_str}' for _ra_str, _dec_str in zip(ra_str, dec_str)]
   else:
