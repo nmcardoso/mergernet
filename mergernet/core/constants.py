@@ -3,6 +3,8 @@ from pathlib import Path
 
 # Check env
 ENV = os.environ.get('PYTHON_ENV', 'dev')
+if 'COLAB_RELEASE_TAG' in os.environ:
+  ENV = 'colab'
 
 
 
