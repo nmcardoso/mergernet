@@ -1,8 +1,12 @@
+from io import BytesIO
 from pathlib import Path
 from typing import List, Tuple, Union
 
 import requests
+from astropy.io import fits
 
+from mergernet.core.constants import RANDOM_SEED
+from mergernet.core.utils import compress_fits, iauname, iauname_relative_path
 from mergernet.services.imaging import ImagingService
 from mergernet.services.utils import (append_query_params, download_file,
                                       parallel_function_executor)
@@ -25,6 +29,11 @@ class LegacyService(ImagingService):
     layer: str = 'ls-dr9',
     use_dev: bool = False,
     fmt: str = 'jpg',
+    compress_fits: bool = False,
+    compress_type: str = 'HCOMPRESS_1',
+    hcomp_scale: int = 3,
+    quantize_level: int = 10,
+    quantize_method: int = -1,
     workers: int = 3,
   ):
     """
@@ -46,6 +55,8 @@ class LegacyService(ImagingService):
       Use the dev env of Legacy Cutout API
     fmt: str, optional
       File format. One of: ``jpg`` or ``fits``
+    compress_fits: bool, optional
+      Compress the downloaded fits stamp to ``fits.fz``
     workers: int, optional
       Maximum spawned threads when `batch_cutout` is called
     """
@@ -58,6 +69,11 @@ class LegacyService(ImagingService):
     self.layer = layer
     self.use_dev = use_dev
     self.workers = workers
+    self.compress_fits = compress_fits
+    self.compress_type = compress_type
+    self.hcomp_scale = hcomp_scale
+    self.quantize_level = quantize_level
+    self.quantize_method = quantize_method
     self.http_client = requests.Session()
 
 
@@ -65,7 +81,8 @@ class LegacyService(ImagingService):
     self,
     ra: float,
     dec: float,
-    save_path: Path,
+    save_path: Path = None,
+    base_path: Union[str, Path] = '',
   ) -> None:
     """
     Downloads a single Legacy Survey object RGB stamp defined by RA and DEC.
@@ -76,13 +93,23 @@ class LegacyService(ImagingService):
       Right ascension of the object.
     dec: float
       Declination of the object.
-    save_path: Path
+    save_path: Path, optional
       Path where downloaded file will be stored.
+    base_path: str, Path, optional
+      The path that will be appended at beggining of every paths if ``save_path``
+      is ``None``.
     """
     if self.image_format == 'jpg':
       url = LEGACY_RGB_URL_DEV if self.use_dev else LEGACY_RGB_URL
     else:
       url = LEGACY_FITS_URL_DEV if self.use_dev else LEGACY_FITS_URL
+
+    if save_path is None:
+      save_path = iauname_relative_path(
+        iaunames=iauname(ra=ra, dec=dec),
+        prefix=Path(base_path),
+        suffix=f'.{self.image_format}'
+      )
 
     image_url = append_query_params(url, {
       'ra': ra,
@@ -94,20 +121,33 @@ class LegacyService(ImagingService):
       'layer': self.layer
     })
 
-    download_file(
+    content = download_file(
       url=image_url,
       save_path=save_path,
       http_client=self.http_client,
-      replace=self.replace
+      replace=self.replace,
+      return_bytes=self.compress_fits,
     )
 
+    if self.compress_fits:
+      compress_fits(
+        file=BytesIO(content),
+        compress_type=self.compress_type,
+        hcomp_scale=self.hcomp_scale,
+        quantize_level=self.quantize_level,
+        quantize_method=self.quantize_method,
+        ext=0,
+        save_path=save_path,
+        replace=self.replace,
+      )
 
 
   def batch_cutout(
     self,
     ra: List[float],
     dec: List[float],
-    save_path: List[Path],
+    save_path: List[Path] = None,
+    base_path: Union[str, Path] = '',
   ) -> Tuple[List[Path], List[Path]]:
     """
     Downloads a list of objects defined by RA and DEC coordinates.
@@ -117,13 +157,23 @@ class LegacyService(ImagingService):
 
     Parameters
     ----------
-    ra: list of float
+    ra: List[float]
       The list of RA coordinates of the desired objects.
-    dec: list of float
+    dec: List[float]
       The list of DEC coordinates of the desired objects.
-    save_path: list of Path
+    save_path: List[Path], optional
       The list of path where files should be saved.
+    base_path: str, Path, optional
+      The path that will be appended at beggining of every paths if ``save_path``
+      is ``None``.
     """
+    if save_path is None:
+      save_path = iauname_relative_path(
+        iaunames=iauname(ra=ra, dec=dec),
+        prefix=Path(base_path),
+        suffix=f'.{self.image_format}'
+      )
+
     params = [
       {
         'ra': _ra,
@@ -137,7 +187,7 @@ class LegacyService(ImagingService):
       self.cutout,
       params=params,
       workers=self.workers,
-      unit=' files'
+      unit='file'
     )
 
     success = [p for p in save_path if p.exists()]
