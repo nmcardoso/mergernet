@@ -8,7 +8,7 @@ from mergernet.model.baseline import finetune_train
 class Job(Experiment):
   def __init__(self):
     super().__init__()
-    self.exp_id = 5
+    self.exp_id = 8
     self.log_wandb = True
     self.restart = True
 

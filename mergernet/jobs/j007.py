@@ -22,7 +22,7 @@ class Job(Experiment):
   """
   def __init__(self):
     super().__init__()
-    self.exp_id = 4
+    self.exp_id = 7
     self.log_wandb = True
     self.restart = True
 
