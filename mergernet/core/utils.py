@@ -1,9 +1,10 @@
 import collections.abc
 import json
 from datetime import datetime, timedelta
+from io import IOBase
 from pathlib import Path
 from threading import Lock
-from typing import Any, List, Union
+from typing import Any, BinaryIO, List, Union
 
 import numpy as np
 import pandas as pd
@@ -13,7 +14,7 @@ from astropy.io import fits
 from astropy.table import Table
 from PIL import Image
 
-from mergernet.core.constants import DATA_ROOT, ENV
+from mergernet.core.constants import DATA_ROOT, ENV, RANDOM_SEED
 
 
 def load_image(path: Union[str, Path]) -> np.ndarray:
@@ -51,7 +52,7 @@ def load_table(path: Union[Path, str], default: bool = True) -> pd.DataFrame:
   if default:
     path = DATA_ROOT / 'tables' / path
 
-  if path.suffix in {'.fit', '.fits'}:
+  if path.suffix in ('.fit', '.fits', '.fz'):
     with fits.open(path) as hdul:
       table_data = hdul[1].data
       table = Table(data=table_data)
@@ -65,11 +66,44 @@ def save_table(data: pd.DataFrame, path: Union[Path, str], default: bool = True)
   if default:
     path = DATA_ROOT / 'tables' / path
 
-  if path.suffix in {'.fit', '.fits'}:
+  if path.suffix in ('.fit', '.fits'):
     pass
   elif path.suffix == '.csv':
     data.to_csv(path, index=False)
 
+
+
+def compress_fits(
+  file: Union[str, Path, BinaryIO],
+  compress_type: str = 'HCOMPRESS_1',
+  hcomp_scale: int = 3,
+  quantize_level: int = 10,
+  quantize_method: int = -1,
+  ext: int = 0,
+  save_path: Union[str, Path] = None,
+  replace: bool = True,
+):
+  hdul = fits.open(file)
+  comp = None
+  try:
+    comp = fits.CompImageHDU(
+      data=hdul[ext].data,
+      header=hdul[ext].header,
+      compression_type=compress_type,
+      hcomp_scale=hcomp_scale,
+      quantize_level=quantize_level,
+      quantize_method=quantize_method,
+      dither_seed=RANDOM_SEED,
+    )
+    if save_path:
+      comp.writeto(
+        save_path,
+        overwrite=replace,
+      )
+  except OSError as e:
+    pass
+
+  return comp
 
 
 def array_fallback(arrays, prefix=None):
