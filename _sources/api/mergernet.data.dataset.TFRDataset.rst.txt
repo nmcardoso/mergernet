@@ -1,0 +1,17 @@
+TFRDataset
+==========
+
+.. currentmodule:: mergernet.data.dataset
+
+.. autoclass:: TFRDataset
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
+
+
+  
+  
+  

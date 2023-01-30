@@ -20,6 +20,7 @@ mergernet.data.dataset
     :template: class-template.rst
   
     Dataset
+    TFRDataset
   
   
 

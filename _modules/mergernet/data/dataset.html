@@ -209,6 +209,7 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../api/mergernet.data.html">mergernet.data</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.dataset.html">mergernet.data.dataset</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.dataset.Dataset.html">Dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.dataset.TFRDataset.html">TFRDataset</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.html">mergernet.data.dataset_config</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -486,6 +487,7 @@
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">copy2</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -498,7 +500,6 @@
                                            <span class="n">GoogleDriveResource</span><span class="p">,</span> <span class="n">HTTPResource</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">mergernet.data.kfold</span> <span class="kn">import</span> <span class="n">StratifiedDistributionKFold</span>
 <span class="kn">from</span> <span class="nn">mergernet.data.preprocessing</span> <span class="kn">import</span> <span class="n">load_jpg</span><span class="p">,</span> <span class="n">load_png</span><span class="p">,</span> <span class="n">one_hot_factory</span>
-<span class="kn">from</span> <span class="nn">mergernet.services.google</span> <span class="kn">import</span> <span class="n">GDrive</span>
 
 <span class="n">L</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -640,7 +641,7 @@
           <span class="k">try</span><span class="p">:</span>
             <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span>
               <span class="n">fname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(),</span>
-              <span class="n">origin</span><span class="o">=</span><span class="n">archive_url</span><span class="p">,</span>
+              <span class="n">origin</span><span class="o">=</span><span class="n">archive_url</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
               <span class="n">cache_subdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">(),</span>
               <span class="n">archive_format</span><span class="o">=</span><span class="s1">&#39;tar&#39;</span><span class="p">,</span>
               <span class="n">extract</span><span class="o">=</span><span class="kc">True</span>
@@ -650,7 +651,7 @@
             <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_url</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
               <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t download images archive&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">archive_url</span><span class="p">,</span> <span class="n">GoogleDriveResource</span><span class="p">):</span>
-          <span class="n">GDrive</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">archive_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="p">)</span>
+          <span class="n">copy2</span><span class="p">(</span><span class="n">archive_url</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="p">)</span>
 
 
     <span class="c1"># Download table</span>
@@ -875,6 +876,31 @@
 
     <span class="k">return</span> <span class="n">df</span></div></div>
 
+
+
+<div class="viewcode-block" id="TFRDataset"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.TFRDataset.html#mergernet.data.dataset.TFRDataset">[docs]</a><span class="k">class</span> <span class="nc">TFRDataset</span><span class="p">:</span>
+  <span class="c1"># https://towardsdatascience.com/a-practical-guide-to-tfrecords-584536bc786c</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">examples_per_shard</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">,</span>
+    <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">examples_per_shard</span> <span class="o">=</span> <span class="n">examples_per_shard</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span>
+
+<div class="viewcode-block" id="TFRDataset.create"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.TFRDataset.html#mergernet.data.dataset.TFRDataset.create">[docs]</a>  <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">):</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TFRDataset._create_shard"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.TFRDataset.html#mergernet.data.dataset.TFRDataset._create_shard">[docs]</a>  <span class="k">def</span> <span class="nf">_create_shard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TFRDataset._serialize_array"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.TFRDataset.html#mergernet.data.dataset.TFRDataset._serialize_array">[docs]</a>  <span class="k">def</span> <span class="nf">_serialize_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TFRDataset._bytes_feature"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.TFRDataset.html#mergernet.data.dataset.TFRDataset._bytes_feature">[docs]</a>  <span class="k">def</span> <span class="nf">_bytes_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">pass</span></div></div>
 </pre></div>
         </article>
       </div>
