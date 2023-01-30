@@ -651,7 +651,8 @@
             <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_url</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
               <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t download images archive&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">archive_url</span><span class="p">,</span> <span class="n">GoogleDriveResource</span><span class="p">):</span>
-          <span class="n">copy2</span><span class="p">(</span><span class="n">archive_url</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="p">)</span>
+          <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">copy2</span><span class="p">(</span><span class="n">archive_url</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="p">)</span>
 
 
     <span class="c1"># Download table</span>
