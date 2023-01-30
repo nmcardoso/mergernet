@@ -270,3 +270,223 @@ class DatasetRegistry:
   S-PLUS blind sample with 13.5 < r_auto < 17 with ls-10-early-grz RGB images
   128x128 pixscale of with 0.55 arcsec/pixel
   """
+
+  DECALS_0364_1M_PART1 = DatasetConfig(
+    name='DECALS_0364_1M_PART1',
+    archive_url=[
+      GDrive.get_url('1unxmLgbdi-6JhpFGtfv7pxRzvFnKADth')
+    ],
+    archive_path=Path('decals_0.364_png_part1.tar.xz'),
+    images_path=Path('decals_0.364_png_part1'),
+    image_extension='png',
+    image_shape=(224, 224, 3)
+  )
+  """
+  DECALS 1M dataset with colored png images PART 1
+
+  .. list-table:: Dataset parameters
+    :header-rows: 1
+
+    * - Parameter
+      - Value
+    * - Type
+      - Predictions
+    * - Pix scale
+      - 0.364
+    * - Shape
+      - 244,244,3
+    * - Image Format
+      - PNG
+    * - Bands
+      - GRZ
+    * - Scale G
+      - (2, 0.008)
+    * - Scale R
+      - (1, 0.014)
+    * - Scale Z
+      - (0, 0.019)
+    * - MinMax
+      - (-0.5, 300)
+    * - Brightness
+      - 1.3
+    * - Desaturate
+      - True
+    * - Non-Linearity
+      - asinh2
+  """
+
+  DECALS_0364_1M_PART2 = DatasetConfig(
+    name='DECALS_0364_1M_PART2',
+    archive_url=[
+      GDrive.get_url('16uVXaTabXECXHJkZET34wxe4rLLPdK_r')
+    ],
+    archive_path=Path('decals_0.364_png_part2.tar.xz'),
+    images_path=Path('decals_0.364_png_part2'),
+    image_extension='png',
+    image_shape=(224, 224, 3)
+  )
+  """
+  DECALS 1M dataset with colored png images PART 2
+
+  .. list-table:: Dataset parameters
+    :header-rows: 1
+
+    * - Parameter
+      - Value
+    * - Type
+      - Predictions
+    * - Pix scale
+      - 0.364
+    * - Shape
+      - 244,244,3
+    * - Image Format
+      - PNG
+    * - Bands
+      - GRZ
+    * - Scale G
+      - (2, 0.008)
+    * - Scale R
+      - (1, 0.014)
+    * - Scale Z
+      - (0, 0.019)
+    * - MinMax
+      - (-0.5, 300)
+    * - Brightness
+      - 1.3
+    * - Desaturate
+      - True
+    * - Non-Linearity
+      - asinh2
+  """
+
+  DECALS_0364_1M_PART3 = DatasetConfig(
+    name='DECALS_0364_1M_PART3',
+    archive_url=[
+      GDrive.get_url('1cA6N4t8F05lsIwgmjBUYDPJ_HAklYx1r')
+    ],
+    archive_path=Path('decals_0.364_png_part3.tar.xz'),
+    images_path=Path('decals_0.364_png_part3'),
+    image_extension='png',
+    image_shape=(224, 224, 3)
+  )
+  """
+  DECALS 1M dataset with colored png images PART 3
+
+  .. list-table:: Dataset parameters
+    :header-rows: 1
+
+    * - Parameter
+      - Value
+    * - Type
+      - Predictions
+    * - Pix scale
+      - 0.364
+    * - Shape
+      - 244,244,3
+    * - Image Format
+      - PNG
+    * - Bands
+      - GRZ
+    * - Scale G
+      - (2, 0.008)
+    * - Scale R
+      - (1, 0.014)
+    * - Scale Z
+      - (0, 0.019)
+    * - MinMax
+      - (-0.5, 300)
+    * - Brightness
+      - 1.3
+    * - Desaturate
+      - True
+    * - Non-Linearity
+      - asinh2
+  """
+
+  DECALS_0364_1M_PART4 = DatasetConfig(
+    name='DECALS_0364_1M_PART4',
+    archive_url=[
+      GDrive.get_url('1Xr9PiveEy9uXjDKZrNujPgBlc8ITkcNG')
+    ],
+    archive_path=Path('decals_0.364_png_part4.tar.xz'),
+    images_path=Path('decals_0.364_png_part4'),
+    image_extension='png',
+    image_shape=(224, 224, 3)
+  )
+  """
+  DECALS 1M dataset with colored png images PART 4
+
+  .. list-table:: Dataset parameters
+    :header-rows: 1
+
+    * - Parameter
+      - Value
+    * - Type
+      - Predictions
+    * - Pix scale
+      - 0.364
+    * - Shape
+      - 244,244,3
+    * - Image Format
+      - PNG
+    * - Bands
+      - GRZ
+    * - Scale G
+      - (2, 0.008)
+    * - Scale R
+      - (1, 0.014)
+    * - Scale Z
+      - (0, 0.019)
+    * - MinMax
+      - (-0.5, 300)
+    * - Brightness
+      - 1.3
+    * - Desaturate
+      - True
+    * - Non-Linearity
+      - asinh2
+  """
+
+  DECALS_0364_1M_PART5 = DatasetConfig(
+    name='DECALS_0364_1M_PART5',
+    archive_url=[
+      GDrive.get_url('1r7Ysn4IQEaJTC1Q6WniWKZtDotlEWxpB')
+    ],
+    archive_path=Path('decals_0.364_png_part5.tar.xz'),
+    images_path=Path('decals_0.364_png_part5'),
+    image_extension='png',
+    image_shape=(224, 224, 3)
+  )
+  """
+  DECALS 1M dataset with colored png images PART 5
+
+  .. list-table:: Dataset parameters
+    :header-rows: 1
+
+    * - Parameter
+      - Value
+    * - Type
+      - Predictions
+    * - Pix scale
+      - 0.364
+    * - Shape
+      - 244,244,3
+    * - Image Format
+      - PNG
+    * - Bands
+      - GRZ
+    * - Scale G
+      - (2, 0.008)
+    * - Scale R
+      - (1, 0.014)
+    * - Scale Z
+      - (0, 0.019)
+    * - MinMax
+      - (-0.5, 300)
+    * - Brightness
+      - 1.3
+    * - Desaturate
+      - True
+    * - Non-Linearity
+      - asinh2
+  """
