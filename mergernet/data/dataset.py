@@ -175,7 +175,8 @@ class Dataset:
             if i == len(self.config.archive_url) - 1:
               raise RuntimeError("Can't download images archive")
         elif isinstance(archive_url, GoogleDriveResource):
-          copy2(archive_url.path, self.config.archive_path)
+          if not self.config.archive_path.exists():
+            copy2(archive_url.path, self.config.archive_path)
 
 
     # Download table
