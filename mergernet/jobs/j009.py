@@ -2,14 +2,9 @@ from itertools import compress
 
 import pandas as pd
 
-from mergernet.core.constants import DATA_ROOT
 from mergernet.core.experiment import Experiment
-from mergernet.core.utils import iauname, iauname_relative_path
 from mergernet.data.dataset import Dataset
-from mergernet.data.image import (ChannelAverage, Crop, ImagePipeline,
-                                  LegacyRGB, TensorToImage, TensorToShards)
 from mergernet.estimators.decals import ZoobotEstimator
-from mergernet.services.legacy import LegacyService
 
 
 class Job(Experiment):
