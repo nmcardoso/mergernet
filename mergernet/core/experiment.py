@@ -1,13 +1,7 @@
-import functools
 import logging
-import secrets
 import tempfile
-from inspect import getdoc
-from io import BytesIO, StringIO
 from pathlib import Path
 from shutil import copy2, rmtree
-from time import time
-from types import FunctionType
 from typing import Any
 
 import numpy as np
@@ -16,9 +10,7 @@ import tensorflow as tf
 import wandb
 
 from mergernet.core.constants import DATA_ROOT, ENV
-from mergernet.core.utils import SingletonMeta, classproperty, serialize
-from mergernet.services.github import GithubService
-from mergernet.services.google import GDrive
+from mergernet.core.utils import serialize
 
 L = logging.getLogger(__name__)
 
