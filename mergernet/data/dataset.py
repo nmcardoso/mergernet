@@ -11,7 +11,7 @@ This module defines others classes and functions as well, who perform complement
 
 import logging
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 import numpy as np
 import pandas as pd
@@ -19,9 +19,11 @@ import tensorflow as tf
 
 from mergernet.core.experiment import Experiment
 from mergernet.core.utils import iauname, iauname_relative_path, load_image
-from mergernet.data.dataset_config import DatasetConfig, DatasetRegistry
+from mergernet.data.dataset_config import (DatasetConfig, DatasetRegistry,
+                                           GoogleDriveResource, HTTPResource)
 from mergernet.data.kfold import StratifiedDistributionKFold
 from mergernet.data.preprocessing import load_jpg, load_png, one_hot_factory
+from mergernet.services.google import GDrive
 
 L = logging.getLogger(__name__)
 
@@ -159,18 +161,22 @@ class Dataset:
     # Download images
     if self.config.archive_url:
       for i, archive_url in enumerate(self.config.archive_url):
-        try:
-          tf.keras.utils.get_file(
-            fname=self.config.archive_path.resolve(),
-            origin=archive_url,
-            cache_subdir=self.config.archive_path.parent.resolve(),
-            archive_format='tar',
-            extract=True
-          )
-          break
-        except:
-          if i == len(self.config.archive_url) - 1:
-            raise RuntimeError("Can't download images archive")
+        if isinstance(archive_url, (HTTPResource, str)):
+          try:
+            tf.keras.utils.get_file(
+              fname=self.config.archive_path.resolve(),
+              origin=archive_url,
+              cache_subdir=self.config.archive_path.parent.resolve(),
+              archive_format='tar',
+              extract=True
+            )
+            break
+          except:
+            if i == len(self.config.archive_url) - 1:
+              raise RuntimeError("Can't download images archive")
+        elif isinstance(archive_url, GoogleDriveResource):
+          GDrive().get(archive_url, self.config.archive_path)
+
 
     # Download table
     if self.config.table_url:

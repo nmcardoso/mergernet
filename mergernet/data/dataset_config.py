@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 from mergernet.data.image import ImageTransform
 from mergernet.services.google import GDrive
@@ -7,12 +7,24 @@ from mergernet.services.imaging import ImagingService
 from mergernet.services.sciserver import SciServer
 
 
+class HTTPResource:
+  def __init__(self, url: str):
+    self.url = url
+
+
+class GoogleDriveResource:
+  GD_DATASETS_PATH = 'drive/MyDrive/mergernet/datasets'
+
+  def __init__(self, filename: Union[str, Path]):
+    self.path = Path(self.GD_DATASETS_PATH) / filename
+
+
 class DatasetConfig:
   """Configuration params for dataset."""
   def __init__(
     self,
     name: str = None,
-    archive_url: List[str] = None,
+    archive_url: List[Union[HTTPResource, GoogleDriveResource]] = None,
     table_url: List[str] = None,
     archive_path: Path = None,
     images_path: Path = None,
@@ -274,7 +286,8 @@ class DatasetRegistry:
   DECALS_0364_1M_PART1 = DatasetConfig(
     name='DECALS_0364_1M_PART1',
     archive_url=[
-      GDrive.get_url('1unxmLgbdi-6JhpFGtfv7pxRzvFnKADth')
+      GoogleDriveResource('decals_0.364_png_part1.tar.xz'),
+      HTTPResource(GDrive.get_url('1unxmLgbdi-6JhpFGtfv7pxRzvFnKADth'))
     ],
     archive_path=Path('decals_0.364_png_part1.tar.xz'),
     images_path=Path('decals_0.364_png_part1'),
