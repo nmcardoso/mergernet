@@ -1,0 +1,17 @@
+ImagePipeline
+=============
+
+.. currentmodule:: mergernet.data.image
+
+.. autoclass:: ImagePipeline
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
+
+
+  
+  
+  

@@ -1,0 +1,6 @@
+mergernet.core.utils.compress\_images
+=====================================
+
+.. currentmodule:: mergernet.core.utils
+
+.. autofunction:: compress_images

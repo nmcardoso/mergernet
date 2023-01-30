@@ -1,0 +1,17 @@
+ChannelAverage
+==============
+
+.. currentmodule:: mergernet.data.image
+
+.. autoclass:: ChannelAverage
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
+
+
+  
+  
+  

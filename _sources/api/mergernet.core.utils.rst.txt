@@ -16,7 +16,9 @@ mergernet.core.utils
   
     array_fallback
     compress_fits
+    compress_images
     deep_update
+    extract_iauname_from_path
     find_by_value
     heading
     iauname
@@ -24,6 +26,7 @@ mergernet.core.utils
     load_image
     load_table
     not_in
+    save_image
     save_table
     serialize
     unique_path

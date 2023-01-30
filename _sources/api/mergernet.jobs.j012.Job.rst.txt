@@ -1,7 +1,7 @@
 Job
 ===
 
-.. currentmodule:: mergernet.jobs.j007
+.. currentmodule:: mergernet.jobs.j012
 
 .. autoclass:: Job
   :members:

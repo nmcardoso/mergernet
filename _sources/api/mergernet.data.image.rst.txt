@@ -27,6 +27,8 @@ mergernet.data.image
     :toctree:
     :template: class-template.rst
   
+    ChannelAverage
+    ImagePipeline
     ImageTransform
     LegacyRGB
     LuptonRGB
