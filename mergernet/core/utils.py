@@ -89,6 +89,8 @@ def save_table(data: pd.DataFrame, path: Union[Path, str], default: bool = True)
     pass
   elif path.suffix == '.csv':
     data.to_csv(path, index=False)
+  elif path.suffix == '.parquet':
+    data.to_parquet(path, index=False)
 
 
 

@@ -13,6 +13,7 @@ from zoobot.tensorflow.predictions import predict_on_dataset
 from mergernet.core.constants import RANDOM_SEED
 from mergernet.core.experiment import Experiment
 from mergernet.core.hp import HyperParameterSet
+from mergernet.core.utils import save_table
 from mergernet.data.dataset import Dataset
 from mergernet.estimators.base import Estimator, EstimatorConfig
 
@@ -125,6 +126,6 @@ class ZoobotEstimator(Estimator):
     df = compress_representations.create_pca_embedding(features, n_components)
 
     if filename is not None:
-      df.to_csv(Experiment.local_exp_path / filename, index=False)
+      save_table(df, Experiment.local_exp_path / filename, default=False)
 
     return df
