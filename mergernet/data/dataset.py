@@ -11,6 +11,7 @@ This module defines others classes and functions as well, who perform complement
 
 import logging
 from pathlib import Path
+from shutil import copy2
 from typing import List, Tuple, Union
 
 import numpy as np
@@ -23,7 +24,6 @@ from mergernet.data.dataset_config import (DatasetConfig, DatasetRegistry,
                                            GoogleDriveResource, HTTPResource)
 from mergernet.data.kfold import StratifiedDistributionKFold
 from mergernet.data.preprocessing import load_jpg, load_png, one_hot_factory
-from mergernet.services.google import GDrive
 
 L = logging.getLogger(__name__)
 
@@ -165,7 +165,7 @@ class Dataset:
           try:
             tf.keras.utils.get_file(
               fname=self.config.archive_path.resolve(),
-              origin=archive_url,
+              origin=archive_url.url,
               cache_subdir=self.config.archive_path.parent.resolve(),
               archive_format='tar',
               extract=True
@@ -175,7 +175,7 @@ class Dataset:
             if i == len(self.config.archive_url) - 1:
               raise RuntimeError("Can't download images archive")
         elif isinstance(archive_url, GoogleDriveResource):
-          GDrive().get(archive_url, self.config.archive_path)
+          copy2(archive_url.path, self.config.archive_path)
 
 
     # Download table
@@ -400,3 +400,28 @@ class Dataset:
 
     return df
 
+
+
+class TFRDataset:
+  # https://towardsdatascience.com/a-practical-guide-to-tfrecords-584536bc786c
+  def __init__(
+    self,
+    save_path: Union[str, Path],
+    examples_per_shard: int = 1024,
+    train: bool = False
+  ):
+    self.save_path = Path(save_path)
+    self.examples_per_shard = examples_per_shard
+    self.train = train
+
+  def create(self, ):
+    pass
+
+  def _create_shard(self):
+    pass
+
+  def _serialize_array(self, array):
+    pass
+
+  def _bytes_feature(self, value):
+    pass
