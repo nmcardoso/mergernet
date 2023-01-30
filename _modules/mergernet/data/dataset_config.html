@@ -214,6 +214,8 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.html">mergernet.data.dataset_config</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.DatasetConfig.html">DatasetConfig</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.DatasetRegistry.html">DatasetRegistry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.GoogleDriveResource.html">GoogleDriveResource</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.HTTPResource.html">HTTPResource</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.image.html">mergernet.data.image</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -472,7 +474,7 @@
         <article role="main">
           <h1>Source code for mergernet.data.dataset_config</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">from</span> <span class="nn">mergernet.data.image</span> <span class="kn">import</span> <span class="n">ImageTransform</span>
 <span class="kn">from</span> <span class="nn">mergernet.services.google</span> <span class="kn">import</span> <span class="n">GDrive</span>
@@ -480,12 +482,24 @@
 <span class="kn">from</span> <span class="nn">mergernet.services.sciserver</span> <span class="kn">import</span> <span class="n">SciServer</span>
 
 
+<div class="viewcode-block" id="HTTPResource"><a class="viewcode-back" href="../../../api/mergernet.data.dataset_config.HTTPResource.html#mergernet.data.dataset_config.HTTPResource">[docs]</a><span class="k">class</span> <span class="nc">HTTPResource</span><span class="p">:</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span></div>
+
+
+<div class="viewcode-block" id="GoogleDriveResource"><a class="viewcode-back" href="../../../api/mergernet.data.dataset_config.GoogleDriveResource.html#mergernet.data.dataset_config.GoogleDriveResource">[docs]</a><span class="k">class</span> <span class="nc">GoogleDriveResource</span><span class="p">:</span>
+  <span class="n">GD_DATASETS_PATH</span> <span class="o">=</span> <span class="s1">&#39;drive/MyDrive/mergernet/datasets&#39;</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GD_DATASETS_PATH</span><span class="p">)</span> <span class="o">/</span> <span class="n">filename</span></div>
+
+
 <div class="viewcode-block" id="DatasetConfig"><a class="viewcode-back" href="../../../api/mergernet.data.dataset_config.DatasetConfig.html#mergernet.data.dataset_config.DatasetConfig">[docs]</a><span class="k">class</span> <span class="nc">DatasetConfig</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Configuration params for dataset.&quot;&quot;&quot;</span>
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">archive_url</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">archive_url</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">HTTPResource</span><span class="p">,</span> <span class="n">GoogleDriveResource</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">table_url</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">archive_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">images_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -747,7 +761,8 @@
   <span class="n">DECALS_0364_1M_PART1</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;DECALS_0364_1M_PART1&#39;</span><span class="p">,</span>
     <span class="n">archive_url</span><span class="o">=</span><span class="p">[</span>
-      <span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1unxmLgbdi-6JhpFGtfv7pxRzvFnKADth&#39;</span><span class="p">)</span>
+      <span class="n">GoogleDriveResource</span><span class="p">(</span><span class="s1">&#39;decals_0.364_png_part1.tar.xz&#39;</span><span class="p">),</span>
+      <span class="n">HTTPResource</span><span class="p">(</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1unxmLgbdi-6JhpFGtfv7pxRzvFnKADth&#39;</span><span class="p">))</span>
     <span class="p">],</span>
     <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;decals_0.364_png_part1.tar.xz&#39;</span><span class="p">),</span>
     <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;decals_0.364_png_part1&#39;</span><span class="p">),</span>

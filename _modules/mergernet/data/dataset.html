@@ -214,6 +214,8 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.html">mergernet.data.dataset_config</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.DatasetConfig.html">DatasetConfig</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.DatasetRegistry.html">DatasetRegistry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.GoogleDriveResource.html">GoogleDriveResource</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.HTTPResource.html">HTTPResource</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.image.html">mergernet.data.image</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -484,7 +486,7 @@
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -492,9 +494,11 @@
 
 <span class="kn">from</span> <span class="nn">mergernet.core.experiment</span> <span class="kn">import</span> <span class="n">Experiment</span>
 <span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">iauname</span><span class="p">,</span> <span class="n">iauname_relative_path</span><span class="p">,</span> <span class="n">load_image</span>
-<span class="kn">from</span> <span class="nn">mergernet.data.dataset_config</span> <span class="kn">import</span> <span class="n">DatasetConfig</span><span class="p">,</span> <span class="n">DatasetRegistry</span>
+<span class="kn">from</span> <span class="nn">mergernet.data.dataset_config</span> <span class="kn">import</span> <span class="p">(</span><span class="n">DatasetConfig</span><span class="p">,</span> <span class="n">DatasetRegistry</span><span class="p">,</span>
+                                           <span class="n">GoogleDriveResource</span><span class="p">,</span> <span class="n">HTTPResource</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">mergernet.data.kfold</span> <span class="kn">import</span> <span class="n">StratifiedDistributionKFold</span>
 <span class="kn">from</span> <span class="nn">mergernet.data.preprocessing</span> <span class="kn">import</span> <span class="n">load_jpg</span><span class="p">,</span> <span class="n">load_png</span><span class="p">,</span> <span class="n">one_hot_factory</span>
+<span class="kn">from</span> <span class="nn">mergernet.services.google</span> <span class="kn">import</span> <span class="n">GDrive</span>
 
 <span class="n">L</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -632,18 +636,22 @@
     <span class="c1"># Download images</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_url</span><span class="p">:</span>
       <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">archive_url</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_url</span><span class="p">):</span>
-        <span class="k">try</span><span class="p">:</span>
-          <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span>
-            <span class="n">fname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(),</span>
-            <span class="n">origin</span><span class="o">=</span><span class="n">archive_url</span><span class="p">,</span>
-            <span class="n">cache_subdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">(),</span>
-            <span class="n">archive_format</span><span class="o">=</span><span class="s1">&#39;tar&#39;</span><span class="p">,</span>
-            <span class="n">extract</span><span class="o">=</span><span class="kc">True</span>
-          <span class="p">)</span>
-          <span class="k">break</span>
-        <span class="k">except</span><span class="p">:</span>
-          <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_url</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t download images archive&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">archive_url</span><span class="p">,</span> <span class="p">(</span><span class="n">HTTPResource</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+          <span class="k">try</span><span class="p">:</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span>
+              <span class="n">fname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(),</span>
+              <span class="n">origin</span><span class="o">=</span><span class="n">archive_url</span><span class="p">,</span>
+              <span class="n">cache_subdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">(),</span>
+              <span class="n">archive_format</span><span class="o">=</span><span class="s1">&#39;tar&#39;</span><span class="p">,</span>
+              <span class="n">extract</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="k">break</span>
+          <span class="k">except</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_url</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+              <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t download images archive&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">archive_url</span><span class="p">,</span> <span class="n">GoogleDriveResource</span><span class="p">):</span>
+          <span class="n">GDrive</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">archive_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="p">)</span>
+
 
     <span class="c1"># Download table</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_url</span><span class="p">:</span>

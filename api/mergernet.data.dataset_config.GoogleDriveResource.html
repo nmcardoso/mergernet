@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="MakeImg" href="mergernet.data.trilogy.MakeImg.html" /><link rel="prev" title="mergernet.data.trilogy.satK2m" href="mergernet.data.trilogy.satK2m.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="HTTPResource" href="mergernet.data.dataset_config.HTTPResource.html" /><link rel="prev" title="DatasetRegistry" href="mergernet.data.dataset_config.DatasetRegistry.html" />
 
     <!-- Generated with Sphinx 6.1.3 and Furo 2022.12.07 -->
-        <title>mergernet.data.trilogy.setLevel - Mergernet 0 documentation</title>
+        <title>GoogleDriveResource - Mergernet 0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
@@ -212,10 +212,10 @@
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset.Dataset.html">Dataset</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.dataset_config.html">mergernet.data.dataset_config</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 current has-children"><a class="reference internal" href="mergernet.data.dataset_config.html">mergernet.data.dataset_config</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset_config.DatasetConfig.html">DatasetConfig</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset_config.DatasetRegistry.html">DatasetRegistry</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset_config.GoogleDriveResource.html">GoogleDriveResource</a></li>
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">GoogleDriveResource</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset_config.HTTPResource.html">HTTPResource</a></li>
 </ul>
 </li>
@@ -256,7 +256,7 @@
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.sanitization.DatasetSanitization.html">DatasetSanitization</a></li>
 </ul>
 </li>
-<li class="toctree-l3 current has-children"><a class="reference internal" href="mergernet.data.trilogy.html">mergernet.data.trilogy</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.trilogy.html">mergernet.data.trilogy</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.RGB2im.html">mergernet.data.trilogy.RGB2im</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.adjust_saturation.html">mergernet.data.trilogy.adjust_saturation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.da.html">mergernet.data.trilogy.da</a></li>
@@ -266,7 +266,7 @@
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.meanstd.html">mergernet.data.trilogy.meanstd</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.rms.html">mergernet.data.trilogy.rms</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.satK2m.html">mergernet.data.trilogy.satK2m</a></li>
-<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">mergernet.data.trilogy.setLevel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.setLevel.html">mergernet.data.trilogy.setLevel</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.MakeImg.html">MakeImg</a></li>
 </ul>
 </li>
@@ -474,12 +474,28 @@
           </label>
         </div>
         <article role="main">
-          <section id="mergernet-data-trilogy-setlevel">
-<h1>mergernet.data.trilogy.setLevel<a class="headerlink" href="#mergernet-data-trilogy-setlevel" title="Permalink to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="mergernet.data.trilogy.setLevel">
-<span class="sig-prename descclassname"><span class="pre">mergernet.data.trilogy.</span></span><span class="sig-name descname"><span class="pre">setLevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mergernet/data/trilogy.html#setLevel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.trilogy.setLevel" title="Permalink to this definition">#</a></dt>
+          <section id="googledriveresource">
+<h1>GoogleDriveResource<a class="headerlink" href="#googledriveresource" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mergernet.data.dataset_config.GoogleDriveResource">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mergernet.data.dataset_config.</span></span><span class="sig-name descname"><span class="pre">GoogleDriveResource</span></span><a class="reference internal" href="../_modules/mergernet/data/dataset_config.html#GoogleDriveResource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.dataset_config.GoogleDriveResource" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p class="rubric">Attributes</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.dataset_config.GoogleDriveResource.GD_DATASETS_PATH" title="mergernet.data.dataset_config.GoogleDriveResource.GD_DATASETS_PATH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GD_DATASETS_PATH</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.dataset_config.GoogleDriveResource.GD_DATASETS_PATH">
+<span class="sig-name descname"><span class="pre">GD_DATASETS_PATH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'drive/MyDrive/mergernet/datasets'</span></em><a class="headerlink" href="#mergernet.data.dataset_config.GoogleDriveResource.GD_DATASETS_PATH" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
+
+</dd></dl>
 
 </section>
 
@@ -488,23 +504,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="mergernet.data.trilogy.MakeImg.html">
+          <a class="next-page" href="mergernet.data.dataset_config.HTTPResource.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">MakeImg</div>
+                <div class="title">HTTPResource</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="mergernet.data.trilogy.satK2m.html">
+          <a class="prev-page" href="mergernet.data.dataset_config.DatasetRegistry.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">mergernet.data.trilogy.satK2m</div>
+                <div class="title">DatasetRegistry</div>
                 
               </div>
             </a>
@@ -538,8 +554,11 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">mergernet.data.trilogy.setLevel</a><ul>
-<li><a class="reference internal" href="#mergernet.data.trilogy.setLevel"><code class="docutils literal notranslate"><span class="pre">setLevel()</span></code></a></li>
+<li><a class="reference internal" href="#">GoogleDriveResource</a><ul>
+<li><a class="reference internal" href="#mergernet.data.dataset_config.GoogleDriveResource"><code class="docutils literal notranslate"><span class="pre">GoogleDriveResource</span></code></a><ul>
+<li><a class="reference internal" href="#mergernet.data.dataset_config.GoogleDriveResource.GD_DATASETS_PATH"><code class="docutils literal notranslate"><span class="pre">GoogleDriveResource.GD_DATASETS_PATH</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

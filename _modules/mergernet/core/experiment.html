@@ -214,6 +214,8 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.html">mergernet.data.dataset_config</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.DatasetConfig.html">DatasetConfig</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.DatasetRegistry.html">DatasetRegistry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.GoogleDriveResource.html">GoogleDriveResource</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.data.dataset_config.HTTPResource.html">HTTPResource</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.data.image.html">mergernet.data.image</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -471,16 +473,10 @@
         </div>
         <article role="main">
           <h1>Source code for mergernet.core.experiment</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">functools</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">secrets</span>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
-<span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">getdoc</span>
-<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span><span class="p">,</span> <span class="n">StringIO</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">copy2</span><span class="p">,</span> <span class="n">rmtree</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
-<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">FunctionType</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -489,9 +485,7 @@
 <span class="kn">import</span> <span class="nn">wandb</span>
 
 <span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">DATA_ROOT</span><span class="p">,</span> <span class="n">ENV</span>
-<span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">SingletonMeta</span><span class="p">,</span> <span class="n">classproperty</span><span class="p">,</span> <span class="n">serialize</span>
-<span class="kn">from</span> <span class="nn">mergernet.services.github</span> <span class="kn">import</span> <span class="n">GithubService</span>
-<span class="kn">from</span> <span class="nn">mergernet.services.google</span> <span class="kn">import</span> <span class="n">GDrive</span>
+<span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">serialize</span>
 
 <span class="n">L</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 

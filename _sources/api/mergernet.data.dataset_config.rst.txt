@@ -21,6 +21,8 @@ mergernet.data.dataset\_config
   
     DatasetConfig
     DatasetRegistry
+    GoogleDriveResource
+    HTTPResource
   
   
 
