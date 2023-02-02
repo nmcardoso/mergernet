@@ -15,14 +15,17 @@ mergernet.core.utils
     :toctree:
   
     array_fallback
+    compress_files
     compress_fits
-    compress_images
     deep_update
+    execute_posix_command
+    extract_files
     extract_iauname_from_path
     find_by_value
     heading
     iauname
     iauname_relative_path
+    install_linux_package
     load_image
     load_table
     not_in

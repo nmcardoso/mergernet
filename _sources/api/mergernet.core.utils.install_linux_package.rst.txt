@@ -1,0 +1,6 @@
+mergernet.core.utils.install\_linux\_package
+============================================
+
+.. currentmodule:: mergernet.core.utils
+
+.. autofunction:: install_linux_package
