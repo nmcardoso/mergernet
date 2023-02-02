@@ -1,8 +1,8 @@
 import collections.abc
 import json
-import tarfile
+import shutil
+import subprocess
 from datetime import datetime, timedelta
-from io import IOBase
 from pathlib import Path
 from threading import Lock
 from typing import Any, BinaryIO, List, Union
@@ -135,6 +135,7 @@ def compress_fits(
   return comp
 
 
+
 def extract_iauname_from_path(path: Path):
   iauname = path.stem
   if iauname.endswith('.fits'):
@@ -143,40 +144,62 @@ def extract_iauname_from_path(path: Path):
 
 
 
-def compress_images(
-  iaunames: List[str],
-  base_path: Union[str, Path],
-  image_ext: str,
-  output_path: Union[str, Path],
-  max_files: int = None,
-):
-  max_files = max_files or len(iauname)
-  parts = int(np.ceil(len(iaunames) / max_files))
-  output_path = Path(output_path)
-  output_path.parent.mkdir(parents=True, exist_ok=True)
-  iaunames_path = iauname_relative_path(iaunames=iaunames, suffix=f'.{image_ext}')
+def execute_posix_command(command: str):
+  process = subprocess.Popen(
+    command,
+    shell=True,
+    stdout=subprocess.PIPE,
+    executable='/bin/bash'
+  )
 
-  for part in range(parts):
-    iaunames_path_part = iaunames_path[max_files*part : max_files*(part+1)]
-
-    if parts > 1:
-      fname = Path(output_path.stem).stem
-      output_part = output_path.parent / f'{fname}.part{part}.tar.xz'
-      print(f'>> [{part + 1} of {parts}] {output_part.stem}')
+  while True:
+    output = process.stdout.readline()
+    if (output == b'' or output == '') and process.poll() is not None:
+      break
     else:
-      output_part = output_path
+      print(output)
 
-    # tar cf - decals_0.364_png/J000 decals_0.364_png/J001 -P
-    # | pv -s $(du -sb decals_0.364_png/J000 decals_0.364_png/J001 | awk '{print $1}')
-    # | xz -0 > test.tar.xz
 
-    with tarfile.open(output_part, mode='w:gz') as tar:
-      for iauname_path in tqdm(
-        iaunames_path_part,
-        total=len(iaunames_path_part),
-        unit='file'
-      ):
-        tar.add(base_path / iauname_path, arcname=str(iaunames_path))
+
+def install_linux_package(package: str):
+  if shutil.which(package) is None:
+    execute_posix_command(f'sudo apt install {package}')
+
+
+
+def compress_files(
+  input_path: Union[str, Path],
+  output_path: Union[str, Path],
+  level: int = 2,
+):
+  input_path = Path(input_path)
+  output_path = Path(output_path)
+
+  install_linux_package('pv')
+
+  ref_path = input_path
+  while not ref_path.name.startswith('J') and ref_path.parent != ref_path:
+    ref_path = ref_path.parent
+
+  command = (
+    f"tar -C {str(ref_path.resolve())} cf - {str(input_path.resolve())} -P 2>/dev/null | "
+    f"pv -s $(du -sbc {str(input_path.resolve())} 2>/dev/null | awk 'END{{print $1}}') | "
+    f"xz -{level} > {str(output_path.resolve())}"
+  )
+
+  execute_posix_command(command)
+
+
+
+def extract_files(archive: Union[str, Path], dest: Union[str, Path]):
+  archive = Path(archive)
+  dest = Path(dest)
+
+  install_linux_package('pv')
+
+  command = f'pv {str(archive.resolve())} | tar -xJ -C {str(dest.resolve())}'
+
+  execute_posix_command(command)
 
 
 
