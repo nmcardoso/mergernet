@@ -193,6 +193,8 @@ class Dataset:
               execute_posix_command(f'mv {src} {dest}')
               shutil.rmtree(self.config.imgaes_path / parent_path)
 
+            shutil.rmtree(self.config.archive_path)
+
 
     # Download table
     if self.config.table_url:
