@@ -10,6 +10,7 @@ This module defines others classes and functions as well, who perform complement
 """
 
 import logging
+import shutil
 from pathlib import Path
 from shutil import copy2
 from typing import List, Tuple, Union
@@ -19,7 +20,8 @@ import pandas as pd
 import tensorflow as tf
 
 from mergernet.core.experiment import Experiment
-from mergernet.core.utils import iauname, iauname_relative_path, load_image
+from mergernet.core.utils import (execute_posix_command, extract_files,
+                                  iauname, iauname_relative_path, load_image)
 from mergernet.data.dataset_config import (DatasetConfig, DatasetRegistry,
                                            GoogleDriveResource, HTTPResource)
 from mergernet.data.kfold import StratifiedDistributionKFold
@@ -177,6 +179,19 @@ class Dataset:
         elif isinstance(archive_url, GoogleDriveResource):
           if not self.config.archive_path.exists():
             copy2(archive_url.path, self.config.archive_path)
+            extract_files(self.config.archive_path, self.config.images_path)
+
+            if (
+              self.config.image_nested and
+              len(list(self.config.images_path.glob('J*'))) == 0 and
+              len(list(self.config.images_path.glob('*'))) == 1
+            ):
+              # remove the redundant parent folder if exists
+              parent_path = list(self.config.images_path.glob('*'))[0]
+              src = f'{str((self.config.images_path / parent_path).resolve())}/*'
+              dest = str(self.config.images_path.resolve())
+              execute_posix_command(f'mv {src} {dest}')
+              shutil.rmtree(self.config.imgaes_path / parent_path)
 
 
     # Download table
