@@ -168,22 +168,28 @@ def install_linux_package(package: str):
 
 
 def compress_files(
-  input_path: Union[str, Path],
+  input_path: Union[str, Path, List[str], List[Path]],
   output_path: Union[str, Path],
   level: int = 2,
 ):
-  input_path = Path(input_path)
+  if isinstance(input_path, list):
+    base_path = Path(input_path[0]).parent
+    input_path = [Path(p) for p in input_path]
+    input_path_str = [str(p.resolve()) for p in input_path]
+    folders = [p.name for p in input_path]
+  else:
+    base_path = Path(input_path).parent
+    input_path = Path(input_path)
+    input_path_str = [str(input_path.resolve())]
+    folders = [input_path.name]
+
   output_path = Path(output_path)
 
   install_linux_package('pv')
 
-  ref_path = input_path
-  while not ref_path.name.startswith('J') and ref_path.parent != ref_path:
-    ref_path = ref_path.parent
-
   command = (
-    f"tar -C {str(ref_path.resolve())} cf - {str(input_path.resolve())} -P 2>/dev/null | "
-    f"pv -s $(du -sbc {str(input_path.resolve())} 2>/dev/null | awk 'END{{print $1}}') | "
+    f"tar -C {str(base_path.resolve())} -cf - {' '.join(folders)} -P 2>/dev/null | "
+    f"pv -s $(du -sbc {' '.join(input_path_str)} 2>/dev/null | awk 'END{{print $1}}') | "
     f"xz -{level} > {str(output_path.resolve())}"
   )
 
