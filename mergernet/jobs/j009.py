@@ -15,31 +15,49 @@ class Job(Experiment):
     self.restart = False
 
   def call(self):
-    ds = Dataset(Dataset.registry.DECALS_0364_1M_PART1)
+    dataset_configs = [
+      Dataset.registry.DECALS_0364_1M_PART0,
+      Dataset.registry.DECALS_0364_1M_PART1,
+      Dataset.registry.DECALS_0364_1M_PART2,
+      Dataset.registry.DECALS_0364_1M_PART3,
+      Dataset.registry.DECALS_0364_1M_PART4,
+      Dataset.registry.DECALS_0364_1M_PART5,
+      Dataset.registry.DECALS_0364_1M_PART6,
+      Dataset.registry.DECALS_0364_1M_PART7,
+      Dataset.registry.DECALS_0364_1M_PART8,
+      Dataset.registry.DECALS_0364_1M_PART9,
+      Dataset.registry.DECALS_0364_1M_PART10,
+      Dataset.registry.DECALS_0364_1M_PART11,
+      Dataset.registry.DECALS_0364_1M_PART12,
+    ]
 
-    model = ZoobotEstimator(
-      hp=None,
-      dataset=ds,
-      config=ZoobotEstimator.registry.ZOOBOT_GREYSCALE,
-      crop_size=224,
-      resize_size=224,
-    )
+    for i, ds_config in enumerate(dataset_configs):
+      ds = Dataset(ds_config)
 
-    table_name = 'decals_cnn_representations_part1.parquet'
-    pca_table_name = 'decals_cnn_pca_part1.parquet'
+      model = ZoobotEstimator(
+        hp=None,
+        dataset=ds,
+        config=ZoobotEstimator.registry.ZOOBOT_GREYSCALE,
+        crop_size=224,
+        resize_size=224,
+      )
 
-    model.cnn_representations(table_name)
-    self.upload_file_gd(table_name)
+      table_name = f'decals_cnn_representations_part{i}.parquet'
+      pca_table_name = f'decals_cnn_pca_part{i}.parquet'
 
-    model.plot('model.png')
-    self.upload_file_gd('model.png')
+      model.cnn_representations(table_name)
+      self.upload_file_gd(table_name)
 
-    df = pd.read_parquet(self.local_exp_path / table_name)
-    feat_cols = [col for col in df.columns.values if col.startswith('feat_')]
-    features = df[feat_cols].to_numpy()
+      if i == 0:
+        model.plot('model.png')
+        self.upload_file_gd('model.png')
 
-    model.pca(features, 10, pca_table_name)
+      df = pd.read_parquet(self.local_exp_path / table_name)
+      feat_cols = [col for col in df.columns.values if col.startswith('feat_')]
+      features = df[feat_cols].to_numpy()
 
+      model.pca(features, 10, pca_table_name)
+      self.upload_file_gd(pca_table_name)
 
 
 
