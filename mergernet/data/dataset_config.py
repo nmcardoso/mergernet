@@ -12,6 +12,7 @@ class HTTPResource:
     self.url = url
 
 
+
 class GoogleDriveResource:
   GD_DATASETS_PATH = 'drive/MyDrive/mergernet/datasets'
 
@@ -19,37 +20,6 @@ class GoogleDriveResource:
     self.path = Path(self.GD_DATASETS_PATH) / filename
 
 
-_DECALS_0364_1M_TABLE = """
-  .. list-table:: Dataset parameters
-    :header-rows: 1
-
-    * - Parameter
-      - Value
-    * - Type
-      - Predictions
-    * - Pix scale
-      - 0.364
-    * - Shape
-      - 244,244,3
-    * - Image Format
-      - PNG
-    * - Bands
-      - GRZ
-    * - Scale G
-      - (2, 0.008)
-    * - Scale R
-      - (1, 0.014)
-    * - Scale Z
-      - (0, 0.019)
-    * - MinMax
-      - (-0.5, 300)
-    * - Brightness
-      - 1.3
-    * - Desaturate
-      - True
-    * - Non-Linearity
-      - asinh2
-"""
 
 class DatasetConfig:
   """Configuration params for dataset."""
@@ -325,11 +295,6 @@ class DatasetRegistry:
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  f"""
-  DECALS 1M dataset with colored png images PART 0
-
-  {_DECALS_0364_1M_TABLE}
-  """
 
   DECALS_0364_1M_PART1 = DatasetConfig(
     name='DECALS_0364_1M_PART1',
@@ -341,11 +306,6 @@ class DatasetRegistry:
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  f"""
-  DECALS 1M dataset with colored png images PART 1
-
-  {_DECALS_0364_1M_TABLE}
-  """
 
   DECALS_0364_1M_PART2 = DatasetConfig(
     name='DECALS_0364_1M_PART2',
@@ -357,11 +317,6 @@ class DatasetRegistry:
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  f"""
-  DECALS 1M dataset with colored png images PART 2
-
-  {_DECALS_0364_1M_TABLE}
-  """
 
   DECALS_0364_1M_PART3 = DatasetConfig(
     name='DECALS_0364_1M_PART3',
@@ -373,11 +328,6 @@ class DatasetRegistry:
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  f"""
-  DECALS 1M dataset with colored png images PART 3
-
-  {_DECALS_0364_1M_TABLE}
-  """
 
   DECALS_0364_1M_PART4 = DatasetConfig(
     name='DECALS_0364_1M_PART4',
@@ -389,11 +339,6 @@ class DatasetRegistry:
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  f"""
-  DECALS 1M dataset with colored png images PART 4
-
-  {_DECALS_0364_1M_TABLE}
-  """
 
   DECALS_0364_1M_PART5 = DatasetConfig(
     name='DECALS_0364_1M_PART5',
@@ -405,11 +350,6 @@ class DatasetRegistry:
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  f"""
-  DECALS 1M dataset with colored png images PART 5
-
-  {_DECALS_0364_1M_TABLE}
-  """
 
   DECALS_0364_1M_PART6 = DatasetConfig(
     name='DECALS_0364_1M_PART6',
@@ -421,11 +361,6 @@ class DatasetRegistry:
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  f"""
-  DECALS 1M dataset with colored png images PART 6
-
-  {_DECALS_0364_1M_TABLE}
-  """
 
   DECALS_0364_1M_PART7 = DatasetConfig(
     name='DECALS_0364_1M_PART7',
@@ -437,11 +372,6 @@ class DatasetRegistry:
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  f"""
-  DECALS 1M dataset with colored png images PART 7
-
-  {_DECALS_0364_1M_TABLE}
-  """
 
   DECALS_0364_1M_PART8 = DatasetConfig(
     name='DECALS_0364_1M_PART8',
@@ -453,11 +383,6 @@ class DatasetRegistry:
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  f"""
-  DECALS 1M dataset with colored png images PART 8
-
-  {_DECALS_0364_1M_TABLE}
-  """
 
   DECALS_0364_1M_PART9 = DatasetConfig(
     name='DECALS_0364_1M_PART9',
@@ -469,11 +394,6 @@ class DatasetRegistry:
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  f"""
-  DECALS 1M dataset with colored png images PART 9
-
-  {_DECALS_0364_1M_TABLE}
-  """
 
   DECALS_0364_1M_PART10 = DatasetConfig(
     name='DECALS_0364_1M_PART10',
@@ -485,11 +405,6 @@ class DatasetRegistry:
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  f"""
-  DECALS 1M dataset with colored png images PART 10
-
-  {_DECALS_0364_1M_TABLE}
-  """
 
   DECALS_0364_1M_PART11 = DatasetConfig(
     name='DECALS_0364_1M_PART11',
@@ -501,11 +416,6 @@ class DatasetRegistry:
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  f"""
-  DECALS 1M dataset with colored png images PART 11
-
-  {_DECALS_0364_1M_TABLE}
-  """
 
   DECALS_0364_1M_PART12 = DatasetConfig(
     name='DECALS_0364_1M_PART12',
@@ -517,8 +427,52 @@ class DatasetRegistry:
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  f"""
-  DECALS 1M dataset with colored png images PART 12
 
-  {_DECALS_0364_1M_TABLE}
-  """
+
+_DECALS_0364_1M_DOC = """
+  DECALS 1M dataset with colored png images PART {}
+
+  .. list-table:: Dataset parameters
+    :header-rows: 1
+
+    * - Parameter
+      - Value
+    * - Type
+      - Predictions
+    * - Pix scale
+      - 0.364
+    * - Shape
+      - 244,244,3
+    * - Image Format
+      - PNG
+    * - Bands
+      - GRZ
+    * - Scale G
+      - (2, 0.008)
+    * - Scale R
+      - (1, 0.014)
+    * - Scale Z
+      - (0, 0.019)
+    * - MinMax
+      - (-0.5, 300)
+    * - Brightness
+      - 1.3
+    * - Desaturate
+      - True
+    * - Non-Linearity
+      - asinh2
+"""
+
+DatasetRegistry.DECALS_0364_1M_PART0.__doc__ = _DECALS_0364_1M_DOC.format(0)
+DatasetRegistry.DECALS_0364_1M_PART1.__doc__ = _DECALS_0364_1M_DOC.format(1)
+DatasetRegistry.DECALS_0364_1M_PART2.__doc__ = _DECALS_0364_1M_DOC.format(2)
+DatasetRegistry.DECALS_0364_1M_PART3.__doc__ = _DECALS_0364_1M_DOC.format(3)
+DatasetRegistry.DECALS_0364_1M_PART4.__doc__ = _DECALS_0364_1M_DOC.format(4)
+DatasetRegistry.DECALS_0364_1M_PART5.__doc__ = _DECALS_0364_1M_DOC.format(5)
+DatasetRegistry.DECALS_0364_1M_PART6.__doc__ = _DECALS_0364_1M_DOC.format(6)
+DatasetRegistry.DECALS_0364_1M_PART7.__doc__ = _DECALS_0364_1M_DOC.format(7)
+DatasetRegistry.DECALS_0364_1M_PART8.__doc__ = _DECALS_0364_1M_DOC.format(8)
+DatasetRegistry.DECALS_0364_1M_PART9.__doc__ = _DECALS_0364_1M_DOC.format(9)
+DatasetRegistry.DECALS_0364_1M_PART10.__doc__ = _DECALS_0364_1M_DOC.format(10)
+DatasetRegistry.DECALS_0364_1M_PART11.__doc__ = _DECALS_0364_1M_DOC.format(11)
+DatasetRegistry.DECALS_0364_1M_PART12.__doc__ = _DECALS_0364_1M_DOC.format(12)
