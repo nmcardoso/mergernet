@@ -26,11 +26,19 @@ DatasetRegistry
       ~DatasetRegistry.BLIND_SPLUS_TRILOGY_128
       ~DatasetRegistry.BLIND_SPLUS_TRILOGY_150
       ~DatasetRegistry.DARG_NO_INSPECTION
+      ~DatasetRegistry.DECALS_0364_1M_PART0
       ~DatasetRegistry.DECALS_0364_1M_PART1
+      ~DatasetRegistry.DECALS_0364_1M_PART10
+      ~DatasetRegistry.DECALS_0364_1M_PART11
+      ~DatasetRegistry.DECALS_0364_1M_PART12
       ~DatasetRegistry.DECALS_0364_1M_PART2
       ~DatasetRegistry.DECALS_0364_1M_PART3
       ~DatasetRegistry.DECALS_0364_1M_PART4
       ~DatasetRegistry.DECALS_0364_1M_PART5
+      ~DatasetRegistry.DECALS_0364_1M_PART6
+      ~DatasetRegistry.DECALS_0364_1M_PART7
+      ~DatasetRegistry.DECALS_0364_1M_PART8
+      ~DatasetRegistry.DECALS_0364_1M_PART9
       ~DatasetRegistry.MESD_LEGACY_128
       ~DatasetRegistry.MESD_SDSS_128
   
