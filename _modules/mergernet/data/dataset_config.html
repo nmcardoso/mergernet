@@ -491,6 +491,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span></div>
 
 
+
 <div class="viewcode-block" id="GoogleDriveResource"><a class="viewcode-back" href="../../../api/mergernet.data.dataset_config.GoogleDriveResource.html#mergernet.data.dataset_config.GoogleDriveResource">[docs]</a><span class="k">class</span> <span class="nc">GoogleDriveResource</span><span class="p">:</span>
   <span class="n">GD_DATASETS_PATH</span> <span class="o">=</span> <span class="s1">&#39;drive/MyDrive/mergernet/datasets&#39;</span>
 
@@ -498,37 +499,6 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GD_DATASETS_PATH</span><span class="p">)</span> <span class="o">/</span> <span class="n">filename</span></div>
 
 
-<span class="n">_DECALS_0364_1M_TABLE</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  .. list-table:: Dataset parameters</span>
-<span class="s2">    :header-rows: 1</span>
-
-<span class="s2">    * - Parameter</span>
-<span class="s2">      - Value</span>
-<span class="s2">    * - Type</span>
-<span class="s2">      - Predictions</span>
-<span class="s2">    * - Pix scale</span>
-<span class="s2">      - 0.364</span>
-<span class="s2">    * - Shape</span>
-<span class="s2">      - 244,244,3</span>
-<span class="s2">    * - Image Format</span>
-<span class="s2">      - PNG</span>
-<span class="s2">    * - Bands</span>
-<span class="s2">      - GRZ</span>
-<span class="s2">    * - Scale G</span>
-<span class="s2">      - (2, 0.008)</span>
-<span class="s2">    * - Scale R</span>
-<span class="s2">      - (1, 0.014)</span>
-<span class="s2">    * - Scale Z</span>
-<span class="s2">      - (0, 0.019)</span>
-<span class="s2">    * - MinMax</span>
-<span class="s2">      - (-0.5, 300)</span>
-<span class="s2">    * - Brightness</span>
-<span class="s2">      - 1.3</span>
-<span class="s2">    * - Desaturate</span>
-<span class="s2">      - True</span>
-<span class="s2">    * - Non-Linearity</span>
-<span class="s2">      - asinh2</span>
-<span class="s2">&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="DatasetConfig"><a class="viewcode-back" href="../../../api/mergernet.data.dataset_config.DatasetConfig.html#mergernet.data.dataset_config.DatasetConfig">[docs]</a><span class="k">class</span> <span class="nc">DatasetConfig</span><span class="p">:</span>
 <span class="w">  </span><span class="sd">&quot;&quot;&quot;Configuration params for dataset.&quot;&quot;&quot;</span>
@@ -804,11 +774,6 @@
     <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
-  <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  DECALS 1M dataset with colored png images PART 0</span>
-
-<span class="s2">  </span><span class="si">{</span><span class="n">_DECALS_0364_1M_TABLE</span><span class="si">}</span>
-<span class="s2">  &quot;&quot;&quot;</span>
 
   <span class="n">DECALS_0364_1M_PART1</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;DECALS_0364_1M_PART1&#39;</span><span class="p">,</span>
@@ -820,11 +785,6 @@
     <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
-  <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  DECALS 1M dataset with colored png images PART 1</span>
-
-<span class="s2">  </span><span class="si">{</span><span class="n">_DECALS_0364_1M_TABLE</span><span class="si">}</span>
-<span class="s2">  &quot;&quot;&quot;</span>
 
   <span class="n">DECALS_0364_1M_PART2</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;DECALS_0364_1M_PART2&#39;</span><span class="p">,</span>
@@ -836,11 +796,6 @@
     <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
-  <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  DECALS 1M dataset with colored png images PART 2</span>
-
-<span class="s2">  </span><span class="si">{</span><span class="n">_DECALS_0364_1M_TABLE</span><span class="si">}</span>
-<span class="s2">  &quot;&quot;&quot;</span>
 
   <span class="n">DECALS_0364_1M_PART3</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;DECALS_0364_1M_PART3&#39;</span><span class="p">,</span>
@@ -852,11 +807,6 @@
     <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
-  <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  DECALS 1M dataset with colored png images PART 3</span>
-
-<span class="s2">  </span><span class="si">{</span><span class="n">_DECALS_0364_1M_TABLE</span><span class="si">}</span>
-<span class="s2">  &quot;&quot;&quot;</span>
 
   <span class="n">DECALS_0364_1M_PART4</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;DECALS_0364_1M_PART4&#39;</span><span class="p">,</span>
@@ -868,11 +818,6 @@
     <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
-  <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  DECALS 1M dataset with colored png images PART 4</span>
-
-<span class="s2">  </span><span class="si">{</span><span class="n">_DECALS_0364_1M_TABLE</span><span class="si">}</span>
-<span class="s2">  &quot;&quot;&quot;</span>
 
   <span class="n">DECALS_0364_1M_PART5</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;DECALS_0364_1M_PART5&#39;</span><span class="p">,</span>
@@ -884,11 +829,6 @@
     <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
-  <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  DECALS 1M dataset with colored png images PART 5</span>
-
-<span class="s2">  </span><span class="si">{</span><span class="n">_DECALS_0364_1M_TABLE</span><span class="si">}</span>
-<span class="s2">  &quot;&quot;&quot;</span>
 
   <span class="n">DECALS_0364_1M_PART6</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;DECALS_0364_1M_PART6&#39;</span><span class="p">,</span>
@@ -900,11 +840,6 @@
     <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
-  <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  DECALS 1M dataset with colored png images PART 6</span>
-
-<span class="s2">  </span><span class="si">{</span><span class="n">_DECALS_0364_1M_TABLE</span><span class="si">}</span>
-<span class="s2">  &quot;&quot;&quot;</span>
 
   <span class="n">DECALS_0364_1M_PART7</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;DECALS_0364_1M_PART7&#39;</span><span class="p">,</span>
@@ -916,11 +851,6 @@
     <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
-  <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  DECALS 1M dataset with colored png images PART 7</span>
-
-<span class="s2">  </span><span class="si">{</span><span class="n">_DECALS_0364_1M_TABLE</span><span class="si">}</span>
-<span class="s2">  &quot;&quot;&quot;</span>
 
   <span class="n">DECALS_0364_1M_PART8</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;DECALS_0364_1M_PART8&#39;</span><span class="p">,</span>
@@ -932,11 +862,6 @@
     <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
-  <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  DECALS 1M dataset with colored png images PART 8</span>
-
-<span class="s2">  </span><span class="si">{</span><span class="n">_DECALS_0364_1M_TABLE</span><span class="si">}</span>
-<span class="s2">  &quot;&quot;&quot;</span>
 
   <span class="n">DECALS_0364_1M_PART9</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;DECALS_0364_1M_PART9&#39;</span><span class="p">,</span>
@@ -948,11 +873,6 @@
     <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
-  <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  DECALS 1M dataset with colored png images PART 9</span>
-
-<span class="s2">  </span><span class="si">{</span><span class="n">_DECALS_0364_1M_TABLE</span><span class="si">}</span>
-<span class="s2">  &quot;&quot;&quot;</span>
 
   <span class="n">DECALS_0364_1M_PART10</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;DECALS_0364_1M_PART10&#39;</span><span class="p">,</span>
@@ -964,11 +884,6 @@
     <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
-  <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  DECALS 1M dataset with colored png images PART 10</span>
-
-<span class="s2">  </span><span class="si">{</span><span class="n">_DECALS_0364_1M_TABLE</span><span class="si">}</span>
-<span class="s2">  &quot;&quot;&quot;</span>
 
   <span class="n">DECALS_0364_1M_PART11</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;DECALS_0364_1M_PART11&#39;</span><span class="p">,</span>
@@ -980,11 +895,6 @@
     <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
   <span class="p">)</span>
-  <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  DECALS 1M dataset with colored png images PART 11</span>
-
-<span class="s2">  </span><span class="si">{</span><span class="n">_DECALS_0364_1M_TABLE</span><span class="si">}</span>
-<span class="s2">  &quot;&quot;&quot;</span>
 
   <span class="n">DECALS_0364_1M_PART12</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;DECALS_0364_1M_PART12&#39;</span><span class="p">,</span>
@@ -995,12 +905,56 @@
     <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;decals_0.364_png_part12&#39;</span><span class="p">),</span>
     <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-  <span class="p">)</span>
-  <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  DECALS 1M dataset with colored png images PART 12</span>
+  <span class="p">)</span></div>
 
-<span class="s2">  </span><span class="si">{</span><span class="n">_DECALS_0364_1M_TABLE</span><span class="si">}</span>
-<span class="s2">  &quot;&quot;&quot;</span></div>
+
+<span class="n">_DECALS_0364_1M_DOC</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">  DECALS 1M dataset with colored png images PART </span><span class="si">{}</span>
+
+<span class="s2">  .. list-table:: Dataset parameters</span>
+<span class="s2">    :header-rows: 1</span>
+
+<span class="s2">    * - Parameter</span>
+<span class="s2">      - Value</span>
+<span class="s2">    * - Type</span>
+<span class="s2">      - Predictions</span>
+<span class="s2">    * - Pix scale</span>
+<span class="s2">      - 0.364</span>
+<span class="s2">    * - Shape</span>
+<span class="s2">      - 244,244,3</span>
+<span class="s2">    * - Image Format</span>
+<span class="s2">      - PNG</span>
+<span class="s2">    * - Bands</span>
+<span class="s2">      - GRZ</span>
+<span class="s2">    * - Scale G</span>
+<span class="s2">      - (2, 0.008)</span>
+<span class="s2">    * - Scale R</span>
+<span class="s2">      - (1, 0.014)</span>
+<span class="s2">    * - Scale Z</span>
+<span class="s2">      - (0, 0.019)</span>
+<span class="s2">    * - MinMax</span>
+<span class="s2">      - (-0.5, 300)</span>
+<span class="s2">    * - Brightness</span>
+<span class="s2">      - 1.3</span>
+<span class="s2">    * - Desaturate</span>
+<span class="s2">      - True</span>
+<span class="s2">    * - Non-Linearity</span>
+<span class="s2">      - asinh2</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">DatasetRegistry</span><span class="o">.</span><span class="n">DECALS_0364_1M_PART0</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_DECALS_0364_1M_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">DatasetRegistry</span><span class="o">.</span><span class="n">DECALS_0364_1M_PART1</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_DECALS_0364_1M_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">DatasetRegistry</span><span class="o">.</span><span class="n">DECALS_0364_1M_PART2</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_DECALS_0364_1M_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">DatasetRegistry</span><span class="o">.</span><span class="n">DECALS_0364_1M_PART3</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_DECALS_0364_1M_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">DatasetRegistry</span><span class="o">.</span><span class="n">DECALS_0364_1M_PART4</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_DECALS_0364_1M_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">DatasetRegistry</span><span class="o">.</span><span class="n">DECALS_0364_1M_PART5</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_DECALS_0364_1M_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">DatasetRegistry</span><span class="o">.</span><span class="n">DECALS_0364_1M_PART6</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_DECALS_0364_1M_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">DatasetRegistry</span><span class="o">.</span><span class="n">DECALS_0364_1M_PART7</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_DECALS_0364_1M_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">DatasetRegistry</span><span class="o">.</span><span class="n">DECALS_0364_1M_PART8</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_DECALS_0364_1M_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">DatasetRegistry</span><span class="o">.</span><span class="n">DECALS_0364_1M_PART9</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_DECALS_0364_1M_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">DatasetRegistry</span><span class="o">.</span><span class="n">DECALS_0364_1M_PART10</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_DECALS_0364_1M_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">DatasetRegistry</span><span class="o">.</span><span class="n">DECALS_0364_1M_PART11</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_DECALS_0364_1M_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">DatasetRegistry</span><span class="o">.</span><span class="n">DECALS_0364_1M_PART12</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_DECALS_0364_1M_DOC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
 </pre></div>
         </article>
       </div>
