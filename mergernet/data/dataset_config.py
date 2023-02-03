@@ -19,6 +19,38 @@ class GoogleDriveResource:
     self.path = Path(self.GD_DATASETS_PATH) / filename
 
 
+_DECALS_0364_1M_TABLE = """
+  .. list-table:: Dataset parameters
+    :header-rows: 1
+
+    * - Parameter
+      - Value
+    * - Type
+      - Predictions
+    * - Pix scale
+      - 0.364
+    * - Shape
+      - 244,244,3
+    * - Image Format
+      - PNG
+    * - Bands
+      - GRZ
+    * - Scale G
+      - (2, 0.008)
+    * - Scale R
+      - (1, 0.014)
+    * - Scale Z
+      - (0, 0.019)
+    * - MinMax
+      - (-0.5, 300)
+    * - Brightness
+      - 1.3
+    * - Desaturate
+      - True
+    * - Non-Linearity
+      - asinh2
+"""
+
 class DatasetConfig:
   """Configuration params for dataset."""
   def __init__(
@@ -283,223 +315,210 @@ class DatasetRegistry:
   128x128 pixscale of with 0.55 arcsec/pixel
   """
 
+  DECALS_0364_1M_PART0 = DatasetConfig(
+    name='DECALS_0364_1M_PART0',
+    archive_url=[
+      GoogleDriveResource('decals_0.364_png_part0.tar.xz'),
+    ],
+    archive_path=Path('decals_0.364_png_part0.tar.xz'),
+    images_path=Path('decals_0.364_png_part0'),
+    image_extension='png',
+    image_shape=(224, 224, 3)
+  )
+  f"""
+  DECALS 1M dataset with colored png images PART 0
+
+  {_DECALS_0364_1M_TABLE}
+  """
+
   DECALS_0364_1M_PART1 = DatasetConfig(
     name='DECALS_0364_1M_PART1',
     archive_url=[
       GoogleDriveResource('decals_0.364_png_part1.tar.xz'),
-      HTTPResource(GDrive.get_url('1unxmLgbdi-6JhpFGtfv7pxRzvFnKADth'))
     ],
     archive_path=Path('decals_0.364_png_part1.tar.xz'),
     images_path=Path('decals_0.364_png_part1'),
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  """
+  f"""
   DECALS 1M dataset with colored png images PART 1
 
-  .. list-table:: Dataset parameters
-    :header-rows: 1
-
-    * - Parameter
-      - Value
-    * - Type
-      - Predictions
-    * - Pix scale
-      - 0.364
-    * - Shape
-      - 244,244,3
-    * - Image Format
-      - PNG
-    * - Bands
-      - GRZ
-    * - Scale G
-      - (2, 0.008)
-    * - Scale R
-      - (1, 0.014)
-    * - Scale Z
-      - (0, 0.019)
-    * - MinMax
-      - (-0.5, 300)
-    * - Brightness
-      - 1.3
-    * - Desaturate
-      - True
-    * - Non-Linearity
-      - asinh2
+  {_DECALS_0364_1M_TABLE}
   """
 
   DECALS_0364_1M_PART2 = DatasetConfig(
     name='DECALS_0364_1M_PART2',
     archive_url=[
-      GDrive.get_url('16uVXaTabXECXHJkZET34wxe4rLLPdK_r')
+      GoogleDriveResource('decals_0.364_png_part2.tar.xz'),
     ],
     archive_path=Path('decals_0.364_png_part2.tar.xz'),
     images_path=Path('decals_0.364_png_part2'),
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  """
+  f"""
   DECALS 1M dataset with colored png images PART 2
 
-  .. list-table:: Dataset parameters
-    :header-rows: 1
-
-    * - Parameter
-      - Value
-    * - Type
-      - Predictions
-    * - Pix scale
-      - 0.364
-    * - Shape
-      - 244,244,3
-    * - Image Format
-      - PNG
-    * - Bands
-      - GRZ
-    * - Scale G
-      - (2, 0.008)
-    * - Scale R
-      - (1, 0.014)
-    * - Scale Z
-      - (0, 0.019)
-    * - MinMax
-      - (-0.5, 300)
-    * - Brightness
-      - 1.3
-    * - Desaturate
-      - True
-    * - Non-Linearity
-      - asinh2
+  {_DECALS_0364_1M_TABLE}
   """
 
   DECALS_0364_1M_PART3 = DatasetConfig(
     name='DECALS_0364_1M_PART3',
     archive_url=[
-      GDrive.get_url('1cA6N4t8F05lsIwgmjBUYDPJ_HAklYx1r')
+      GoogleDriveResource('decals_0.364_png_part3.tar.xz'),
     ],
     archive_path=Path('decals_0.364_png_part3.tar.xz'),
     images_path=Path('decals_0.364_png_part3'),
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  """
+  f"""
   DECALS 1M dataset with colored png images PART 3
 
-  .. list-table:: Dataset parameters
-    :header-rows: 1
-
-    * - Parameter
-      - Value
-    * - Type
-      - Predictions
-    * - Pix scale
-      - 0.364
-    * - Shape
-      - 244,244,3
-    * - Image Format
-      - PNG
-    * - Bands
-      - GRZ
-    * - Scale G
-      - (2, 0.008)
-    * - Scale R
-      - (1, 0.014)
-    * - Scale Z
-      - (0, 0.019)
-    * - MinMax
-      - (-0.5, 300)
-    * - Brightness
-      - 1.3
-    * - Desaturate
-      - True
-    * - Non-Linearity
-      - asinh2
+  {_DECALS_0364_1M_TABLE}
   """
 
   DECALS_0364_1M_PART4 = DatasetConfig(
     name='DECALS_0364_1M_PART4',
     archive_url=[
-      GDrive.get_url('1Xr9PiveEy9uXjDKZrNujPgBlc8ITkcNG')
+      GoogleDriveResource('decals_0.364_png_part4.tar.xz'),
     ],
     archive_path=Path('decals_0.364_png_part4.tar.xz'),
     images_path=Path('decals_0.364_png_part4'),
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  """
+  f"""
   DECALS 1M dataset with colored png images PART 4
 
-  .. list-table:: Dataset parameters
-    :header-rows: 1
-
-    * - Parameter
-      - Value
-    * - Type
-      - Predictions
-    * - Pix scale
-      - 0.364
-    * - Shape
-      - 244,244,3
-    * - Image Format
-      - PNG
-    * - Bands
-      - GRZ
-    * - Scale G
-      - (2, 0.008)
-    * - Scale R
-      - (1, 0.014)
-    * - Scale Z
-      - (0, 0.019)
-    * - MinMax
-      - (-0.5, 300)
-    * - Brightness
-      - 1.3
-    * - Desaturate
-      - True
-    * - Non-Linearity
-      - asinh2
+  {_DECALS_0364_1M_TABLE}
   """
 
   DECALS_0364_1M_PART5 = DatasetConfig(
     name='DECALS_0364_1M_PART5',
     archive_url=[
-      GDrive.get_url('1r7Ysn4IQEaJTC1Q6WniWKZtDotlEWxpB')
+      GoogleDriveResource('decals_0.364_png_part5.tar.xz'),
     ],
     archive_path=Path('decals_0.364_png_part5.tar.xz'),
     images_path=Path('decals_0.364_png_part5'),
     image_extension='png',
     image_shape=(224, 224, 3)
   )
-  """
+  f"""
   DECALS 1M dataset with colored png images PART 5
 
-  .. list-table:: Dataset parameters
-    :header-rows: 1
+  {_DECALS_0364_1M_TABLE}
+  """
 
-    * - Parameter
-      - Value
-    * - Type
-      - Predictions
-    * - Pix scale
-      - 0.364
-    * - Shape
-      - 244,244,3
-    * - Image Format
-      - PNG
-    * - Bands
-      - GRZ
-    * - Scale G
-      - (2, 0.008)
-    * - Scale R
-      - (1, 0.014)
-    * - Scale Z
-      - (0, 0.019)
-    * - MinMax
-      - (-0.5, 300)
-    * - Brightness
-      - 1.3
-    * - Desaturate
-      - True
-    * - Non-Linearity
-      - asinh2
+  DECALS_0364_1M_PART6 = DatasetConfig(
+    name='DECALS_0364_1M_PART6',
+    archive_url=[
+      GoogleDriveResource('decals_0.364_png_part6.tar.xz'),
+    ],
+    archive_path=Path('decals_0.364_png_part6.tar.xz'),
+    images_path=Path('decals_0.364_png_part6'),
+    image_extension='png',
+    image_shape=(224, 224, 3)
+  )
+  f"""
+  DECALS 1M dataset with colored png images PART 6
+
+  {_DECALS_0364_1M_TABLE}
+  """
+
+  DECALS_0364_1M_PART7 = DatasetConfig(
+    name='DECALS_0364_1M_PART7',
+    archive_url=[
+      GoogleDriveResource('decals_0.364_png_part7.tar.xz'),
+    ],
+    archive_path=Path('decals_0.364_png_part7.tar.xz'),
+    images_path=Path('decals_0.364_png_part7'),
+    image_extension='png',
+    image_shape=(224, 224, 3)
+  )
+  f"""
+  DECALS 1M dataset with colored png images PART 7
+
+  {_DECALS_0364_1M_TABLE}
+  """
+
+  DECALS_0364_1M_PART8 = DatasetConfig(
+    name='DECALS_0364_1M_PART8',
+    archive_url=[
+      GoogleDriveResource('decals_0.364_png_part8.tar.xz'),
+    ],
+    archive_path=Path('decals_0.364_png_part8.tar.xz'),
+    images_path=Path('decals_0.364_png_part8'),
+    image_extension='png',
+    image_shape=(224, 224, 3)
+  )
+  f"""
+  DECALS 1M dataset with colored png images PART 8
+
+  {_DECALS_0364_1M_TABLE}
+  """
+
+  DECALS_0364_1M_PART9 = DatasetConfig(
+    name='DECALS_0364_1M_PART9',
+    archive_url=[
+      GoogleDriveResource('decals_0.364_png_part9.tar.xz'),
+    ],
+    archive_path=Path('decals_0.364_png_part9.tar.xz'),
+    images_path=Path('decals_0.364_png_part9'),
+    image_extension='png',
+    image_shape=(224, 224, 3)
+  )
+  f"""
+  DECALS 1M dataset with colored png images PART 9
+
+  {_DECALS_0364_1M_TABLE}
+  """
+
+  DECALS_0364_1M_PART10 = DatasetConfig(
+    name='DECALS_0364_1M_PART10',
+    archive_url=[
+      GoogleDriveResource('decals_0.364_png_part10.tar.xz'),
+    ],
+    archive_path=Path('decals_0.364_png_part10.tar.xz'),
+    images_path=Path('decals_0.364_png_part10'),
+    image_extension='png',
+    image_shape=(224, 224, 3)
+  )
+  f"""
+  DECALS 1M dataset with colored png images PART 10
+
+  {_DECALS_0364_1M_TABLE}
+  """
+
+  DECALS_0364_1M_PART11 = DatasetConfig(
+    name='DECALS_0364_1M_PART11',
+    archive_url=[
+      GoogleDriveResource('decals_0.364_png_part11.tar.xz'),
+    ],
+    archive_path=Path('decals_0.364_png_part11.tar.xz'),
+    images_path=Path('decals_0.364_png_part11'),
+    image_extension='png',
+    image_shape=(224, 224, 3)
+  )
+  f"""
+  DECALS 1M dataset with colored png images PART 11
+
+  {_DECALS_0364_1M_TABLE}
+  """
+
+  DECALS_0364_1M_PART12 = DatasetConfig(
+    name='DECALS_0364_1M_PART12',
+    archive_url=[
+      GoogleDriveResource('decals_0.364_png_part12.tar.xz'),
+    ],
+    archive_path=Path('decals_0.364_png_part12.tar.xz'),
+    images_path=Path('decals_0.364_png_part12'),
+    image_extension='png',
+    image_shape=(224, 224, 3)
+  )
+  f"""
+  DECALS 1M dataset with colored png images PART 12
+
+  {_DECALS_0364_1M_TABLE}
   """
