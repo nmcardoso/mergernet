@@ -153,6 +153,24 @@ class Dataset:
            self.config.table_path and self.config.table_path.is_file()
 
 
+  def clear(self):
+    """
+    Removes all downloaded files from hard disk. This includes:
+
+    - Table file
+    - Image archive
+    - Extracted images folder
+    """
+    if self.config.archive_path.exists():
+      shutil.rmtree(self.config.archive_path)
+
+    if self.config.images_path.exists():
+      shutil.rmtree(self.config.images_path)
+
+    if self.config.table_path.exists():
+      shutil.rmtree(self.config.table_path)
+
+
   def download(self):
     """
     Check if destination path exists, create missing folders and download
