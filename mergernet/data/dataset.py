@@ -48,9 +48,7 @@ class Dataset:
   def __init__(
     self,
     config: DatasetConfig,
-    in_memory: bool = False
   ):
-    self.in_memory = in_memory
     self.config = config
     self._weight_map = None
 
@@ -265,10 +263,6 @@ class Dataset:
       str(path.resolve())
       for path in self.get_images_paths(X_test)
     ])
-
-    if self.in_memory:
-      X_train = [load_image(path) for path in X_train]
-      X_test = [load_image(path) for path in X_test]
 
     if self.config.labels:
       y_train = self._discretize_label(y_train)
