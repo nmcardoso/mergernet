@@ -195,21 +195,21 @@ class Dataset:
         elif isinstance(archive_url, GoogleDriveResource):
           if not self.config.archive_path.exists():
             copy2(archive_url.path, self.config.archive_path)
+
+          if not self.config.images_path.exists():
             extract_files(self.config.archive_path, self.config.images_path)
 
-            if (
-              self.config.image_nested and
-              len(list(self.config.images_path.glob('J*'))) == 0 and
-              len(list(self.config.images_path.glob('*'))) == 1
-            ):
-              # remove the redundant parent folder if exists
-              parent_path = list(self.config.images_path.glob('*'))[0]
-              src = f'{str((self.config.images_path / parent_path).resolve())}/*'
-              dest = str(self.config.images_path.resolve())
-              execute_posix_command(f'mv {src} {dest}')
-              shutil.rmtree(self.config.imgaes_path / parent_path)
-
-            shutil.rmtree(self.config.archive_path)
+          if (
+            self.config.image_nested and
+            len(list(self.config.images_path.glob('J*'))) == 0 and
+            len(list(self.config.images_path.glob('*'))) == 1
+          ):
+            # remove the redundant parent folder if exists
+            parent_path = list(self.config.images_path.glob('*'))[0]
+            src = f'{str((self.config.images_path / parent_path).resolve())}/*'
+            dest = str(self.config.images_path.resolve())
+            execute_posix_command(f'mv {src} {dest}')
+            shutil.rmtree(self.config.imgaes_path / parent_path)
 
 
     # Download table
