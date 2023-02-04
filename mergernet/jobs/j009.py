@@ -1,5 +1,3 @@
-from itertools import compress
-
 import pandas as pd
 
 from mergernet.core.experiment import Experiment
