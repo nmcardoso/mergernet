@@ -479,6 +479,7 @@
           <h1>Source code for mergernet.core.utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">collections.abc</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
@@ -496,6 +497,8 @@
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
 <span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">DATA_ROOT</span><span class="p">,</span> <span class="n">ENV</span><span class="p">,</span> <span class="n">RANDOM_SEED</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="load_image"><a class="viewcode-back" href="../../../api/mergernet.core.utils.load_image.html#mergernet.core.utils.load_image">[docs]</a><span class="k">def</span> <span class="nf">load_image</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -624,6 +627,8 @@
 
 
 <div class="viewcode-block" id="execute_posix_command"><a class="viewcode-back" href="../../../api/mergernet.core.utils.execute_posix_command.html#mergernet.core.utils.execute_posix_command">[docs]</a><span class="k">def</span> <span class="nf">execute_posix_command</span><span class="p">(</span><span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+  <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;executing posix command: </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
   <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
     <span class="n">command</span><span class="p">,</span>
     <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
