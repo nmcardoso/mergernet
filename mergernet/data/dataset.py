@@ -65,12 +65,12 @@ class Dataset:
     if config.positions is not None:
       self.config.positions = np.array(self.config.positions)
 
-    # create table for unregistered datasets
-    self._create_dataset_table()
-
     # download dataset data
     # if not self.is_dataset_downloaded():
     self.download()
+
+    # create table for unregistered datasets
+    self._create_dataset_table()
 
     if self.config.image_transform is not None:
       self._transform_images()
@@ -217,7 +217,6 @@ class Dataset:
             dest = str(self.config.images_path.resolve())
             execute_posix_command(f'mv {src} {dest}')
             shutil.rmtree(self.config.imgaes_path / parent_path)
-
 
     # Download table
     if self.config.table_url:
