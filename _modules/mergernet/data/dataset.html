@@ -641,13 +641,13 @@
 <span class="sd">    - Extracted images folder</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-      <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">archive_path</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
       <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-      <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="p">)</span></div>
+      <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_path</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Dataset.download"><a class="viewcode-back" href="../../../api/mergernet.data.dataset.Dataset.html#mergernet.data.dataset.Dataset.download">[docs]</a>  <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
