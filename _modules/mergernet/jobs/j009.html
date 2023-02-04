@@ -509,6 +509,9 @@
     <span class="p">]</span>
 
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ds_config</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset_configs</span><span class="p">):</span>
+      <span class="n">table_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;decals_cnn_representations_part</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.parquet&#39;</span>
+      <span class="n">pca_table_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;decals_cnn_pca_part</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.parquet&#39;</span>
+
       <span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">ds_config</span><span class="p">)</span>
 
       <span class="n">model</span> <span class="o">=</span> <span class="n">ZoobotEstimator</span><span class="p">(</span>
@@ -519,22 +522,17 @@
         <span class="n">resize_size</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span>
       <span class="p">)</span>
 
-      <span class="n">table_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;decals_cnn_representations_part</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.parquet&#39;</span>
-      <span class="n">pca_table_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;decals_cnn_pca_part</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.parquet&#39;</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_exp_path</span> <span class="o">/</span> <span class="n">table_name</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">cnn_representations</span><span class="p">(</span><span class="n">table_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span><span class="n">table_name</span><span class="p">)</span>
 
-      <span class="n">model</span><span class="o">.</span><span class="n">cnn_representations</span><span class="p">(</span><span class="n">table_name</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span><span class="n">table_name</span><span class="p">)</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_exp_path</span> <span class="o">/</span> <span class="n">pca_table_name</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_exp_path</span> <span class="o">/</span> <span class="n">table_name</span><span class="p">)</span>
+        <span class="n">feat_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;feat_&#39;</span><span class="p">)]</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feat_cols</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
 
-      <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;model.png&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span><span class="s1">&#39;model.png&#39;</span><span class="p">)</span>
-
-      <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_exp_path</span> <span class="o">/</span> <span class="n">table_name</span><span class="p">)</span>
-      <span class="n">feat_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;feat_&#39;</span><span class="p">)]</span>
-      <span class="n">features</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">feat_cols</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
-
-      <span class="n">model</span><span class="o">.</span><span class="n">pca</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">pca_table_name</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span><span class="n">pca_table_name</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">pca</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">pca_table_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span><span class="n">pca_table_name</span><span class="p">)</span>
 
       <span class="n">ds</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div></div>
 
