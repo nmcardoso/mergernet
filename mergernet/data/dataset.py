@@ -162,13 +162,13 @@ class Dataset:
     - Extracted images folder
     """
     if self.config.archive_path.exists():
-      shutil.rmtree(self.config.archive_path)
+      self.config.archive_path.unlink()
 
     if self.config.images_path.exists():
       shutil.rmtree(self.config.images_path)
 
     if self.config.table_path.exists():
-      shutil.rmtree(self.config.table_path)
+      self.config.table_path.unlink()
 
 
   def download(self):
