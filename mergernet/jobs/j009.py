@@ -57,6 +57,8 @@ class Job(Experiment):
       model.pca(features, 10, pca_table_name)
       self.upload_file_gd(pca_table_name)
 
+      ds.clear()
+
 
 
 
