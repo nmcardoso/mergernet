@@ -41,6 +41,9 @@ class ZoobotEstimator(Estimator):
   def _prepare_dataset(self):
     iaunames = self.dataset.get_X()
     paths = self.dataset.get_images_paths(iaunames)
+    print(paths)
+    print([str(p.resolve()) for p in paths])
+    print(self.dataset.config.image_extension)
     raw_image_ds = image_datasets.get_image_dataset(
       image_paths=[str(p.resolve()) for p in paths],
       file_format=self.dataset.config.image_extension,
