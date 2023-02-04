@@ -210,6 +210,8 @@ def extract_files(archive: Union[str, Path], dest: Union[str, Path]):
 
   command = f'pv {str(archive.resolve())} | tar -xJ -C {str(dest.resolve())}'
 
+  print('is_dir:', dest.is_dir(), 'is_file:', dest.is_file())
+
   if dest.is_dir():
     L.info(f'creating folder: {str(dest)}')
     dest.mkdir(parents=True, exist_ok=True)
