@@ -122,8 +122,17 @@ class ZoobotEstimator(Estimator):
     save_table(df, Experiment.local_exp_path / filename, default=False)
 
 
-  def pca(self, features: np.ndarray, n_components: int, filename: str = None):
+  def pca(
+    self,
+    features: np.ndarray,
+    n_components: int,
+    filename: str = None,
+    include_iauname: bool = True,
+  ):
     df = compress_representations.create_pca_embedding(features, n_components)
+
+    if include_iauname:
+      df.insert(0, 'iauname', self.dataset.get_X())
 
     if filename is not None:
       save_table(df, Experiment.local_exp_path / filename, default=False)
