@@ -1,5 +1,6 @@
 import collections.abc
 import json
+import logging
 import shutil
 import subprocess
 from datetime import datetime, timedelta
@@ -17,6 +18,8 @@ from PIL import Image, ImageOps
 from tqdm import tqdm
 
 from mergernet.core.constants import DATA_ROOT, ENV, RANDOM_SEED
+
+L = logging.getLogger(__name__)
 
 
 def load_image(path: Union[str, Path]) -> np.ndarray:
@@ -145,6 +148,8 @@ def extract_iauname_from_path(path: Path):
 
 
 def execute_posix_command(command: str):
+  L.info(f'executing posix command: {command}')
+
   process = subprocess.Popen(
     command,
     shell=True,

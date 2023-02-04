@@ -194,11 +194,15 @@ class Dataset:
               raise RuntimeError("Can't download images archive")
         elif isinstance(archive_url, GoogleDriveResource):
           if not self.config.archive_path.exists():
+            L.info('copying archive {} into {}'.format(
+              archive_url.path, str(self.config.archive_path)
+            ))
             copy2(archive_url.path, self.config.archive_path)
 
-          print(self.config.images_path)
-
           if not self.config.images_path.exists():
+            L.info('extracting archive {} into {}'.format(
+              str(self.config.archive_path), str(self.config.images_path)
+            ))
             extract_files(self.config.archive_path, self.config.images_path)
 
           if (
@@ -207,6 +211,7 @@ class Dataset:
             len(list(self.config.images_path.glob('*'))) == 1
           ):
             # remove the redundant parent folder if exists
+            L.info('removing parent archive folder')
             parent_path = list(self.config.images_path.glob('*'))[0]
             src = f'{str((self.config.images_path / parent_path).resolve())}/*'
             dest = str(self.config.images_path.resolve())
