@@ -601,8 +601,17 @@
     <span class="n">save_table</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">local_exp_path</span> <span class="o">/</span> <span class="n">filename</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ZoobotEstimator.pca"><a class="viewcode-back" href="../../../api/mergernet.estimators.decals.ZoobotEstimator.html#mergernet.estimators.decals.ZoobotEstimator.pca">[docs]</a>  <span class="k">def</span> <span class="nf">pca</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ZoobotEstimator.pca"><a class="viewcode-back" href="../../../api/mergernet.estimators.decals.ZoobotEstimator.html#mergernet.estimators.decals.ZoobotEstimator.pca">[docs]</a>  <span class="k">def</span> <span class="nf">pca</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">features</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">include_iauname</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+  <span class="p">):</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">compress_representations</span><span class="o">.</span><span class="n">create_pca_embedding</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">n_components</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">include_iauname</span><span class="p">:</span>
+      <span class="n">df</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;iauname&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_X</span><span class="p">())</span>
 
     <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
       <span class="n">save_table</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">local_exp_path</span> <span class="o">/</span> <span class="n">filename</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
