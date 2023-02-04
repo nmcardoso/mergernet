@@ -544,12 +544,12 @@
     <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span>
 
-    <span class="c1"># create table for unregistered datasets</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_create_dataset_table</span><span class="p">()</span>
-
     <span class="c1"># download dataset data</span>
     <span class="c1"># if not self.is_dataset_downloaded():</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
+
+    <span class="c1"># create table for unregistered datasets</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_create_dataset_table</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">image_transform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_transform_images</span><span class="p">()</span>
@@ -696,7 +696,6 @@
             <span class="n">dest</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">images_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
             <span class="n">execute_posix_command</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;mv </span><span class="si">{</span><span class="n">src</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">dest</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">imgaes_path</span> <span class="o">/</span> <span class="n">parent_path</span><span class="p">)</span>
-
 
     <span class="c1"># Download table</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">table_url</span><span class="p">:</span>
