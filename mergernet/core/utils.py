@@ -210,6 +210,12 @@ def extract_files(archive: Union[str, Path], dest: Union[str, Path]):
 
   command = f'pv {str(archive.resolve())} | tar -xJ -C {str(dest.resolve())}'
 
+  if dest.is_dir():
+    dest.mkdir(parents=True, exist_ok=True)
+
+  if dest.is_file():
+    dest.parent.mkdir(parents=True, exist_ok=True)
+
   execute_posix_command(command)
 
 
