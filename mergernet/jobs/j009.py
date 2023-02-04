@@ -30,6 +30,9 @@ class Job(Experiment):
     ]
 
     for i, ds_config in enumerate(dataset_configs):
+      table_name = f'decals_cnn_representations_part{i}.parquet'
+      pca_table_name = f'decals_cnn_pca_part{i}.parquet'
+
       ds = Dataset(ds_config)
 
       model = ZoobotEstimator(
@@ -40,22 +43,17 @@ class Job(Experiment):
         resize_size=224,
       )
 
-      table_name = f'decals_cnn_representations_part{i}.parquet'
-      pca_table_name = f'decals_cnn_pca_part{i}.parquet'
+      if not (self.local_exp_path / table_name).exists():
+        model.cnn_representations(table_name)
+        self.upload_file_gd(table_name)
 
-      model.cnn_representations(table_name)
-      self.upload_file_gd(table_name)
+      if not (self.local_exp_path / pca_table_name).exists():
+        df = pd.read_parquet(self.local_exp_path / table_name)
+        feat_cols = [col for col in df.columns.values if col.startswith('feat_')]
+        features = df[feat_cols].to_numpy()
 
-      if i == 0:
-        model.plot('model.png')
-        self.upload_file_gd('model.png')
-
-      df = pd.read_parquet(self.local_exp_path / table_name)
-      feat_cols = [col for col in df.columns.values if col.startswith('feat_')]
-      features = df[feat_cols].to_numpy()
-
-      model.pca(features, 10, pca_table_name)
-      self.upload_file_gd(pca_table_name)
+        model.pca(features, 10, pca_table_name)
+        self.upload_file_gd(pca_table_name)
 
       ds.clear()
 
