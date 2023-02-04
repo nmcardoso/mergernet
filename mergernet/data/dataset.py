@@ -196,6 +196,8 @@ class Dataset:
           if not self.config.archive_path.exists():
             copy2(archive_url.path, self.config.archive_path)
 
+          print(self.config.images_path)
+
           if not self.config.images_path.exists():
             extract_files(self.config.archive_path, self.config.images_path)
 
