@@ -119,7 +119,7 @@ class ZoobotEstimator(Estimator):
     df = pd.DataFrame(preds, columns=columns)
     df.insert(0, 'iauname', self.dataset.get_X())
 
-    df.to_csv(Experiment.local_exp_path / filename, index=False)
+    save_table(df, Experiment.local_exp_path / filename)
 
 
   def pca(self, features: np.ndarray, n_components: int, filename: str = None):
