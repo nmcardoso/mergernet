@@ -293,7 +293,8 @@ class DatasetRegistry:
     archive_path=Path('decals_0.364_png_part0.tar.xz'),
     images_path=Path('decals_0.364_png_part0'),
     image_extension='png',
-    image_shape=(224, 224, 3)
+    image_shape=(224, 224, 3),
+    image_nested=True,
   )
 
   DECALS_0364_1M_PART1 = DatasetConfig(
@@ -304,7 +305,8 @@ class DatasetRegistry:
     archive_path=Path('decals_0.364_png_part1.tar.xz'),
     images_path=Path('decals_0.364_png_part1'),
     image_extension='png',
-    image_shape=(224, 224, 3)
+    image_shape=(224, 224, 3),
+    image_nested=True,
   )
 
   DECALS_0364_1M_PART2 = DatasetConfig(
@@ -315,7 +317,8 @@ class DatasetRegistry:
     archive_path=Path('decals_0.364_png_part2.tar.xz'),
     images_path=Path('decals_0.364_png_part2'),
     image_extension='png',
-    image_shape=(224, 224, 3)
+    image_shape=(224, 224, 3),
+    image_nested=True,
   )
 
   DECALS_0364_1M_PART3 = DatasetConfig(
@@ -326,7 +329,8 @@ class DatasetRegistry:
     archive_path=Path('decals_0.364_png_part3.tar.xz'),
     images_path=Path('decals_0.364_png_part3'),
     image_extension='png',
-    image_shape=(224, 224, 3)
+    image_shape=(224, 224, 3),
+    image_nested=True,
   )
 
   DECALS_0364_1M_PART4 = DatasetConfig(
@@ -337,7 +341,8 @@ class DatasetRegistry:
     archive_path=Path('decals_0.364_png_part4.tar.xz'),
     images_path=Path('decals_0.364_png_part4'),
     image_extension='png',
-    image_shape=(224, 224, 3)
+    image_shape=(224, 224, 3),
+    image_nested=True,
   )
 
   DECALS_0364_1M_PART5 = DatasetConfig(
@@ -348,7 +353,8 @@ class DatasetRegistry:
     archive_path=Path('decals_0.364_png_part5.tar.xz'),
     images_path=Path('decals_0.364_png_part5'),
     image_extension='png',
-    image_shape=(224, 224, 3)
+    image_shape=(224, 224, 3),
+    image_nested=True,
   )
 
   DECALS_0364_1M_PART6 = DatasetConfig(
@@ -359,7 +365,8 @@ class DatasetRegistry:
     archive_path=Path('decals_0.364_png_part6.tar.xz'),
     images_path=Path('decals_0.364_png_part6'),
     image_extension='png',
-    image_shape=(224, 224, 3)
+    image_shape=(224, 224, 3),
+    image_nested=True,
   )
 
   DECALS_0364_1M_PART7 = DatasetConfig(
@@ -370,7 +377,8 @@ class DatasetRegistry:
     archive_path=Path('decals_0.364_png_part7.tar.xz'),
     images_path=Path('decals_0.364_png_part7'),
     image_extension='png',
-    image_shape=(224, 224, 3)
+    image_shape=(224, 224, 3),
+    image_nested=True,
   )
 
   DECALS_0364_1M_PART8 = DatasetConfig(
@@ -381,7 +389,8 @@ class DatasetRegistry:
     archive_path=Path('decals_0.364_png_part8.tar.xz'),
     images_path=Path('decals_0.364_png_part8'),
     image_extension='png',
-    image_shape=(224, 224, 3)
+    image_shape=(224, 224, 3),
+    image_nested=True,
   )
 
   DECALS_0364_1M_PART9 = DatasetConfig(
@@ -392,7 +401,8 @@ class DatasetRegistry:
     archive_path=Path('decals_0.364_png_part9.tar.xz'),
     images_path=Path('decals_0.364_png_part9'),
     image_extension='png',
-    image_shape=(224, 224, 3)
+    image_shape=(224, 224, 3),
+    image_nested=True,
   )
 
   DECALS_0364_1M_PART10 = DatasetConfig(
@@ -403,7 +413,8 @@ class DatasetRegistry:
     archive_path=Path('decals_0.364_png_part10.tar.xz'),
     images_path=Path('decals_0.364_png_part10'),
     image_extension='png',
-    image_shape=(224, 224, 3)
+    image_shape=(224, 224, 3),
+    image_nested=True,
   )
 
   DECALS_0364_1M_PART11 = DatasetConfig(
@@ -414,7 +425,8 @@ class DatasetRegistry:
     archive_path=Path('decals_0.364_png_part11.tar.xz'),
     images_path=Path('decals_0.364_png_part11'),
     image_extension='png',
-    image_shape=(224, 224, 3)
+    image_shape=(224, 224, 3),
+    image_nested=True,
   )
 
   DECALS_0364_1M_PART12 = DatasetConfig(
@@ -425,7 +437,8 @@ class DatasetRegistry:
     archive_path=Path('decals_0.364_png_part12.tar.xz'),
     images_path=Path('decals_0.364_png_part12'),
     image_extension='png',
-    image_shape=(224, 224, 3)
+    image_shape=(224, 224, 3),
+    image_nested=True,
   )
 
 
