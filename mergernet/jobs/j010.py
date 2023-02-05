@@ -18,7 +18,7 @@ class Job(Experiment):
     for name in names:
       self.download_file_gd(name, 9)
 
-    dfs = [pd.read_parquet(name) for name in names]
+    dfs = [pd.read_parquet(self.local_exp_path / name) for name in names]
 
     df = pd.concat(dfs)
 
