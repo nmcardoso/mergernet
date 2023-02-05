@@ -16,7 +16,8 @@ class Job(Experiment):
     names = [f'decals_cnn_representations_part{i}.parquet' for i in range(13)]
 
     for name in names:
-      self.download_file_gd(name, 9)
+      if not (self.local_exp_path / name).exists():
+        self.download_file_gd(name, 9)
 
     dfs = [pd.read_parquet(self.local_exp_path / name) for name in names]
 
