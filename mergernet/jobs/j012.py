@@ -27,7 +27,7 @@ class Job(Experiment):
   """
   def __init__(self):
     super().__init__()
-    self.exp_id = 9
+    self.exp_id = 12
     self.log_wandb = True
     self.restart = True
 
