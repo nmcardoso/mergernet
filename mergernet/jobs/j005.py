@@ -1,9 +1,8 @@
 import pandas as pd
-from tqdm import tqdm
 
 from mergernet.core.constants import DATA_ROOT
 from mergernet.core.experiment import Experiment
-from mergernet.core.utils import iauname, iauname_relative_path
+from mergernet.core.utils import iauname_relative_path
 from mergernet.services.legacy import LegacyService
 
 
@@ -18,12 +17,13 @@ class Job(Experiment):
   def call(self):
     Experiment.download_file_gd('decals_pca10.csv', exp_id=3)
 
-    df = pd.read_csv(Experiment.local_exp_path / 'decals_pca10.csv')[300_000:400_000]
+    df = pd.read_csv(Experiment.local_exp_path / 'decals_pca10.csv')
 
     paths = iauname_relative_path(
-      iauname(df.ra.values, df.dec.values),
-      DATA_ROOT / 'images' / 'decals_0.364_fits_fz',
-      '.fits.fz'
+      ra=df.ra.values,
+      dec=df.dec.values,
+      prefix=DATA_ROOT / 'images' / 'decals_0.364_fits_fz',
+      suffix='.fits.fz'
     )
 
     ls = LegacyService(
@@ -32,7 +32,7 @@ class Job(Experiment):
       height=300,
       pixscale=0.364,
       bands='grz',
-      workers=6,
+      workers=7,
       compress_fits=True,
     )
 
