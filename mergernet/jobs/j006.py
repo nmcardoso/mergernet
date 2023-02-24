@@ -8,6 +8,7 @@ from tqdm import tqdm
 from mergernet.core.constants import DATA_ROOT
 from mergernet.core.experiment import Experiment
 from mergernet.core.utils import compress_fits, iauname, iauname_relative_path
+from mergernet.services.utils import parallel_function_executor
 
 
 class Job(Experiment):
@@ -41,18 +42,22 @@ class Job(Experiment):
       suffix='.fits.fz'
     )
 
-    for path, comp_path in tqdm(zip(descompressed_paths, compressed_paths)):
-      comp_path.parent.mkdir(parents=True, exist_ok=True)
-      compress_fits(
-        file=path,
-        compress_type='HCOMPRESS_1',
-        hcomp_scale=3,
-        quantize_level=10,
-        quantize_method=-1,
-        ext=0,
-        save_path=comp_path,
-        replace=True,
-      )
+    for path, comp_path in tqdm(
+      zip(descompressed_paths, compressed_paths),
+      total=len(df)
+    ):
+      if path.exists():
+        comp_path.parent.mkdir(parents=True, exist_ok=True)
+        compress_fits(
+          file=path,
+          compress_type='HCOMPRESS_1',
+          hcomp_scale=3,
+          quantize_level=10,
+          quantize_method=-1,
+          ext=0,
+          save_path=comp_path,
+          replace=False,
+        )
 
 
 
