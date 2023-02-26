@@ -93,9 +93,9 @@ class LegacyService(ImagingService):
       Right ascension of the object.
     dec: float
       Declination of the object.
-    save_path: Path, optional
+    save_path: pathlib.Path, optional
       Path where downloaded file will be stored.
-    base_path: str, Path, optional
+    base_path: str, pathlib.Path, optional
       The path that will be appended at beggining of every paths if ``save_path``
       is ``None``.
     """

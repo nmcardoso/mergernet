@@ -11,7 +11,7 @@ def parallel_function_executor(
   func: Callable,
   params: Sequence[Dict[str, Any]] = [],
   workers: int = 2,
-  unit: str = ' it'
+  unit: str = 'it'
 ):
   with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
     futures = []
