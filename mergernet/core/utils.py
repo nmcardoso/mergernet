@@ -1,5 +1,6 @@
 import collections.abc
 import json
+import tarfile
 from datetime import datetime, timedelta
 from io import IOBase
 from pathlib import Path
