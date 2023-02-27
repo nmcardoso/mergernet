@@ -12,7 +12,8 @@ from astropy import units as u
 from astropy.coordinates import SkyCoord
 from astropy.io import fits
 from astropy.table import Table
-from PIL import Image
+from PIL import Image, ImageOps
+from tqdm import tqdm
 
 from mergernet.core.constants import DATA_ROOT, ENV, RANDOM_SEED
 
@@ -45,6 +46,23 @@ def load_image(path: Union[str, Path]) -> np.ndarray:
       # convert from (c, h, w) to (h, w, c)
       im = np.moveaxis(im, 0 , -1)
     return im
+
+
+
+def save_image(data: np.ndarray, path: Union[str, Path]):
+  path = Path(path)
+
+  if not path.parent.exists():
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+  if path.suffix in ('.jpg', '.png'):
+    ImageOps.flip(Image.fromarray(data, 'RGB')).save(path)
+  elif path.suffix in ('.fits', '.fit'):
+    fits.ImageHDU(np.moveaxis(data, -1, 0)).writeto(path, overwrite=True)
+  elif path.suffix == '.npy':
+    np.save(path, data)
+  elif path.suffix == '.npz':
+    np.savez(path, *data)
 
 
 
