@@ -3,9 +3,12 @@ from pathlib import Path
 from typing import Dict, List, Tuple, Union
 
 import numpy as np
+import tensorflow as tf
 from PIL import Image, ImageOps
+from tqdm import tqdm
 
-from mergernet.core.utils import load_image
+from mergernet.core.utils import (extract_iauname_from_path, load_image,
+                                  save_image)
 
 # first number is index of that band
 # second number is scale divisor - divide pixel values by
@@ -90,24 +93,84 @@ def asinh_map2(x: np.ndarray, gain: float = 1) -> np.ndarray:
 
 class ImageTransform(ABC):
   @abstractmethod
-  def transform(
-    self,
-    image: Union[str, Path, np.ndarray],
-    save_path: Union[str, Path]
-  ) -> np.ndarray:
+  def transform(self, image: np.ndarray) -> np.ndarray:
+    pass
+
+
+  def on_batch_end(self):
     pass
 
 
   def batch_transform(
     self,
     images: List[Path],
-    save_paths: List[Path],
+    save_paths: List[Path] = None,
   ):
-    for image_path, save_path in zip(images, save_paths):
-      self.transform(
-        image_path,
-        save_path=save_path,
-      )
+    errors = []
+
+    if save_paths is None:
+      for image_path in tqdm(images, total=len(images), unit='file'):
+        try:
+          self.transform(load_image(image_path))
+        except KeyboardInterrupt:
+          break
+        except:
+          errors.append(extract_iauname_from_path(image_path))
+    else:
+      for image_path, save_path in tqdm(
+        zip(images, save_paths), total=len(images), unit='file'
+      ):
+        try:
+          transformed_image = self.transform(load_image(image_path))
+          save_image(transformed_image, save_path)
+        except KeyboardInterrupt:
+          break
+        except:
+          errors.append(extract_iauname_from_path(image_path))
+
+    self.on_batch_end()
+
+    if len(errors) > 0:
+      print('Failed images:')
+      for error in errors:
+        print(error)
+
+
+
+
+
+class ImagePipeline(ImageTransform):
+  def __init__(self, transforms: List[ImageTransform] = []):
+    self._transforms = transforms
+
+
+  def transform(self, image: np.ndarray) -> np.ndarray:
+    i = image.copy()
+    for transform in self._transforms:
+      i = transform.transform(i)
+    return i
+
+
+  def on_batch_end(self):
+    for transform in self._transforms:
+      transform.on_batch_end()
+
+
+
+class ChannelAverage(ImageTransform):
+  def __init__(self, return_int=False, normalize=False):
+    self.return_int = return_int
+    self.normalize = normalize
+
+
+  def transform(self, image: np.ndarray) -> np.ndarray:
+    channel_index = np.argmin(image.shape)
+    mean = np.mean(image, axis=channel_index)
+    if self.normalize:
+      mean = mean / np.max(mean)
+    if self.return_int:
+      mean = (mean * 255).astype(np.uint8)
+    return mean
 
 
 
@@ -120,7 +183,7 @@ class LegacyRGB(ImageTransform):
     desaturate: bool = False,
     minmax: Tuple[float, float] = (-3, 10), # cutoff range
     nl_func: str = 'asinh',
-    normalize: bool = True,
+    rgb_output: bool = True,
   ):
     self.bands = bands
     self.brightness = brightness
@@ -128,17 +191,10 @@ class LegacyRGB(ImageTransform):
     self.desaturate = desaturate
     self.minmax = minmax
     self.nl_func = asinh_map if nl_func == 'asinh' else asinh_map2
-    self.normalize = normalize
+    self.rgb_output = rgb_output
 
 
-  def transform(
-    self,
-    img: Union[str, Path, np.ndarray],
-    save_path: Union[str, Path]
-  ) -> np.ndarray:
-    if not isinstance(img, np.ndarray):
-      img = load_image(img)
-
+  def transform(self, img: np.ndarray) -> np.ndarray:
     #  create blank matrix to work with
     h, w, _ = img.shape
     rgb = np.zeros((h, w, 3), np.float32)
@@ -206,12 +262,12 @@ class LegacyRGB(ImageTransform):
     rgb = np.clip(rgb, 0., 1.)
 
     # set image to RGB levels (0 - 255)
-    if not self.normalize or save_path is not None:
+    if self.rgb_output:
       rgb = (rgb * 255).astype(np.uint8)
 
     # save image
-    if save_path is not None:
-      ImageOps.flip(Image.fromarray(rgb, 'RGB')).save(save_path)
+    # if save_path is not None:
+    #   ImageOps.flip(Image.fromarray(rgb, 'RGB')).save(save_path)
 
     return rgb
 
@@ -237,11 +293,7 @@ class LuptonRGB(ImageTransform):
     self.nl_func = asinh_map if nl_func == 'asinh' else asinh_map2
 
 
-  def transform(
-    self,
-    imgs:  Union[str, Path, np.ndarray],
-    save_path: Union[str, Path],
-  ) -> np.ndarray:
+  def transform(self, imgs:  np.ndarray) -> np.ndarray:
     """
     Create human-interpretable rgb image from multi-band pixel data
     Follow the comments of Lupton (2004) to preserve colour during rescaling
@@ -274,9 +326,6 @@ class LuptonRGB(ImageTransform):
     numpy.ndarray
       aray of shape (H, W, 3) of pixel values for colour image
     """
-    if not isinstance(img, np.ndarray):
-      img = load_image(img)
-
     size = imgs[0].shape[1]
     grzscales = dict(
       g=(2, 0.00526),
