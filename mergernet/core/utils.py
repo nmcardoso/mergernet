@@ -140,6 +140,43 @@ def extract_iauname_from_path(path: Path):
 
 
 
+def compress_images(
+  iaunames: List[str],
+  base_path: Union[str, Path],
+  image_ext: str,
+  output_path: Union[str, Path],
+  max_files: int = None,
+):
+  max_files = max_files or len(iauname)
+  parts = int(np.ceil(len(iaunames) / max_files))
+  output_path = Path(output_path)
+  output_path.parent.mkdir(parents=True, exist_ok=True)
+  iaunames_path = iauname_relative_path(iaunames=iaunames, suffix=f'.{image_ext}')
+
+  for part in range(parts):
+    iaunames_path_part = iaunames_path[max_files*part : max_files*(part+1)]
+
+    if parts > 1:
+      fname = Path(output_path.stem).stem
+      output_part = output_path.parent / f'{fname}.part{part}.tar.xz'
+      print(f'>> [{part + 1} of {parts}] {output_part.stem}')
+    else:
+      output_part = output_path
+
+    # tar cf - decals_0.364_png/J000 decals_0.364_png/J001 -P
+    # | pv -s $(du -sb decals_0.364_png/J000 decals_0.364_png/J001 | awk '{print $1}')
+    # | xz -0 > test.tar.xz
+
+    with tarfile.open(output_part, mode='w:gz') as tar:
+      for iauname_path in tqdm(
+        iaunames_path_part,
+        total=len(iaunames_path_part),
+        unit='file'
+      ):
+        tar.add(base_path / iauname_path, arcname=str(iaunames_path))
+
+
+
 def array_fallback(arrays, prefix=None):
   gen = []
   flag = False # return True if missing row
