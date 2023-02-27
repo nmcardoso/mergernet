@@ -132,6 +132,14 @@ def compress_fits(
   return comp
 
 
+def extract_iauname_from_path(path: Path):
+  iauname = path.stem
+  if iauname.endswith('.fits'):
+    iauname = iauname[:-5]
+  return iauname
+
+
+
 def array_fallback(arrays, prefix=None):
   gen = []
   flag = False # return True if missing row
