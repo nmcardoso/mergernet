@@ -22,12 +22,63 @@ class DatasetConfig:
     fold_column: str = 'fold',
     image_extension: str = '',
     image_shape: tuple = None,
-    labels: dict = [],
+    labels: List[str] = [],
     positions: List[Tuple[float, float]] = None,
     image_service: ImagingService = None,
     image_transform: ImageTransform = None,
     image_nested: bool = False,
   ):
+    """
+    Dataset Configuration Data Model
+
+    Parameters
+    ----------
+    name : str, optional
+      The dataset name, by default None
+    archive_url : List[str], optional
+      List of urls of the archive, the compressed file that contains the
+      images, by default None
+    table_url : List[str], optional
+      List of urls of the table, the csv file that contains metadata info
+      about each example, such as label, by default None
+    archive_path : Path, optional
+      The path where the compressed file will be stored in local file system,
+      by default None
+    images_path : Path, optional
+      The path of the archive in local storage after descompression, this
+      is used to avoid problems with different directory structures
+      of the compressed images file, by default None, by default None
+    table_path : Path, optional
+      The path of the metadata table in local storage, by default None
+    image_column : str, optional
+      The name of the column in metadata table that correlates each image
+      filename with respective row, usually ``iauname``, by default None
+    label_column : str, optional
+      The name of column that have the label of each example,
+      only needed for train datasets, by default None
+    fold_column : str, optional
+      The name of the column that has the index of the fold the example
+      belongs to, by default 'fold'
+    image_extension : str, optional
+      The image extension without the leading ``.``, by default ''
+    image_shape : tuple, optional
+      A tuple that represents the shape of each example in the following
+      format: ``(HEIGHT, WIDTH, CHANNELS)``, by default None
+    labels : List[str], optional
+      The list of all labels, by default []
+    positions : List[Tuple[float, float]], optional
+      List of positions ``(RA, DEC)`` of the objects, by default None
+    image_service : ImagingService, optional
+      An `ImageService` instance if the dataset is not stored in cloud
+      services and will be downloaded direct from the Surveys
+      web-services, by default None
+    image_transform : ImageTransform, optional
+      An pipeline of image transformations that will be performed in
+      each downloaded image, by default None
+    image_nested : bool, optional
+      flags if the image directory structure follows the nested pattern or
+      not, by default False
+    """
     self.name = name
     self.archive_url = archive_url
     self.table_url = table_url
