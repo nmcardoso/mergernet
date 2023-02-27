@@ -106,7 +106,11 @@ def compress_fits(
   if ext >= len(hdul):
     raise ValueError(f'Trying to access ext {ext}, max ext is {len(hdul)-1}')
 
+  if save_path.exists() and not replace:
+    return None
+
   comp = None
+
   try:
     comp = fits.CompImageHDU(
       data=hdul[ext].data,
