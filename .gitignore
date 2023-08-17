@@ -11,3 +11,9 @@ docs/api
 
 # Development
 dev/
+
+# Milvus DB
+volumes/
+
+
+scripts/splus*
