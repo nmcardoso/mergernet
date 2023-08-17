@@ -124,7 +124,7 @@ class ParametricEstimator(Estimator):
         epochs=self.hp.get('tl_epochs', default=10) + self.hp.get('epochs'),
         validation_data=ds_test,
         class_weight=class_weights,
-        initial_epoch=len(h.history['loss'] - 1),
+        initial_epoch=len(h.history['loss']) - 1,
         callbacks=[wandb_cb, *callbacks],
       )
       L.info(f'End of training loop, duration: {t.end()}')
