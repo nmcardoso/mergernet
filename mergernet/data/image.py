@@ -105,6 +105,7 @@ class ImageTransform(ABC):
     self,
     images: List[Path],
     save_paths: List[Path] = None,
+    silent: bool = False,
   ):
     errors = []
 
@@ -130,11 +131,12 @@ class ImageTransform(ABC):
 
     self.on_batch_end()
 
-    if len(errors) > 0:
+    if not silent and len(errors) > 0:
       print('Failed images:')
       for error in errors:
         print(error)
 
+    return errors
 
 
 
