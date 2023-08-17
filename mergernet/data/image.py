@@ -380,6 +380,90 @@ class LuptonRGB(ImageTransform):
 
 
 
+class Crop(ImageTransform):
+  def __init__(self, size: int):
+    self.size = size
+
+
+  def transform(self, image: np.ndarray) -> np.ndarray:
+    img_size = image.shape[1]
+    start = (img_size - self.size) // 2
+    end = start + self.size
+
+    if len(image.shape) == 2:
+      return image[start:end, start:end]
+    else:
+      return image[start:end, start:end, :]
+
+
+
+class TensorToImage(ImageTransform):
+  def __init__(self, save_paths: List[Union[str, Path]]):
+    self.save_paths = [Path(p) for p in save_paths]
+    self.current_index = 0
+
+
+  def transform(self, image: np.ndarray):
+    save_image(image, self.save_paths[self.current_index])
+    self.current_index += 1
+
+
+
+class TensorToShards(ImageTransform):
+  # https://towardsdatascience.com/a-practical-guide-to-tfrecords-584536bc786c
+  def __init__(
+    self,
+    save_path: Union[str, Path],
+    examples_per_shard: int = 1024,
+  ):
+    self.save_path = Path(save_path)
+    self.examples_per_shard = examples_per_shard
+    self._writer = None
+    self._examples_count = 0
+    self._shard_count = 0
+    self.save_path.mkdir(parents=True, exist_ok=True)
+
+
+  def transform(self, image: np.ndarray):
+    self._create_shard()
+
+    data = {'X': self._bytes_feature(self._serialize_array(image))}
+    example = tf.train.Example(features=tf.train.Features(feature=data))
+
+    self._writer.write(example.SerializeToString())
+    self._examples_count += 1
+
+
+  def on_batch_end(self):
+    self._writer.close()
+    self._shard_count += 1
+
+
+  def _create_shard(self):
+    if self._examples_count >= self.examples_per_shard:
+      self._writer.close()
+      self._writer = None
+      self._shard_count += 1
+      self._examples_count = 0
+
+    if self._writer is None:
+      path = self.save_path / f'shard-{self._shard_count:05d}.tfrecords'
+      self._writer = tf.io.TFRecordWriter(str(path.resolve()))
+
+
+  def _bytes_feature(self, value):
+    """Returns a bytes_list from a string / byte."""
+    if isinstance(value, type(tf.constant(0))): # if value ist tensor
+      value = value.numpy() # get value of tensor
+    return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
+
+
+  def _serialize_array(self, array):
+    return tf.io.serialize_tensor(array)
+
+
+
+
 if __name__ == '__main__':
   fits_path = '/home/natan/repos/mergernet/data/images/J000030.87-011246.8.fits'
   rgb_path = '/home/natan/repos/mergernet/data/images/J000/J000030.87-011246.8.png'
