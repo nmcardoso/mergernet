@@ -363,13 +363,13 @@ def iauname_path(
 
   Example
   -------
-  iaunames_relative_path('J123049.42+122328.03', '.png')
+  iaunames_path('J123049.42+122328.03', '.png')
   Path('J123/J123049.42+122328.03.png')
 
   Returns
   -------
   Path, List[Path]
-    The relative iauname path
+    The iauname path
   """
   if iaunames is None:
     iaunames = iauname(ra, dec)

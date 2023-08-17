@@ -6,7 +6,7 @@ import requests
 from astropy.io import fits
 
 from mergernet.core.constants import RANDOM_SEED
-from mergernet.core.utils import compress_fits, iauname, iauname_relative_path
+from mergernet.core.utils import compress_fits, iauname, iauname_path
 from mergernet.services.imaging import ImagingService
 from mergernet.services.utils import (append_query_params, download_file,
                                       parallel_function_executor)
