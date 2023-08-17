@@ -6,14 +6,68 @@ import astropy.units as u
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import pymilvus as pm
 from astropy.coordinates import SkyCoord, match_coordinates_sky
 from matplotlib.backends.backend_pdf import PdfPages
 from sklearn.neighbors import NearestNeighbors
 
-from mergernet.core.utils import Timming, iauname_relative_path, load_image
+from mergernet.core.utils import Timming, iauname_path, load_image
 from mergernet.estimators.base import Estimator
 
 L = logging.getLogger(__name__)
+
+
+class MilvusClusterSimilarity:
+  def __init__(self):
+    pass
+
+
+  def cluster_search(
+    self,
+    collection: pm.Collection,
+    features: np.ndarray,
+    neighbours: int,
+    features_field: str = 'embeddings',
+    params: dict = {},
+    fields: list = [],
+    key_field: str = 'iauname',
+  ):
+    if key_field not in fields:
+      fields = [key_field, *fields]
+
+    result = collection.search(
+      features,
+      features_field,
+      params,
+      limit=neighbours,
+      output_fields=fields
+    )
+
+    data = {f: [] for f in fields}
+
+    for hits in result:
+      for hit in hits:
+        for f in fields:
+          data[f].append(hit.entity.get(f))
+
+    data['count'] = np.zeros(len(data[f]), dtype=np.int32)
+    df = pd.DataFrame(data)
+
+    other_fields = list(set(fields) - set([key_field])) # remove key field
+    agg_dict = {f: 'first' for f in other_fields}
+    agg_dict['count'] = 'count'
+
+    df = df.groupby(key_field, sort=False).agg(agg_dict).sort_values('count', ascending=False).reset_index()
+
+    # ids = np.array(ids)
+    # unique_ids, frequency = np.unique(ids, return_counts=True)
+    # sorted_indexes = np.argsort(frequency)[::-1]
+    # ids_sorted = unique_ids[sorted_indexes]
+    # freq_sorted = frequency[sorted_indexes]
+
+    return df
+
+
 
 
 class SimilarityEstimator(Estimator):
@@ -136,7 +190,7 @@ class SimilarityEstimator(Estimator):
       fig = plt.figure(figsize=(8.3, 11.7))
       plt.imshow(
         load_image(
-          iauname_relative_path(query_df.iauname, images_path, image_type)
+          iauname_path(query_df.iauname, images_path, image_type)
         )
       )
       plt.gca().set_xticks([])
@@ -159,7 +213,7 @@ class SimilarityEstimator(Estimator):
             neighbour = neighbours_df.iloc[20 * page + 4 * row + col]
             axs[row, col].imshow(
               load_image(
-                iauname_relative_path(neighbour.iauname, images_path, image_type)
+                iauname_path(neighbour.iauname, images_path, image_type)
               )
             )
             axs[row, col].title(f'{neighbour.ra:.3f}, {neighbour.dec:.3f} | ({neighbour.knn_distance:.2f})')
