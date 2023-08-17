@@ -21,7 +21,7 @@ import tensorflow as tf
 
 from mergernet.core.experiment import Experiment
 from mergernet.core.utils import (execute_posix_command, extract_files,
-                                  iauname, iauname_relative_path, load_image)
+                                  iauname, iauname_path, load_image)
 from mergernet.data.dataset_config import (DatasetConfig, DatasetRegistry,
                                            GoogleDriveResource, HTTPResource)
 from mergernet.data.kfold import StratifiedDistributionKFold
@@ -129,7 +129,7 @@ class Dataset:
     else:
       suffix = self.config.image_extension
 
-    images = iauname_relative_path(
+    images = iauname_path(
       iaunames=iaunames,
       prefix=self.config.images_path,
       suffix=f'.{suffix}'
@@ -236,8 +236,9 @@ class Dataset:
     if self.config.positions is not None and self.config.image_service is not None:
       svc = self.config.image_service
       pos = self.config.positions
-      save_paths = iauname_relative_path(
-        iaunames=self.get_X(),
+      save_paths = iauname_path(
+        ra=pos[:, 0],
+        dec=pos[:, 1],
         prefix=self.config.images_path,
         suffix=f'.{svc.image_format}'
       )
@@ -335,7 +336,7 @@ class Dataset:
 
   def get_images_paths(self, iaunames: List[str]) -> List[Path]:
     if self.config.image_nested:
-      return iauname_relative_path(
+      return iauname_path(
         iaunames=iaunames,
         prefix=self.config.images_path,
         suffix=f'.{self.config.image_extension}'
