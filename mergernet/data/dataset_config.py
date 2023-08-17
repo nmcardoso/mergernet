@@ -441,6 +441,22 @@ class DatasetRegistry:
     image_nested=True,
   )
 
+  LS10_TRAIN_224_PNG = DatasetConfig(
+    name='LS10_TRAIN_224_RGB',
+    table_url=[GDrive.get_url('1dSpgG-Zc3cFNUGR78-7WNq-y0CMoxeUa')],
+    table_path=Path('bin_ds.csv'),
+    archive_url=[GoogleDriveResource('ls10_train_224_png.tar.xz')],
+    archive_path=Path('ls10_train_224_png.tar.xz'),
+    images_path=Path('ls10_train_224_png'),
+    image_extension='png',
+    image_shape=(224, 224, 3),
+    image_nested=True,
+    label_column='class',
+    labels=['merger', 'non_merger'],
+    fold_column='fold',
+  )
+  """Conjunto de treino para classificação binária"""
+
 
 _DECALS_0364_1M_DOC = """
   DECALS 1M dataset with colored png images PART {}
