@@ -70,9 +70,11 @@ def save_image(data: np.ndarray, path: Union[str, Path]):
 
 
 
-def load_table(path: Union[Path, str], default: bool = True) -> pd.DataFrame:
+def load_table(path: Union[Path, str], default: bool = False) -> pd.DataFrame:
   if default:
     path = DATA_ROOT / 'tables' / path
+
+  path = Path(path)
 
   if path.suffix in ('.fit', '.fits', '.fz'):
     with fits.open(path) as hdul:
@@ -81,6 +83,8 @@ def load_table(path: Union[Path, str], default: bool = True) -> pd.DataFrame:
     return table.to_pandas()
   elif path.suffix == '.csv':
     return pd.read_csv(path)
+  elif path.suffix == '.parquet':
+    return pd.read_parquet(path)
 
 
 
