@@ -559,7 +559,7 @@
       <span class="n">url</span> <span class="o">=</span> <span class="n">LEGACY_FITS_URL_DEV</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_dev</span> <span class="k">else</span> <span class="n">LEGACY_FITS_URL</span>
 
     <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-      <span class="n">save_path</span> <span class="o">=</span> <span class="n">iauname_path</span><span class="p">(</span>
+      <span class="n">save_path</span> <span class="o">=</span> <span class="n">iauname_relative_path</span><span class="p">(</span>
         <span class="n">iaunames</span><span class="o">=</span><span class="n">iauname</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="p">),</span>
         <span class="n">prefix</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="n">base_path</span><span class="p">),</span>
         <span class="n">suffix</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_format</span><span class="si">}</span><span class="s1">&#39;</span>
@@ -622,7 +622,7 @@
 <span class="sd">      is ``None``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-      <span class="n">save_path</span> <span class="o">=</span> <span class="n">iauname_path</span><span class="p">(</span>
+      <span class="n">save_path</span> <span class="o">=</span> <span class="n">iauname_relative_path</span><span class="p">(</span>
         <span class="n">iaunames</span><span class="o">=</span><span class="n">iauname</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="p">),</span>
         <span class="n">prefix</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="n">base_path</span><span class="p">),</span>
         <span class="n">suffix</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">image_format</span><span class="si">}</span><span class="s1">&#39;</span>
