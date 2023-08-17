@@ -898,13 +898,14 @@
   <span class="n">LS10_TRAIN_224_PNG</span> <span class="o">=</span> <span class="n">DatasetConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;LS10_TRAIN_224_RGB&#39;</span><span class="p">,</span>
     <span class="n">table_url</span><span class="o">=</span><span class="p">[</span><span class="n">GDrive</span><span class="o">.</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;1dSpgG-Zc3cFNUGR78-7WNq-y0CMoxeUa&#39;</span><span class="p">)],</span>
-    <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;bin_ds.csv&#39;</span><span class="p">),</span>
+    <span class="n">table_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;ls10_train.csv&#39;</span><span class="p">),</span>
     <span class="n">archive_url</span><span class="o">=</span><span class="p">[</span><span class="n">GoogleDriveResource</span><span class="p">(</span><span class="s1">&#39;ls10_train_224_png.tar.xz&#39;</span><span class="p">)],</span>
     <span class="n">archive_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;ls10_train_224_png.tar.xz&#39;</span><span class="p">),</span>
     <span class="n">images_path</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;ls10_train_224_png&#39;</span><span class="p">),</span>
     <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">image_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
     <span class="n">image_nested</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">image_column</span><span class="o">=</span><span class="s1">&#39;iauname&#39;</span><span class="p">,</span>
     <span class="n">label_column</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
     <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;merger&#39;</span><span class="p">,</span> <span class="s1">&#39;non_merger&#39;</span><span class="p">],</span>
     <span class="n">fold_column</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">,</span>
