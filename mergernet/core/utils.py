@@ -323,15 +323,17 @@ def iauname(
 
 
 
-def iauname_relative_path(
+def iauname_path(
   iaunames: Union[str, List[str]] = None,
   ra: Union[float, List[float]] = None,
   dec: Union[float, List[float]] = None,
   prefix: Union[str, Path] = '',
   suffix: str = '',
+  flat: bool = False,
+  return_str: bool = False,
 ) -> Union[Path, List[Path]]:
   """
-  Calculates the nested path for a given iauname
+  Calculate the nested path for a given iauname
 
   Parameters
   ----------
@@ -347,6 +349,11 @@ def iauname_relative_path(
     Path that will be prepended at the begin of all paths
   suffix: str, optional
     Suffix that will be appended at the end of all paths
+  flat: bool, optional
+    Create the flat path with all files inside a same parent folder. This is
+    not recomended for big datasets
+  return_str: bool, optional
+    Cast all paths to string before returning
 
   Example
   -------
@@ -358,16 +365,20 @@ def iauname_relative_path(
   Path, List[Path]
     The relative iauname path
   """
-  prefix_path = Path(prefix)
-  mapping = lambda x: prefix_path / x[:4] / (x + suffix)
-
   if iaunames is None:
     iaunames = iauname(ra, dec)
 
-  if isinstance(iaunames, str):
-    return mapping(iaunames)
+  if flat:
+    mapping = lambda x:  Path(prefix) / (x + suffix)
   else:
-    return [mapping(x) for x in iaunames]
+    mapping = lambda x: Path(prefix) / x[:4] / (x + suffix)
+
+  prep_output = lambda x: str(x) if return_str else x
+
+  if isinstance(iaunames, str):
+    return prep_output(mapping(iaunames))
+  else:
+    return [prep_output(mapping(x)) for x in iaunames]
 
 
 
