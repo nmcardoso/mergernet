@@ -1,12 +1,12 @@
 from pathlib import Path
 from typing import Sequence, Tuple, Union
 
-import pandas as pd
-import numpy as np
 import astropy.units as u
+import numpy as np
+import pandas as pd
 from astropy.coordinates import SkyCoord, match_coordinates_sky
 
-
+from mergernet.core.utils import load_table
 
 arcsec_in_deg = 1. / 3600
 
@@ -41,7 +41,7 @@ class XTable:
 
   def to_df(self):
     if self.path is not None:
-      df = pd.read_csv(self.path)
+      df = load_table(self.path)
     else:
       df = self.df
     return df
