@@ -195,14 +195,14 @@ class MyWandbCallback(wandb.keras.WandbCallback):
     y_true_one_hot = np.concatenate([y for _, y in self.validation_data], axis=0)
     y_true = np.argmax(y_true_one_hot, axis=-1)
 
-    print('probs')
-    print(probs)
+    # print('probs')
+    # print(probs)
 
-    print('y_true')
-    print(y_true)
+    # print('y_true')
+    # print(y_true)
 
-    print('class_names')
-    print(self.labels)
+    # print('class_names')
+    # print(self.labels)
 
     wandb.log({
       'confusion_matrix': wandb.plot.confusion_matrix(
