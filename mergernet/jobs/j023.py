@@ -36,7 +36,7 @@ class Job(Experiment):
       HP.num('dropout_2_rate', low=0.2, high=0.5),
       HP.num('opt_lr', low=1e-5, high=1e-3, log=True)
     )
-    ds = Dataset(config=Dataset.registry.LS10_TRAIN_224_RGB)
+    ds = Dataset(config=Dataset.registry.LS10_TRAIN_224_PNG)
 
     model = ParametricEstimator(hp=hps, dataset=ds)
 
