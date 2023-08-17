@@ -92,8 +92,10 @@ def save_table(data: pd.DataFrame, path: Union[Path, str], default: bool = True)
   if default:
     path = DATA_ROOT / 'tables' / path
 
+  path = Path(path)
+
   if path.suffix in ('.fit', '.fits'):
-    pass
+    Table.from_pandas(data).write(path, overwrite=True)
   elif path.suffix == '.csv':
     data.to_csv(path, index=False)
   elif path.suffix == '.parquet':
