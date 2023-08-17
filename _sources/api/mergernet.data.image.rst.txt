@@ -28,10 +28,13 @@ mergernet.data.image
     :template: class-template.rst
   
     ChannelAverage
+    Crop
     ImagePipeline
     ImageTransform
     LegacyRGB
     LuptonRGB
+    TensorToImage
+    TensorToShards
   
   
 

@@ -1,9 +1,9 @@
-LegacyService
-=============
+TensorToShards
+==============
 
-.. currentmodule:: mergernet.services.legacy
+.. currentmodule:: mergernet.data.image
 
-.. autoclass:: LegacyService
+.. autoclass:: TensorToShards
   :members:
   :private-members:
   :undoc-members:

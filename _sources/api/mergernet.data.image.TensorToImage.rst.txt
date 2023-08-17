@@ -1,0 +1,17 @@
+TensorToImage
+=============
+
+.. currentmodule:: mergernet.data.image
+
+.. autoclass:: TensorToImage
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
+
+
+  
+  
+  

@@ -1,6 +1,0 @@
-mergernet.core.utils.iauname\_relative\_path
-============================================
-
-.. currentmodule:: mergernet.core.utils
-
-.. autofunction:: iauname_relative_path
