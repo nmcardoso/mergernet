@@ -102,6 +102,8 @@ class Experiment:
   """Flags if the experiment was started by `Experiment._pre_run` method"""
   _registered_artifacts: list = []
   """Stores all registered artifacts"""
+  _downloaded_artifacts: list = []
+  """Stores all downloaded artifacts using `Experiment.download_*`"""
   exp_id: int = None
   """Identifier of the experiment set by user."""
   exp_name: str = None
@@ -300,6 +302,7 @@ class Experiment:
       return
 
     path = copy2(from_path, to_path)
+    cls._downloaded_artifacts.append(to_path)
     return Path(path)
 
 
