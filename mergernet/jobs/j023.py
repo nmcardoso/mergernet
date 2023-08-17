@@ -25,7 +25,7 @@ class Job(Experiment):
 
   def call(self):
     hps = HyperParameterSet(
-      HP.const('architecture', 'resnext_tiny'),
+      HP.const('architecture', 'convnext_tiny'),
       HP.const('pretrained_weights', 'imagenet'),
       HP.const('tl_epochs', 2),
       HP.const('epochs', 3),
