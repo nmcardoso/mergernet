@@ -105,7 +105,7 @@ class LegacyService(ImagingService):
       url = LEGACY_FITS_URL_DEV if self.use_dev else LEGACY_FITS_URL
 
     if save_path is None:
-      save_path = iauname_relative_path(
+      save_path = iauname_path(
         iaunames=iauname(ra=ra, dec=dec),
         prefix=Path(base_path),
         suffix=f'.{self.image_format}'
@@ -168,7 +168,7 @@ class LegacyService(ImagingService):
       is ``None``.
     """
     if save_path is None:
-      save_path = iauname_relative_path(
+      save_path = iauname_path(
         iaunames=iauname(ra=ra, dec=dec),
         prefix=Path(base_path),
         suffix=f'.{self.image_format}'
