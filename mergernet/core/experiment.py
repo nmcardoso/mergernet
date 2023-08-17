@@ -2,7 +2,7 @@ import logging
 import tempfile
 from pathlib import Path
 from shutil import copy2, rmtree
-from typing import Any
+from typing import Any, List, Union
 
 import numpy as np
 import pandas as pd
@@ -338,6 +338,24 @@ class Experiment:
 
 
   @classmethod
+  def delete(cls, path: Union[str, Path, List[str], List[Path]]):
+    if isinstance(path, (str, Path)):
+      path = Path(path)
+      if path.is_file:
+        path.unlink()
+      elif path.is_dir:
+        rmtree(path)
+    elif isinstance(path, (list, np.ndarray)):
+      for p in path:
+        cls.delete(p)
+
+
+  @classmethod
+  def autoclean(cls):
+    cls.delete(cls._downloaded_artifacts)
+
+
+  @classmethod
   def init_wandb(
     cls,
     config: dict = {},
@@ -365,7 +383,7 @@ class Experiment:
     See Also
     --------
     mergernet.core.experiment.finish_wandb,
-    mergernet.core.experiment.Tracer
+    mergernet.core.experiment.Tracker
     """
     if cls.log_wandb:
       wandb.init(
