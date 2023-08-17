@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Union
+from typing import Any, Dict, List, Union
 
 import numpy as np
 import pandas as pd
@@ -106,7 +106,8 @@ class ZoobotEstimator(Estimator):
   def cnn_representations(
     self,
     filename: Union[str, Path] = None,
-    rebuild: bool = False
+    rebuild: bool = False,
+    include_cols: Dict[str, List[Any]] = None,
   ):
     if self.zoobot_dataset is None:
       self._prepare_dataset()
@@ -118,6 +119,10 @@ class ZoobotEstimator(Estimator):
     columns = [f'feat_{i}' for i in range(len(preds[0]))]
     df = pd.DataFrame(preds, columns=columns)
     df.insert(0, 'iauname', self.dataset.get_X())
+
+    if include_cols is not None:
+      for i, (col_name, col_data) in enumerate(include_cols.items()):
+        df.insert(i + 1, col_name, col_data)
 
     save_table(df, Experiment.local_exp_path / filename, default=False)
 
