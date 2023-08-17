@@ -649,14 +649,14 @@
     <span class="n">y_true_one_hot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">y</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation_data</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y_true_one_hot</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;probs&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span>
+    <span class="c1"># print(&#39;probs&#39;)</span>
+    <span class="c1"># print(probs)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y_true&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
+    <span class="c1"># print(&#39;y_true&#39;)</span>
+    <span class="c1"># print(y_true)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;class_names&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
+    <span class="c1"># print(&#39;class_names&#39;)</span>
+    <span class="c1"># print(self.labels)</span>
 
     <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span>
       <span class="s1">&#39;confusion_matrix&#39;</span><span class="p">:</span> <span class="n">wandb</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span>
