@@ -130,7 +130,7 @@ class HP:
     name: str,
     low: Union[float, int],
     high: Union[float, int],
-    step: Union[float, int] = None,
+    step: Union[float, int] = 1,
     log: bool = False,
     dtype: Union[float, int] = float
   ) -> Union[FloatHyperParameter, IntHyperParameter]:
