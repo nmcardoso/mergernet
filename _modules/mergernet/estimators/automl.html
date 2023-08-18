@@ -496,7 +496,6 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span> <span class="o">=</span> <span class="n">objective_metric</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">objective_direction</span> <span class="o">=</span> <span class="n">objective_direction</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">resume_hash</span> <span class="o">=</span> <span class="n">resume_hash</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">study</span> <span class="o">=</span> <span class="kc">None</span>
 
 
 <div class="viewcode-block" id="OptunaEstimator._objective"><a class="viewcode-back" href="../../../api/mergernet.estimators.automl.OptunaEstimator.html#mergernet.estimators.automl.OptunaEstimator._objective">[docs]</a>  <span class="k">def</span> <span class="nf">_objective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">Trial</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
@@ -517,7 +516,7 @@
 
     <span class="c1"># generate callback</span>
     <span class="k">try</span><span class="p">:</span>
-      <span class="n">initial_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">best_value</span>
+      <span class="n">initial_value</span> <span class="o">=</span> <span class="n">trial</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">best_value</span>
     <span class="k">except</span><span class="p">:</span>
       <span class="n">initial_value</span> <span class="o">=</span> <span class="kc">None</span>
 
