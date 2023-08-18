@@ -399,10 +399,10 @@ class Dataset:
     L.info(f'Image max value: {example_X.max()}')
     L.info(f'Image min value: {example_X.min()}')
     L.info(f'Image datatype: {str(example_X.dtype)}')
-    L.info(f'Label shape: {example_X.shape}')
-    L.info(f'Label max value: {example_X.max()}')
-    L.info(f'Label min value: {example_X.min()}')
-    L.info(f'Label datatype: {str(example_X.dtype)}')
+    L.info(f'Label shape: {example_y.shape}')
+    L.info(f'Label max value: {example_y.max()}')
+    L.info(f'Label min value: {example_y.min()}')
+    L.info(f'Label datatype: {str(example_y.dtype)}')
 
     if kind == 'train':
       ds = ds.map(one_hot_factory(self.config.n_classes))
