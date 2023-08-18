@@ -392,6 +392,12 @@ class Dataset:
       ds = ds.map(load_png)
       L.info('Apply: load_png')
 
+    example = next(iter(ds)).numpy()
+    L.info(f'Example shape: {example.shape}')
+    L.info(f'Example max value: {example.max()}')
+    L.info(f'Example min value: {example.min()}')
+    L.info(f'Example datatype: {str(example.dtype)}')
+
     if kind == 'train':
       ds = ds.map(one_hot_factory(self.config.n_classes))
       L.info('Apply: one_hot')
