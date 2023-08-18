@@ -90,6 +90,7 @@ class OptunaEstimator(Estimator):
     hist = model.history.history
     hist_df = history_to_dataframe(hist)
     Experiment.upload_file_gd(f'history_trial_{trial.number}.csv', hist_df)
+    self._save_optuna_db(study=trial.study)
 
     # generating optuna value to optimize (val_accuracy)
     objective_value = hist['val_loss'][-1]
@@ -148,11 +149,7 @@ class OptunaEstimator(Estimator):
 
     # save optimization artifacts
     Experiment.upload_file_gd('model.h5')
-    Experiment.upload_file_gd('optuna.sqlite')
-    Experiment.upload_file_gd(
-      'optuna_trials.csv',
-      study.trials_dataframe(multi_index=False)
-    )
+    self._save_optuna_db(study)
 
     L.info(f'number of finished trials: {len(study.trials)}')
     L.info(f'----- begin of best trial summary -----')
@@ -168,6 +165,13 @@ class OptunaEstimator(Estimator):
     )
     return self._tf_model
 
+
+  def _save_optuna_db(self, study: optuna.Study):
+    Experiment.upload_file_gd('optuna.sqlite')
+    Experiment.upload_file_gd(
+      'optuna_trials.csv',
+      study.trials_dataframe(multi_index=False)
+    )
 
   def build(self):
     pass
