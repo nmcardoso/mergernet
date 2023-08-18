@@ -30,9 +30,9 @@ class Job(Experiment):
       HP.const('tl_epochs', 12),
       HP.const('epochs', 24),
       HP.const('batch_size', 64),
-      HP.num('dense_1_units', low=32, high=1024, dtype=int),
+      HP.num('dense_1_units', low=32, high=1024, step=1, dtype=int),
       HP.num('dropout_1_rate', low=0.1, high=0.5),
-      HP.num('dense_2_units', low=32, high=1024, dtype=int),
+      HP.num('dense_2_units', low=32, high=1024, step=1, dtype=int),
       HP.num('dropout_2_rate', low=0.1, high=0.5),
       HP.num('opt_lr', low=1e-5, high=1e-3, log=True)
     )
