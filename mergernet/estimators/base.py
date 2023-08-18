@@ -228,6 +228,15 @@ class Estimator(ABC):
     elif pretrained_arch == 'efficientnetb7':
       preprocess_input = tf.keras.applications.efficientnet.preprocess_input
       base_model = tf.keras.applications.EfficientNetB7
+    elif pretrained_arch == 'efficientnetv2b0':
+      preprocess_input = tf.keras.applications.efficientnet_v2.preprocess_input
+      base_model = tf.keras.applications.efficientnet_v2.EfficientNetV2B0
+    elif pretrained_arch == 'efficientnetv2b1':
+      preprocess_input = tf.keras.applications.efficientnet_v2.preprocess_input
+      base_model = tf.keras.applications.efficientnet_v2.EfficientNetV2B1
+    elif pretrained_arch == 'efficientnetv2b2':
+      preprocess_input = tf.keras.applications.efficientnet_v2.preprocess_input
+      base_model = tf.keras.applications.efficientnet_v2.EfficientNetV2B2
     elif pretrained_arch == 'convnext_tiny':
       preprocess_input = tf.keras.applications.convnext.preprocess_input
       base_model = tf.keras.applications.ConvNeXtTiny
