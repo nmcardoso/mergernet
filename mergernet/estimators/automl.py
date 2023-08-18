@@ -38,7 +38,6 @@ class OptunaEstimator(Estimator):
     self.objective_metric = objective_metric
     self.objective_direction = objective_direction
     self.resume_hash = resume_hash
-    self.study = None
 
 
   def _objective(self, trial: optuna.trial.Trial) -> float:
@@ -59,7 +58,7 @@ class OptunaEstimator(Estimator):
 
     # generate callback
     try:
-      initial_value = self.study.best_value
+      initial_value = trial.study.best_value
     except:
       initial_value = None
 
