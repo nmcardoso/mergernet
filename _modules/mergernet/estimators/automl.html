@@ -544,6 +544,7 @@
     <span class="n">hist</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">history</span>
     <span class="n">hist_df</span> <span class="o">=</span> <span class="n">history_to_dataframe</span><span class="p">(</span><span class="n">hist</span><span class="p">)</span>
     <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;history_trial_</span><span class="si">{</span><span class="n">trial</span><span class="o">.</span><span class="n">number</span><span class="si">}</span><span class="s1">.csv&#39;</span><span class="p">,</span> <span class="n">hist_df</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_save_optuna_db</span><span class="p">(</span><span class="n">study</span><span class="o">=</span><span class="n">trial</span><span class="o">.</span><span class="n">study</span><span class="p">)</span>
 
     <span class="c1"># generating optuna value to optimize (val_accuracy)</span>
     <span class="n">objective_value</span> <span class="o">=</span> <span class="n">hist</span><span class="p">[</span><span class="s1">&#39;val_loss&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -602,11 +603,7 @@
 
     <span class="c1"># save optimization artifacts</span>
     <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span><span class="s1">&#39;model.h5&#39;</span><span class="p">)</span>
-    <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span><span class="s1">&#39;optuna.sqlite&#39;</span><span class="p">)</span>
-    <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span>
-      <span class="s1">&#39;optuna_trials.csv&#39;</span><span class="p">,</span>
-      <span class="n">study</span><span class="o">.</span><span class="n">trials_dataframe</span><span class="p">(</span><span class="n">multi_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_save_optuna_db</span><span class="p">(</span><span class="n">study</span><span class="p">)</span>
 
     <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;number of finished trials: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">trials</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;----- begin of best trial summary -----&#39;</span><span class="p">)</span>
@@ -622,6 +619,13 @@
     <span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tf_model</span></div>
 
+
+<div class="viewcode-block" id="OptunaEstimator._save_optuna_db"><a class="viewcode-back" href="../../../api/mergernet.estimators.automl.OptunaEstimator.html#mergernet.estimators.automl.OptunaEstimator._save_optuna_db">[docs]</a>  <span class="k">def</span> <span class="nf">_save_optuna_db</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">study</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">Study</span><span class="p">):</span>
+    <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span><span class="s1">&#39;optuna.sqlite&#39;</span><span class="p">)</span>
+    <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span>
+      <span class="s1">&#39;optuna_trials.csv&#39;</span><span class="p">,</span>
+      <span class="n">study</span><span class="o">.</span><span class="n">trials_dataframe</span><span class="p">(</span><span class="n">multi_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="p">)</span></div>
 
 <div class="viewcode-block" id="OptunaEstimator.build"><a class="viewcode-back" href="../../../api/mergernet.estimators.automl.OptunaEstimator.html#mergernet.estimators.automl.OptunaEstimator.build">[docs]</a>  <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">pass</span></div>
