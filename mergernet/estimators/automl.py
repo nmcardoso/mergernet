@@ -128,17 +128,17 @@ class OptunaEstimator(Estimator):
     if self.resume:
       L.info(f'Downloading optuna study of exp {exp_id}')
       Experiment.download_file_gd(OPTUNA_DB_FILENAME, exp_id)
-      study_factory = optuna.load_study
-    else:
-      study_factory = optuna.create_study
+    #   study_factory = optuna.load_study
+    # else:
+    #   study_factory = optuna.create_study
 
-    study = study_factory(
+    study = optuna.create_study(
       storage=optuna_uri,
       study_name=Experiment.exp_name,
       pruner=pruner_instance,
       sampler=optuna.samplers.TPESampler(seed=RANDOM_SEED, multivariate=True),
       direction=self.objective_direction,
-      load_if_exists=True
+      load_if_exists=self.resume
     )
 
     study.set_user_attr('objective_metric', self.objective_metric)
