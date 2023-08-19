@@ -177,6 +177,18 @@ class Estimator(ABC):
   def get_metric(self, metric: str):
     if metric == 'f1':
       return tf.keras.metrics.F1Score(name='f1')
+    elif metric == 'precision':
+      return tf.keras.metrics.Precision(name='precision')
+    elif metric == 'recall':
+      return tf.keras.metrics.Recall(name='recall')
+    elif metric == 'tp':
+      return tf.keras.metrics.TruePositives(name='tp')
+    elif metric == 'tn':
+      return tf.keras.metrics.TrueNegatives(name='tn')
+    elif metric == 'fp':
+      return tf.keras.metrics.FalsePositives(name='fp')
+    elif metric == 'fn':
+      return tf.keras.metrics.FalseNegatives(name='fn')
     elif metric == 'tpr':
       return tfma.metrics.TPR(name='tpr', class_id=self.hp.get('positive_class_id'))
     elif metric == 'tnr':
@@ -185,10 +197,6 @@ class Estimator(ABC):
       return tfma.metrics.FPR(name='fpr', class_id=self.hp.get('positive_class_id'))
     elif metric == 'fnr':
       return tfma.metrics.FNR(name='fnr', class_id=self.hp.get('negative_class_id'))
-    elif metric == 'precision':
-      return tf.keras.metrics.Precision(name='precision')
-    elif metric == 'recall':
-      return tf.keras.metrics.Recall(name='recall')
 
 
   def get_optimizer(

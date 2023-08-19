@@ -27,7 +27,7 @@ class Job(Experiment):
     hps = HyperParameterSet(
       HP.const('architecture', 'efficientnetv2b0'),
       HP.const('pretrained_weights', 'imagenet'),
-      # HP.const('metrics', ['tpr']),
+      HP.const('metrics', ['f1', 'recall']),
       HP.const('positive_class_id', 1),
       HP.const('negative_class_id', 0),
       HP.const('epochs', 35),
@@ -51,7 +51,13 @@ class Job(Experiment):
 
     model = ParametricEstimator(hp=hps, dataset=ds)
 
-    optuna_model = OptunaEstimator(estimator=model, n_trials=20, resume=True)
+    optuna_model = OptunaEstimator(
+      estimator=model,
+      n_trials=20,
+      objective_metric='val_recall',
+      objective_direction='maximize',
+      resume=True,
+    )
 
     optuna_model.train()
 
