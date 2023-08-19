@@ -38,7 +38,7 @@ class Job(Experiment):
       HP.num('lr_decay_steps', low=0.5, high=0.9),
       HP.num('lr_decay_alpha', low=0.1, high=1.0),
       HP.num('opt_lr', low=1e-5, high=1e-3, log=True),
-      # HP.num('weight_decay', low=1e-3, hight=1e-4),
+      HP.num('weight_decay', low=1e-4, hight=1e-1, log=True),
       HP.num('label_smoothing', low=0, high=0.1),
       HP.num('dense_1_units', low=32, high=1024, step=1, dtype=int),
       HP.num('dropout_1_rate', low=0.1, high=0.5),
