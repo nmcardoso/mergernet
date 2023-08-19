@@ -51,7 +51,7 @@ class Job(Experiment):
 
     model = ParametricEstimator(hp=hps, dataset=ds)
 
-    optuna_model = OptunaEstimator(estimator=model, n_trials=70)
+    optuna_model = OptunaEstimator(estimator=model, n_trials=20, resume=True)
 
     optuna_model.train()
 

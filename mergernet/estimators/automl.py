@@ -30,7 +30,7 @@ class OptunaEstimator(Estimator):
     pruner: str = 'hyperband',
     objective_metric: str = 'val_loss',
     objective_direction: str = 'minimize',
-    resume_hash: str = None,
+    resume: bool = False,
   ):
     super().__init__(estimator.hp, estimator.dataset)
     self.estimator = estimator
@@ -38,7 +38,7 @@ class OptunaEstimator(Estimator):
     self.pruner = pruner
     self.objective_metric = objective_metric
     self.objective_direction = objective_direction
-    self.resume_hash = resume_hash
+    self.resume = resume
 
 
   def _objective(self, trial: optuna.trial.Trial) -> float:
@@ -124,15 +124,13 @@ class OptunaEstimator(Estimator):
     optuna_path = Experiment.local_exp_path / OPTUNA_DB_FILENAME
     optuna_uri = f'sqlite:///{str(optuna_path.resolve())}' # absolute path
 
-    if self.resume_hash is not None:
+    # creating a new study instance
+    if self.resume:
       L.info(f'Downloading optuna study of exp {exp_id}')
       Experiment.download_file_gh(OPTUNA_DB_FILENAME, exp_id)
-
-    # creating a new study instance
-    if self.resume_hash is None:
-      study_factory = optuna.create_study
-    else:
       study_factory = optuna.load_study
+    else:
+      study_factory = optuna.create_study
 
     study = study_factory(
       storage=optuna_uri,
