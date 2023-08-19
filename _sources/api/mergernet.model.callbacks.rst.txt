@@ -24,6 +24,8 @@ mergernet.model.callbacks
     MyWandbCallback
     PruneCallback
     SaveBestTrialCallback
+    TFKerasPruningCallback
+    WandbGraphicsCallback
   
   
 

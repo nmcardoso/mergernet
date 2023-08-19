@@ -1,0 +1,17 @@
+TFKerasPruningCallback
+======================
+
+.. currentmodule:: mergernet.model.callbacks
+
+.. autoclass:: TFKerasPruningCallback
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
+
+
+  
+  
+  

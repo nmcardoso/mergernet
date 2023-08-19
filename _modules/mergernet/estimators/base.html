@@ -1,10 +1,10 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-    <!-- Generated with Sphinx 7.1.2 and Furo 2023.08.17 -->
+    <!-- Generated with Sphinx 7.1.2 and Furo 2023.08.19 -->
         <title>mergernet.estimators.base - Mergernet 0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
@@ -341,6 +341,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.MyWandbCallback.html">MyWandbCallback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.PruneCallback.html">PruneCallback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.SaveBestTrialCallback.html">SaveBestTrialCallback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.TFKerasPruningCallback.html">TFKerasPruningCallback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.WandbGraphicsCallback.html">WandbGraphicsCallback</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.model.inference.html">mergernet.model.inference</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" role="switch" type="checkbox"/><label for="toctree-checkbox-33"><div class="visually-hidden">Toggle navigation of mergernet.model.inference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -461,6 +463,7 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_model_analysis</span> <span class="k">as</span> <span class="nn">tfma</span>
 
 <span class="kn">from</span> <span class="nn">mergernet.core.constants</span> <span class="kn">import</span> <span class="n">RANDOM_SEED</span>
 <span class="kn">from</span> <span class="nn">mergernet.core.experiment</span> <span class="kn">import</span> <span class="n">Experiment</span>
@@ -555,13 +558,16 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">tf_model</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span>
     <span class="n">optimizer</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">,</span>
-    <span class="n">metrics</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">metrics</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">label_smoothing</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
   <span class="p">):</span>
+    <span class="n">hp_metrics</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_metric</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;metrics&#39;</span><span class="p">,</span> <span class="p">[])</span> <span class="k">if</span> <span class="n">m</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">tf_model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
       <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
-      <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">CategoricalCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+      <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">CategoricalCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label_smoothing</span><span class="o">=</span><span class="n">label_smoothing</span><span class="p">),</span>
       <span class="n">metrics</span><span class="o">=</span><span class="p">[</span>
         <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">CategoricalAccuracy</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">),</span>
+        <span class="o">*</span><span class="n">hp_metrics</span><span class="p">,</span>
         <span class="o">*</span><span class="n">metrics</span>
       <span class="p">]</span>
     <span class="p">)</span></div>
@@ -626,6 +632,108 @@
       <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">data_aug_layers</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;data_augmentation&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Estimator.get_metric"><a class="viewcode-back" href="../../../api/mergernet.estimators.base.Estimator.html#mergernet.estimators.base.Estimator.get_metric">[docs]</a>  <span class="k">def</span> <span class="nf">get_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s1">&#39;f1&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">F1Score</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;f1&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s1">&#39;tpr&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tfma</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">TPR</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tpr&#39;</span><span class="p">,</span> <span class="n">class_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;positive_class_id&#39;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s1">&#39;tnr&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tfma</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">TNR</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;tnr&#39;</span><span class="p">,</span> <span class="n">class_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;negative_class_id&#39;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s1">&#39;fpr&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tfma</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">FPR</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;fpr&#39;</span><span class="p">,</span> <span class="n">class_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;positive_class_id&#39;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s1">&#39;fnr&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tfma</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">FNR</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;fnr&#39;</span><span class="p">,</span> <span class="n">class_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;negative_class_id&#39;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s1">&#39;precision&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">Precision</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;precision&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s1">&#39;recall&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">Recall</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;recall&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Estimator.get_optimizer"><a class="viewcode-back" href="../../../api/mergernet.estimators.base.Estimator.html#mergernet.estimators.base.Estimator.get_optimizer">[docs]</a>  <span class="k">def</span> <span class="nf">get_optimizer</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">optimizer</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">lr</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">schedules</span><span class="o">.</span><span class="n">LearningRateSchedule</span><span class="p">]</span>
+  <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s1">&#39;adam&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+        <span class="n">weight_decay</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weight_decay&#39;</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s1">&#39;adamw&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">AdamW</span><span class="p">(</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+        <span class="n">weight_decay</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weight_decay&#39;</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s1">&#39;lion&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Lion</span><span class="p">(</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+        <span class="n">weight_decay</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weight_decay&#39;</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s1">&#39;sgd&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+        <span class="n">weight_decay</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weight_decay&#39;</span><span class="p">),</span>
+        <span class="n">nesterov</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nesterov&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="n">momentum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;momentum&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s1">&#39;nadam&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">Nadam</span><span class="p">(</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+        <span class="n">weight_decay</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weight_decay&#39;</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">optimizer</span> <span class="o">==</span> <span class="s1">&#39;rmsprop&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">RMSprop</span><span class="p">(</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+        <span class="n">weight_decay</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weight_decay&#39;</span><span class="p">),</span>
+        <span class="n">momentum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;momentum&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+      <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Estimator.get_scheduler"><a class="viewcode-back" href="../../../api/mergernet.estimators.base.Estimator.html#mergernet.estimators.base.Estimator.get_scheduler">[docs]</a>  <span class="k">def</span> <span class="nf">get_scheduler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lr</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">schedules</span><span class="o">.</span><span class="n">LearningRateSchedule</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For cosine_restarts scheduler, the learning rate multiplier first decays</span>
+<span class="sd">    from 1 to alpha for first_decay_steps steps. Then, a warm restart is</span>
+<span class="sd">    performed. Each new warm restart runs for t_mul times more steps and</span>
+<span class="sd">    with m_mul times initial learning rate as the new learning rate.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    scheduler : str</span>
+<span class="sd">      Scheduler name</span>
+<span class="sd">    lr : float</span>
+<span class="sd">      Initial learning rate</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tf.keras.optimizers.schedules.LearningRateSchedule</span>
+<span class="sd">      A LearningRateSchedule instance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">scheduler</span> <span class="o">==</span> <span class="s1">&#39;cosine_restarts&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">schedules</span><span class="o">.</span><span class="n">CosineDecayRestarts</span><span class="p">(</span>
+        <span class="n">initial_learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+        <span class="n">first_decay_steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lr_decay_steps&#39;</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span>
+        <span class="n">t_mul</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lr_decay_t&#39;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span>
+        <span class="n">m_mul</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lr_decay_m&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lr_decay_alpha&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+      <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">scheduler</span> <span class="o">==</span> <span class="s1">&#39;cosine&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">schedules</span><span class="o">.</span><span class="n">CosineDecay</span><span class="p">(</span>
+        <span class="n">initial_learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+        <span class="n">decay_steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lr_decay_steps&#39;</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lr_decay_alpha&#39;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+        <span class="n">warmup_target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lr_warmup_target&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="n">warmup_steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lr_warmup_steps&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">scheduler</span> <span class="o">==</span> <span class="s1">&#39;exponential&#39;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">schedules</span><span class="o">.</span><span class="n">ExponentialDecay</span><span class="p">(</span>
+        <span class="n">initial_learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+        <span class="n">decay_steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lr_decay_steps&#39;</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span>
+        <span class="n">decay_rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lr_decay_rate&#39;</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span>
+      <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="Estimator.get_conv_arch"><a class="viewcode-back" href="../../../api/mergernet.estimators.base.Estimator.html#mergernet.estimators.base.Estimator.get_conv_arch">[docs]</a>  <span class="k">def</span> <span class="nf">get_conv_arch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pretrained_arch</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]:</span>

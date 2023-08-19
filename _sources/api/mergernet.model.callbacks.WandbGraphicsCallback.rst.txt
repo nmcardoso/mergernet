@@ -1,0 +1,17 @@
+WandbGraphicsCallback
+=====================
+
+.. currentmodule:: mergernet.model.callbacks
+
+.. autoclass:: WandbGraphicsCallback
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
+
+
+  
+  
+  
