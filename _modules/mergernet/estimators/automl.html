@@ -582,7 +582,7 @@
         <span class="n">n_warmup_steps</span><span class="o">=</span><span class="mi">10</span>
       <span class="p">)</span>
     <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">pruner</span> <span class="o">==</span> <span class="s1">&#39;hyperband&#39;</span><span class="p">:</span>
-      <span class="n">pruner_instance</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">pruners</span><span class="o">.</span><span class="n">HyperbandPruner</span><span class="p">(</span><span class="n">min_resource</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+      <span class="n">pruner_instance</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">pruners</span><span class="o">.</span><span class="n">HyperbandPruner</span><span class="p">(</span><span class="n">min_resource</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 
     <span class="c1"># setup db uri</span>
     <span class="n">optuna_path</span> <span class="o">=</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">local_exp_path</span> <span class="o">/</span> <span class="n">OPTUNA_DB_FILENAME</span>
