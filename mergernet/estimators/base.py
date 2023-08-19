@@ -263,8 +263,8 @@ class Estimator(ABC):
         initial_learning_rate=lr,
         decay_steps=self.hp.get('lr_decay_steps', default=40),
         alpha=self.hp.get('lr_decay_alpha', default=0.0),
-        warmup_target=self.get('lr_warmup_target', default=None),
-        warmup_steps=self.get('lr_warmup_steps', default=0)
+        warmup_target=self.hp.get('lr_warmup_target', default=None),
+        warmup_steps=self.hp.get('lr_warmup_steps', default=0)
       )
     elif scheduler == 'exponential':
       return tf.keras.optimizers.schedules.ExponentialDecay(
