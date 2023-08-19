@@ -27,7 +27,6 @@ class Job(Experiment):
     hps = HyperParameterSet(
       HP.const('architecture', 'efficientnetv2b0'),
       HP.const('pretrained_weights', 'imagenet'),
-      HP.const('batch_size', 64),
       # HP.const('metrics', ['tpr']),
       HP.const('positive_class_id', 1),
       HP.const('negative_class_id', 0),
@@ -40,8 +39,9 @@ class Job(Experiment):
       HP.num('lr_decay_steps', low=0.5, high=0.9),
       HP.num('lr_decay_alpha', low=0.1, high=1.0),
       HP.num('opt_lr', low=1e-5, high=1e-3, log=True),
-      HP.num('weight_decay', low=1e-4, high=1e-1, log=True),
+      HP.num('weight_decay', low=1e-4, high=1e-1),
       HP.num('label_smoothing', low=0, high=0.1),
+      HP.num('batch_size', low=64, high=256, step=64, dtype=int),
       HP.num('dense_1_units', low=32, high=1024, step=1, dtype=int),
       HP.num('dropout_1_rate', low=0.1, high=0.5),
       # HP.num('dense_2_units', low=32, high=1024, step=1, dtype=int),
