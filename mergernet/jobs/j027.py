@@ -27,7 +27,7 @@ class Job(Experiment):
     hps = HyperParameterSet(
       HP.const('architecture', 'efficientnetv2b0'),
       HP.const('pretrained_weights', 'imagenet'),
-      HP.const('metrics', ['f1', 'recall']),
+      HP.const('metrics', ['f1', 'recall', 'roc']),
       HP.const('positive_class_id', 1),
       HP.const('negative_class_id', 0),
       HP.const('epochs', 35),
