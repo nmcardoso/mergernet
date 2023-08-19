@@ -118,7 +118,7 @@ class OptunaEstimator(Estimator):
         n_warmup_steps=10
       )
     elif self.pruner == 'hyperband':
-      pruner_instance = optuna.pruners.HyperbandPruner(min_resource=7)
+      pruner_instance = optuna.pruners.HyperbandPruner(min_resource=15)
 
     # setup db uri
     optuna_path = Experiment.local_exp_path / OPTUNA_DB_FILENAME
