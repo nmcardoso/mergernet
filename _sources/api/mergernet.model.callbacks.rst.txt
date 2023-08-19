@@ -20,8 +20,6 @@ mergernet.model.callbacks
     :template: class-template.rst
   
     DeltaStopping
-    MWandbCallback
-    MyWandbCallback
     PruneCallback
     SaveBestTrialCallback
     TFKerasPruningCallback

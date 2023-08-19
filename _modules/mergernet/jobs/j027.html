@@ -341,8 +341,6 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/mergernet.model.callbacks.html">mergernet.model.callbacks</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" role="switch" type="checkbox"/><label for="toctree-checkbox-33"><div class="visually-hidden">Toggle navigation of mergernet.model.callbacks</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.DeltaStopping.html">DeltaStopping</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.MWandbCallback.html">MWandbCallback</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.MyWandbCallback.html">MyWandbCallback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.PruneCallback.html">PruneCallback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.SaveBestTrialCallback.html">SaveBestTrialCallback</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/mergernet.model.callbacks.TFKerasPruningCallback.html">TFKerasPruningCallback</a></li>
@@ -491,7 +489,7 @@
     <span class="n">hps</span> <span class="o">=</span> <span class="n">HyperParameterSet</span><span class="p">(</span>
       <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;architecture&#39;</span><span class="p">,</span> <span class="s1">&#39;efficientnetv2b0&#39;</span><span class="p">),</span>
       <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;pretrained_weights&#39;</span><span class="p">,</span> <span class="s1">&#39;imagenet&#39;</span><span class="p">),</span>
-      <span class="c1"># HP.const(&#39;metrics&#39;, [&#39;tpr&#39;]),</span>
+      <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;metrics&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;f1&#39;</span><span class="p">,</span> <span class="s1">&#39;recall&#39;</span><span class="p">]),</span>
       <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;positive_class_id&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
       <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;negative_class_id&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
       <span class="n">HP</span><span class="o">.</span><span class="n">const</span><span class="p">(</span><span class="s1">&#39;epochs&#39;</span><span class="p">,</span> <span class="mi">35</span><span class="p">),</span>
@@ -515,7 +513,13 @@
 
     <span class="n">model</span> <span class="o">=</span> <span class="n">ParametricEstimator</span><span class="p">(</span><span class="n">hp</span><span class="o">=</span><span class="n">hps</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="n">ds</span><span class="p">)</span>
 
-    <span class="n">optuna_model</span> <span class="o">=</span> <span class="n">OptunaEstimator</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">resume</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">optuna_model</span> <span class="o">=</span> <span class="n">OptunaEstimator</span><span class="p">(</span>
+      <span class="n">estimator</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+      <span class="n">n_trials</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+      <span class="n">objective_metric</span><span class="o">=</span><span class="s1">&#39;val_recall&#39;</span><span class="p">,</span>
+      <span class="n">objective_direction</span><span class="o">=</span><span class="s1">&#39;maximize&#39;</span><span class="p">,</span>
+      <span class="n">resume</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="n">optuna_model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 
