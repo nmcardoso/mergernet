@@ -182,9 +182,9 @@ class Estimator(ABC):
     elif metric == 'recall':
       return tf.keras.metrics.Recall(name='recall')
     elif metric == 'roc':
-      return tf.keras.metrics.AUC(curve='ROC', name='roc', from_logits=True, num_labels=self.dataset.config.n_classes)
+      return tf.keras.metrics.AUC(curve='ROC', name='roc', from_logits=True)
     elif metric == 'pr':
-      return tf.keras.metrics.AUC(curve='PR', name='pr', from_logits=True, num_labels=self.dataset.config.n_classes)
+      return tf.keras.metrics.AUC(curve='PR', name='pr', from_logits=True)
     elif metric == 'tp':
       return tf.keras.metrics.TruePositives(name='tp')
     elif metric == 'tn':
