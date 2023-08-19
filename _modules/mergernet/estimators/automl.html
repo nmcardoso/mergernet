@@ -587,7 +587,7 @@
     <span class="c1"># creating a new study instance</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">resume</span><span class="p">:</span>
       <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Downloading optuna study of exp </span><span class="si">{</span><span class="n">exp_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-      <span class="n">Experiment</span><span class="o">.</span><span class="n">download_file_gh</span><span class="p">(</span><span class="n">OPTUNA_DB_FILENAME</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">)</span>
+      <span class="n">Experiment</span><span class="o">.</span><span class="n">download_file_gd</span><span class="p">(</span><span class="n">OPTUNA_DB_FILENAME</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">)</span>
       <span class="n">study_factory</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">load_study</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="n">study_factory</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span>
