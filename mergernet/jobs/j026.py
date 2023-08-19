@@ -29,6 +29,8 @@ class Job(Experiment):
       HP.const('pretrained_weights', 'imagenet'),
       HP.const('batch_size', 64),
       HP.const('metrics', ['tpr']),
+      HP.const('positive_class_id', 1),
+      HP.const('negative_class_id', 0),
       HP.const('epochs', 35),
       HP.const('tl_epochs', 12),
       HP.const('t1_opt', 'adamw'),
