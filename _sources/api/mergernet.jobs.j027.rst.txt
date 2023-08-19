@@ -1,0 +1,31 @@
+mergernet.jobs.j027
+===================
+
+.. automodule:: mergernet.jobs.j027
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  .. rubric:: Classes
+
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    Job
+  
+  
+
+  
+  
+  
+
+
+

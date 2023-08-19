@@ -40,4 +40,5 @@
   mergernet.jobs.j010
   mergernet.jobs.j023
   mergernet.jobs.j026
+  mergernet.jobs.j027
 
