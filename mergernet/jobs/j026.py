@@ -28,7 +28,7 @@ class Job(Experiment):
       HP.const('architecture', 'efficientnetv2b0'),
       HP.const('pretrained_weights', 'imagenet'),
       HP.const('batch_size', 64),
-      HP.const('metrics', ['tpr']),
+      # HP.const('metrics', ['tpr']),
       HP.const('positive_class_id', 1),
       HP.const('negative_class_id', 0),
       HP.const('epochs', 35),
