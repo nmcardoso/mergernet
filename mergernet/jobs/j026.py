@@ -20,7 +20,7 @@ class Job(Experiment):
     super().__init__()
     self.exp_id = 26
     self.log_wandb = True
-    self.restart = True
+    self.restart = False
 
 
   def call(self):
