@@ -176,7 +176,7 @@ class Estimator(ABC):
 
   def get_metric(self, metric: str):
     if metric == 'f1':
-      return tf.keras.metrics.F1Score(name='f1')
+      return tf.keras.metrics.F1Score(name='f1', average='weighted')
     elif metric == 'precision':
       return tf.keras.metrics.Precision(name='precision')
     elif metric == 'recall':
