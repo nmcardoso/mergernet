@@ -1,7 +1,7 @@
 import logging
 from copy import deepcopy
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import numpy as np
 import optuna
@@ -225,6 +225,49 @@ class MyWandbCallback(wandb.keras.WandbCallback):
     self.model.history.history = history
 
 
+  def on_epoch_end(self, epoch: int, logs: dict = None):
+    super().on_epoch_end(epoch, logs)
+
+    lr = self.optimizer.get_config().get('learning_rate', None)
+    if lr is not None:
+      L.info(f'**Learning rate: {lr}')
+      wandb.log({'computed_lr': str(lr)}, commit=False)
+
+
+
+class WandbGraphicsCallback(tf.keras.callbacks.Callback):
+  def __init__(self, validation_data, labels):
+    self.validation_data = validation_data
+    self.labels = labels
+
+  def on_train_end(self):
+    history = deepcopy(self.model.history.history)
+
+    probs = self.model.predict(self.validation_data)
+    y_true_one_hot = np.concatenate([y for _, y in self.validation_data], axis=0)
+    y_true = np.argmax(y_true_one_hot, axis=-1)
+
+    wandb.log({
+      'confusion_matrix': wandb.plot.confusion_matrix(
+        probs=probs,
+        y_true=y_true,
+        class_names=self.labels,
+      ),
+      'pr-curve': wandb.plot.pr_curve(
+        y_true=y_true,
+        y_probas=probs,
+        labels=self.labels,
+      ),
+      'roc-curve': wandb.plot.roc_curve(
+        y_true=y_true,
+        y_probas=probs,
+        labels=self.labels,
+      )
+    })
+
+    self.model.history.history = history
+
+
 
 class MWandbCallback(tf.keras.callbacks.Callback):
   def __init__(self,
@@ -374,6 +417,48 @@ class PruneCallback(tf.keras.callbacks.Callback):
     if self.trial.should_prune():
       self.model.stop_training = True
       L.info(f'Trial pruned at epoch {epoch + 1}')
+
+
+
+class TFKerasPruningCallback(tf.keras.callbacks.Callback):
+  """tf.keras callback to prune unpromising trials.
+
+  This callback is intend to be compatible for TensorFlow v1 and v2,
+  but only tested with TensorFlow v2.
+
+  See `the example <https://github.com/optuna/optuna-examples/blob/main/
+  tfkeras/tfkeras_integration.py>`__
+  if you want to add a pruning callback which observes the validation accuracy.
+
+  Parameters
+  ----------
+    trial:
+      A `optuna.trial.Trial` corresponding to the current evaluation of the
+      objective function.
+    monitor:
+      An evaluation metric for pruning, e.g., ``val_loss`` or ``val_acc``.
+  """
+
+  def __init__(self, trial: optuna.trial.Trial, monitor: str) -> None:
+    super().__init__()
+    self._trial = trial
+    self._monitor = monitor
+
+  def on_epoch_end(self, epoch: int, logs: Optional[Dict[str, Any]] = None) -> None:
+    logs = logs or {}
+    current_score = logs.get(self._monitor)
+
+    if current_score is None:
+      L.error(f'Metric {self._monitor} not found by TFKerasPruningCallback')
+      return
+
+    # Report current score and epoch to Optuna's trial.
+    self._trial.report(float(current_score), step=epoch)
+
+    # Prune trial if needed
+    if self._trial.should_prune():
+      message = 'Trial was pruned at epoch {}'.format(epoch)
+      raise optuna.TrialPruned(message)
 
 
 

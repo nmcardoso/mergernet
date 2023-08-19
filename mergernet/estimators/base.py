@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Callable, List, Tuple, Union
 
 import tensorflow as tf
+import tensorflow_model_analysis as tfma
 
 from mergernet.core.constants import RANDOM_SEED
 from mergernet.core.experiment import Experiment
@@ -97,13 +98,16 @@ class Estimator(ABC):
     self,
     tf_model: tf.keras.Model,
     optimizer: tf.keras.optimizers.Optimizer,
-    metrics: list = []
+    metrics: list = [],
+    label_smoothing: float = 0.0
   ):
+    hp_metrics = [self.get_metric(m) for m in self.hp.get('metrics', []) if m is not None]
     tf_model.compile(
       optimizer=optimizer,
-      loss=tf.keras.losses.CategoricalCrossentropy(from_logits=False),
+      loss=tf.keras.losses.CategoricalCrossentropy(from_logits=True, label_smoothing=label_smoothing),
       metrics=[
         tf.keras.metrics.CategoricalAccuracy(name='accuracy'),
+        *hp_metrics,
         *metrics
       ]
     )
@@ -168,6 +172,108 @@ class Estimator(ABC):
       )
 
     return tf.keras.Sequential(data_aug_layers, name='data_augmentation')
+
+
+  def get_metric(self, metric: str):
+    if metric == 'f1':
+      return tf.keras.metrics.F1Score(name='f1')
+    elif metric == 'tpr':
+      return tfma.metrics.TPR(name='tpr', class_id=self.hp.get('positive_class_id'))
+    elif metric == 'tnr':
+      return tfma.metrics.TNR(name='tnr', class_id=self.hp.get('negative_class_id'))
+    elif metric == 'fpr':
+      return tfma.metrics.FPR(name='fpr', class_id=self.hp.get('positive_class_id'))
+    elif metric == 'fnr':
+      return tfma.metrics.FNR(name='fnr', class_id=self.hp.get('negative_class_id'))
+    elif metric == 'precision':
+      return tf.keras.metrics.Precision(name='precision')
+    elif metric == 'recall':
+      return tf.keras.metrics.Recall(name='recall')
+
+
+  def get_optimizer(
+    self,
+    optimizer: str,
+    lr: Union[float, tf.keras.optimizers.schedules.LearningRateSchedule]
+  ) -> tf.keras.optimizers.Optimizer:
+    if optimizer == 'adam':
+      return tf.keras.optimizers.Adam(
+        learning_rate=lr,
+        weight_decay=self.hp.get('weight_decay')
+      )
+    elif optimizer == 'adamw':
+      return tf.keras.optimizers.AdamW(
+        learning_rate=lr,
+        weight_decay=self.hp.get('weight_decay')
+      )
+    elif optimizer == 'lion':
+      return tf.keras.optimizers.Lion(
+        learning_rate=lr,
+        weight_decay=self.hp.get('weight_decay')
+      )
+    elif optimizer == 'sgd':
+      return tf.keras.optimizers.experimental.SGD(
+        learning_rate=lr,
+        weight_decay=self.hp.get('weight_decay'),
+        nesterov=self.hp.get('nesterov', default=False),
+        momentum=self.hp.get('momentum', default=0.0)
+      )
+    elif optimizer == 'nadam':
+      return tf.keras.optimizers.experimental.Nadam(
+        learning_rate=lr,
+        weight_decay=self.hp.get('weight_decay')
+      )
+    elif optimizer == 'rmsprop':
+      return tf.keras.optimizers.experimental.RMSprop(
+        learning_rate=lr,
+        weight_decay=self.hp.get('weight_decay'),
+        momentum=self.hp.get('momentum', default=0.0)
+      )
+
+
+  def get_scheduler(self, scheduler: str, lr: float) -> tf.keras.optimizers.schedules.LearningRateSchedule:
+    """
+    For cosine_restarts scheduler, the learning rate multiplier first decays
+    from 1 to alpha for first_decay_steps steps. Then, a warm restart is
+    performed. Each new warm restart runs for t_mul times more steps and
+    with m_mul times initial learning rate as the new learning rate.
+
+    Parameters
+    ----------
+    scheduler : str
+      Scheduler name
+    lr : float
+      Initial learning rate
+
+    Returns
+    -------
+    tf.keras.optimizers.schedules.LearningRateSchedule
+      A LearningRateSchedule instance
+    """
+    if scheduler == 'cosine_restarts':
+      return tf.keras.optimizers.schedules.CosineDecayRestarts(
+        initial_learning_rate=lr,
+        first_decay_steps=self.hp.get('lr_decay_steps', 40),
+        t_mul=self.hp.get('lr_decay_t', 2.0),
+        m_mul=self.hp.get('lr_decay_m', 1.0),
+        alpha=self.hp.get('lr_decay_alpha', 0.0),
+      )
+    elif scheduler == 'cosine':
+      return tf.keras.optimizers.schedules.CosineDecay(
+        initial_learning_rate=lr,
+        decay_steps=self.hp.get('lr_decay_steps', 40),
+        alpha=self.hp.get('lr_decay_alpha', 0.0),
+        warmup_target=self.get('lr_warmup_target', None),
+        warmup_steps=self.get('lr_warmup_steps', 0)
+      )
+    elif scheduler == 'exponential':
+      return tf.keras.optimizers.schedules.ExponentialDecay(
+        initial_learning_rate=lr,
+        decay_steps=self.hp.get('lr_decay_steps', 40),
+        decay_rate=self.hp.get('lr_decay_rate', 40),
+      )
+    else:
+      return None
 
 
   def get_conv_arch(self, pretrained_arch: str) -> Tuple[Callable, Callable]:

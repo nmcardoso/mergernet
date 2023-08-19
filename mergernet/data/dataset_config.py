@@ -453,7 +453,7 @@ class DatasetRegistry:
     image_nested=True,
     image_column='iauname',
     label_column='class',
-    labels=['merger', 'non_merger'],
+    labels=['non_merger', 'merger'],
     fold_column='fold',
   )
   """Conjunto de treino para classificação binária"""

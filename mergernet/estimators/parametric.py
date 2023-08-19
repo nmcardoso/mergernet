@@ -2,7 +2,7 @@ import logging
 from typing import List, Tuple
 
 import tensorflow as tf
-import wandb
+from wandb.keras import WandbMetricsLogger
 
 from mergernet.core.constants import RANDOM_SEED
 from mergernet.core.experiment import Experiment
@@ -10,7 +10,7 @@ from mergernet.core.hp import HyperParameterSet
 from mergernet.core.utils import Timming
 from mergernet.data.dataset import Dataset
 from mergernet.estimators.base import Estimator
-from mergernet.model.callbacks import MWandbCallback, MyWandbCallback
+from mergernet.model.callbacks import WandbGraphicsCallback
 
 L = logging.getLogger(__name__)
 
@@ -49,7 +49,7 @@ class ParametricEstimator(Estimator):
     x = tf.keras.layers.Dropout(self.hp.get('dropout_1_rate'))(x)
     x = tf.keras.layers.Dense(self.hp.get('dense_2_units'), activation='relu')(x)
     x = tf.keras.layers.Dropout(self.hp.get('dropout_2_rate'))(x)
-    outputs = tf.keras.layers.Dense(self.dataset.config.n_classes, activation='softmax')(x)
+    outputs = tf.keras.layers.Dense(self.dataset.config.n_classes)(x)
 
     self._tf_model = tf.keras.Model(inputs, outputs)
     L.info(f'Trainable weights (TOTAL): {len(self._tf_model.trainable_weights)}')
@@ -81,7 +81,13 @@ class ParametricEstimator(Estimator):
     class_weights = self.dataset.compute_class_weight()
 
     model = self.build(freeze_conv=True)
-    self.compile_model(model, tf.keras.optimizers.Adam(self.hp.get('opt_lr')))
+
+    opt = self.get_optimizer(self.hp.get('t1_opt'), lr=self.hp.get('t1_lr'))
+    self.compile_model(
+      model,
+      optimizer=opt,
+      label_smoothing=self.hp.get('label_smoothing', default=0.0),
+    )
 
     with Experiment.Tracker(self.hp.to_values_dict(), name=run_name, job_type='train'):
       early_stop_cb = tf.keras.callbacks.EarlyStopping(
@@ -92,11 +98,17 @@ class ParametricEstimator(Estimator):
         restore_best_weights=True
       )
 
-      wandb_cb = MyWandbCallback(
+      # wandb_cb = MyWandbCallback(
+      #   validation_data=ds_test,
+      #   labels=self.dataset.config.labels,
+      #   monitor='val_loss',
+      #   mode='min',
+      # )
+
+      wandb_metrics = WandbMetricsLogger()
+      wandb_graphics = WandbGraphicsCallback(
         validation_data=ds_test,
-        labels=self.dataset.config.labels,
-        monitor='val_loss',
-        mode='min',
+        labels=self.dataset.config.labels
       )
 
       t1_epochs = self.hp.get('tl_epochs', default=10)
@@ -110,14 +122,26 @@ class ParametricEstimator(Estimator):
         epochs=t1_epochs,
         validation_data=ds_test,
         class_weight=class_weights,
-        callbacks=[early_stop_cb, wandb_cb]
+        callbacks=[early_stop_cb, wandb_metrics, wandb_graphics]
       )
       L.info(f'End of training loop, duration: {t.end()}')
       L.info(f'History keys: {", ".join(h.history.keys())}')
       L.info(f'History length: {len(h.history["loss"])}')
 
       self.set_trainable(model, 'conv_block', True)
-      self.compile_model(model, tf.keras.optimizers.Adam(self.hp.get('opt_lr')))
+
+      lr_scheduler = self.get_scheduler(
+        self.hp.get('lr_decay'),
+        lr=self.hp.get('opt_lr')
+      )
+      lr = lr_scheduler or self.hp.get('opt_lr')
+      opt = self.get_optimizer(self.hp.get('optimizer'), lr=lr)
+
+      self.compile_model(
+        model,
+        optimizer=opt,
+        label_smoothing=self.hp.get('label_smoothing', default=0.0),
+      )
 
       t = Timming()
       L.info('Start of main training loop')
@@ -128,7 +152,7 @@ class ParametricEstimator(Estimator):
         validation_data=ds_test,
         class_weight=class_weights,
         initial_epoch=len(h.history['loss']),
-        callbacks=[wandb_cb, *callbacks],
+        callbacks=[wandb_metrics, wandb_graphics, *callbacks],
       )
       L.info(f'End of training loop, duration: {t.end()}')
 

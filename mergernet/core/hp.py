@@ -1,6 +1,9 @@
+import logging
 from typing import Any, Sequence, Union
 
 import optuna
+
+L = logging.getLogger(__name__)
 
 
 class HyperParameter:
@@ -215,6 +218,7 @@ class HyperParameterSet:
     mergernet.core.hp.HyperParameter.suggest
     """
     if not name in self.hps:
+      L.warning(f'Hyperparameter {name} not found! Returning default value: {str(default)}')
       return default
 
     if trial is None:

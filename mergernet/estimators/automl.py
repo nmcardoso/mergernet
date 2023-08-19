@@ -12,6 +12,7 @@ from mergernet.core.hp import HyperParameterSet
 from mergernet.core.utils import Timming
 from mergernet.data.dataset import Dataset
 from mergernet.estimators.base import Estimator
+from mergernet.model.callbacks import TFKerasPruningCallback
 from mergernet.model.utils import history_to_dataframe
 
 L = logging.getLogger(__name__)
@@ -65,15 +66,17 @@ class OptunaEstimator(Estimator):
     model_path = Experiment.local_exp_path / MODEL_FILENAME
     ckpt_callback = tf.keras.callbacks.ModelCheckpoint(
       str(model_path),
-      monitor='val_loss',
+      monitor=self.objective_metric,
       verbose=1,
       save_best_only=True,
       save_weights_only=False,
-      mode='min',
+      mode=self.objective_direction,
       save_freq='epoch',
       initial_value_threshold=initial_value
     )
     L.info(f'Initial threshold for CheckpointCallback: {initial_value}')
+
+    pruning_callback = TFKerasPruningCallback(trial, self.objective_metric)
 
     # update current trial in hyperparameter set
     self.hp.set_trial(trial)
@@ -82,7 +85,7 @@ class OptunaEstimator(Estimator):
     # train model
     model = self.estimator.train(
       run_name=f'run-{trial.number}',
-      callbacks=[ckpt_callback]
+      callbacks=[ckpt_callback, pruning_callback]
     )
 
     # saving the history of current trial
@@ -92,7 +95,7 @@ class OptunaEstimator(Estimator):
     self._save_optuna_db(study=trial.study)
 
     # generating optuna value to optimize (val_accuracy)
-    objective_value = hist['val_loss'][-1]
+    objective_value = hist[self.objective_metric][-1]
 
     return objective_value
 
@@ -135,10 +138,15 @@ class OptunaEstimator(Estimator):
       storage=optuna_uri,
       study_name=Experiment.exp_name,
       pruner=pruner_instance,
-      sampler=optuna.samplers.TPESampler(seed=RANDOM_SEED),
+      sampler=optuna.samplers.TPESampler(seed=RANDOM_SEED, multivariate=True),
       direction=self.objective_direction,
       load_if_exists=True
     )
+
+    study.set_user_attr('objective_metric', self.objective_metric)
+    study.set_user_attr('objective_direction', self.objective_direction)
+    study.set_user_attr('metrics', self.hp.get('metrics', []))
+    study.set_user_attr('architecture', self.hp.get('architecture'))
 
     # start optimization (train loop)
     L.info(f'start of optuna optimization')
