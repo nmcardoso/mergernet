@@ -45,10 +45,18 @@ class ParametricEstimator(Estimator):
     x = preprocess_input(x)
     x = conv_block(x)
     x = tf.keras.layers.Flatten()(x)
-    x = tf.keras.layers.Dense(self.hp.get('dense_1_units'), activation='relu')(x)
-    x = tf.keras.layers.Dropout(self.hp.get('dropout_1_rate'))(x)
-    x = tf.keras.layers.Dense(self.hp.get('dense_2_units'), activation='relu')(x)
-    x = tf.keras.layers.Dropout(self.hp.get('dropout_2_rate'))(x)
+    if self.hp.get('dense_1_units'):
+      x = tf.keras.layers.Dense(self.hp.get('dense_1_units'), activation='relu')(x)
+    if self.hp.get('dropout_1_rate'):
+      x = tf.keras.layers.Dropout(self.hp.get('dropout_1_rate'))(x)
+    if self.hp.get('dense_2_units'):
+      x = tf.keras.layers.Dense(self.hp.get('dense_2_units'), activation='relu')(x)
+    if self.hp.get('dropout_2_rate'):
+      x = tf.keras.layers.Dropout(self.hp.get('dropout_2_rate'))(x)
+    if self.hp.get('dense_3_units'):
+      x = tf.keras.layers.Dense(self.hp.get('dense_3_units'), activation='relu')(x)
+    if self.hp.get('dropout_3_rate'):
+      x = tf.keras.layers.Dropout(self.hp.get('dropout_3_rate'))(x)
     outputs = tf.keras.layers.Dense(self.dataset.config.n_classes)(x)
 
     self._tf_model = tf.keras.Model(inputs, outputs)
