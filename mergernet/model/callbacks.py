@@ -240,7 +240,7 @@ class WandbGraphicsCallback(tf.keras.callbacks.Callback):
     self.validation_data = validation_data
     self.labels = labels
 
-  def on_train_end(self):
+  def on_train_end(self, logs: dict = None):
     history = deepcopy(self.model.history.history)
 
     probs = self.model.predict(self.validation_data)
