@@ -490,7 +490,7 @@
     <span class="n">pruner</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;hyperband&#39;</span><span class="p">,</span>
     <span class="n">objective_metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;val_loss&#39;</span><span class="p">,</span>
     <span class="n">objective_direction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;minimize&#39;</span><span class="p">,</span>
-    <span class="n">resume_hash</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">resume</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
   <span class="p">):</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">hp</span><span class="p">,</span> <span class="n">estimator</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span> <span class="o">=</span> <span class="n">estimator</span>
@@ -498,7 +498,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">pruner</span> <span class="o">=</span> <span class="n">pruner</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">objective_metric</span> <span class="o">=</span> <span class="n">objective_metric</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">objective_direction</span> <span class="o">=</span> <span class="n">objective_direction</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">resume_hash</span> <span class="o">=</span> <span class="n">resume_hash</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">resume</span> <span class="o">=</span> <span class="n">resume</span>
 
 
 <div class="viewcode-block" id="OptunaEstimator._objective"><a class="viewcode-back" href="../../../api/mergernet.estimators.automl.OptunaEstimator.html#mergernet.estimators.automl.OptunaEstimator._objective">[docs]</a>  <span class="k">def</span> <span class="nf">_objective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial</span><span class="p">:</span> <span class="n">optuna</span><span class="o">.</span><span class="n">trial</span><span class="o">.</span><span class="n">Trial</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
@@ -584,15 +584,13 @@
     <span class="n">optuna_path</span> <span class="o">=</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">local_exp_path</span> <span class="o">/</span> <span class="n">OPTUNA_DB_FILENAME</span>
     <span class="n">optuna_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;sqlite:///</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">optuna_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span> <span class="c1"># absolute path</span>
 
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">resume_hash</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># creating a new study instance</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">resume</span><span class="p">:</span>
       <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Downloading optuna study of exp </span><span class="si">{</span><span class="n">exp_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
       <span class="n">Experiment</span><span class="o">.</span><span class="n">download_file_gh</span><span class="p">(</span><span class="n">OPTUNA_DB_FILENAME</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">)</span>
-
-    <span class="c1"># creating a new study instance</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">resume_hash</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-      <span class="n">study_factory</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span>
-    <span class="k">else</span><span class="p">:</span>
       <span class="n">study_factory</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">load_study</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">study_factory</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span>
 
     <span class="n">study</span> <span class="o">=</span> <span class="n">study_factory</span><span class="p">(</span>
       <span class="n">storage</span><span class="o">=</span><span class="n">optuna_uri</span><span class="p">,</span>
