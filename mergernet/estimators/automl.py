@@ -127,7 +127,7 @@ class OptunaEstimator(Estimator):
     # creating a new study instance
     if self.resume:
       L.info(f'Downloading optuna study of exp {exp_id}')
-      Experiment.download_file_gh(OPTUNA_DB_FILENAME, exp_id)
+      Experiment.download_file_gd(OPTUNA_DB_FILENAME, exp_id)
       study_factory = optuna.load_study
     else:
       study_factory = optuna.create_study
