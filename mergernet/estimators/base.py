@@ -181,6 +181,10 @@ class Estimator(ABC):
       return tf.keras.metrics.Precision(name='precision')
     elif metric == 'recall':
       return tf.keras.metrics.Recall(name='recall')
+    elif metric == 'roc':
+      return tf.keras.metrics.AUC(curve='ROC', name='roc', from_logits=True, num_labels=self.dataset.config.n_classes)
+    elif metric == 'pr':
+      return tf.keras.metrics.AUC(curve='PR', name='pr', from_logits=True, num_labels=self.dataset.config.n_classes)
     elif metric == 'tp':
       return tf.keras.metrics.TruePositives(name='tp')
     elif metric == 'tn':
