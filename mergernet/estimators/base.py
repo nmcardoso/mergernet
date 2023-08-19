@@ -101,7 +101,7 @@ class Estimator(ABC):
     metrics: list = [],
     label_smoothing: float = 0.0
   ):
-    hp_metrics = [self.get_metric(m) for m in self.hp.get('metrics', []) if m is not None]
+    hp_metrics = [self.get_metric(m) for m in self.hp.get('metrics', default=[]) if m is not None]
     tf_model.compile(
       optimizer=optimizer,
       loss=tf.keras.losses.CategoricalCrossentropy(from_logits=True, label_smoothing=label_smoothing),
