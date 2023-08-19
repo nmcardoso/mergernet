@@ -148,7 +148,7 @@ class ParametricEstimator(Estimator):
       model.fit(
         ds_train,
         batch_size=batch_size,
-        epochs=t1_epochs + self.hp.get('epochs'),
+        epochs=len(h.history['loss']) + self.hp.get('epochs'),
         validation_data=ds_test,
         class_weight=class_weights,
         initial_epoch=len(h.history['loss']),
