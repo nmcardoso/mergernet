@@ -253,24 +253,24 @@ class Estimator(ABC):
     if scheduler == 'cosine_restarts':
       return tf.keras.optimizers.schedules.CosineDecayRestarts(
         initial_learning_rate=lr,
-        first_decay_steps=self.hp.get('lr_decay_steps', 40),
-        t_mul=self.hp.get('lr_decay_t', 2.0),
-        m_mul=self.hp.get('lr_decay_m', 1.0),
-        alpha=self.hp.get('lr_decay_alpha', 0.0),
+        first_decay_steps=self.hp.get('lr_decay_steps', default=40),
+        t_mul=self.hp.get('lr_decay_t', default=2.0),
+        m_mul=self.hp.get('lr_decay_m', default=1.0),
+        alpha=self.hp.get('lr_decay_alpha', default=0.0),
       )
     elif scheduler == 'cosine':
       return tf.keras.optimizers.schedules.CosineDecay(
         initial_learning_rate=lr,
-        decay_steps=self.hp.get('lr_decay_steps', 40),
-        alpha=self.hp.get('lr_decay_alpha', 0.0),
-        warmup_target=self.get('lr_warmup_target', None),
-        warmup_steps=self.get('lr_warmup_steps', 0)
+        decay_steps=self.hp.get('lr_decay_steps', default=40),
+        alpha=self.hp.get('lr_decay_alpha', default=0.0),
+        warmup_target=self.get('lr_warmup_target', default=None),
+        warmup_steps=self.get('lr_warmup_steps', default=0)
       )
     elif scheduler == 'exponential':
       return tf.keras.optimizers.schedules.ExponentialDecay(
         initial_learning_rate=lr,
-        decay_steps=self.hp.get('lr_decay_steps', 40),
-        decay_rate=self.hp.get('lr_decay_rate', 40),
+        decay_steps=self.hp.get('lr_decay_steps', default=40),
+        decay_rate=self.hp.get('lr_decay_rate', default=40),
       )
     else:
       return None
