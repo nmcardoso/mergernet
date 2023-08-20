@@ -36,5 +36,6 @@
   mergernet.data.preprocessing
   mergernet.data.rgb
   mergernet.data.sanitization
+  mergernet.data.schemas
   mergernet.data.trilogy
 

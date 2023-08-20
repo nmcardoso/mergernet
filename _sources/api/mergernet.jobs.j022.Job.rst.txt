@@ -1,0 +1,29 @@
+Job
+===
+
+.. currentmodule:: mergernet.jobs.j022
+
+.. autoclass:: Job
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
+
+
+  
+  
+  .. rubric:: Attributes
+
+  .. autosummary::
+  
+      ~Job.exp_id
+      ~Job.exp_name
+      ~Job.gd_exp_path
+      ~Job.gd_shared_path
+      ~Job.local_exp_path
+      ~Job.local_shared_path
+      ~Job.notes
+  
+  

@@ -38,7 +38,22 @@
   mergernet.jobs.j008
   mergernet.jobs.j009
   mergernet.jobs.j010
+  mergernet.jobs.j011
+  mergernet.jobs.j012
+  mergernet.jobs.j013
+  mergernet.jobs.j014
+  mergernet.jobs.j015
+  mergernet.jobs.j016
+  mergernet.jobs.j017
+  mergernet.jobs.j018
+  mergernet.jobs.j019
+  mergernet.jobs.j020
+  mergernet.jobs.j021
+  mergernet.jobs.j022
   mergernet.jobs.j023
+  mergernet.jobs.j024
+  mergernet.jobs.j025
   mergernet.jobs.j026
   mergernet.jobs.j027
+  mergernet.jobs.j028
 

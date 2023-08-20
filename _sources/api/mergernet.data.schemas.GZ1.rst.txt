@@ -1,0 +1,57 @@
+GZ1
+===
+
+.. currentmodule:: mergernet.data.schemas
+
+.. autoclass:: GZ1
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
+
+
+  
+  
+  .. rubric:: Attributes
+
+  .. autosummary::
+  
+      ~GZ1.CAMCOL
+      ~GZ1.DEC
+      ~GZ1.DR7OBJID
+      ~GZ1.DR8OBJID
+      ~GZ1.ELLIPTICAL
+      ~GZ1.FIELD
+      ~GZ1.IAUNAME
+      ~GZ1.MODELMAG_G
+      ~GZ1.MODELMAG_I
+      ~GZ1.MODELMAG_R
+      ~GZ1.MODELMAG_U
+      ~GZ1.MODELMAG_Z
+      ~GZ1.OBJ
+      ~GZ1.PATH
+      ~GZ1.PETROMAG_G
+      ~GZ1.PETROMAG_I
+      ~GZ1.PETROMAG_R
+      ~GZ1.PETROMAG_U
+      ~GZ1.PETROMAG_Z
+      ~GZ1.P_ACW
+      ~GZ1.P_CS
+      ~GZ1.P_CS_DEBIASED
+      ~GZ1.P_CW
+      ~GZ1.P_DK
+      ~GZ1.P_EDGE
+      ~GZ1.P_EL
+      ~GZ1.P_EL_DEBIASED
+      ~GZ1.P_MG
+      ~GZ1.RA
+      ~GZ1.RERUN
+      ~GZ1.RUN
+      ~GZ1.SPECOBJID
+      ~GZ1.SPIRAL
+      ~GZ1.UNCERTAIN
+      ~GZ1.Z
+  
+  

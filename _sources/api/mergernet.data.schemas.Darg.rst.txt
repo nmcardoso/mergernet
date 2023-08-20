@@ -1,0 +1,17 @@
+Darg
+====
+
+.. currentmodule:: mergernet.data.schemas
+
+.. autoclass:: Darg
+  :members:
+  :private-members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
+
+
+  
+  
+  

@@ -1,0 +1,33 @@
+mergernet.data.schemas
+======================
+
+.. automodule:: mergernet.data.schemas
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  .. rubric:: Classes
+
+  .. autosummary::
+    :toctree:
+    :template: class-template.rst
+  
+    Darg
+    GZ1
+    GZDecals5
+  
+  
+
+  
+  
+  
+
+
+

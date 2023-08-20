@@ -1,0 +1,1765 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="mergernet.data.trilogy" href="mergernet.data.trilogy.html" /><link rel="prev" title="GZ1" href="mergernet.data.schemas.GZ1.html" />
+
+    <!-- Generated with Sphinx 7.1.2 and Furo 2023.08.19 -->
+        <title>GZDecals5 - Mergernet 0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Mergernet 0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/galaxy_256.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Mergernet 0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../reference.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="mergernet.core.html">mergernet.core</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of mergernet.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="mergernet.core.constants.html">mergernet.core.constants</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.core.experiment.html">mergernet.core.experiment</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of mergernet.core.experiment</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.experiment.backup_model.html">mergernet.core.experiment.backup_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.experiment.Experiment.html">Experiment</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.core.hp.html">mergernet.core.hp</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of mergernet.core.hp</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.CategoricalHyperParameter.html">CategoricalHyperParameter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.ConstantHyperParameter.html">ConstantHyperParameter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.FloatHyperParameter.html">FloatHyperParameter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.HP.html">HP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.HyperParameter.html">HyperParameter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.HyperParameterSet.html">HyperParameterSet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.hp.IntHyperParameter.html">IntHyperParameter</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.core.logging.html">mergernet.core.logging</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of mergernet.core.logging</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.logging.configure_root_logger.html">mergernet.core.logging.configure_root_logger</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.core.utils.html">mergernet.core.utils</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of mergernet.core.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.array_fallback.html">mergernet.core.utils.array_fallback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.compress_files.html">mergernet.core.utils.compress_files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.compress_fits.html">mergernet.core.utils.compress_fits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.deep_update.html">mergernet.core.utils.deep_update</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.execute_posix_command.html">mergernet.core.utils.execute_posix_command</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.extract_files.html">mergernet.core.utils.extract_files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.extract_iauname_from_path.html">mergernet.core.utils.extract_iauname_from_path</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.find_by_value.html">mergernet.core.utils.find_by_value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.heading.html">mergernet.core.utils.heading</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.iauname.html">mergernet.core.utils.iauname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.iauname_path.html">mergernet.core.utils.iauname_path</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.install_linux_package.html">mergernet.core.utils.install_linux_package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.load_image.html">mergernet.core.utils.load_image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.load_table.html">mergernet.core.utils.load_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.not_in.html">mergernet.core.utils.not_in</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.save_image.html">mergernet.core.utils.save_image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.save_table.html">mergernet.core.utils.save_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.serialize.html">mergernet.core.utils.serialize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.unique_path.html">mergernet.core.utils.unique_path</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.CachedDataFrame.html">CachedDataFrame</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.SingletonMeta.html">SingletonMeta</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.Timming.html">Timming</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.core.utils.classproperty.html">classproperty</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="mergernet.data.html">mergernet.data</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of mergernet.data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.dataset.html">mergernet.data.dataset</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of mergernet.data.dataset</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset.Dataset.html">Dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset.TFRDataset.html">TFRDataset</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.dataset_config.html">mergernet.data.dataset_config</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of mergernet.data.dataset_config</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset_config.DatasetConfig.html">DatasetConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset_config.DatasetRegistry.html">DatasetRegistry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset_config.GoogleDriveResource.html">GoogleDriveResource</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.dataset_config.HTTPResource.html">HTTPResource</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.image.html">mergernet.data.image</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of mergernet.data.image</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.asinh_map.html">mergernet.data.image.asinh_map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.asinh_map2.html">mergernet.data.image.asinh_map2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.ChannelAverage.html">ChannelAverage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.Crop.html">Crop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.ImagePipeline.html">ImagePipeline</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.ImageTransform.html">ImageTransform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.LegacyRGB.html">LegacyRGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.LuptonRGB.html">LuptonRGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.TensorToImage.html">TensorToImage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.image.TensorToShards.html">TensorToShards</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.kfold.html">mergernet.data.kfold</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of mergernet.data.kfold</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.kfold.DistributionKFold.html">DistributionKFold</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.kfold.StratifiedDistributionKFold.html">StratifiedDistributionKFold</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.match.html">mergernet.data.match</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of mergernet.data.match</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.match.CrossMatch.html">CrossMatch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.match.CrossMatchResult.html">CrossMatchResult</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.match.XTable.html">XTable</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.preprocessing.html">mergernet.data.preprocessing</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of mergernet.data.preprocessing</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.preprocessing.load_jpg.html">mergernet.data.preprocessing.load_jpg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.preprocessing.load_png.html">mergernet.data.preprocessing.load_png</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.preprocessing.normalize_rgb.html">mergernet.data.preprocessing.normalize_rgb</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.preprocessing.one_hot_factory.html">mergernet.data.preprocessing.one_hot_factory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.preprocessing.standardize_rgb.html">mergernet.data.preprocessing.standardize_rgb</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.rgb.html">mergernet.data.rgb</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of mergernet.data.rgb</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.rgb.RGB.html">RGB</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.sanitization.html">mergernet.data.sanitization</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of mergernet.data.sanitization</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.sanitization.DatasetSanitization.html">DatasetSanitization</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current has-children"><a class="reference internal" href="mergernet.data.schemas.html">mergernet.data.schemas</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of mergernet.data.schemas</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.schemas.Darg.html">Darg</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.schemas.GZ1.html">GZ1</a></li>
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">GZDecals5</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.data.trilogy.html">mergernet.data.trilogy</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle navigation of mergernet.data.trilogy</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.RGB2im.html">mergernet.data.trilogy.RGB2im</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.adjust_saturation.html">mergernet.data.trilogy.adjust_saturation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.da.html">mergernet.data.trilogy.da</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.get_clip.html">mergernet.data.trilogy.get_clip</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.get_levels.html">mergernet.data.trilogy.get_levels</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.imscale.html">mergernet.data.trilogy.imscale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.meanstd.html">mergernet.data.trilogy.meanstd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.rms.html">mergernet.data.trilogy.rms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.satK2m.html">mergernet.data.trilogy.satK2m</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.setLevel.html">mergernet.data.trilogy.setLevel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.data.trilogy.MakeImg.html">MakeImg</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="mergernet.estimators.html">mergernet.estimators</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of mergernet.estimators</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.estimators.automl.html">mergernet.estimators.automl</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of mergernet.estimators.automl</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.automl.OptunaEstimator.html">OptunaEstimator</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.estimators.base.html">mergernet.estimators.base</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of mergernet.estimators.base</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.base.Estimator.html">Estimator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.base.EstimatorConfig.html">EstimatorConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.base.EstimatorRegistry.html">EstimatorRegistry</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.estimators.decals.html">mergernet.estimators.decals</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of mergernet.estimators.decals</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.decals.ZoobotEstimator.html">ZoobotEstimator</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.estimators.parametric.html">mergernet.estimators.parametric</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of mergernet.estimators.parametric</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.estimators.parametric.ParametricEstimator.html">ParametricEstimator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="mergernet.jobs.html">mergernet.jobs</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of mergernet.jobs</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j001.html">mergernet.jobs.j001</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j001</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j001.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j002.html">mergernet.jobs.j002</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j002</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j002.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j005.html">mergernet.jobs.j005</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j005</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j005.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j006.html">mergernet.jobs.j006</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j006</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j006.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j007.html">mergernet.jobs.j007</a><input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" role="switch" type="checkbox"/><label for="toctree-checkbox-28"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j007</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j007.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j008.html">mergernet.jobs.j008</a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" role="switch" type="checkbox"/><label for="toctree-checkbox-29"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j008</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j008.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j009.html">mergernet.jobs.j009</a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" role="switch" type="checkbox"/><label for="toctree-checkbox-30"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j009</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j009.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j010.html">mergernet.jobs.j010</a><input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" role="switch" type="checkbox"/><label for="toctree-checkbox-31"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j010</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j010.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j011.html">mergernet.jobs.j011</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" role="switch" type="checkbox"/><label for="toctree-checkbox-32"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j011</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j011.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j021.html">mergernet.jobs.j021</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" role="switch" type="checkbox"/><label for="toctree-checkbox-33"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j021</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j021.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j022.html">mergernet.jobs.j022</a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" role="switch" type="checkbox"/><label for="toctree-checkbox-34"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j022</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j022.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j023.html">mergernet.jobs.j023</a><input class="toctree-checkbox" id="toctree-checkbox-35" name="toctree-checkbox-35" role="switch" type="checkbox"/><label for="toctree-checkbox-35"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j023</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j023.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j024.html">mergernet.jobs.j024</a><input class="toctree-checkbox" id="toctree-checkbox-36" name="toctree-checkbox-36" role="switch" type="checkbox"/><label for="toctree-checkbox-36"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j024</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j024.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j025.html">mergernet.jobs.j025</a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j025</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j025.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j026.html">mergernet.jobs.j026</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j026</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j026.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j027.html">mergernet.jobs.j027</a><input class="toctree-checkbox" id="toctree-checkbox-39" name="toctree-checkbox-39" role="switch" type="checkbox"/><label for="toctree-checkbox-39"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j027</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j027.Job.html">Job</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.jobs.j028.html">mergernet.jobs.j028</a><input class="toctree-checkbox" id="toctree-checkbox-40" name="toctree-checkbox-40" role="switch" type="checkbox"/><label for="toctree-checkbox-40"><div class="visually-hidden">Toggle navigation of mergernet.jobs.j028</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.jobs.j028.Job.html">Job</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="mergernet.model.html">mergernet.model</a><input class="toctree-checkbox" id="toctree-checkbox-41" name="toctree-checkbox-41" role="switch" type="checkbox"/><label for="toctree-checkbox-41"><div class="visually-hidden">Toggle navigation of mergernet.model</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.model.automl.html">mergernet.model.automl</a><input class="toctree-checkbox" id="toctree-checkbox-42" name="toctree-checkbox-42" role="switch" type="checkbox"/><label for="toctree-checkbox-42"><div class="visually-hidden">Toggle navigation of mergernet.model.automl</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.automl.optuna_train.html">mergernet.model.automl.optuna_train</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.model.baseline.html">mergernet.model.baseline</a><input class="toctree-checkbox" id="toctree-checkbox-43" name="toctree-checkbox-43" role="switch" type="checkbox"/><label for="toctree-checkbox-43"><div class="visually-hidden">Toggle navigation of mergernet.model.baseline</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.baseline.finetune_train.html">mergernet.model.baseline.finetune_train</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.model.callbacks.html">mergernet.model.callbacks</a><input class="toctree-checkbox" id="toctree-checkbox-44" name="toctree-checkbox-44" role="switch" type="checkbox"/><label for="toctree-checkbox-44"><div class="visually-hidden">Toggle navigation of mergernet.model.callbacks</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.DeltaStopping.html">DeltaStopping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.PruneCallback.html">PruneCallback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.SaveBestTrialCallback.html">SaveBestTrialCallback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.TFKerasPruningCallback.html">TFKerasPruningCallback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.callbacks.WandbGraphicsCallback.html">WandbGraphicsCallback</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.model.inference.html">mergernet.model.inference</a><input class="toctree-checkbox" id="toctree-checkbox-45" name="toctree-checkbox-45" role="switch" type="checkbox"/><label for="toctree-checkbox-45"><div class="visually-hidden">Toggle navigation of mergernet.model.inference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.inference.Predictor.html">Predictor</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.model.utils.html">mergernet.model.utils</a><input class="toctree-checkbox" id="toctree-checkbox-46" name="toctree-checkbox-46" role="switch" type="checkbox"/><label for="toctree-checkbox-46"><div class="visually-hidden">Toggle navigation of mergernet.model.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.utils.get_conv_arch.html">mergernet.model.utils.get_conv_arch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.utils.history_to_dataframe.html">mergernet.model.utils.history_to_dataframe</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.utils.load_model.html">mergernet.model.utils.load_model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.utils.set_trainable_state.html">mergernet.model.utils.set_trainable_state</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.model.utils.setup_seeds.html">mergernet.model.utils.setup_seeds</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="mergernet.services.html">mergernet.services</a><input class="toctree-checkbox" id="toctree-checkbox-47" name="toctree-checkbox-47" role="switch" type="checkbox"/><label for="toctree-checkbox-47"><div class="visually-hidden">Toggle navigation of mergernet.services</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.github.html">mergernet.services.github</a><input class="toctree-checkbox" id="toctree-checkbox-48" name="toctree-checkbox-48" role="switch" type="checkbox"/><label for="toctree-checkbox-48"><div class="visually-hidden">Toggle navigation of mergernet.services.github</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.github.GithubService.html">GithubService</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.google.html">mergernet.services.google</a><input class="toctree-checkbox" id="toctree-checkbox-49" name="toctree-checkbox-49" role="switch" type="checkbox"/><label for="toctree-checkbox-49"><div class="visually-hidden">Toggle navigation of mergernet.services.google</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.google.GDrive.html">GDrive</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.imaging.html">mergernet.services.imaging</a><input class="toctree-checkbox" id="toctree-checkbox-50" name="toctree-checkbox-50" role="switch" type="checkbox"/><label for="toctree-checkbox-50"><div class="visually-hidden">Toggle navigation of mergernet.services.imaging</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.imaging.ImagingService.html">ImagingService</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.legacy.html">mergernet.services.legacy</a><input class="toctree-checkbox" id="toctree-checkbox-51" name="toctree-checkbox-51" role="switch" type="checkbox"/><label for="toctree-checkbox-51"><div class="visually-hidden">Toggle navigation of mergernet.services.legacy</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.legacy.LegacyService.html">LegacyService</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.sciserver.html">mergernet.services.sciserver</a><input class="toctree-checkbox" id="toctree-checkbox-52" name="toctree-checkbox-52" role="switch" type="checkbox"/><label for="toctree-checkbox-52"><div class="visually-hidden">Toggle navigation of mergernet.services.sciserver</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.sciserver.SciServer.html">SciServer</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.sdss.html">mergernet.services.sdss</a><input class="toctree-checkbox" id="toctree-checkbox-53" name="toctree-checkbox-53" role="switch" type="checkbox"/><label for="toctree-checkbox-53"><div class="visually-hidden">Toggle navigation of mergernet.services.sdss</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.sdss.SloanService.html">SloanService</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.splus.html">mergernet.services.splus</a><input class="toctree-checkbox" id="toctree-checkbox-54" name="toctree-checkbox-54" role="switch" type="checkbox"/><label for="toctree-checkbox-54"><div class="visually-hidden">Toggle navigation of mergernet.services.splus</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.splus.update_authorization.html">mergernet.services.splus.update_authorization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.splus.ImageType.html">ImageType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.splus.SplusService.html">SplusService</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.tap.html">mergernet.services.tap</a><input class="toctree-checkbox" id="toctree-checkbox-55" name="toctree-checkbox-55" role="switch" type="checkbox"/><label for="toctree-checkbox-55"><div class="visually-hidden">Toggle navigation of mergernet.services.tap</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.tap.TapService.html">TapService</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.tensorboard.html">mergernet.services.tensorboard</a><input class="toctree-checkbox" id="toctree-checkbox-56" name="toctree-checkbox-56" role="switch" type="checkbox"/><label for="toctree-checkbox-56"><div class="visually-hidden">Toggle navigation of mergernet.services.tensorboard</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.tensorboard.TensorboardService.html">TensorboardService</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.services.utils.html">mergernet.services.utils</a><input class="toctree-checkbox" id="toctree-checkbox-57" name="toctree-checkbox-57" role="switch" type="checkbox"/><label for="toctree-checkbox-57"><div class="visually-hidden">Toggle navigation of mergernet.services.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.utils.append_query_params.html">mergernet.services.utils.append_query_params</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.utils.batch_download_file.html">mergernet.services.utils.batch_download_file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.utils.download_file.html">mergernet.services.utils.download_file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.services.utils.parallel_function_executor.html">mergernet.services.utils.parallel_function_executor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="mergernet.visualization.html">mergernet.visualization</a><input class="toctree-checkbox" id="toctree-checkbox-58" name="toctree-checkbox-58" role="switch" type="checkbox"/><label for="toctree-checkbox-58"><div class="visually-hidden">Toggle navigation of mergernet.visualization</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="mergernet.visualization.plot.html">mergernet.visualization.plot</a><input class="toctree-checkbox" id="toctree-checkbox-59" name="toctree-checkbox-59" role="switch" type="checkbox"/><label for="toctree-checkbox-59"><div class="visually-hidden">Toggle navigation of mergernet.visualization.plot</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.visualization.plot.color_color.html">mergernet.visualization.plot.color_color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.visualization.plot.conf_matrix.html">mergernet.visualization.plot.conf_matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.visualization.plot.data_distribution.html">mergernet.visualization.plot.data_distribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.visualization.plot.mag_class_distribution.html">mergernet.visualization.plot.mag_class_distribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.visualization.plot.object_position.html">mergernet.visualization.plot.object_position</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.visualization.plot.roc.html">mergernet.visualization.plot.roc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.visualization.plot.train_metrics.html">mergernet.visualization.plot.train_metrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mergernet.visualization.plot.Serie.html">Serie</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments.html">Experiments</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="gzdecals5">
+<h1>GZDecals5<a class="headerlink" href="#gzdecals5" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mergernet.data.schemas.</span></span><span class="sig-name descname"><span class="pre">GZDecals5</span></span><a class="reference internal" href="../_modules/mergernet/data/schemas.html#GZDecals5"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mergernet.data.schemas.GZDecals5" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p class="rubric">Attributes</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.ACTIVE_LEARNING_ON" title="mergernet.data.schemas.GZDecals5.ACTIVE_LEARNING_ON"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ACTIVE_LEARNING_ON</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_NO" title="mergernet.data.schemas.GZDecals5.BAR_NO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BAR_NO</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_NO_DEBIASED" title="mergernet.data.schemas.GZDecals5.BAR_NO_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BAR_NO_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_NO_FRACTION" title="mergernet.data.schemas.GZDecals5.BAR_NO_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BAR_NO_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_STRONG" title="mergernet.data.schemas.GZDecals5.BAR_STRONG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BAR_STRONG</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_STRONG_DEBIASED" title="mergernet.data.schemas.GZDecals5.BAR_STRONG_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BAR_STRONG_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_STRONG_FRACTION" title="mergernet.data.schemas.GZDecals5.BAR_STRONG_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BAR_STRONG_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_TOTAL_VOTES" title="mergernet.data.schemas.GZDecals5.BAR_TOTAL_VOTES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BAR_TOTAL_VOTES</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_WEAK" title="mergernet.data.schemas.GZDecals5.BAR_WEAK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BAR_WEAK</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_WEAK_DEBIASED" title="mergernet.data.schemas.GZDecals5.BAR_WEAK_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BAR_WEAK_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_WEAK_FRACTION" title="mergernet.data.schemas.GZDecals5.BAR_WEAK_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BAR_WEAK_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_DOMINANT</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT_DEBIASED" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_DOMINANT_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT_FRACTION" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_DOMINANT_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_LARGE</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE_DEBIASED" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_LARGE_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE_FRACTION" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_LARGE_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_MODERATE</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE_DEBIASED" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_MODERATE_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE_FRACTION" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_MODERATE_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_NONE</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE_DEBIASED" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_NONE_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE_FRACTION" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_NONE_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_SMALL</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL_DEBIASED" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_SMALL_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL_FRACTION" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_SMALL_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_TOTAL_VOTES" title="mergernet.data.schemas.GZDecals5.BULGE_SIZE_TOTAL_VOTES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BULGE_SIZE_TOTAL_VOTES</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DEC" title="mergernet.data.schemas.GZDecals5.DEC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DEC</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO" title="mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DISK_EDGE_ON_NO</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO_DEBIASED" title="mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DISK_EDGE_ON_NO_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO_FRACTION" title="mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DISK_EDGE_ON_NO_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_TOTAL_VOTES" title="mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_TOTAL_VOTES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DISK_EDGE_ON_TOTAL_VOTES</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES" title="mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DISK_EDGE_ON_YES</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES_DEBIASED" title="mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DISK_EDGE_ON_YES_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES_FRACTION" title="mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DISK_EDGE_ON_YES_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY" title="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EDGE_ON_BULGE_BOXY</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY_DEBIASED" title="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EDGE_ON_BULGE_BOXY_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY_FRACTION" title="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EDGE_ON_BULGE_BOXY_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE" title="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EDGE_ON_BULGE_NONE</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE_DEBIASED" title="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EDGE_ON_BULGE_NONE_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE_FRACTION" title="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EDGE_ON_BULGE_NONE_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED" title="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EDGE_ON_BULGE_ROUNDED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED_DEBIASED" title="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EDGE_ON_BULGE_ROUNDED_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED_FRACTION" title="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EDGE_ON_BULGE_ROUNDED_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_TOTAL_VOTES" title="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_TOTAL_VOTES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EDGE_ON_BULGE_TOTAL_VOTES</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.ELPETRO_ABSMAG_R" title="mergernet.data.schemas.GZDecals5.ELPETRO_ABSMAG_R"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ELPETRO_ABSMAG_R</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO" title="mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HAS_SPIRAL_ARMS_NO</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO_DEBIASED" title="mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HAS_SPIRAL_ARMS_NO_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO_FRACTION" title="mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HAS_SPIRAL_ARMS_NO_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_TOTAL_VOTES" title="mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_TOTAL_VOTES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HAS_SPIRAL_ARMS_TOTAL_VOTES</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES" title="mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HAS_SPIRAL_ARMS_YES</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES_DEBIASED" title="mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HAS_SPIRAL_ARMS_YES_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES_FRACTION" title="mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HAS_SPIRAL_ARMS_YES_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED" title="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HOW_ROUNDED_CIGAR_SHAPED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED_DEBIASED" title="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HOW_ROUNDED_CIGAR_SHAPED_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED_FRACTION" title="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HOW_ROUNDED_CIGAR_SHAPED_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN" title="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HOW_ROUNDED_IN_BETWEEN</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN_DEBIASED" title="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HOW_ROUNDED_IN_BETWEEN_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN_FRACTION" title="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HOW_ROUNDED_IN_BETWEEN_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND" title="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HOW_ROUNDED_ROUND</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND_DEBIASED" title="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HOW_ROUNDED_ROUND_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND_FRACTION" title="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HOW_ROUNDED_ROUND_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_TOTAL_VOTES" title="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_TOTAL_VOTES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HOW_ROUNDED_TOTAL_VOTES</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.IAUNAME" title="mergernet.data.schemas.GZDecals5.IAUNAME"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IAUNAME</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.IN_GZD_AB" title="mergernet.data.schemas.GZDecals5.IN_GZD_AB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IN_GZD_AB</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MAG_R" title="mergernet.data.schemas.GZDecals5.MAG_R"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAG_R</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE" title="mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MERGING_MAJOR_DISTURBANCE</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE_DEBIASED" title="mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MERGING_MAJOR_DISTURBANCE_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE_FRACTION" title="mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MERGING_MAJOR_DISTURBANCE_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MERGER" title="mergernet.data.schemas.GZDecals5.MERGING_MERGER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MERGING_MERGER</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MERGER_DEBIASED" title="mergernet.data.schemas.GZDecals5.MERGING_MERGER_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MERGING_MERGER_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MERGER_FRACTION" title="mergernet.data.schemas.GZDecals5.MERGING_MERGER_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MERGING_MERGER_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE" title="mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MERGING_MINOR_DISTURBANCE</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE_DEBIASED" title="mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MERGING_MINOR_DISTURBANCE_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE_FRACTION" title="mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MERGING_MINOR_DISTURBANCE_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_NONE" title="mergernet.data.schemas.GZDecals5.MERGING_NONE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MERGING_NONE</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_NONE_DEBIASED" title="mergernet.data.schemas.GZDecals5.MERGING_NONE_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MERGING_NONE_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_NONE_FRACTION" title="mergernet.data.schemas.GZDecals5.MERGING_NONE_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MERGING_NONE_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_TOTAL_VOTES" title="mergernet.data.schemas.GZDecals5.MERGING_TOTAL_VOTES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MERGING_TOTAL_VOTES</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.PATH" title="mergernet.data.schemas.GZDecals5.PATH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PATH</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.PETRO_TH50" title="mergernet.data.schemas.GZDecals5.PETRO_TH50"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PETRO_TH50</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.PETRO_TH90" title="mergernet.data.schemas.GZDecals5.PETRO_TH90"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PETRO_TH90</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.PETRO_THETA" title="mergernet.data.schemas.GZDecals5.PETRO_THETA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PETRO_THETA</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.PNG_LOC" title="mergernet.data.schemas.GZDecals5.PNG_LOC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PNG_LOC</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.RA" title="mergernet.data.schemas.GZDecals5.RA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RA</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.REDSHIFT" title="mergernet.data.schemas.GZDecals5.REDSHIFT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">REDSHIFT</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SERSIC_NMGY_R" title="mergernet.data.schemas.GZDecals5.SERSIC_NMGY_R"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SERSIC_NMGY_R</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT" title="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SMOOTH_OR_FEATURED_ARTIFACT</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT_DEBIASED" title="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SMOOTH_OR_FEATURED_ARTIFACT_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT_FRACTION" title="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SMOOTH_OR_FEATURED_ARTIFACT_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK" title="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SMOOTH_OR_FEATURED_FEATURED_OR_DISK</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK_DEBIASED" title="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SMOOTH_OR_FEATURED_FEATURED_OR_DISK_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK_FRACTION" title="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SMOOTH_OR_FEATURED_FEATURED_OR_DISK_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH" title="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SMOOTH_OR_FEATURED_SMOOTH</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH_DEBIASED" title="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SMOOTH_OR_FEATURED_SMOOTH_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH_FRACTION" title="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SMOOTH_OR_FEATURED_SMOOTH_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_TOTAL_VOTES" title="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_TOTAL_VOTES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SMOOTH_OR_FEATURED_TOTAL_VOTES</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_1</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1_DEBIASED" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_1_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1_FRACTION" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_1_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_2</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2_DEBIASED" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_2_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2_FRACTION" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_2_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_3</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3_DEBIASED" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_3_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3_FRACTION" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_3_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_4</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4_DEBIASED" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_4_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4_FRACTION" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_4_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_CANT_TELL</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL_DEBIASED" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_CANT_TELL_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL_FRACTION" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_CANT_TELL_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_MORE_THAN_4</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4_DEBIASED" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_MORE_THAN_4_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4_FRACTION" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_MORE_THAN_4_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_TOTAL_VOTES" title="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_TOTAL_VOTES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_ARM_COUNT_TOTAL_VOTES</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE" title="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_WINDING_LOOSE</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE_DEBIASED" title="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_WINDING_LOOSE_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE_FRACTION" title="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_WINDING_LOOSE_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM" title="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_WINDING_MEDIUM</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM_DEBIASED" title="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_WINDING_MEDIUM_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM_FRACTION" title="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_WINDING_MEDIUM_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT" title="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_WINDING_TIGHT</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT_DEBIASED" title="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT_DEBIASED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_WINDING_TIGHT_DEBIASED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT_FRACTION" title="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT_FRACTION"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_WINDING_TIGHT_FRACTION</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TOTAL_VOTES" title="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TOTAL_VOTES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPIRAL_WINDING_TOTAL_VOTES</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.UPLOAD_GROUP" title="mergernet.data.schemas.GZDecals5.UPLOAD_GROUP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UPLOAD_GROUP</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.WRONG_SIZE_STATISTIC" title="mergernet.data.schemas.GZDecals5.WRONG_SIZE_STATISTIC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WRONG_SIZE_STATISTIC</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.WRONG_SIZE_WARNING" title="mergernet.data.schemas.GZDecals5.WRONG_SIZE_WARNING"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WRONG_SIZE_WARNING</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.ACTIVE_LEARNING_ON">
+<span class="sig-name descname"><span class="pre">ACTIVE_LEARNING_ON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'active_learning_on'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.ACTIVE_LEARNING_ON" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BAR_NO">
+<span class="sig-name descname"><span class="pre">BAR_NO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bar_no'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BAR_NO" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BAR_NO_DEBIASED">
+<span class="sig-name descname"><span class="pre">BAR_NO_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bar_no_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BAR_NO_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BAR_NO_FRACTION">
+<span class="sig-name descname"><span class="pre">BAR_NO_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bar_no_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BAR_NO_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BAR_STRONG">
+<span class="sig-name descname"><span class="pre">BAR_STRONG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bar_strong'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BAR_STRONG" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BAR_STRONG_DEBIASED">
+<span class="sig-name descname"><span class="pre">BAR_STRONG_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bar_strong_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BAR_STRONG_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BAR_STRONG_FRACTION">
+<span class="sig-name descname"><span class="pre">BAR_STRONG_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bar_strong_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BAR_STRONG_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BAR_TOTAL_VOTES">
+<span class="sig-name descname"><span class="pre">BAR_TOTAL_VOTES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bar_total-votes'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BAR_TOTAL_VOTES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BAR_WEAK">
+<span class="sig-name descname"><span class="pre">BAR_WEAK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bar_weak'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BAR_WEAK" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BAR_WEAK_DEBIASED">
+<span class="sig-name descname"><span class="pre">BAR_WEAK_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bar_weak_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BAR_WEAK_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BAR_WEAK_FRACTION">
+<span class="sig-name descname"><span class="pre">BAR_WEAK_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bar_weak_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BAR_WEAK_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_DOMINANT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_dominant'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT_DEBIASED">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_DOMINANT_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_dominant_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT_FRACTION">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_DOMINANT_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_dominant_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_LARGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_large'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE_DEBIASED">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_LARGE_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_large_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE_FRACTION">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_LARGE_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_large_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_MODERATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_moderate'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE_DEBIASED">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_MODERATE_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_moderate_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE_FRACTION">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_MODERATE_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_moderate_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_none'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE_DEBIASED">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_NONE_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_none_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE_FRACTION">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_NONE_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_none_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_SMALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_small'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL_DEBIASED">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_SMALL_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_small_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL_FRACTION">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_SMALL_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_small_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.BULGE_SIZE_TOTAL_VOTES">
+<span class="sig-name descname"><span class="pre">BULGE_SIZE_TOTAL_VOTES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bulge-size_total-votes'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_TOTAL_VOTES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.DEC">
+<span class="sig-name descname"><span class="pre">DEC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'dec'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.DEC" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO">
+<span class="sig-name descname"><span class="pre">DISK_EDGE_ON_NO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'disk-edge-on_no'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO_DEBIASED">
+<span class="sig-name descname"><span class="pre">DISK_EDGE_ON_NO_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'disk-edge-on_no_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO_FRACTION">
+<span class="sig-name descname"><span class="pre">DISK_EDGE_ON_NO_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'disk-edge-on_no_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_TOTAL_VOTES">
+<span class="sig-name descname"><span class="pre">DISK_EDGE_ON_TOTAL_VOTES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'disk-edge-on_total-votes'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_TOTAL_VOTES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES">
+<span class="sig-name descname"><span class="pre">DISK_EDGE_ON_YES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'disk-edge-on_yes'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES_DEBIASED">
+<span class="sig-name descname"><span class="pre">DISK_EDGE_ON_YES_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'disk-edge-on_yes_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES_FRACTION">
+<span class="sig-name descname"><span class="pre">DISK_EDGE_ON_YES_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'disk-edge-on_yes_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY">
+<span class="sig-name descname"><span class="pre">EDGE_ON_BULGE_BOXY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'edge-on-bulge_boxy'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY_DEBIASED">
+<span class="sig-name descname"><span class="pre">EDGE_ON_BULGE_BOXY_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'edge-on-bulge_boxy_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY_FRACTION">
+<span class="sig-name descname"><span class="pre">EDGE_ON_BULGE_BOXY_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'edge-on-bulge_boxy_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE">
+<span class="sig-name descname"><span class="pre">EDGE_ON_BULGE_NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'edge-on-bulge_none'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE_DEBIASED">
+<span class="sig-name descname"><span class="pre">EDGE_ON_BULGE_NONE_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'edge-on-bulge_none_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE_FRACTION">
+<span class="sig-name descname"><span class="pre">EDGE_ON_BULGE_NONE_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'edge-on-bulge_none_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED">
+<span class="sig-name descname"><span class="pre">EDGE_ON_BULGE_ROUNDED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'edge-on-bulge_rounded'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED_DEBIASED">
+<span class="sig-name descname"><span class="pre">EDGE_ON_BULGE_ROUNDED_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'edge-on-bulge_rounded_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED_FRACTION">
+<span class="sig-name descname"><span class="pre">EDGE_ON_BULGE_ROUNDED_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'edge-on-bulge_rounded_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_TOTAL_VOTES">
+<span class="sig-name descname"><span class="pre">EDGE_ON_BULGE_TOTAL_VOTES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'edge-on-bulge_total-votes'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_TOTAL_VOTES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.ELPETRO_ABSMAG_R">
+<span class="sig-name descname"><span class="pre">ELPETRO_ABSMAG_R</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'elpetro_absmag_r'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.ELPETRO_ABSMAG_R" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO">
+<span class="sig-name descname"><span class="pre">HAS_SPIRAL_ARMS_NO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'has-spiral-arms_no'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO_DEBIASED">
+<span class="sig-name descname"><span class="pre">HAS_SPIRAL_ARMS_NO_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'has-spiral-arms_no_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO_FRACTION">
+<span class="sig-name descname"><span class="pre">HAS_SPIRAL_ARMS_NO_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'has-spiral-arms_no_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_TOTAL_VOTES">
+<span class="sig-name descname"><span class="pre">HAS_SPIRAL_ARMS_TOTAL_VOTES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'has-spiral-arms_total-votes'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_TOTAL_VOTES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES">
+<span class="sig-name descname"><span class="pre">HAS_SPIRAL_ARMS_YES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'has-spiral-arms_yes'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES_DEBIASED">
+<span class="sig-name descname"><span class="pre">HAS_SPIRAL_ARMS_YES_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'has-spiral-arms_yes_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES_FRACTION">
+<span class="sig-name descname"><span class="pre">HAS_SPIRAL_ARMS_YES_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'has-spiral-arms_yes_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED">
+<span class="sig-name descname"><span class="pre">HOW_ROUNDED_CIGAR_SHAPED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'how-rounded_cigar-shaped'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED_DEBIASED">
+<span class="sig-name descname"><span class="pre">HOW_ROUNDED_CIGAR_SHAPED_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'how-rounded_cigar-shaped_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED_FRACTION">
+<span class="sig-name descname"><span class="pre">HOW_ROUNDED_CIGAR_SHAPED_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'how-rounded_cigar-shaped_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN">
+<span class="sig-name descname"><span class="pre">HOW_ROUNDED_IN_BETWEEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'how-rounded_in-between'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN_DEBIASED">
+<span class="sig-name descname"><span class="pre">HOW_ROUNDED_IN_BETWEEN_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'how-rounded_in-between_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN_FRACTION">
+<span class="sig-name descname"><span class="pre">HOW_ROUNDED_IN_BETWEEN_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'how-rounded_in-between_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND">
+<span class="sig-name descname"><span class="pre">HOW_ROUNDED_ROUND</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'how-rounded_round'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND_DEBIASED">
+<span class="sig-name descname"><span class="pre">HOW_ROUNDED_ROUND_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'how-rounded_round_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND_FRACTION">
+<span class="sig-name descname"><span class="pre">HOW_ROUNDED_ROUND_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'how-rounded_round_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.HOW_ROUNDED_TOTAL_VOTES">
+<span class="sig-name descname"><span class="pre">HOW_ROUNDED_TOTAL_VOTES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'how-rounded_total-votes'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_TOTAL_VOTES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.IAUNAME">
+<span class="sig-name descname"><span class="pre">IAUNAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'iauname'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.IAUNAME" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.IN_GZD_AB">
+<span class="sig-name descname"><span class="pre">IN_GZD_AB</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'in_gzd_ab'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.IN_GZD_AB" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.MAG_R">
+<span class="sig-name descname"><span class="pre">MAG_R</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mag_r'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.MAG_R" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE">
+<span class="sig-name descname"><span class="pre">MERGING_MAJOR_DISTURBANCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merging_major-disturbance'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE_DEBIASED">
+<span class="sig-name descname"><span class="pre">MERGING_MAJOR_DISTURBANCE_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merging_major-disturbance_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE_FRACTION">
+<span class="sig-name descname"><span class="pre">MERGING_MAJOR_DISTURBANCE_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merging_major-disturbance_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.MERGING_MERGER">
+<span class="sig-name descname"><span class="pre">MERGING_MERGER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merging_merger'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.MERGING_MERGER" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.MERGING_MERGER_DEBIASED">
+<span class="sig-name descname"><span class="pre">MERGING_MERGER_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merging_merger_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.MERGING_MERGER_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.MERGING_MERGER_FRACTION">
+<span class="sig-name descname"><span class="pre">MERGING_MERGER_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merging_merger_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.MERGING_MERGER_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE">
+<span class="sig-name descname"><span class="pre">MERGING_MINOR_DISTURBANCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merging_minor-disturbance'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE_DEBIASED">
+<span class="sig-name descname"><span class="pre">MERGING_MINOR_DISTURBANCE_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merging_minor-disturbance_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE_FRACTION">
+<span class="sig-name descname"><span class="pre">MERGING_MINOR_DISTURBANCE_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merging_minor-disturbance_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.MERGING_NONE">
+<span class="sig-name descname"><span class="pre">MERGING_NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merging_none'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.MERGING_NONE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.MERGING_NONE_DEBIASED">
+<span class="sig-name descname"><span class="pre">MERGING_NONE_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merging_none_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.MERGING_NONE_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.MERGING_NONE_FRACTION">
+<span class="sig-name descname"><span class="pre">MERGING_NONE_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merging_none_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.MERGING_NONE_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.MERGING_TOTAL_VOTES">
+<span class="sig-name descname"><span class="pre">MERGING_TOTAL_VOTES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merging_total-votes'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.MERGING_TOTAL_VOTES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.PATH">
+<span class="sig-name descname"><span class="pre">PATH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">PosixPath('/home/runner/work/mergernet/mergernet/data/catalogs')</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.PATH" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.PETRO_TH50">
+<span class="sig-name descname"><span class="pre">PETRO_TH50</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'petro_th50'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.PETRO_TH50" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.PETRO_TH90">
+<span class="sig-name descname"><span class="pre">PETRO_TH90</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'petro_th90'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.PETRO_TH90" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.PETRO_THETA">
+<span class="sig-name descname"><span class="pre">PETRO_THETA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'petro_theta'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.PETRO_THETA" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.PNG_LOC">
+<span class="sig-name descname"><span class="pre">PNG_LOC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'png_loc'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.PNG_LOC" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.RA">
+<span class="sig-name descname"><span class="pre">RA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ra'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.RA" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.REDSHIFT">
+<span class="sig-name descname"><span class="pre">REDSHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'redshift'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.REDSHIFT" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SERSIC_NMGY_R">
+<span class="sig-name descname"><span class="pre">SERSIC_NMGY_R</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'sersic_nmgy_r'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SERSIC_NMGY_R" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT">
+<span class="sig-name descname"><span class="pre">SMOOTH_OR_FEATURED_ARTIFACT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'smooth-or-featured_artifact'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT_DEBIASED">
+<span class="sig-name descname"><span class="pre">SMOOTH_OR_FEATURED_ARTIFACT_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'smooth-or-featured_artifact_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT_FRACTION">
+<span class="sig-name descname"><span class="pre">SMOOTH_OR_FEATURED_ARTIFACT_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'smooth-or-featured_artifact_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK">
+<span class="sig-name descname"><span class="pre">SMOOTH_OR_FEATURED_FEATURED_OR_DISK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'smooth-or-featured_featured-or-disk'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK_DEBIASED">
+<span class="sig-name descname"><span class="pre">SMOOTH_OR_FEATURED_FEATURED_OR_DISK_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'smooth-or-featured_featured-or-disk_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK_FRACTION">
+<span class="sig-name descname"><span class="pre">SMOOTH_OR_FEATURED_FEATURED_OR_DISK_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'smooth-or-featured_featured-or-disk_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH">
+<span class="sig-name descname"><span class="pre">SMOOTH_OR_FEATURED_SMOOTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'smooth-or-featured_smooth'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH_DEBIASED">
+<span class="sig-name descname"><span class="pre">SMOOTH_OR_FEATURED_SMOOTH_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'smooth-or-featured_smooth_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH_FRACTION">
+<span class="sig-name descname"><span class="pre">SMOOTH_OR_FEATURED_SMOOTH_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'smooth-or-featured_smooth_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_TOTAL_VOTES">
+<span class="sig-name descname"><span class="pre">SMOOTH_OR_FEATURED_TOTAL_VOTES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'smooth-or-featured_total-votes'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_TOTAL_VOTES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_1'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1_DEBIASED">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_1_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_1_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1_FRACTION">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_1_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_1_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_2'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2_DEBIASED">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_2_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_2_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2_FRACTION">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_2_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_2_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_3</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_3'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3_DEBIASED">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_3_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_3_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3_FRACTION">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_3_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_3_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_4</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_4'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4_DEBIASED">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_4_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_4_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4_FRACTION">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_4_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_4_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_CANT_TELL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_cant-tell'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL_DEBIASED">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_CANT_TELL_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_cant-tell_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL_FRACTION">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_CANT_TELL_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_cant-tell_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_MORE_THAN_4</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_more-than-4'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4_DEBIASED">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_MORE_THAN_4_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_more-than-4_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4_FRACTION">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_MORE_THAN_4_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_more-than-4_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_TOTAL_VOTES">
+<span class="sig-name descname"><span class="pre">SPIRAL_ARM_COUNT_TOTAL_VOTES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-arm-count_total-votes'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_TOTAL_VOTES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE">
+<span class="sig-name descname"><span class="pre">SPIRAL_WINDING_LOOSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-winding_loose'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE_DEBIASED">
+<span class="sig-name descname"><span class="pre">SPIRAL_WINDING_LOOSE_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-winding_loose_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE_FRACTION">
+<span class="sig-name descname"><span class="pre">SPIRAL_WINDING_LOOSE_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-winding_loose_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM">
+<span class="sig-name descname"><span class="pre">SPIRAL_WINDING_MEDIUM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-winding_medium'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM_DEBIASED">
+<span class="sig-name descname"><span class="pre">SPIRAL_WINDING_MEDIUM_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-winding_medium_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM_FRACTION">
+<span class="sig-name descname"><span class="pre">SPIRAL_WINDING_MEDIUM_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-winding_medium_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT">
+<span class="sig-name descname"><span class="pre">SPIRAL_WINDING_TIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-winding_tight'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT_DEBIASED">
+<span class="sig-name descname"><span class="pre">SPIRAL_WINDING_TIGHT_DEBIASED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-winding_tight_debiased'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT_DEBIASED" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT_FRACTION">
+<span class="sig-name descname"><span class="pre">SPIRAL_WINDING_TIGHT_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-winding_tight_fraction'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT_FRACTION" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TOTAL_VOTES">
+<span class="sig-name descname"><span class="pre">SPIRAL_WINDING_TOTAL_VOTES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'spiral-winding_total-votes'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TOTAL_VOTES" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.UPLOAD_GROUP">
+<span class="sig-name descname"><span class="pre">UPLOAD_GROUP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'upload_group'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.UPLOAD_GROUP" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.WRONG_SIZE_STATISTIC">
+<span class="sig-name descname"><span class="pre">WRONG_SIZE_STATISTIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'wrong_size_statistic'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.WRONG_SIZE_STATISTIC" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mergernet.data.schemas.GZDecals5.WRONG_SIZE_WARNING">
+<span class="sig-name descname"><span class="pre">WRONG_SIZE_WARNING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'wrong_size_warning'</span></em><a class="headerlink" href="#mergernet.data.schemas.GZDecals5.WRONG_SIZE_WARNING" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="mergernet.data.trilogy.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">mergernet.data.trilogy</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="mergernet.data.schemas.GZ1.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">GZ1</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Natanael M. Cardoso
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">GZDecals5</a><ul>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5"><code class="docutils literal notranslate"><span class="pre">GZDecals5</span></code></a><ul>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.ACTIVE_LEARNING_ON"><code class="docutils literal notranslate"><span class="pre">GZDecals5.ACTIVE_LEARNING_ON</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_NO"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BAR_NO</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_NO_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BAR_NO_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_NO_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BAR_NO_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_STRONG"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BAR_STRONG</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_STRONG_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BAR_STRONG_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_STRONG_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BAR_STRONG_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_TOTAL_VOTES"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BAR_TOTAL_VOTES</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_WEAK"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BAR_WEAK</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_WEAK_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BAR_WEAK_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BAR_WEAK_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BAR_WEAK_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_DOMINANT</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_DOMINANT_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_DOMINANT_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_DOMINANT_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_LARGE</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_LARGE_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_LARGE_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_LARGE_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_MODERATE</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_MODERATE_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_MODERATE_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_MODERATE_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_NONE</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_NONE_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_NONE_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_NONE_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_SMALL</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_SMALL_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_SMALL_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_SMALL_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.BULGE_SIZE_TOTAL_VOTES"><code class="docutils literal notranslate"><span class="pre">GZDecals5.BULGE_SIZE_TOTAL_VOTES</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DEC"><code class="docutils literal notranslate"><span class="pre">GZDecals5.DEC</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO"><code class="docutils literal notranslate"><span class="pre">GZDecals5.DISK_EDGE_ON_NO</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.DISK_EDGE_ON_NO_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_NO_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.DISK_EDGE_ON_NO_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_TOTAL_VOTES"><code class="docutils literal notranslate"><span class="pre">GZDecals5.DISK_EDGE_ON_TOTAL_VOTES</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES"><code class="docutils literal notranslate"><span class="pre">GZDecals5.DISK_EDGE_ON_YES</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.DISK_EDGE_ON_YES_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.DISK_EDGE_ON_YES_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.DISK_EDGE_ON_YES_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY"><code class="docutils literal notranslate"><span class="pre">GZDecals5.EDGE_ON_BULGE_BOXY</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.EDGE_ON_BULGE_BOXY_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_BOXY_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.EDGE_ON_BULGE_BOXY_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE"><code class="docutils literal notranslate"><span class="pre">GZDecals5.EDGE_ON_BULGE_NONE</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.EDGE_ON_BULGE_NONE_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_NONE_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.EDGE_ON_BULGE_NONE_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.EDGE_ON_BULGE_ROUNDED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.EDGE_ON_BULGE_ROUNDED_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_ROUNDED_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.EDGE_ON_BULGE_ROUNDED_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.EDGE_ON_BULGE_TOTAL_VOTES"><code class="docutils literal notranslate"><span class="pre">GZDecals5.EDGE_ON_BULGE_TOTAL_VOTES</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.ELPETRO_ABSMAG_R"><code class="docutils literal notranslate"><span class="pre">GZDecals5.ELPETRO_ABSMAG_R</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HAS_SPIRAL_ARMS_NO</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HAS_SPIRAL_ARMS_NO_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_NO_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HAS_SPIRAL_ARMS_NO_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_TOTAL_VOTES"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HAS_SPIRAL_ARMS_TOTAL_VOTES</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HAS_SPIRAL_ARMS_YES</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HAS_SPIRAL_ARMS_YES_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HAS_SPIRAL_ARMS_YES_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HAS_SPIRAL_ARMS_YES_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HOW_ROUNDED_CIGAR_SHAPED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HOW_ROUNDED_CIGAR_SHAPED_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_CIGAR_SHAPED_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HOW_ROUNDED_CIGAR_SHAPED_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HOW_ROUNDED_IN_BETWEEN</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HOW_ROUNDED_IN_BETWEEN_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_IN_BETWEEN_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HOW_ROUNDED_IN_BETWEEN_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HOW_ROUNDED_ROUND</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HOW_ROUNDED_ROUND_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_ROUND_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HOW_ROUNDED_ROUND_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.HOW_ROUNDED_TOTAL_VOTES"><code class="docutils literal notranslate"><span class="pre">GZDecals5.HOW_ROUNDED_TOTAL_VOTES</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.IAUNAME"><code class="docutils literal notranslate"><span class="pre">GZDecals5.IAUNAME</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.IN_GZD_AB"><code class="docutils literal notranslate"><span class="pre">GZDecals5.IN_GZD_AB</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MAG_R"><code class="docutils literal notranslate"><span class="pre">GZDecals5.MAG_R</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE"><code class="docutils literal notranslate"><span class="pre">GZDecals5.MERGING_MAJOR_DISTURBANCE</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.MERGING_MAJOR_DISTURBANCE_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MAJOR_DISTURBANCE_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.MERGING_MAJOR_DISTURBANCE_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MERGER"><code class="docutils literal notranslate"><span class="pre">GZDecals5.MERGING_MERGER</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MERGER_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.MERGING_MERGER_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MERGER_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.MERGING_MERGER_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE"><code class="docutils literal notranslate"><span class="pre">GZDecals5.MERGING_MINOR_DISTURBANCE</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.MERGING_MINOR_DISTURBANCE_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_MINOR_DISTURBANCE_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.MERGING_MINOR_DISTURBANCE_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_NONE"><code class="docutils literal notranslate"><span class="pre">GZDecals5.MERGING_NONE</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_NONE_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.MERGING_NONE_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_NONE_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.MERGING_NONE_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.MERGING_TOTAL_VOTES"><code class="docutils literal notranslate"><span class="pre">GZDecals5.MERGING_TOTAL_VOTES</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.PATH"><code class="docutils literal notranslate"><span class="pre">GZDecals5.PATH</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.PETRO_TH50"><code class="docutils literal notranslate"><span class="pre">GZDecals5.PETRO_TH50</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.PETRO_TH90"><code class="docutils literal notranslate"><span class="pre">GZDecals5.PETRO_TH90</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.PETRO_THETA"><code class="docutils literal notranslate"><span class="pre">GZDecals5.PETRO_THETA</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.PNG_LOC"><code class="docutils literal notranslate"><span class="pre">GZDecals5.PNG_LOC</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.RA"><code class="docutils literal notranslate"><span class="pre">GZDecals5.RA</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.REDSHIFT"><code class="docutils literal notranslate"><span class="pre">GZDecals5.REDSHIFT</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SERSIC_NMGY_R"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SERSIC_NMGY_R</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SMOOTH_OR_FEATURED_ARTIFACT_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SMOOTH_OR_FEATURED_FEATURED_OR_DISK_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SMOOTH_OR_FEATURED_SMOOTH</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SMOOTH_OR_FEATURED_SMOOTH_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_SMOOTH_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SMOOTH_OR_FEATURED_SMOOTH_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SMOOTH_OR_FEATURED_TOTAL_VOTES"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SMOOTH_OR_FEATURED_TOTAL_VOTES</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_1</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_1_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_1_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_1_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_2</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_2_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_2_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_2_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_3</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_3_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_3_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_3_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_4</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_4_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_4_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_4_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_CANT_TELL_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_MORE_THAN_4_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_ARM_COUNT_TOTAL_VOTES"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_ARM_COUNT_TOTAL_VOTES</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_WINDING_LOOSE</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_WINDING_LOOSE_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_LOOSE_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_WINDING_LOOSE_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_WINDING_MEDIUM</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_WINDING_MEDIUM_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_MEDIUM_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_WINDING_MEDIUM_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_WINDING_TIGHT</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT_DEBIASED"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_WINDING_TIGHT_DEBIASED</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TIGHT_FRACTION"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_WINDING_TIGHT_FRACTION</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.SPIRAL_WINDING_TOTAL_VOTES"><code class="docutils literal notranslate"><span class="pre">GZDecals5.SPIRAL_WINDING_TOTAL_VOTES</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.UPLOAD_GROUP"><code class="docutils literal notranslate"><span class="pre">GZDecals5.UPLOAD_GROUP</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.WRONG_SIZE_STATISTIC"><code class="docutils literal notranslate"><span class="pre">GZDecals5.WRONG_SIZE_STATISTIC</span></code></a></li>
+<li><a class="reference internal" href="#mergernet.data.schemas.GZDecals5.WRONG_SIZE_WARNING"><code class="docutils literal notranslate"><span class="pre">GZDecals5.WRONG_SIZE_WARNING</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=e43216b9"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>
