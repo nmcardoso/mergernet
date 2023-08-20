@@ -9,37 +9,36 @@ from mergernet.services.legacy import LegacyService
 class Job(Experiment):
   def __init__(self):
     super().__init__()
-    self.exp_id = 5
+    self.exp_id = 21
     self.log_wandb = False
     self.restart = False
 
 
   def call(self):
-    Experiment.download_file_gd('decals_pca10.csv', exp_id=3)
-
-    df = pd.read_csv(Experiment.local_exp_path / 'decals_pca10.csv')
+    df = pd.read_parquet(DATA_ROOT / 'ls10s_blind.parquet')[44_000:]
 
     paths = iauname_path(
       ra=df.ra.values,
       dec=df.dec.values,
-      prefix=DATA_ROOT / 'images' / 'decals_0.364_fits_fz',
+      prefix=DATA_ROOT / 'images' / 'ls10s_blind_fits_fz',
       suffix='.fits.fz'
     )
 
     ls = LegacyService(
       fmt='fits',
-      width=300,
-      height=300,
-      pixscale=0.364,
+      width=224,
+      height=224,
+      pixscale=0.4,
       bands='grz',
       workers=7,
       compress_fits=True,
     )
 
     ls.batch_cutout(
-      df.ra.values,
-      df.dec.values,
-      paths
+      ra=df.ra.values,
+      dec=df.dec.values,
+      save_path=paths,
+      mag_r=df.mag_r.values
     )
 
 

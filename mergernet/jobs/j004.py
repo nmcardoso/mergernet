@@ -2,7 +2,7 @@ import pandas as pd
 from tqdm import tqdm
 
 from mergernet.core.experiment import Experiment
-from mergernet.core.utils import iauname, iauname_relative_path
+from mergernet.core.utils import iauname, iauname_path
 from mergernet.estimators.similarity import SimilarityEstimator
 from mergernet.services.legacy import LegacyService
 
@@ -36,7 +36,7 @@ class Job(Experiment):
 
       n = neighbours.sort_values(by='knn_distance', axis=0, ascending=True)[:40]
 
-      paths = iauname_relative_path(
+      paths = iauname_path(
         iauname(n.ra.values, n.dec.values),
         Experiment.local_exp_path / 'img',
         '.jpg'
@@ -45,7 +45,7 @@ class Job(Experiment):
       ls.cutout(
         query_gal.ra,
         query_gal.dec,
-        iauname_relative_path(
+        iauname_path(
           iauname(query_gal.ra, query_gal.dec),
           Experiment.local_exp_path / 'img',
           '.jpg'

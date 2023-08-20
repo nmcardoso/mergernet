@@ -1,4 +1,5 @@
 from itertools import compress
+from time import sleep
 
 import pandas as pd
 
@@ -13,20 +14,18 @@ from mergernet.services.legacy import LegacyService
 class Job(Experiment):
   def __init__(self):
     super().__init__()
-    self.exp_id = 7
+    self.exp_id = 22
     self.log_wandb = False
     self.restart = False
 
 
   def call(self):
-    Experiment.download_file_gd('decals_pca10.csv', exp_id=3)
+    df = pd.read_parquet(DATA_ROOT / 'ls10s_blind.parquet')[30_000:]
 
-    df = pd.read_csv(Experiment.local_exp_path / 'decals_pca10.csv')[700_000:]
+    png_path = DATA_ROOT / 'images' / 'ls10s_blind_png'
+    fits_path = DATA_ROOT / 'images' / 'ls10s_blind_fits_fz'
 
-    png_path = DATA_ROOT / 'images' / 'decals_0.364_png'
-    fits_path = DATA_ROOT / 'images' / 'decals_0.364_fits_fz'
-
-    iaunames = iauname(ra=df.ra.values, dec=df.dec.values)
+    iaunames = df.iauname.values
 
     paths = iauname_path(
       iaunames=iaunames,
@@ -39,10 +38,6 @@ class Job(Experiment):
       prefix=png_path,
       suffix='.png'
     )
-
-    mask = [not p.exists() for p in save_paths]
-    paths = list(compress(paths, mask))
-    save_paths = list(compress(save_paths, mask))
 
     rgb_transform = LegacyRGB(
       bands='grz',
@@ -58,20 +53,19 @@ class Job(Experiment):
       rgb_output=True,
     )
 
-    avg_transform = ChannelAverage(return_int=True, normalize=True)
+    while True:
+      mask = [not p.exists() for p in save_paths]
+      paths = list(compress(paths, mask))
+      save_paths = list(compress(save_paths, mask))
 
-    crop_transform = Crop(224)
+      img_transform = TensorToImage(save_paths=save_paths)
 
-    shards_transform = TensorToShards(
-      save_path=DATA_ROOT / 'images' / 'shards_test',
-      examples_per_shard=20
-    )
+      pipe = ImagePipeline([rgb_transform, img_transform])
 
-    img_transform = TensorToImage(save_paths=save_paths)
+      errors = pipe.batch_transform(images=paths, silent=True)
 
-    pipe = ImagePipeline([crop_transform, rgb_transform, img_transform])
-
-    pipe.batch_transform(images=paths)
+      if len(errors) > 0: sleep(60)
+      else: break
 
 
 

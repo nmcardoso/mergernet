@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 from mergernet.core.constants import DATA_ROOT
 from mergernet.core.experiment import Experiment
-from mergernet.core.utils import compress_fits, iauname, iauname_relative_path
+from mergernet.core.utils import compress_fits, iauname, iauname_path
 from mergernet.services.utils import parallel_function_executor
 
 
@@ -30,13 +30,13 @@ class Job(Experiment):
 
     iaunames = iauname(ra=df.ra.values, dec=df.dec.values)
 
-    descompressed_paths = iauname_relative_path(
+    descompressed_paths = iauname_path(
       iaunames=iaunames,
       prefix=DATA_ROOT / 'images' / 'decals_0.364_fits',
       suffix='.fits'
     )
 
-    compressed_paths = iauname_relative_path(
+    compressed_paths = iauname_path(
       iaunames=iaunames,
       prefix=DATA_ROOT / 'images' / 'decals_0.364_fits_fz',
       suffix='.fits.fz'

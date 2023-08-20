@@ -14,11 +14,11 @@ class Job(Experiment):
 
 
   def call(self):
-    Experiment.download_file_gd('dr5_8_b0_pca10_and_safe_ids.parquet', shared=True)
-    Experiment.download_file_gd('dr5_dr8_catalog_with_radius.parquet', shared=True)
+    self.download_file_gd('dr5_8_b0_pca10_and_safe_ids.parquet', shared=True)
+    self.download_file_gd('dr5_dr8_catalog_with_radius.parquet', shared=True)
 
-    df_pca = pd.read_parquet(Experiment.local_exp_path / 'dr5_8_b0_pca10_and_safe_ids.parquet')
-    df_meta = pd.read_parquet(Experiment.local_exp_path / 'dr5_dr8_catalog_with_radius.parquet')
+    df_pca = pd.read_parquet(self.local_exp_path / 'dr5_8_b0_pca10_and_safe_ids.parquet')
+    df_meta = pd.read_parquet(self.local_exp_path / 'dr5_dr8_catalog_with_radius.parquet')
 
     df = pd.merge(
       df_meta[['ra', 'dec', 'galaxy_id']],
@@ -29,7 +29,7 @@ class Job(Experiment):
 
     df['iauname'] = iauname(df['ra'].values, df['dec'].values)
 
-    Experiment.upload_file_gd('decals_pca10.csv', df)
+    self.upload_file_gd('decals_pca10.csv', df)
 
 
 if __name__ == '__main__':

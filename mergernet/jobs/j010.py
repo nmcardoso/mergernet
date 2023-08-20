@@ -14,12 +14,13 @@ class Job(Experiment):
 
   def call(self):
     names = [f'decals_cnn_representations_part{i}.parquet' for i in range(13)]
+    paths = [self.local_exp_path / name for name in names]
 
-    for name in names:
-      if not (self.local_exp_path / name).exists():
+    for name, path in zip(names, paths):
+      if not path.exists():
         self.download_file_gd(name, 9)
 
-    dfs = [pd.read_parquet(self.local_exp_path / name) for name in names]
+    dfs = [pd.read_parquet(path) for path in paths]
 
     df = pd.concat(dfs)
 
@@ -37,26 +38,34 @@ class Job(Experiment):
     pca_df = model.pca(features, 10, include_iauname=False)
     pca_df.insert(0, 'iauname', df['iauname'].values)
     self.upload_file_gd('decals_cnn_pca_10.parquet', pca_df)
+    del pca_df
 
     pca_df = model.pca(features, 20, include_iauname=False)
     pca_df.insert(0, 'iauname', df['iauname'].values)
     self.upload_file_gd('decals_cnn_pca_20.parquet', pca_df)
+    del pca_df
 
     pca_df = model.pca(features, 30, include_iauname=False)
     pca_df.insert(0, 'iauname', df['iauname'].values)
     self.upload_file_gd('decals_cnn_pca_30.parquet', pca_df)
+    del pca_df
 
     pca_df = model.pca(features, 40, include_iauname=False)
     pca_df.insert(0, 'iauname', df['iauname'].values)
     self.upload_file_gd('decals_cnn_pca_40.parquet', pca_df)
+    del pca_df
 
     pca_df = model.pca(features, 50, include_iauname=False)
     pca_df.insert(0, 'iauname', df['iauname'].values)
     self.upload_file_gd('decals_cnn_pca_50.parquet', pca_df)
+    del pca_df
 
     pca_df = model.pca(features, 100, include_iauname=False)
     pca_df.insert(0, 'iauname', df['iauname'].values)
     self.upload_file_gd('decals_cnn_pca_100.parquet', pca_df)
+    del pca_df
+
+    self.delete(paths)
 
 
 if __name__ == '__main__':

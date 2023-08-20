@@ -3,7 +3,7 @@ import pandas as pd
 
 from mergernet.core.constants import DATA_ROOT
 from mergernet.core.experiment import Experiment
-from mergernet.core.utils import compress_files, iauname, iauname_relative_path
+from mergernet.core.utils import compress_files, iauname, iauname_path
 from mergernet.services.legacy import LegacyService
 
 
