@@ -580,29 +580,32 @@
   <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">History</span><span class="p">]:</span>
     <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">clear_session</span><span class="p">()</span>
 
-    <span class="n">ds_train</span><span class="p">,</span> <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">ds_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span>
-      <span class="n">ds_train</span><span class="p">,</span>
-      <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;batch_size&#39;</span><span class="p">),</span>
-      <span class="n">buffer_size</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>
-      <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;train&#39;</span>
-    <span class="p">)</span>
-    <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span>
-      <span class="n">ds_test</span><span class="p">,</span>
-      <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;batch_size&#39;</span><span class="p">),</span>
-      <span class="n">buffer_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-      <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;train&#39;</span>
-    <span class="p">)</span>
-
-    <span class="n">class_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">compute_class_weight</span><span class="p">()</span>
-
-    <span class="n">wandb_metrics</span> <span class="o">=</span> <span class="n">WandbMetricsLogger</span><span class="p">()</span>
-    <span class="n">wandb_graphics</span> <span class="o">=</span> <span class="n">WandbGraphicsCallback</span><span class="p">(</span>
-      <span class="n">validation_data</span><span class="o">=</span><span class="n">ds_test</span><span class="p">,</span>
-      <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">labels</span>
-    <span class="p">)</span>
-
     <span class="k">with</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">Tracker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">to_values_dict</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="n">run_name</span><span class="p">,</span> <span class="n">job_type</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">):</span>
+      <span class="c1"># dataset preparation</span>
+      <span class="n">ds_train</span><span class="p">,</span> <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+      <span class="n">ds_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span>
+        <span class="n">ds_train</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;batch_size&#39;</span><span class="p">),</span>
+        <span class="n">buffer_size</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>
+        <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;train&#39;</span>
+      <span class="p">)</span>
+      <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span>
+        <span class="n">ds_test</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;batch_size&#39;</span><span class="p">),</span>
+        <span class="n">buffer_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;train&#39;</span>
+      <span class="p">)</span>
+
+      <span class="n">class_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">compute_class_weight</span><span class="p">()</span>
+
+      <span class="c1"># w&amp;b callbacks</span>
+      <span class="n">wandb_metrics</span> <span class="o">=</span> <span class="n">WandbMetricsLogger</span><span class="p">()</span>
+      <span class="n">wandb_graphics</span> <span class="o">=</span> <span class="n">WandbGraphicsCallback</span><span class="p">(</span>
+        <span class="n">validation_data</span><span class="o">=</span><span class="n">ds_test</span><span class="p">,</span>
+        <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">labels</span>
+      <span class="p">)</span>
+
+      <span class="c1"># t1 train</span>
       <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;t1_epochs&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">freeze_conv</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -642,6 +645,7 @@
       <span class="k">else</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">freeze_conv</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
+      <span class="c1"># main train</span>
       <span class="n">lr_scheduler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_scheduler</span><span class="p">(</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lr_decay&#39;</span><span class="p">),</span>
         <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;opt_lr&#39;</span><span class="p">)</span>
