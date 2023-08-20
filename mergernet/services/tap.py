@@ -7,6 +7,7 @@ from urllib.parse import quote, urlencode
 import pandas as pd
 import requests
 
+from mergernet.core.utils import save_table
 from mergernet.services.utils import batch_download_file, download_file
 
 
@@ -64,7 +65,7 @@ class TapService:
       ])
       save_paths = Path(save_paths)
       save_paths.parent.mkdir(parents=True, exist_ok=True)
-      combined_csv.to_csv(save_paths, index=False)
+      save_table(combined_csv, save_paths, default=False)
 
 
 

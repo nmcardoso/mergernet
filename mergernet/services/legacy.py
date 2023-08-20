@@ -17,6 +17,12 @@ LEGACY_FITS_URL = 'https://www.legacysurvey.org/viewer/fits-cutout'
 LEGACY_FITS_URL_DEV = 'https://www.legacysurvey.org/viewer-dev/fits-cutout'
 
 
+# mag_r | pixscale
+# 14-15 | 0.45
+# 15-16 | 0.35
+# 16-17 | 0.3
+# 17-18 | 0.2
+
 
 class LegacyService(ImagingService):
   def __init__(
@@ -26,7 +32,7 @@ class LegacyService(ImagingService):
     height: float = 256,
     pixscale: float = 0.27,
     bands: str = 'grz',
-    layer: str = 'ls-dr9',
+    layer: str = 'ls-dr10',
     use_dev: bool = False,
     fmt: str = 'jpg',
     compress_fits: bool = False,
@@ -83,6 +89,7 @@ class LegacyService(ImagingService):
     dec: float,
     save_path: Path = None,
     base_path: Union[str, Path] = '',
+    mag_r: float = None,
   ) -> None:
     """
     Downloads a single Legacy Survey object RGB stamp defined by RA and DEC.
@@ -111,12 +118,14 @@ class LegacyService(ImagingService):
         suffix=f'.{self.image_format}'
       )
 
+    pixscale = self.get_pixscale(mag_r) if mag_r is not None else self.pixscale
+
     image_url = append_query_params(url, {
       'ra': ra,
       'dec': dec,
       'width': self.width,
       'height': self.height,
-      'pixscale': self.pixscale,
+      'pixscale': pixscale,
       'bands': self.bands,
       'layer': self.layer
     })
@@ -148,6 +157,7 @@ class LegacyService(ImagingService):
     dec: List[float],
     save_path: List[Path] = None,
     base_path: Union[str, Path] = '',
+    mag_r: List[float] = None,
   ) -> Tuple[List[Path], List[Path]]:
     """
     Downloads a list of objects defined by RA and DEC coordinates.
@@ -174,14 +184,25 @@ class LegacyService(ImagingService):
         suffix=f'.{self.image_format}'
       )
 
-    params = [
-      {
-        'ra': _ra,
-        'dec': _dec,
-        'save_path': _save_path,
-      }
-      for _ra, _dec, _save_path in zip(ra, dec, save_path)
-    ]
+    if mag_r is None:
+      params = [
+        {
+          'ra': _ra,
+          'dec': _dec,
+          'save_path': _save_path,
+        }
+        for _ra, _dec, _save_path in zip(ra, dec, save_path)
+      ]
+    else:
+      params = [
+        {
+          'ra': _ra,
+          'dec': _dec,
+          'save_path': _save_path,
+          'mag_r': _mag_r,
+        }
+        for _ra, _dec, _save_path, _mag_r in zip(ra, dec, save_path, mag_r)
+      ]
 
     parallel_function_executor(
       self.cutout,
@@ -193,6 +214,16 @@ class LegacyService(ImagingService):
     success = [p for p in save_path if p.exists()]
     error = [p for p in save_path if not p.exists()]
     return success, error
+
+
+  def get_pixscale(self, mag_r: Union[float, List[float]]) -> Union[float, List[float]]:
+    if isinstance(mag_r, list):
+      return [self.get_pixscale(m) for m in mag_r]
+
+    if   14 <= mag_r < 15: return 0.45
+    elif 15 <= mag_r < 16: return 0.35
+    elif 16 <= mag_r < 17: return 0.3
+    elif 17 <= mag_r < 18: return 0.2
 
 
 
