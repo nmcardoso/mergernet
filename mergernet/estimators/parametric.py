@@ -117,13 +117,12 @@ class ParametricEstimator(Estimator):
         )
 
         t1_epochs = self.hp.get('tl_epochs', default=10)
-        batch_size = self.hp.get('batch_size')
 
         t = Timming()
         L.info('Start of training loop with frozen CNN')
         h = model.fit(
           ds_train,
-          batch_size=batch_size,
+          batch_size=self.hp.get('batch_size'),
           epochs=t1_epochs,
           validation_data=ds_test,
           class_weight=class_weights,
@@ -155,7 +154,7 @@ class ParametricEstimator(Estimator):
       L.info('Start of main training loop')
       model.fit(
         ds_train,
-        batch_size=batch_size,
+        batch_size=self.hp.get('batch_size'),
         epochs=len(h.history['loss']) + self.hp.get('epochs'),
         validation_data=ds_test,
         class_weight=class_weights,
