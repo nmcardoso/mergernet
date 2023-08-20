@@ -144,6 +144,7 @@ class ParametricEstimator(Estimator):
         lr=self.hp.get('opt_lr')
       )
       lr = lr_scheduler or self.hp.get('opt_lr')
+      L.info(f'Using learning rate: {str(lr_scheduler)}')
       opt = self.get_optimizer(self.hp.get('optimizer'), lr=lr)
 
       self.compile_model(

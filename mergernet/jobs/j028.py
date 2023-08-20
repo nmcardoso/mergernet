@@ -42,7 +42,7 @@ class Job(Experiment):
       # main train setup
       HP.const('epochs', 200),
       HP.const('optimizer', 'adamw'),
-      HP.const('lr_decay', 'cosine_restart'),
+      HP.const('lr_decay', 'cosine_restarts'),
       HP.const('lr_decay_steps', 40),
       HP.const('lr_decay_t', 1.5),
       HP.const('lr_decay_m', 1.0),
