@@ -72,29 +72,32 @@ class ParametricEstimator(Estimator):
   ) -> Tuple[tf.keras.Model, tf.keras.callbacks.History]:
     tf.keras.backend.clear_session()
 
-    ds_train, ds_test = self.dataset.get_fold(0)
-    ds_train = self.dataset.prepare_data(
-      ds_train,
-      batch_size=self.hp.get('batch_size'),
-      buffer_size=5000,
-      kind='train'
-    )
-    ds_test = self.dataset.prepare_data(
-      ds_test,
-      batch_size=self.hp.get('batch_size'),
-      buffer_size=1000,
-      kind='train'
-    )
-
-    class_weights = self.dataset.compute_class_weight()
-
-    wandb_metrics = WandbMetricsLogger()
-    wandb_graphics = WandbGraphicsCallback(
-      validation_data=ds_test,
-      labels=self.dataset.config.labels
-    )
-
     with Experiment.Tracker(self.hp.to_values_dict(), name=run_name, job_type='train'):
+      # dataset preparation
+      ds_train, ds_test = self.dataset.get_fold(0)
+      ds_train = self.dataset.prepare_data(
+        ds_train,
+        batch_size=self.hp.get('batch_size'),
+        buffer_size=5000,
+        kind='train'
+      )
+      ds_test = self.dataset.prepare_data(
+        ds_test,
+        batch_size=self.hp.get('batch_size'),
+        buffer_size=1000,
+        kind='train'
+      )
+
+      class_weights = self.dataset.compute_class_weight()
+
+      # w&b callbacks
+      wandb_metrics = WandbMetricsLogger()
+      wandb_graphics = WandbGraphicsCallback(
+        validation_data=ds_test,
+        labels=self.dataset.config.labels
+      )
+
+      # t1 train
       if self.hp.get('t1_epochs') > 0:
         model = self.build(freeze_conv=True)
 
@@ -134,6 +137,7 @@ class ParametricEstimator(Estimator):
       else:
         model = self.build(freeze_conv=False)
 
+      # main train
       lr_scheduler = self.get_scheduler(
         self.hp.get('lr_decay'),
         lr=self.hp.get('opt_lr')
