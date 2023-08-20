@@ -88,55 +88,51 @@ class ParametricEstimator(Estimator):
 
     class_weights = self.dataset.compute_class_weight()
 
-    model = self.build(freeze_conv=True)
-
-    opt = self.get_optimizer(self.hp.get('t1_opt'), lr=self.hp.get('t1_lr'))
-    self.compile_model(
-      model,
-      optimizer=opt,
-      label_smoothing=self.hp.get('label_smoothing', default=0.0),
+    wandb_metrics = WandbMetricsLogger()
+    wandb_graphics = WandbGraphicsCallback(
+      validation_data=ds_test,
+      labels=self.dataset.config.labels
     )
 
     with Experiment.Tracker(self.hp.to_values_dict(), name=run_name, job_type='train'):
-      early_stop_cb = tf.keras.callbacks.EarlyStopping(
-        monitor='val_loss',
-        min_delta=0,
-        patience=2,
-        mode='min', # 'min' or 'max'
-        restore_best_weights=True
-      )
+      if self.hp.get('t1_epochs') > 0:
+        model = self.build(freeze_conv=True)
 
-      # wandb_cb = MyWandbCallback(
-      #   validation_data=ds_test,
-      #   labels=self.dataset.config.labels,
-      #   monitor='val_loss',
-      #   mode='min',
-      # )
+        opt = self.get_optimizer(self.hp.get('t1_opt'), lr=self.hp.get('t1_lr'))
+        self.compile_model(
+          model,
+          optimizer=opt,
+          label_smoothing=self.hp.get('label_smoothing', default=0.0),
+        )
 
-      wandb_metrics = WandbMetricsLogger()
-      wandb_graphics = WandbGraphicsCallback(
-        validation_data=ds_test,
-        labels=self.dataset.config.labels
-      )
+        early_stop_cb = tf.keras.callbacks.EarlyStopping(
+          monitor='val_loss',
+          min_delta=0,
+          patience=2,
+          mode='min', # 'min' or 'max'
+          restore_best_weights=True
+        )
 
-      t1_epochs = self.hp.get('tl_epochs', default=10)
-      batch_size = self.hp.get('batch_size')
+        t1_epochs = self.hp.get('tl_epochs', default=10)
+        batch_size = self.hp.get('batch_size')
 
-      t = Timming()
-      L.info('Start of training loop with frozen CNN')
-      h = model.fit(
-        ds_train,
-        batch_size=batch_size,
-        epochs=t1_epochs,
-        validation_data=ds_test,
-        class_weight=class_weights,
-        callbacks=[early_stop_cb, wandb_metrics, wandb_graphics]
-      )
-      L.info(f'End of training loop, duration: {t.end()}')
-      L.info(f'History keys: {", ".join(h.history.keys())}')
-      L.info(f'History length: {len(h.history["loss"])}')
+        t = Timming()
+        L.info('Start of training loop with frozen CNN')
+        h = model.fit(
+          ds_train,
+          batch_size=batch_size,
+          epochs=t1_epochs,
+          validation_data=ds_test,
+          class_weight=class_weights,
+          callbacks=[early_stop_cb, wandb_metrics, wandb_graphics]
+        )
+        L.info(f'End of training loop, duration: {t.end()}')
+        L.info(f'History keys: {", ".join(h.history.keys())}')
+        L.info(f'History length: {len(h.history["loss"])}')
 
-      self.set_trainable(model, 'conv_block', True)
+        self.set_trainable(model, 'conv_block', True)
+      else:
+        model = self.build(freeze_conv=False)
 
       lr_scheduler = self.get_scheduler(
         self.hp.get('lr_decay'),
