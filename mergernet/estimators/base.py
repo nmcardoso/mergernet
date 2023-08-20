@@ -263,9 +263,10 @@ class Estimator(ABC):
       A LearningRateSchedule instance
     """
     if scheduler == 'cosine_restarts':
+      ds, _ = self.dataset.get_fold(0)
       return tf.keras.optimizers.schedules.CosineDecayRestarts(
         initial_learning_rate=lr,
-        first_decay_steps=self.hp.get('lr_decay_steps', default=40),
+        first_decay_steps=len(ds) // self.hp.get('batch_size') // self.hp.get('lr_decay_steps', default=4),
         t_mul=self.hp.get('lr_decay_t', default=2.0),
         m_mul=self.hp.get('lr_decay_m', default=1.0),
         alpha=self.hp.get('lr_decay_alpha', default=0.0),

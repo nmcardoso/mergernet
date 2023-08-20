@@ -36,14 +36,14 @@ class Job(Experiment):
       HP.const('positive_class_id', 1),
       HP.const('negative_class_id', 0),
       # t1 setup
-      HP.const('tl_epochs', 0),
+      HP.const('tl_epochs', 15),
       HP.const('t1_opt', 'adamw'),
-      HP.const('t1_lr', 0),
+      HP.const('t1_lr', 5e-4),
       # main train setup
-      HP.const('epochs', 200),
+      HP.const('epochs', 800),
       HP.const('optimizer', 'adamw'),
       HP.const('lr_decay', 'cosine_restarts'),
-      HP.const('lr_decay_steps', 40),
+      HP.const('lr_decay_steps', 6),
       HP.const('lr_decay_t', 1.5),
       HP.const('lr_decay_m', 1.0),
       HP.const('lr_decay_alpha', 0.1),
