@@ -98,7 +98,7 @@ class ParametricEstimator(Estimator):
       )
 
       # t1 train
-      if self.hp.get('t1_epochs') > 0:
+      if self.hp.get('t1_epochs', default=0) > 0:
         model = self.build(freeze_conv=True)
 
         opt = self.get_optimizer(self.hp.get('t1_opt'), lr=self.hp.get('t1_lr'))
