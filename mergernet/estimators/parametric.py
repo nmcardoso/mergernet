@@ -98,6 +98,7 @@ class ParametricEstimator(Estimator):
       )
 
       # t1 train
+      t1_epochs = 0
       if self.hp.get('t1_epochs', default=0) > 0:
         model = self.build(freeze_conv=True)
 
@@ -133,6 +134,7 @@ class ParametricEstimator(Estimator):
         L.info(f'History length: {len(h.history["loss"])}')
 
         self.set_trainable(model, 'conv_block', True)
+        t1_epochs += len(h.history['loss'])
       else:
         model = self.build(freeze_conv=False)
 
@@ -155,10 +157,10 @@ class ParametricEstimator(Estimator):
       model.fit(
         ds_train,
         batch_size=self.hp.get('batch_size'),
-        epochs=len(h.history['loss']) + self.hp.get('epochs'),
+        epochs=t1_epochs + self.hp.get('epochs'),
         validation_data=ds_test,
         class_weight=class_weights,
-        initial_epoch=len(h.history['loss']),
+        initial_epoch=t1_epochs,
         callbacks=[wandb_metrics, wandb_graphics, *callbacks],
       )
       L.info(f'End of training loop, duration: {t.end()}')
