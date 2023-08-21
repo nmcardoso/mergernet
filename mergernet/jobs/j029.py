@@ -26,7 +26,6 @@ class Job(Experiment):
 
 
   def call(self):
-    Experiment.download_file_gd('model.h5', exp_id=28)
     model = load_model('model.h5', exp_id=28)
     ds = Dataset(Dataset.registry.LS10S_BLIND_PNG)
     p = Predictor(model=model, dataset=ds)
