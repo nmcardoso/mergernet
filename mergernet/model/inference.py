@@ -2,8 +2,10 @@ from typing import Dict, List
 
 import pandas as pd
 import tensorflow as tf
+import wandb
 
 from mergernet.core.experiment import Experiment
+from mergernet.core.utils import load_table
 from mergernet.data.dataset import Dataset
 
 
@@ -31,7 +33,7 @@ class Predictor:
     return test_preds
 
 
-  def upload(self, name: str = None, label_map: Dict = None):
+  def upload(self, name: str = None, labels: Dict = None):
     # get X by dataset type: predictions or train
     if self.dataset.config.label_column is None:
       X = self.dataset.get_X()
@@ -39,10 +41,10 @@ class Predictor:
     else:
       X = self.dataset.get_X_by_fold(0, kind='test')
       name = name or 'test_preds_fold_0.csv'
-      label_map = label_map or self.dataset.config.labels
+      labels = labels or self.dataset.config.labels
 
     # load dataset table
-    df = pd.read_csv(self.dataset.config.table_path)
+    df = load_table(self.dataset.config.table_path)
     x_col_name = self.dataset.config.image_column
 
     print('preds_len:', len(self._preds))
@@ -55,10 +57,23 @@ class Predictor:
     print('df_reindex_len:', len(df))
 
     # append preds columns
-    for label, index in label_map.items():
+    for index, label in enumerate(labels):
       y_hat = [pred[index] for pred in self._preds]
       print('y_hat_len', len(y_hat))
       df[f'prob_{label}'] = y_hat
+
+    # upload stamps to W&B
+    if Experiment.log_wandb:
+      with Experiment.Tracker(name=name, job_type='pred'):
+        sorted_df = df.sort_values('prob_merger', ascending=False)
+        imgs = []
+        for i in range(min(50, len(sorted_df))):
+          path = sorted_df[x_col_name][i]
+          prob = sorted_df['prob_merger'][i]
+          label = f'P(M) = {prob*100:.1f}'
+          img = wandb.Image(path, caption=label)
+          imgs.append(img)
+        wandb.log({'predictions': imgs})
 
     # upload to github
     Experiment.upload_file_gd(name, df)

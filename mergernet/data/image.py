@@ -414,9 +414,11 @@ class TensorToShards(ImageTransform):
   def __init__(
     self,
     save_path: Union[str, Path],
+    filename: str = 'shard',
     examples_per_shard: int = 1024,
   ):
     self.save_path = Path(save_path)
+    self.filename = filename
     self.examples_per_shard = examples_per_shard
     self._writer = None
     self._examples_count = 0
@@ -447,7 +449,7 @@ class TensorToShards(ImageTransform):
       self._examples_count = 0
 
     if self._writer is None:
-      path = self.save_path / f'shard-{self._shard_count:05d}.tfrecords'
+      path = self.save_path / f'{self.filename}-{self._shard_count:05d}.tfrecords'
       self._writer = tf.io.TFRecordWriter(str(path.resolve()))
 
 
@@ -469,13 +471,11 @@ if __name__ == '__main__':
   rgb_path = '/home/natan/repos/mergernet/data/images/J000/J000030.87-011246.8.png'
   output_path = '/home/natan/repos/mergernet/data/images/out.png'
 
-
   fits_img = load_image(fits_path)
   rgb_img = load_image(rgb_path)
 
   print('fits shape', fits_img.shape)
   print('rgb shape', rgb_img.shape)
-
 
   kwargs = {
     'scales': {
@@ -506,6 +506,5 @@ if __name__ == '__main__':
   im.save(output_path)
   # plt.imshow(fits_color)
   # plt.savefig()
-
 
   print('final fits shape', fits_color.shape)

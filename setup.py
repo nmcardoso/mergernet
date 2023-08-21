@@ -22,7 +22,6 @@ setup(
     'Pillow>=7.1.2',
     'astropy>=5.2',
     'tensorflow_addons',
-    'tensorflow_model_analysis',
     'tensorboard',
     'optuna',
     'plotly',

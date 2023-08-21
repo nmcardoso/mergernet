@@ -1,5 +1,6 @@
 import logging
-from typing import List, Tuple
+from pathlib import Path
+from typing import List, Tuple, Union
 
 import tensorflow as tf
 from wandb.keras import WandbMetricsLogger
@@ -69,12 +70,13 @@ class ParametricEstimator(Estimator):
     self,
     run_name: str = 'run-0',
     callbacks: List[tf.keras.callbacks.Callback] = [],
-  ) -> Tuple[tf.keras.Model, tf.keras.callbacks.History]:
+    fold: int = 0,
+  ) -> tf.keras.Model:
     tf.keras.backend.clear_session()
 
     with Experiment.Tracker(self.hp.to_values_dict(), name=run_name, job_type='train'):
       # dataset preparation
-      ds_train, ds_test = self.dataset.get_fold(0)
+      ds_train, ds_test = self.dataset.get_fold(fold)
       ds_train = self.dataset.prepare_data(
         ds_train,
         batch_size=self.hp.get('batch_size'),
@@ -87,6 +89,8 @@ class ParametricEstimator(Estimator):
         buffer_size=1000,
         kind='train'
       )
+      self.ds_train = ds_train
+      self.ds_test = ds_test
 
       class_weights = self.dataset.compute_class_weight()
 
@@ -170,5 +174,16 @@ class ParametricEstimator(Estimator):
     return self._tf_model
 
 
-  def predict(self):
-    pass
+  def cross_validation(
+    self,
+    run_name: str = 'run-0',
+    callbacks: List[tf.keras.callbacks.Callback] = []
+  ):
+    for fold in range(self.dataset.get_n_folds()):
+      model = self.train(run_name=f'{run_name}_fold-{fold}', callbacks=callbacks)
+      preds = model.predict(self.ds_test)
+
+      # for label, index in label_map.items():
+      # y_hat = [pred[index] for pred in self._preds]
+      # print('y_hat_len', len(y_hat))
+      # df[f'prob_{label}'] = y_hat

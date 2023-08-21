@@ -21,11 +21,14 @@ import tensorflow as tf
 
 from mergernet.core.experiment import Experiment
 from mergernet.core.utils import (execute_posix_command, extract_files,
-                                  iauname, iauname_path, load_image)
+                                  iauname, iauname_path, load_image,
+                                  load_table)
 from mergernet.data.dataset_config import (DatasetConfig, DatasetRegistry,
                                            GoogleDriveResource, HTTPResource)
 from mergernet.data.kfold import StratifiedDistributionKFold
-from mergernet.data.preprocessing import load_jpg, load_png, one_hot_factory
+from mergernet.data.preprocessing import (load_jpg, load_jpg_with_label,
+                                          load_png, load_png_with_label,
+                                          one_hot_factory)
 
 L = logging.getLogger(__name__)
 
@@ -269,7 +272,7 @@ class Dataset:
       A tuple containing two datasets, the first is the train dataset and the
       secound is the test dataset
     """
-    df = pd.read_csv(self.config.table_path)
+    df = load_table(self.config.table_path)
 
     df_test = df[df[self.config.fold_column] == fold]
     df_train = df[df[self.config.fold_column] != fold]
@@ -299,6 +302,19 @@ class Dataset:
     return ds_train, ds_test
 
 
+  def get_n_folds(self) -> int:
+    """
+    Get the number of folds in dataset
+
+    Returns
+    -------
+    int
+      the number of folds
+    """
+    df = load_table(self.config.table_path)
+    return df[self.config.fold_column].nunique()
+
+
   def get_X_by_fold(self, fold: int, kind='test') -> np.ndarray:
     """
     Get X by fold
@@ -315,7 +331,7 @@ class Dataset:
     numpy.ndarray
       X values
     """
-    df = pd.read_csv(self.config.table_path)
+    df = load_table(self.config.table_path)
 
     if kind == 'test':
       df = df[df[self.config.fold_column] == fold]
@@ -326,12 +342,12 @@ class Dataset:
 
 
   def get_X(self) -> np.ndarray:
-    df = pd.read_csv(self.config.table_path)
+    df = load_table(self.config.table_path)
     return df[self.config.image_column].to_numpy()
 
 
   def get_table(self) -> pd.DataFrame:
-    return pd.read_csv(self.config.table_path)
+    return load_table(self.config.table_path)
 
 
   def get_images_paths(self, iaunames: List[str]) -> List[Path]:
@@ -348,13 +364,43 @@ class Dataset:
       ]
 
 
-  def get_preds_dataset(self) -> tf.data.Dataset:
+  def get_preds_dataset(
+    self,
+    prepare: bool = True,
+    batch_size: int = 64,
+    buffer_size: int = 1000
+  ) -> tf.data.Dataset:
     iaunames = self.get_X()
     paths = self.get_images_paths(iaunames)
 
     X = np.array([str(path.resolve()) for path in paths])
 
-    return tf.data.Dataset.from_tensor_slices(X)
+    ds = tf.data.Dataset.from_tensor_slices(X)
+
+    if prepare:
+      if self.config.image_extension == 'jpg':
+        ds = ds.map(load_jpg)
+        L.info('Apply: load_jpg')
+      elif self.config.image_extension == 'png':
+        ds = ds.map(load_png)
+        L.info('Apply: load_png')
+
+      example_X = next(iter(ds)).numpy()
+      L.info(f'Dataset length: {len(ds)}')
+      L.info(f'Image shape: {example_X.shape}')
+      L.info(f'Image max value: {example_X.max()}')
+      L.info(f'Image min value: {example_X.min()}')
+      L.info(f'Image datatype: {str(example_X.dtype)}')
+
+      ds = ds.cache()
+      L.info('Apply: cache')
+
+      ds = ds.batch(batch_size)
+      L.info('Apply: batch')
+
+      ds = ds.prefetch(tf.data.AUTOTUNE)
+      L.info('Apply: prefetch')
+    return ds
 
 
   def compute_class_weight(self) -> dict:
@@ -386,10 +432,10 @@ class Dataset:
     kind='train'
   ):
     if self.config.image_extension == 'jpg':
-      ds = ds.map(load_jpg)
+      ds = ds.map(load_jpg_with_label)
       L.info('Apply: load_jpg')
     elif self.config.image_extension == 'png':
-      ds = ds.map(load_png)
+      ds = ds.map(load_png_with_label)
       L.info('Apply: load_png')
 
     example_X, example_y = next(iter(ds))
@@ -411,15 +457,15 @@ class Dataset:
     ds = ds.cache()
     L.info('Apply: cache')
 
-    ds = ds.shuffle(buffer_size)
-    L.info('Apply: shuffle')
+    if kind == 'train':
+      ds = ds.shuffle(buffer_size)
+      L.info('Apply: shuffle')
 
     ds = ds.batch(batch_size)
     L.info('Apply: batch')
 
     ds = ds.prefetch(tf.data.AUTOTUNE)
     L.info('Apply: prefetch')
-
     return ds
 
 

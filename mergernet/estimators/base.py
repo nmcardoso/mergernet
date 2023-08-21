@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Callable, List, Tuple, Union
 
 import tensorflow as tf
-import tensorflow_model_analysis as tfma
 
 from mergernet.core.constants import RANDOM_SEED
 from mergernet.core.experiment import Experiment
@@ -193,14 +192,6 @@ class Estimator(ABC):
       return tf.keras.metrics.FalsePositives(name='fp')
     elif metric == 'fn':
       return tf.keras.metrics.FalseNegatives(name='fn')
-    elif metric == 'tpr':
-      return tfma.metrics.TPR(name='tpr', class_id=self.hp.get('positive_class_id'))
-    elif metric == 'tnr':
-      return tfma.metrics.TNR(name='tnr', class_id=self.hp.get('negative_class_id'))
-    elif metric == 'fpr':
-      return tfma.metrics.FPR(name='fpr', class_id=self.hp.get('positive_class_id'))
-    elif metric == 'fnr':
-      return tfma.metrics.FNR(name='fnr', class_id=self.hp.get('negative_class_id'))
 
 
   def get_optimizer(

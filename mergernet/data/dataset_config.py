@@ -458,6 +458,20 @@ class DatasetRegistry:
   )
   """Conjunto de treino para classificação binária"""
 
+  LS10S_BLIND_PNG = DatasetConfig(
+    name='LS10S_BLIND_PNG',
+    table_url=[GoogleDriveResource('ls10s_blind.parquet')],
+    table_path=Path('ls10s_blind.parquet'),
+    archive_url=[
+      GoogleDriveResource('ls10s_blind_png.tar.xz'),
+    ],
+    archive_path=Path('ls10s_blind_png.tar.xz'),
+    images_path=Path('ls10s_blind_png'),
+    image_extension='png',
+    image_shape=(224, 224, 3),
+    image_nested=True,
+  )
+
 
 _DECALS_0364_1M_DOC = """
   DECALS 1M dataset with colored png images PART {}

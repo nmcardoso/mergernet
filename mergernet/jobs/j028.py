@@ -54,7 +54,7 @@ class Job(Experiment):
     ds = Dataset(config=Dataset.registry.LS10_TRAIN_224_PNG)
 
     model = ParametricEstimator(hp=hps, dataset=ds)
-    model.train(run_name='no_t1')
+    model.train(run_name='with_t1')
 
     Experiment.upload_file_gd('model.h5', model.tf_model)
 
