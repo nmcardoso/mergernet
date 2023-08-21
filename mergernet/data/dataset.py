@@ -375,7 +375,6 @@ class Dataset:
     self,
     prepare: bool = True,
     batch_size: int = 64,
-    buffer_size: int = 1000
   ) -> tf.data.Dataset:
     iaunames = self.get_X()
     paths = self.get_images_paths(iaunames)
@@ -399,8 +398,8 @@ class Dataset:
       L.info(f'Image min value: {example_X.min()}')
       L.info(f'Image datatype: {str(example_X.dtype)}')
 
-      ds = ds.cache()
-      L.info('Apply: cache')
+      # ds = ds.cache()
+      # L.info('Apply: cache')
 
       ds = ds.batch(batch_size)
       L.info('Apply: batch')
