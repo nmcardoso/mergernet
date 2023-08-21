@@ -19,7 +19,7 @@ class Predictor:
     self._preds = None
 
 
-  def predict(self, upload: str = True, name: str = None, labels: Dict = None) -> List:
+  def predict(self, upload: str = True, name: str = None, labels: List[str] = None) -> List:
     with Experiment.Tracker(name=name, job_type='pred'):
       # select ds by dataset type: predictions or train
       if self.dataset.config.label_column is None:
@@ -47,19 +47,19 @@ class Predictor:
         df = load_table(self.dataset.config.table_path)
         x_col_name = self.dataset.config.image_column
 
-        L.info('preds_len:', len(self._preds))
-        L.info('df_len:', len(df))
-        L.info('X_len:', len(X))
+        L.info(f'preds_len: {len(self._preds)}')
+        L.info(f'df_len: {len(df)}')
+        L.info(f'X_len: {len(X)}')
 
         # filter and order the rows of dataset table with predictions
-        df = df.set_index(x_col_name).loc[X].reset_index(inplace=False)
+        # df = df.set_index(x_col_name).loc[X].reset_index(inplace=False)
 
-        L.info('df_reindex_len:', len(df))
+        # L.info(f'df_reindex_len: {len(df)}')
 
         # append preds columns
         for index, label in enumerate(labels):
           y_hat = [pred[index] for pred in self._preds]
-          L.info('y_hat_len', len(y_hat))
+          L.info(f'y_hat_len: {len(y_hat)}')
           df[f'prob_{label}'] = y_hat
 
         # upload stamps to W&B
