@@ -40,7 +40,7 @@ class DatasetConfig:
     positions: List[Tuple[float, float]] = None,
     image_service: ImagingService = None,
     image_transform: ImageTransform = None,
-    image_nested: bool = False,
+    image_nested: bool = True,
   ):
     """
     Dataset Configuration Data Model
