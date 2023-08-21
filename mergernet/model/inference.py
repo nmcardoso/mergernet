@@ -6,7 +6,7 @@ import tensorflow as tf
 import wandb
 
 from mergernet.core.experiment import Experiment
-from mergernet.core.utils import load_table
+from mergernet.core.utils import iauname_path, load_table
 from mergernet.data.dataset import Dataset
 
 L = logging.getLogger(__name__)
@@ -67,7 +67,12 @@ class Predictor:
           sorted_df = df.sort_values('prob_merger', ascending=False)
           imgs = []
           for i in range(min(50, len(sorted_df))):
-            path = sorted_df[x_col_name][i]
+            path = iauname_path(
+              sorted_df[x_col_name][i],
+              prefix=self.dataset.config.images_path,
+              suffix=self.dataset.config.image_extension,
+              flat=not self.dataset.config.image_nested
+            )
             prob = sorted_df['prob_merger'][i]
             label = f'P(M) = {prob*100:.1f}'
             img = wandb.Image(path, caption=label)
