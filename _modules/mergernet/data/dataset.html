@@ -889,7 +889,6 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">prepare</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
-    <span class="n">buffer_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span>
   <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
     <span class="n">iaunames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_X</span><span class="p">()</span>
     <span class="n">paths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_images_paths</span><span class="p">(</span><span class="n">iaunames</span><span class="p">)</span>
@@ -913,8 +912,8 @@
       <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Image min value: </span><span class="si">{</span><span class="n">example_X</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
       <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Image datatype: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">example_X</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-      <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
-      <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Apply: cache&#39;</span><span class="p">)</span>
+      <span class="c1"># ds = ds.cache()</span>
+      <span class="c1"># L.info(&#39;Apply: cache&#39;)</span>
 
       <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
       <span class="n">L</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Apply: batch&#39;</span><span class="p">)</span>
