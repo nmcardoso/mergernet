@@ -470,6 +470,7 @@ class DatasetRegistry:
     image_extension='png',
     image_shape=(224, 224, 3),
     image_nested=True,
+    image_column='iauname',
   )
 
 
