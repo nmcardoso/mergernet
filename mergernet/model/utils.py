@@ -37,7 +37,7 @@ def set_trainable_state(
 def load_model(name: str, exp_id: int) -> tf.keras.Model:
   path = Experiment.download_file_gd(name, exp_id)
   L.info(f'Loading model {str(path)}')
-  return tf.keras.models.load_model(path)
+  return tf.keras.models.load_model(path, compile=False)
 
 
 
