@@ -224,16 +224,23 @@ class Dataset:
     # Download table
     if self.config.table_url:
       for i, table_url in enumerate(self.config.table_url):
-        try:
-          tf.keras.utils.get_file(
-            fname=self.config.table_path.resolve(),
-            origin=table_url,
-            cache_subdir=self.config.table_path.parent.resolve()
-          )
-          break
-        except:
-          if i == len(self.config.table_url) - 1:
-            raise RuntimeError("Can't download table")
+        if isinstance(table_url, (HTTPResource, str)):
+          try:
+            tf.keras.utils.get_file(
+              fname=self.config.table_path.resolve(),
+              origin=table_url,
+              cache_subdir=self.config.table_path.parent.resolve()
+            )
+            break
+          except:
+            if i == len(self.config.table_url) - 1:
+              raise RuntimeError("Can't download table")
+        elif isinstance(table_url, GoogleDriveResource):
+          if not self.config.table_path.exists():
+            L.info('copying table {} into {}'.format(
+              table_url.path, str(self.config.table_path)
+            ))
+            copy2(table_url.path, self.config.table_path)
 
     # Download image from positions
     if self.config.positions is not None and self.config.image_service is not None:
