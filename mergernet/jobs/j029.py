@@ -29,9 +29,7 @@ class Job(Experiment):
     model = load_model('model.h5', exp_id=28)
     ds = Dataset(Dataset.registry.LS10S_BLIND_PNG)
     p = Predictor(model=model, dataset=ds)
-    p.predict()
-    p.upload()
-
+    p.predict(upload=True, labels=Dataset.registry.LS10_TRAIN_224_PNG.labels)
 
 if __name__ == '__main__':
   Job().run()
