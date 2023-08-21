@@ -19,12 +19,10 @@ class Predictor:
   def predict(self) -> List:
     # select ds by dataset type: predictions or train
     if self.dataset.config.label_column is None:
-      ds_test = self.dataset.get_preds_dataset()
+      ds_test = self.dataset.get_preds_dataset(prepare=True)
     else:
       _, ds_test = self.dataset.get_fold(0)
-
-    # prepare dataset
-    ds_test = self.dataset.prepare_data(ds_test, kind='pred')
+      ds_test = self.dataset.prepare_data(ds_test, kind='train')
 
     # make prediction and save in instance state
     test_preds = self.model.predict(ds_test)
