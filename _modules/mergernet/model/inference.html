@@ -520,7 +520,7 @@
 <span class="kn">import</span> <span class="nn">wandb</span>
 
 <span class="kn">from</span> <span class="nn">mergernet.core.experiment</span> <span class="kn">import</span> <span class="n">Experiment</span>
-<span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">iauname_path</span><span class="p">,</span> <span class="n">load_table</span>
+<span class="kn">from</span> <span class="nn">mergernet.core.utils</span> <span class="kn">import</span> <span class="n">iauname_path</span><span class="p">,</span> <span class="n">load_image</span><span class="p">,</span> <span class="n">load_table</span>
 <span class="kn">from</span> <span class="nn">mergernet.data.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 
 <span class="n">L</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -589,7 +589,7 @@
             <span class="p">)</span>
             <span class="n">prob</span> <span class="o">=</span> <span class="n">sorted_df</span><span class="p">[</span><span class="s1">&#39;prob_merger&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
             <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;P(M) = </span><span class="si">{</span><span class="n">prob</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">&#39;</span>
-            <span class="n">img</span> <span class="o">=</span> <span class="n">wandb</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">wandb</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">load_image</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">caption</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
             <span class="n">imgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
           <span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span><span class="s1">&#39;predictions&#39;</span><span class="p">:</span> <span class="n">imgs</span><span class="p">})</span>
 
