@@ -1,0 +1,6 @@
+mergernet.data.preprocessing.load\_png\_with\_label
+===================================================
+
+.. currentmodule:: mergernet.data.preprocessing
+
+.. autofunction:: load_png_with_label

@@ -39,6 +39,7 @@ DatasetRegistry
       ~DatasetRegistry.DECALS_0364_1M_PART7
       ~DatasetRegistry.DECALS_0364_1M_PART8
       ~DatasetRegistry.DECALS_0364_1M_PART9
+      ~DatasetRegistry.LS10S_BLIND_PNG
       ~DatasetRegistry.LS10_TRAIN_224_PNG
       ~DatasetRegistry.MESD_LEGACY_128
       ~DatasetRegistry.MESD_SDSS_128

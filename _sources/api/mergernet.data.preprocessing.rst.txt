@@ -15,7 +15,9 @@ mergernet.data.preprocessing
     :toctree:
   
     load_jpg
+    load_jpg_with_label
     load_png
+    load_png_with_label
     normalize_rgb
     one_hot_factory
     standardize_rgb
