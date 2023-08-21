@@ -533,12 +533,10 @@
 <div class="viewcode-block" id="Predictor.predict"><a class="viewcode-back" href="../../../api/mergernet.model.inference.Predictor.html#mergernet.model.inference.Predictor.predict">[docs]</a>  <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
     <span class="c1"># select ds by dataset type: predictions or train</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">label_column</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-      <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_preds_dataset</span><span class="p">()</span>
+      <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_preds_dataset</span><span class="p">(</span><span class="n">prepare</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="n">_</span><span class="p">,</span> <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_fold</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
-    <span class="c1"># prepare dataset</span>
-    <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span><span class="n">ds_test</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;pred&#39;</span><span class="p">)</span>
+      <span class="n">ds_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span><span class="n">ds_test</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
     <span class="c1"># make prediction and save in instance state</span>
     <span class="n">test_preds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ds_test</span><span class="p">)</span>
