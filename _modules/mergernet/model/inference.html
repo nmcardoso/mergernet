@@ -578,7 +578,7 @@
 
         <span class="c1"># upload stamps to W&amp;B</span>
         <span class="k">if</span> <span class="n">Experiment</span><span class="o">.</span><span class="n">log_wandb</span><span class="p">:</span>
-          <span class="n">sorted_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;prob_merger&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+          <span class="n">sorted_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;prob_merger&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
           <span class="n">imgs</span> <span class="o">=</span> <span class="p">[]</span>
           <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sorted_df</span><span class="p">))):</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">iauname_path</span><span class="p">(</span>
