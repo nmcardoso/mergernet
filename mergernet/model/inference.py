@@ -75,7 +75,7 @@ class Predictor:
             )
             prob = sorted_df['prob_merger'][i]
             label = f'P(M) = {prob*100:.1f}'
-            img = wandb.Image(load_image(path), caption=label)
+            img = wandb.Image(str(path.absolute()), caption=label)
             imgs.append(img)
           wandb.log({'predictions': imgs})
 
