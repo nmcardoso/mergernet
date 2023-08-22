@@ -64,7 +64,7 @@ class Predictor:
 
         # upload stamps to W&B
         if Experiment.log_wandb:
-          sorted_df = df.sort_values('prob_merger', ascending=False)
+          sorted_df = df.sort_values('prob_merger', ascending=False, inplace=False)
           imgs = []
           for i in range(min(50, len(sorted_df))):
             path = iauname_path(
