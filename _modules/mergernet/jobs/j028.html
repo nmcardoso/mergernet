@@ -568,9 +568,9 @@
     <span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">Dataset</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">LS10_TRAIN_224_PNG</span><span class="p">)</span>
 
     <span class="n">model</span> <span class="o">=</span> <span class="n">ParametricEstimator</span><span class="p">(</span><span class="n">hp</span><span class="o">=</span><span class="n">hps</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="n">ds</span><span class="p">)</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="s1">&#39;with_t1&#39;</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="s1">&#39;with_t1_softmax_logits&#39;</span><span class="p">)</span>
 
-    <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span><span class="s1">&#39;model.h5&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">tf_model</span><span class="p">)</span></div></div>
+    <span class="n">Experiment</span><span class="o">.</span><span class="n">upload_file_gd</span><span class="p">(</span><span class="s1">&#39;model_softmax_logits.h5&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">tf_model</span><span class="p">)</span></div></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
