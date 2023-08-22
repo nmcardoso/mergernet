@@ -70,7 +70,7 @@ class Predictor:
             path = iauname_path(
               sorted_df[x_col_name][i],
               prefix=self.dataset.config.images_path,
-              suffix=self.dataset.config.image_extension,
+              suffix=f'.{self.dataset.config.image_extension}',
               flat=not self.dataset.config.image_nested
             )
             prob = sorted_df['prob_merger'][i]
