@@ -174,6 +174,10 @@ class ParametricEstimator(Estimator):
     return self._tf_model
 
 
+  def predict(self):
+    pass
+
+
   def cross_validation(
     self,
     run_name: str = 'run-0',
