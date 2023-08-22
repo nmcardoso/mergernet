@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Callable, List, Tuple, Union
 
 import tensorflow as tf
+import tensorflow_addons as tfa
 
 from mergernet.core.constants import RANDOM_SEED
 from mergernet.core.experiment import Experiment
@@ -175,7 +176,8 @@ class Estimator(ABC):
 
   def get_metric(self, metric: str):
     if metric == 'f1':
-      return tf.keras.metrics.F1Score(name='f1', average='weighted')
+      return tfa.metrics.F1Score(name='f1', average='weighted')
+      # return tf.keras.metrics.F1Score(name='f1', average='weighted') # tf 2.13
     elif metric == 'precision':
       return tf.keras.metrics.Precision(name='precision')
     elif metric == 'recall':
