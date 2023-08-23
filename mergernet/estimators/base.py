@@ -104,7 +104,7 @@ class Estimator(ABC):
     hp_metrics = [self.get_metric(m) for m in self.hp.get('metrics', default=[]) if m is not None]
     tf_model.compile(
       optimizer=optimizer,
-      loss=tf.keras.losses.CategoricalCrossentropy(from_logits=True, label_smoothing=label_smoothing),
+      loss=tf.keras.losses.CategoricalCrossentropy(from_logits=False, label_smoothing=label_smoothing),
       metrics=[
         tf.keras.metrics.CategoricalAccuracy(name='accuracy'),
         *hp_metrics,
@@ -183,9 +183,9 @@ class Estimator(ABC):
     elif metric == 'recall':
       return tf.keras.metrics.Recall(name='recall')
     elif metric == 'roc':
-      return tf.keras.metrics.AUC(curve='ROC', name='roc', from_logits=True)
+      return tf.keras.metrics.AUC(curve='ROC', name='roc', from_logits=False)
     elif metric == 'pr':
-      return tf.keras.metrics.AUC(curve='PR', name='pr', from_logits=True)
+      return tf.keras.metrics.AUC(curve='PR', name='pr', from_logits=False)
     elif metric == 'tp':
       return tf.keras.metrics.TruePositives(name='tp')
     elif metric == 'tn':
