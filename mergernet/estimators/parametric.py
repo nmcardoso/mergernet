@@ -56,7 +56,7 @@ class ParametricEstimator(Estimator):
     x = conv_block(x)
 
     # Representation layer
-    representation_mode = self.hp.get('features_reduction', default='flatten')
+    representation_mode = self.hp.get('features_reduction', default='avg_pooling')
     if representation_mode == 'flatten':
       x = tf.keras.layers.Flatten()(x)
     elif representation_mode == 'avg_pooling':
@@ -73,14 +73,14 @@ class ParametricEstimator(Estimator):
       units = self.hp.get(f'dense_{i}_units')
       bn = self.hp.get(f'batch_norm_{i}')
       activation = self.hp.get(f'activation_{i}', default='relu')
-      dropout_rate = self.hp.get(f'dropout_{i}_rate')
+      dropout_rate = self.hp.get(f'dropout_{i}_rate', default=0.0)
       if units:
         x = tf.keras.layers.Dense(units, use_bias=not bn)(x)
         if bn:
           x = tf.keras.layers.BatchNormalization()(x)
         if activation == 'relu':
           x = tf.keras.layers.Activation('relu')(x)
-        if dropout_rate:
+        if dropout_rate > 1e-7:
           x = tf.keras.layers.Dropout(dropout_rate)(x)
 
     # Classifications

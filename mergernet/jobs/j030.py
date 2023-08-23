@@ -46,13 +46,13 @@ class Job(Experiment):
       HP.num('batch_size', low=64, high=256, step=64, dtype=int),
       HP.const('features_reduction', 'avg_pooling'),
       HP.num('dense_1_units', low=32, high=1024, step=1, dtype=int),
-      HP.cat('dropout_1_rate', [None, 0.1, 0.2, 0.3, 0.4]),
+      HP.num('dropout_1_rate', low=0.0, high=0.4, step=0.1, dtype=float),
       HP.cat('batch_norm_1', [True, False]),
       HP.num('dense_2_units', low=32, high=1024, step=1, dtype=int),
-      HP.cat('dropout_2_rate', [None, 0.1, 0.2, 0.3, 0.4]),
+      HP.num('dropout_2_rate', low=0.0, high=0.4, step=0.1, dtype=float),
       HP.cat('batch_norm_2', [True, False]),
       HP.num('dense_3_units', low=32, high=1024, step=1, dtype=int),
-      HP.cat('dropout_3_rate', [None, 0.1, 0.2, 0.3, 0.4]),
+      HP.num('dropout_3_rate', low=0.0, high=0.4, step=0.1, dtype=float),
       HP.cat('batch_norm_3', [True, False]),
     )
     ds = Dataset(config=Dataset.registry.LS10_TRAIN_224_PNG)
