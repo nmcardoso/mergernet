@@ -70,14 +70,18 @@ class ParametricEstimator(Estimator):
 
     # Classifier
     for i in range(1, 4):
-      if self.hp.get(f'dense_{i}_units'):
-        x = tf.keras.layers.Dense(self.hp.get(f'dense_{i}_units'))(x)
-        if self.hp.get(f'batch_norm_{i}'):
+      units = self.hp.get(f'dense_{i}_units')
+      bn = self.hp.get(f'batch_norm_{i}')
+      activation = self.hp.get(f'activation_{i}', default='relu')
+      dropout_rate = self.hp.get(f'dropout_{i}_rate')
+      if units:
+        x = tf.keras.layers.Dense(units, use_bias=not bn)(x)
+        if bn:
           x = tf.keras.layers.BatchNormalization()(x)
-        if self.hp.get(f'activation_{i}', default='relu') == 'relu':
+        if activation == 'relu':
           x = tf.keras.layers.Activation('relu')(x)
-        if self.hp.get(f'dropout_{i}_rate'):
-          x = tf.keras.layers.Dropout(self.hp.get(f'dropout_{i}_rate'))(x)
+        if dropout_rate:
+          x = tf.keras.layers.Dropout(dropout_rate)(x)
 
     # Classifications
     outputs = tf.keras.layers.Dense(self.dataset.config.n_classes, activation='softmax')(x)
