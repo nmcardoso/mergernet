@@ -64,7 +64,7 @@ class Job(Experiment):
       n_trials=20,
       objective_metric='val_recall',
       objective_direction='maximize',
-      resume=True,
+      resume=False,
     )
 
     optuna_model.train()
