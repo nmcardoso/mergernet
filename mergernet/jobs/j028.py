@@ -30,6 +30,7 @@ class Job(Experiment):
       HP.const('pretrained_weights', 'imagenet'),
       HP.const('batch_size', 128),
       HP.const('dense_1_units', 400),
+      HP.const('batch_norm_1', True),
       HP.const('dropout_1_rate', 0.32),
       # metrics and validation
       HP.const('metrics', ['f1', 'recall', 'roc']),
