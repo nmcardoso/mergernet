@@ -26,7 +26,7 @@ class Job(Experiment):
 
 
   def call(self):
-    model = load_model('model.h5', exp_id=28)
+    model = load_model('model_softmax_logits.h5', exp_id=28)
     ds = Dataset(Dataset.registry.LS10S_BLIND_PNG)
     p = Predictor(model=model, dataset=ds)
     p.predict(upload=True, labels=Dataset.registry.LS10_TRAIN_224_PNG.labels)
