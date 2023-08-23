@@ -690,7 +690,11 @@
 
 <div class="viewcode-block" id="Estimator.get_metric"><a class="viewcode-back" href="../../../api/mergernet.estimators.base.Estimator.html#mergernet.estimators.base.Estimator.get_metric">[docs]</a>  <span class="k">def</span> <span class="nf">get_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s1">&#39;f1&#39;</span><span class="p">:</span>
-      <span class="k">return</span> <span class="n">tfa</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">F1Score</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;f1&#39;</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">tfa</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">F1Score</span><span class="p">(</span>
+        <span class="n">num_classes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">n_classes</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;f1&#39;</span><span class="p">,</span>
+        <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span>
+      <span class="p">)</span>
       <span class="c1"># return tf.keras.metrics.F1Score(name=&#39;f1&#39;, average=&#39;weighted&#39;) # tf 2.13</span>
     <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s1">&#39;precision&#39;</span><span class="p">:</span>
       <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">Precision</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;precision&#39;</span><span class="p">)</span>
