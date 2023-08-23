@@ -32,12 +32,13 @@ class Job(Experiment):
       HP.const('dense_1_units', 400),
       HP.const('batch_norm_1', True),
       HP.const('dropout_1_rate', 0.32),
+      HP.const('features_reduction', 'avg_pooling'),
       # metrics and validation
       HP.const('metrics', ['f1', 'recall', 'roc']),
       HP.const('positive_class_id', 1),
       HP.const('negative_class_id', 0),
       # t1 setup
-      HP.const('tl_epochs', 15),
+      HP.const('t1_epochs', 15),
       HP.const('t1_opt', 'adamw'),
       HP.const('t1_lr', 5e-4),
       # main train setup
