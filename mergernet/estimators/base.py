@@ -176,7 +176,11 @@ class Estimator(ABC):
 
   def get_metric(self, metric: str):
     if metric == 'f1':
-      return tfa.metrics.F1Score(name='f1', average='weighted')
+      return tfa.metrics.F1Score(
+        num_classes=self.dataset.config.n_classes,
+        name='f1',
+        average='weighted'
+      )
       # return tf.keras.metrics.F1Score(name='f1', average='weighted') # tf 2.13
     elif metric == 'precision':
       return tf.keras.metrics.Precision(name='precision')
