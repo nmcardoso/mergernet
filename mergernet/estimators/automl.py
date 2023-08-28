@@ -70,7 +70,7 @@ class OptunaEstimator(Estimator):
       verbose=1,
       save_best_only=True,
       save_weights_only=False,
-      mode=self.objective_direction,
+      mode=self.objective_direction[:3],
       save_freq='epoch',
       initial_value_threshold=initial_value
     )
